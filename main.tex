@@ -1,14 +1,18 @@
-\documentclass[letterpaper]{article}
+\documentclass[letterpaper,11pt]{article}
 
 \usepackage{times}
+\usepackage{fullpage}
 \usepackage{latexsym}
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{graphicx}
 
-\title{Identifying Lexical Entailments with Distributional Semantics}
+\title{Identifying Lexical Relationships and Entailments with Distributional Semantics}
 \author{Stephen Roller\\
-roller@cs.utexas.edu}
+The University of Texas at Austin\\
+{\tt roller@cs.utexas.edu}\\
+\\
+Doctoral Dissertation Proposal}
 
 \date{\today}
 
@@ -16,9 +20,48 @@ roller@cs.utexas.edu}
 \maketitle
 
 \begin{abstract}
-  Abstract goes here.
+  As the field of Natural Language Processing has developed, more ambitious
+  semantic tasks are starting to be addressed, such as Question Answering, and
+  Recognizing Textual Entailment. Systems which approach these tasks can
+  perform sophisticated inference between sentences of Natural Language, but
+  often have exhibit issues of Montague-style semantics, where the meaning of
+  {\em life} is {\em life$'$}. Such systems depend heavily on lexical resources
+  like WordNet to provide critical information like the
+  relationships between lexical items, or whether one lexical item entails
+  another. However, lexical resources are expensive to create and maintain, and
+  can never be comprehensive.
+
+  Distributional Semantics has long provided a method to automatically induce
+  meaning representations for lexical items from large corpora with little or
+  no annotation efforts. In Distributional Semantics, words are modeled as
+  vectors in high-dimensional spaces, induced by counting or modeling the
+  contexts in which a word appears. The resulting representations are excellent
+  as proxies of semantic similarity: words will have similar representations if
+  their semantic meanings are similar. Yet, knowing two words are similar does
+  not tell us their relationship, or whether one entails the other.
+
+  In this work, we present several techniques for automatically identifying
+  specific relationships or entailments from distributional representations of
+  lexical semantics. Broadly, this work falls into two distinct but related
+  areas: the first predicts specific taxonomic relations and entailment
+  decisions between lexical items devoid of context;
+  the second predicts specific lexical paraphrases in complete sentences. In
+  both cases, we evaluate and emphasize generalization to novel lexical items
+  which are devoid of any explicit semantic annotations.  We also provide
+  analysis and insight as to how and why these models are anble to generalize
+  to novel lexical items, and relate this to prior linguistic and NLP research.
+
+  We propose several short- and long-term extensions to this work. In the
+  sans-context models, we propose applying our model to a broader group of
+  lexical relations, and including additional useful features in
+  classification.  In the con-context work, we propose extensions which
+  improve handling of very rare context items, analyzing the
+  relationships between paraphrases. In the long-term, we propose stronger
+  models of con-context representations, and unifying the sans- and con-context models in various ways.
+
 \end{abstract}
 
+\pagebreak
 \section{Outline}
 \begin{itemize}
   \item Introduction
@@ -34,7 +77,7 @@ roller@cs.utexas.edu}
   \item Future Work
 \end{itemize}
 
-
+\pagebreak
 \bibliographystyle{plain}
 \bibliography{../bib}
 
