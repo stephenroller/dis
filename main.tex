@@ -1,13 +1,14 @@
-\documentclass[letterpaper,11pt]{article}
+\documentclass[letterpaper]{article}
 
 \usepackage{times}
-\usepackage{fullpage}
+%\usepackage{fullpage}
 \usepackage{latexsym}
 \usepackage{amsmath}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{aclcite}
 
-\title{Identifying Lexical Relationships and Entailments with Distributional Semantics}
+\title{Identifying Lexical Relationships and Subsitutes with Distributional Semantics}
 \author{Stephen Roller\\
 The University of Texas at Austin\\
 {\tt roller@cs.utexas.edu}\\
@@ -54,18 +55,23 @@ Doctoral Dissertation Proposal}
   We propose several short- and long-term extensions to this work. In the
   out-of-context models, we propose applying our model to a broader group of
   lexical relations, and including additional useful features in
-  classification.  In the in-context work, we propose extensions which
-  improve handling of very rare context items, analyzing the
-  relationships between paraphrases. In the long-term, we propose stronger
-  models of in-context representations, and unifying the out-of-context and in-context
-  models in various ways.
+  classification.  In the in-context work, we propose extensions which improve
+  handling of very rare context items, analyzing the relationships between
+  paraphrases. In the long-term, we propose stronger models of in-context
+  representations, and unifying the out-of-context and in-context models in
+  various ways.
 
 \end{abstract}
 
 \pagebreak
-\section{Outline}
+\section*{Table of Contents}
 \begin{itemize}
   \item Introduction
+    \begin{itemize}
+      \item Distributional Semantics
+      \item Lexical Entailment
+      \item Lexical Substitution
+    \end{itemize}
   \item Identifying Lexical Relations
     \begin{itemize}
       \item Asym (COLING 2014)
@@ -73,13 +79,130 @@ Doctoral Dissertation Proposal}
     \end{itemize}
   \item Lexical Substitution
     \begin{itemize}
-      \item Proposed model
+      \item NAACL 2016
     \end{itemize}
-  \item Future Work
+  \item Proposed Work
+    \begin{itemize}
+      \item 
+    \end{itemize}
+\end{itemize}
+\pagebreak
+
+\section{Introduction}
+
+As the field of Natural Language Processing (NLP) has developed, significant
+progress has been made in many areas of research, especially those in ``lower''
+levels of the Vauquois Triangle, like Part-of-Speech tagging and Parsing.  Even
+difficult semantics tasks, like Sentiment Analysis and Document Classification,
+have made significant progress NEEDCITE. Today, there is great deal of emphasis
+on sophisticated semantics tasks that require inference and synthesis of
+knowledge. These include tasks like Question Answering (QA), where computers
+must read and answer questions about passages NEEDCITE, and Recognizing Textual
+Entailment (RTE), where computers must decide whether a hypothesis utterance
+logically follows from a given text NEEDCITE.
+
+Much progress has been made in systems which perform these sort of sophisticated
+logical inferences, especially as common benchmarks and data sets have started
+to become common NEEDCITE. Yet these systems ultimately must work over
+individual lexical items to form a conclusion, and require knowledge about
+the relationships between lexical items. Consider the following example:
+\footnote{Mention ``Montague's curse'', as I like to call it?}
+\begin{quote}
+  Text: The bright girl reads a book.\\
+  Hypothesis: The smart child looks at pages of text.
+\end{quote}
+Any language processing system wishing to infer the second sentence from
+the first must know quite a bit of world knowledge: it must know that
+girl is a kind of child, and that bright and smart are synonyms in this
+context; that books contain pages of text, and that reading involves looking
+at some text.
+
+Although significant progress has been made on the text of
+Rich Textual Entailment, these systems ultimately depend on some lexical
+resources NEEDCITE. The most famous lexical resource is WordNet, which
+organizes the lexicon into a large ontology containing many thousands of
+annotations of relationships between different lexical items, though countless
+other resources also exist and are used (NEEDCITE FrameNet, PPDB, BLESS, LEDS,
+SemEval). Unfortunately, resources as thorough as WordNet are extremely
+expensive and intensive to create, and since language is ever-changing, they
+are inevitably always incomplete, and represent one weak point in Natural
+Language Understanding systems. Even modern Neural Network approaches,
+which attempt to learn entailments without explicitly depending on these
+resources, cannot make entailment predictions about words which were not
+in the training data NEEDCITE.
+
+Distributional Semantics offers a potential solution to these issues of lexical
+coverage. Distributional Semantics takes inspiration from the famous quote,
+``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In Distributional
+Semantics, representations of word meaning are automatically induced by
+counting or modeling the {\em contexts} in which a word appears Distributional
+Semantics is often sometimes called Vector Space Models of language, as words
+are represented as vectors a high-dimensional vector space.  Words with similar
+semantics will have similar vectors in this induced geometric space. As these
+
+In this work, we approach the question as to whether Distributional Semantics
+can be leveraged to predict the sort of lexical inferences necessary in tasks
+like Question Answering and Recognizing Textual Entailment. Namely, we present
+techniques and models for predicting certain kinds of lexical relationships,
+entailments, and subsitutions using Distributional Semantics. In Lexical
+Relationship Detection, we try to specifically identify whether two words
+exhibit specific lexical relationships, like hypernymy (is-a relationships) or
+meronymy (has-a relationships). 
+
+What is distributional semantics, why is it useful here
+
+\section{Background and Related Work}
+
+\subsection{Distributional Semantics}
+\begin{itemize}
+  \item What is distributional semantics, picture, what is it good for
+  \item How are vectors computed (bow, pmi, dim reduction)
+  \item Dependency vectors, and the importance of col representations
+  \item Important citations: Katrin's survey, Peter's survey
 \end{itemize}
 
+\subsection{Lexical Entailment}
+\begin{itemize}
+  \item What is Lexical Entailment, how is it defined?
+  \item Examples and types of Entailment
+    \begin{itemize}
+      \item Word relationships (countless kinds)
+    \end{itemize}
+  \item Linguistic theories, indicators of entailment
+  \begin{itemize}
+    \item Distributional Inclusion Hypothesis
+    \item Hearst Patterns
+  \end{itemize}
+  \item Works predicting lex entailment using distributional semantics
+    \begin{itemize}
+      \item Far too extensive to thoroughly cover all groups and models attempting
+      to do lexical entailment. Some use vision, some use DS, some explicitly mine
+      Wikipedia for phrases, etc
+    \end{itemize}
+\end{itemize}
+
+\subsection{Lexical Substitution}
+\begin{itemize}
+  \item What is lexical substitution
+  \item Sometimes even more difficult to define that lexical entailment
+  \item Linguistic understanding of substitution is less developed
+    \begin{itemize}
+      \item Violations of selectional preferences?
+      \item Synonyms/Entailment in context?
+    \end{itemize}
+\end{itemize}
+
+\section{Completed work}
+
+\subsection{Hypernymy and Entailment Detection}
+
+\subsubsection{Asym}
+
+\subsubsection{}
+
+
 \pagebreak
-\bibliographystyle{plain}
-\bibliography{../bib}
+\bibliographystyle{aclcite}
+\bibliography{refs}
 
 \end{document}
