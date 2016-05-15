@@ -237,6 +237,20 @@ or {\em kennel}, and cosine similarity is defined over the range of $[0, 1]$.
 Words with similar vectors will have a small angle between them, and therefore
 a high cosine similarity (e.g. close to 1).
 
+In practice, usually the distributional vectors are more sophisticated in their
+construction than raw co-occurrence counts. Typically, words and contexts below
+a certain threshold are omitted from the co-occurrence matrix, as extremely
+rare words have few counts and therefore impoverished representations. The
+co-occurrence matrix is also usually transformed using some non-linearity;
+one common choice is Positive Pointwise Mutual Information (PPMI), where the
+raw co-occurence count between a word $w$ and context $c$ is transformed,
+\begin{equation*}
+  \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
+\end{equation*}
+Pointwise Mutual Information measures roughly how many times more likely
+do these two items co-occur more than chance, while Positive PMI additionally
+co-occurrences which occur less often than chance.
+
 \subsection{Lexical Entailment}
 \begin{itemize}
   \item What is Lexical Entailment, how is it defined?
