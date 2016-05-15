@@ -99,7 +99,7 @@ on sophisticated semantics tasks that require inference and synthesis of
 knowledge. These include tasks like Question Answering (QA), where computers
 must read and answer questions about passages NEEDCITE, and Recognizing Textual
 Entailment (RTE), where computers must decide whether a hypothesis utterance
-logically follows from a given text NEEDCITE.
+logically follows from a given text \cite{marelli:2014:semeval}.
 
 Much progress has been made in systems which perform these sort of sophisticated
 logical inferences, especially as common benchmarks and data sets have started
@@ -133,21 +133,27 @@ in the training data NEEDCITE.
 
 Distributional Semantics offers a potential solution to these issues of lexical
 coverage. Distributional Semantics takes inspiration from the famous quote,
-``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In Distributional
-Semantics, representations of word meaning are automatically induced by
-counting or modeling the {\em contexts} in which a word appears Distributional
-Semantics is often sometimes called Vector Space Models of language, as words
-are represented as vectors a high-dimensional vector space.  Words with similar
-semantics will have similar vectors in this induced geometric space. As these
+``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In
+Distributional Semantics, representations of word meaning are automatically
+induced by counting or modeling the {\em contexts} in which a word appears.
+Distributional Semantics is often sometimes called Vector Space Models (VSM) of
+language, as words are represented as vectors a high-dimensional vector space.
+Words with similar semantics will have similar vectors in this induced
+geometric space. Since VSMs do not require annotated corpora, they are used and
+studied as an alternative or predictor of particular lexical resources NEEDCITE.
 
 In this work, we approach the question as to whether Distributional Semantics
-can be leveraged to predict the sort of lexical inferences necessary in tasks
-like Question Answering and Recognizing Textual Entailment. Namely, we present
-techniques and models for predicting specific lexical relationships,
-entailments, and subsitutions using Distributional Semantics. In Lexical
-Relationship Detection, we try to specifically identify whether two words
-exhibit specific lexical relationships, like hypernymy (is-a relationships) or
-meronymy (has-a relationships).
+can be leveraged to predict some of the lexical inferences necessary in tasks
+like RTE. Namely, we present techniques and models for predicting specific
+lexical relationships, entailments, and subsitutions using Distributional
+Semantics. We emphasize 
+
+In Lexical Relationship Detection, we try to specifically identify
+whether two words exhibit specific lexical relationships, like hypernymy (is-a
+relationships) or meronymy (has-a relationships). In particular, we will
+present two models which can learn to predict hypernymy and general lexical
+entailment, and
+
 
 \section{Background and Related Work}
 
