@@ -213,7 +213,7 @@ a reputation among {dog} trainers of having
 \end{scriptsize}
 \end{minipage}\qquad
 \begin{minipage}{3cm}
-\includegraphics[width=3cm]{figures/vectors}
+\includegraphics[width=3cm]{figures/vsm}
 \end{minipage}
 \caption{Contexts of the word {\em dog}, and cartoon drawing
 of word vectors.}
@@ -262,7 +262,14 @@ as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of similarity results in
 emphasizing more topical similarity, e.g. doctor and hospital, while smaller
 windows emphasize more functional similarity, e.g. doctor and surgeon NEEDCITE.
-Context can be also defined as {\em syntactic neighbors} \cite{pado:2007:cl}.
+Context can be also defined as {\em syntactic neighbors} \cite{pado:2007:cl},
+as demonstrated in Figure~\ref{fig:syn}.
+
+\begin{figure}
+  \includegraphics[width=0.7\textwidth]{figures/syn}
+\caption{Example of a dependency parse for ``The dog chased its tail.''}
+\label{fig:syn}
+\end{figure}
 
 \subsection{Lexical Entailment}
 \begin{itemize}
