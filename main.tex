@@ -197,20 +197,24 @@ with similar vectors can be assumed to have similar meanings
 In its simplest form, vectors are induced by defining a vector space where
 each dimension in the space corresponds to a particular context word. A large,
 unannotated corpus of text is then iterated, finding instances of a given word,
-like {\em dog}, and incrementing a count for each of the words appearing to
-the left and right of the target word {\em dog}.
+like {\em dog}, and incrementing a count for each of the word's {\em
+co-occurrences}, or words appearing to the left or right of the target word
+{\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
+statistical patterns begin to form. For example, the word {\em furry} is likely
+to be used to describe both {\em cat} and {\em dog}, which is then reflected in
+the vector counts.
 
 \begin{figure}
 \centering
 \begin{minipage}{7cm}
 \begin{scriptsize}
 \begin{alltt}
+         the furry {dog} is friendly to
 and manipulate the {dog} 's lips and
        as a clever {dog} ; two to
 a reputation among {dog} trainers of having
     also among the {dog} breeds most likely
  the very earliest {dog} shows and kennel
-Azawakh from other {dog} populations near base
         as a guard {dog} and to hunt
    the mechanic 's {dog} began to howl
 \end{alltt}
@@ -221,7 +225,7 @@ Azawakh from other {dog} populations near base
 \end{minipage}
 \caption{Contexts of the word {\em dog}, and cartoon drawing
 of word vectors.}
-\label{fig:dog}
+\label{fig:vsm}
 \end{figure}
 
 \subsection{Lexical Entailment}
