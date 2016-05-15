@@ -151,14 +151,23 @@ Semantics. In Lexical Relationship detection and Entailment detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
 relationships) or meronymy (has-a relationships). We present two original
 models which can learn to predict hypernymy and sometimes other relations,
-and characterize their performance on different data sets, relations.
+and characterize their performance on different data sets, relations. We also
+present an original model for Lexical Substitution, in which we must predict a
+context-specific synonym for a given target word; we argue that Lexical
+Substitution is a form of lexical entailment in context.
 
-In Lexical Relationship Detection, we try to specifically identify
-whether two words exhibit specific lexical relationships, like hypernymy (is-a
-relationships) or meronymy (has-a relationships). In particular, we will
-present two models which can learn to predict hypernymy and general lexical
-entailment, and
-
+Finally, we propose several extensions to this completed work. In the
+short-term, we propose drawing a stronger connection between Lexical
+Substitution and lexical relationships, analyzing the sort of lexical
+relationships which we can and cannot predict in our model. We propose
+extending our Lexical Substitution model to better handle out-of-vocabulary
+(OoV) issues for very rare context items. We also propose further analysis of
+our Lexical Relationship models to see if additional relationships can be
+automatically predicted, and consider whether the model can do all-words
+relationship prediction.  In the long-term, we wish to consider whether our
+Lexical Substitution model can be improved by removing or alleviating a strong
+independence assumption in the previous model, and how the Lexical Substitution
+and Relationship Detection models could be potentially unified.
 
 \section{Background and Related Work}
 
