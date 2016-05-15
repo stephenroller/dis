@@ -249,7 +249,17 @@ raw co-occurence count between a word $w$ and context $c$ is transformed,
 \end{equation*}
 Pointwise Mutual Information measures roughly how many times more likely
 do these two items co-occur more than chance, while Positive PMI additionally
-co-occurrences which occur less often than chance.
+co-occurrences which occur less often than chance. Different transformations,
+like Mutual Information, conditional probability, and softplus, are also
+sometimes seen in the literature, and each emphasizes different forms of
+similarity.
+
+Another important aspect of Distributional Semantics is how context is defined.
+In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
+as three words to the left and right of the target word, but there are
+alternatives. For example, using very large windows of similarity results in
+emphasizing more topical similarity, e.g. doctor and hospital, while smaller
+windows emphasize more functional similarity, e.g. doctor and surgeon NEEDCITE.
 
 \subsection{Lexical Entailment}
 \begin{itemize}
