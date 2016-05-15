@@ -194,16 +194,6 @@ particular word appears. According to the Distributional Hypothesis then, words
 with similar vectors can be assumed to have similar meanings
 \cite{turney:2010:jair}.
 
-In its simplest form, vectors are induced by defining a vector space where
-each dimension in the space corresponds to a particular context word. A large,
-unannotated corpus of text is then iterated, finding instances of a given word,
-like {\em dog}, and incrementing a count for each of the word's {\em
-co-occurrences}, or words appearing to the left or right of the target word
-{\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
-statistical patterns begin to form. For example, the word {\em furry} is likely
-to be used to describe both {\em cat} and {\em dog}, which is then reflected in
-the vector counts.
-
 \begin{figure}
 \centering
 \begin{minipage}{7cm}
@@ -227,6 +217,23 @@ a reputation among {dog} trainers of having
 of word vectors.}
 \label{fig:vsm}
 \end{figure}
+
+In its simplest form, vectors are induced by defining a vector space where
+each dimension in the space corresponds to a particular context word. A large,
+unannotated corpus of text is then iterated, finding instances of a given word,
+like {\em dog}, and incrementing a count for each of the word's {\em
+co-occurrences}, or words appearing to the left or right of the target word
+{\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
+statistical patterns begin to form. For example, the word {\em furry} is likely
+to be used to describe both {\em cat} and {\em dog}, which is then reflected in
+the vector counts. After constructing vector representations for the words {\em
+cat} and {\em dog}, we can then compare these vectors using {\em cosine
+similarity}:
+\begin{equation*}
+  \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
+\end{equation*}
+Here, $i$ iterates over all the different context dimensions, like {\em furry}
+or {\em kennel}, 
 
 \subsection{Lexical Entailment}
 \begin{itemize}
