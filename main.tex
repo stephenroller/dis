@@ -283,7 +283,17 @@ dimensionality reduction. As described earlier, the distributional vector
 spaces are very high-dimensional; bag-of-words spaces have many thousands of
 dimensions (or sometimes as large as the entire vocab, e.g.
 \newcite{pennington:2014:emnlp}, while syntactic spaces often have a million
-or more dimensions, e.g. \newcite{baroni:2011:gems}.
+or more dimensions, e.g. \newcite{baroni:2011:gems}. Efficiently dealing
+with these large, extremely sparse vectors can sometime be troublesome, so
+we often opt to use some form of {\em dimensionality reduction}, like
+Singular Value Decomposition \cite{landauer:1997:pr}. In dimensionality
+reduction, the co-occurrence matrix $M$ is usually assumed to be factorizable
+into two lower-rank matrices,
+\begin{equation*}
+  M = VC^{\top},
+\end{equation*}
+where $V$ is some lower dimension representation of word vectors, and $C$
+is the corresponding lower dimension representation of the context items.
 
 \subsection{Lexical Entailment}
 \begin{itemize}
