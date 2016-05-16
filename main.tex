@@ -308,7 +308,7 @@ like hypernymy (a girl {\em is a} child; a dog {\em is an} animal), and
 meronomy (a girl {\em has} eyes; a dog {has a} tail), but also many
 nonclassical ones too. For example, a {\em dissertation} implies a {\em
 committee}, but the exact relationship between these items would be difficult
-to pigeonhole or generalize to other items.
+to pigeonhole into a category, or generalize to other items.
 
 There has been a great deal of research around predicting lexical entailment
 automatically from text; we cannot possibly enumerate all the work on this
@@ -325,7 +325,7 @@ of meronomy. In fact, the previous sentence contains several Hearst patterns
 \newcite{snow:2004:nips} to include a variety of syntactic patterns rather than
 pure textual patterns. In another vein of research, others have proposed how
 hypernymy relationships might be viewed holistically in corpora. One
-lasting hypothesis has been the Distributional Inclusion Hypothesis
+lasting hypothesis has been the Distributional Inclusion Hypothesis (DIH)
 \cite{zhitomirsky-geffet:2005:acl}, which states that the contexts in which a
 hypernym appears should be a superset of all its hyponyms, or subordinate
 words. Though this seems to be strictly false\footnote{Consider {\em \#The animal
@@ -341,7 +341,10 @@ distributional space, and the right similarity measure, perhaps hypernym pairs,
 or at least candidate pairs, could be readily identified using only word
 vectors vectors. This view was further highlighted by the fact that the
 ubiquitious cosine similarity tends to highlight co-hyponym pairs more than
-other relations \cite{baroni:2011:gems}.
+other relations \cite{baroni:2011:gems}. Many of the proposed measures were
+based on the Distributional Inclusion Hypothesis in one form or another
+\cite{clarke:2009:gems}, or a hybrid of DIH and cosine similarity
+\cite{kotlerman:2010:nle,lenci:2012:starsem}.
 
 Many of the proposed
 measures were The reasoning went that, with the right measure, hypernyms could
