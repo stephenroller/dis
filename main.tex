@@ -388,7 +388,14 @@ the given target word and context, and not given any additional information. As
 such, early Lexical Substitution systems relied heavily on lexical resources
 like WordNet to obtain a list of {\em candidate substitutes}. Then, using
 various custom features, they would extract features and learn to rank
-substitutes for their appropriateness \cite{NEEDCITE}
+substitutes for their appropriateness \cite{NEEDCITE}. Later, researchers
+began noting the difference between candidate generation and candidate ranking,
+and then focused research on mostly the ranking task \cite{NEEDCITE}. Today,
+many have begun returning to the generation-and-ranking task \cite{NEEDCITE},
+but opting to avoid lexical resources like WordNet.
+
+Since then, various methods have been used to improve scores on the candidate
+ranking task, with most of the interest being in 
 
 \begin{itemize}
   \item What is lexical substitution
