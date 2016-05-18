@@ -376,11 +376,19 @@ relationship between {\em bright} and {\em smart}. This is because the word
 {\em bright} has multiple meanings, and there needs to be some sort of
 reasoning in order to consider that the appropriate synonym of {\em bright}
 is {\em smart} in this context, but not {\em luminous} or {\em colorful}.
-Generally speaking, in Lexical Substitution, we wish to identify what
+More formally, in Lexical Substitution, we wish to identify what
 words could replace a given target word in a particular sentence, while
-perserving the meaning of the whole sentence.
+perserving the meaning of the whole sentence. Evaluation is typically
+performed by comparing a system's predictions to actual substitutes generated
+by humans asked to perform the same task.
 
-In some ways, Lexical Substitution is a more difficult and general task
+In the original SemEval 2007 version of the Lexical Substitution Task,
+systems were required to generate up to ten potential substitutes for
+the given target word and context, and not given any additional information. As
+such, early Lexical Substitution systems relied heavily on lexical resources
+like WordNet to obtain a list of {\em candidate substitutes}. Then, using
+various custom features, they would extract features and learn to rank
+substitutes for their appropriateness \cite{NEEDCITE}
 
 \begin{itemize}
   \item What is lexical substitution
