@@ -467,14 +467,8 @@ annotated with its co-hyponyms, meronyms, hypernym and some random words. Since
 there were four relations, we trained four one-vs-all classifiers, and
 predicted the relation with the highest score.
 
-Table~\ref{tab:asymacc}a shows results 
-
 \begin{table}
   \centering
-  \begin{minipage}{5cm}
-    Other table goes here
-  \end{minipage}\qquad
-  \begin{minipage}{5cm}
   \begin{tabular}{|l|cc cc|}
     \hline
     Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
@@ -503,11 +497,9 @@ Table~\ref{tab:asymacc}a shows results
     % ------------------------------------------------------------------
      \hline
   \end{tabular}
-\end{minipage}
-  % \vspace{-2mm}
-  \caption{Mean Average Precision for the unsupervised measures
-  after selecting the top dimensions from a supervised model.}
-  \label{tab:mapscores:unprojected}
+  \caption{Mean Average Precision for the unsupervised measures before
+  after selecting the top dimensions from the asym model.}
+  \label{tab:mapscores}
 \end{table}
 
 
