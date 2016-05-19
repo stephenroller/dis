@@ -553,6 +553,72 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
   \label{tab:mapscores:unprojected}
 \end{table}
 
+\subsubsection{Subsystem in complete RTE system}
+
+Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
+the lexical rules, which have single words on the LHS and RHS. In these
+experiments we use the same procedure as before, but omit the phrasal rules
+from the dataset. On the RTE tasks, we compute accuracy over only the SICK
+pairs which require at least one lexical rule. Note that a new ceiling
+score is needed, as some rules require both lexical and phrasal
+predictions, but we do not predict any phrasal rules.
+
+\begin{table}
+\centering
+\begin{tabular}{|lrrr|}
+    \hline
+    {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Train} & {\bf RTE Test}\\
+    \hline
+    Always guess neutral & 56.6 & 69.4 & 69.3 \\
+    Gold standard annotations&100.0 & 93.2 & 94.6 \\
+    \hline
+    Wordform only        & 57.4 & 70.4 & 70.9 \\
+    WordNet only         & 79.1 & 83.1 & 84.2 \\
+    Dist (Lexical) only  & 68.8 & 76.3 & 76.7 \\
+    \newcite{roller:2014:coling} only            & 76.8 & 78.3 & 79.2 \\
+    \hline
+    All features         & 84.6 & 82.7 & 83.8 \\
+    \hline
+\end{tabular}
+\caption{Cross-validation accuracy on Entailment on lexical rules only}
+\label{tab:evallexical}
+\end{table}
+
+Again we see that WordNet features have the highest contribution. Distributional rules still perform better
+than the baseline, but the gap between distributional features and
+WordNet is much more apparent. 
+Perhaps most encouraging is the very high performance of the Asymmetric features: by
+themselves, they perform substantially better
+than just the distributional features. We investigate this further
+below in Section~\ref{subsubsec:asym}. 
+
+As with the entire dataset, we once again see that all the features are
+highly complementary, and intrinsic accuracy is greatly improved by
+using all the features together. It may be surprising that these significant
+gains in intrinsic accuracy do not translate to improvements on the
+RTE tasks; in fact, there is a minor drop from using all features compared
+to only using WordNet. This most likely depends on {\em which} pairs the
+system gets right or wrong. For sentences involving multiple lexical rules,
+errors become disproportionately costly. As such, the high-precision
+WordNet predictions are slightly better on the RTE task.
+
+In a qualitative analysis comparing a
+classifier with only cosine distributional features to a classifier
+with the full feature set, we found that, as expected, the distributional features
+miss many hypernyms and falsely classify many co-hyponyms as
+entailing: We manually analyzed a sample of 170 pairs that the distributional classifier
+falsely classifies as entailing. Of these, 67 were co-hyponyms (39\%), 33 were
+antonyms (19\%), and 32 were context-specific pairs like
+\textit{stir/fry}. On the other hand, most (87\%)
+ cases of entailment that the distributional classifier detects but the
+all-features classifier misses are word pairs that have no link in
+WordNet. These pairs include \textit{note
+  $\to$ paper}, \textit{swimmer $\to$ racer}, \textit{eat $\to$ bite},
+and \textit{stand $\to$ wait}. 
+
+
+
+
 \subsubsection{Analysis of Learned Classifier}
 
 
@@ -623,8 +689,6 @@ appear in the data set.}
 \label{tab:ctxsim}
 \end{table}
 
-
-\subsubsection{Subsystem in complete RTE system}
 
 Knowing that the Concat classifier acts primarily as a feature detector, we
 ask whether this can be combined with similarity-based insights of models like
@@ -713,33 +777,6 @@ The only free hyperparameter of the model is $n$, the number of iterations of
 the PCA-like procedure. We found that performance improves substantially on all
 data sets with at least two iterations, but then falls off slowly after five or
 more iterations. We chose to use four iterations for all final models.
-
-
-\begin{table}
-\centering
-\begin{small}
-\begin{tabular}{|lrrr|}
-    \hline
-    {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Train} & {\bf RTE Test}\\
-    \hline
-    Always guess neutral               & 64.3 & 73.9 & 73.3  \\
-    Gold standard annotations          &100.0 & 95.0 & 95.5  \\
-    \hline
-    Base only                          & 64.3 & 73.8 & 73.4  \\
-    Wordform only                      & 67.3 & 77.0 & 76.7  \\
-    WordNet only                       & 75.1 & 81.9 & 81.3  \\
-    Cosine binning only                & 71.5 & 78.7 & 77.7  \\
-    \newcite{roller:2014:coling} only  & 70.1 & 77.3 & 77.2  \\
-    \hline
-    All features                       & 79.9 & 84.0 & 83.0  \\
-    \hline
-\end{tabular}
-\end{small}
-\caption{Cross-validation accuracy on Entailment on all rules}
-\label{tab:evalall}
-\end{table}
-
-
 
 \subsection{Lexical Substitution}
 
