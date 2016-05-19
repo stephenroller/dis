@@ -9,6 +9,7 @@
 \usepackage{aclcite}
 \usepackage{alltt}
 \usepackage{subfig}
+\usepackage{aliases}
 
 \title{Identifying Lexical Relationships and Subsitutes with Distributional Semantics}
 \author{Stephen Roller\\
@@ -410,9 +411,7 @@ corpora used in machine translation and distributional semantics.
 
 \section{Completed work}
 
-\subsection{Hypernymy and Entailment Detection}
-
-\subsubsection{Hypernymy Classifiers}
+\subsection{Lexical Relationship Detection}
 
 
 \begin{table}
@@ -483,8 +482,6 @@ appear in the data set.}
 \end{table}
 
 
-\subsubsection{Subsystem in complete RTE system}
-
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|rrrr|}
@@ -506,9 +503,53 @@ appear in the data set.}
 \label{tab:results1}
 \end{table}
 
+\subsubsection{Subsystem in complete RTE system}
+
 
 
 \subsection{Lexical Substitution}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|r|r|r|}
+  \hline
+  {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
+  \hline\hline
+  \multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
+  \hline
+  \ooc               &     44.2   &     44.5  &     57.9       \\
+  \addCos            &     51.2   &     46.3  &     62.2       \\
+  \balAddCos         &     49.6   &     46.5  &     61.3       \\
+  \hline
+  \ourmeas           &     51.3   &     46.4  &     61.8       \\
+  \ourmeasparam      & {\bf52.4}  & {\bf48.3} & {\bf62.8}      \\
+  \hline\hline
+  \multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@1)}\\
+  \hline
+  \ooc               &     11.7   &    10.9   &      9.8       \\
+  \addCos            &     12.9   &    10.5   &      7.9       \\
+  \balAddCos         &     13.4   &    11.8   &      9.8       \\
+  \hline
+  \ourmeas           &     17.3   &    16.3   &     11.1       \\
+  \ourmeasparam      & {\bf19.7}  &{\bf18.2}  & {\bf13.7}      \\
+  \hline
+  \hline
+  \multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@3)}\\
+  \hline
+  \ooc               &     9.7    &     8.6   &     7.0       \\
+  \addCos            &     9.0    &     7.9   &     6.1       \\
+  \balAddCos         &     9.8    &     9.1   &     7.4       \\
+  \hline
+  \ourmeas           &    13.1    &    12.1   &     7.9       \\
+  \ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
+  \hline
+\end{tabular}
+\end{center}
+\caption{Lexical Substitution results for candidate ranking (GAP) and all-words
+ranking tasks (P@1, P@3).}
+\label{tab:precision}
+\end{table}
+
 
 \section{Proposed Work}
 
