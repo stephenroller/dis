@@ -413,6 +413,44 @@ corpora used in machine translation and distributional semantics.
 
 \subsection{Lexical Relationship Detection}
 
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc cc|}
+    \hline
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    \hline\hline
+    \multicolumn{5}{|c|}{\UpWW~Before Dimension Selection}\\
+    \hline
+    \cosine        &     .68     &     .20    &     .27     &     .27    \\
+%    \balAPinc      &     .56     &     .23    &     .31     &     .28    \\
+%    \WeedsPrec     &     .52     &     .22    &     .33     &     .28    \\
+    \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
+    \invCL         &     .60     &     .18    &     .31     &     .28    \\
+    \hline
+    \hline
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    \hline\hline
+    % ------------------------------------------------------------------
+    % THESE VALUES WERE CREATED IN THE HOLD-ONE-CONCEPT-OUT SETTING
+    % ------------------------------------------------------------------
+    \multicolumn{5}{|c|}{\UpWWu~After Dimension Selection}\\
+    \hline
+    \cosine        &   .69      &    .20    &    .24     &    .28    \\
+%    \balAPinc      &   .54      &    .35    &    .26     &    .28    \\
+%    \WeedsPrec     &   .50      &    .38    &    .27     &    .29    \\
+    \ClarkeDE      &   .55      &    .39    &    .24     &    .29    \\
+    \invCL         &   .42      &{\bf.58}   &    .24     &    .29    \\
+    % ------------------------------------------------------------------
+     \hline
+  \end{tabular}
+  \end{center}
+  % \vspace{-2mm}
+  \caption{Mean Average Precision for the unsupervised measures
+  after selecting the top dimensions from a supervised model.}
+  \label{tab:mapscores:unprojected}
+\end{table}
+
+
 
 \begin{table}
 \begin{center}
