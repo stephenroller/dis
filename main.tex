@@ -416,6 +416,31 @@ corpora used in machine translation and distributional semantics.
 
 \subsubsection{Hearst Pattern Detector}
 
+\subsubsection{Results}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|rrrr|}
+  \hline
+  Model                        &   LEDS   &  BLESS   &   Medical &      TM14  \\
+  \hline
+  Cosine                       &    .789  &    .225  &    .165  &      .674  \\
+  \hline
+  Concat                       &    .802  &    .689  &    .257  &      .722  \\
+  Diff                         &    .809  &    .496  &    .226  &      .672  \\
+  %RBF                         &    .400  &    .174  &    .116  &      .269  \\
+  \newcite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
+  \newcite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
+  \newcite{roller:2016:arxiv}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  \hline
+\end{tabular}
+\end{center}
+\caption{Mean F1 scores for each model and data set.}
+\label{tab:results1}
+\end{table}
+
+
+
 \subsection{Lexical Substitution}
 
 \section{Proposed Work}
