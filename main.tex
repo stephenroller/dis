@@ -428,10 +428,12 @@ fail hard.
 
 To rememdy this, we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
-rough conditional probability that two words $a$ and $b$ exhibited a lexical
-relation:
+rough conditional probability that two words $a$ and $c$ exhibited a particular
+lexical relation (the antecedent and consequent). The model learned a simple
+Logistic Regression classifier with the vector difference and the vector
+difference element-wise-squared as input features:
 \begin{equation*}
-  \text{asym({\bf \hat H}, {\bf \hat e})} = \sigma\left({\bf w}^\top ({\bf H} - {\bf e})\oplus({\bf \hat H} - {\bf e})^2\right) + b
+  \text{asym({a}, {c})} = \sigma\left({w}^\top \langle{a} - {c}; ({a} - {c})^2\rangle + b\right)
 \end{equation*}
 
 \begin{table}
