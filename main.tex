@@ -435,8 +435,8 @@ difference element-wise-squared as input features:
 \begin{equation*}
   \text{asym({a}, {c})} = \sigma\left({w}^\top \langle{a} - {c}; ({a} - {c})^2\rangle + b\right)
 \end{equation*}
-The model was parameterized by a vector $w$ and intercept $b$, which we
-learned in a leave-one-out cross validation setting.
+The model was parameterized by a weight vector $w$ and intercept $b$, which are
+learned from training data.
 
 One significant advantage of this model was its direct connection to the
 Distributional Inclusion Hypothesis: since our model used the vector difference
@@ -444,7 +444,13 @@ as input, it was naturally measuring whether $a_i$ was greater than $c_i$,
 effectively acting as a strict-subset measurement. The element-wise-squared
 part of the input features capture whether they have a large absolute difference,
 allowing asym to capture the ``equal'' part of the ``less than or equal''
-relation.
+relation. As such, the model describes a form of {\em Selective Distributional
+Inclusion Hypothesis}, which presupposes that the DIH holds, but only for
+particularly relevant dimensions.
+
+To evaluate our model, we trained and measured accuracy of the asym model on
+two data sets in a variation of leave-one-out cross validation and measuring
+absolute accuracy.
 
 \begin{table}
 \begin{center}
