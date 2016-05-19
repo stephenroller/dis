@@ -553,6 +553,7 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
   \label{tab:mapscores:unprojected}
 \end{table}
 
+\subsubsection{Analysis of Learned Classifier}
 
 
 \begin{table}
@@ -625,6 +626,95 @@ appear in the data set.}
 
 \subsubsection{Subsystem in complete RTE system}
 
+Knowing that the Concat classifier acts primarily as a feature detector, we
+ask whether this can be combined with similarity-based insights of models like
+Ksim and Cosine. To this end, we propose a novel model which exploits the
+Concat classifier, extends its modeling power, and adds two other types of
+evidence proposed in the literature: overall similarity, and distributional
+inclusion.
+
+The model works through an iterative procedure similar to Principal Component
+Analysis (PCA). Each iteration repeatedly trains a Concat classifier under the
+assumption that it acts as a feature detector, and then explicitly discards
+this information from the distributional vectors. By training a new feature
+detector on these modified distributional vectors, we can find additional
+features indicative of entailment which were not captured by the first
+classifier. This is similar to how in Principal Component Analysis, the
+second principal component is computed after the first principal component
+has been removed from the data.
+
+The main insight is that after training some feature detector using Concat,
+we can {\em remove} this feature from the distributional vectors through
+the use of {\em vector projection}.
+Formally, the vector projection of $x$ onto
+a vector $\hat p$, $\text{proj}_{\hat p}(x)$ finds the {\em component} of $x$
+which is in the direction of $\hat p$,
+\begin{equation*}
+  \text{proj}_{\hat p}(x) = \left(\frac{x^T\hat p}{\|\hat p\|}\right)\hat p.
+\end{equation*}
+Figure~\ref{fig:vecproj} gives a geometric illustration of the vector
+projection. If $x$ forms the hypotenuse of a right
+triangle, $\text{proj}_{\hat p}(x)$ forms a leg of the triangle. This also
+gives rise to the {\em vector rejection}, which is the vector forming the third
+leg of the triangle. The vector rejection is orthogonal to the projection, and
+intuitively, is the original vector after the projection has been removed:
+\begin{equation*}
+  \text{rej}_{\hat p}(x) = x - \text{proj}_{\hat p}(x).
+\end{equation*}
+
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=0.30\textwidth]{vecproj}
+\end{center}
+\caption{A vector $\hat p$ is used to break $H$ into two orthogonal components,
+its projection and the rejection over $\hat p$.}
+\label{fig:vecproj}
+\end{figure}
+
+Using the vector rejection, we take a learned Hearst Pattern detector $\hat p$,
+and remove these features from each of the data points. That is, for every data
+point $\langle H, w\rangle$, we replace it by its vector rejection and rescale
+it to unit magnitude:
+\begin{align*}
+  H' & = \text{rej}_{\hat p}(H) / \|\text{rej}_{\hat p}(H)\|\\
+  w' & = \text{rej}_{\hat p}(w) / \|\text{rej}_{\hat p}(w)\|
+\end{align*}
+A new classifier trained on the $\langle H', w'\rangle$ data must now learn
+a very different decision plane than $\hat p$, as $\hat p$ is no longer present
+in any data points. This new classifier must perform strictly worse than the
+original, otherwise the first classifier would have learned this hyperplane.
+Nonetheless, it will be able to learn {\em new} Hearst patterns which the
+original classifier was unable to capture. By repeating this process several
+times, we can find several Hearst pattern detectors, $\hat p_1, \ldots, \hat
+p_n$.
+
+In each iteration $i$ of the procedure, we generate a four-valued feature vector
+$F_i$, based on the Hearst pattern detector $\hat p_i$. Each
+feature vector contains (1) the similarity of $H_i$ and $w_i$ (before projection);
+(2) the Hearst detector
+$\hat p_i$ applied to $H_i$; (3) the Hearst detector $\hat p_i$ applied to $w_i$; and
+(4) the difference of 2 and 3.
+\begin{align*}
+  & F_i(\langle H_i, w_i\rangle, \hat p_i)\\
+  & \qquad = \langle H_i^Tw, H_i^T\hat p_i, w_i^T\hat p_i, H_i^T\hat p_i - w_i^T\hat p_i\rangle
+\end{align*}
+These four ``meta''-features capture all the benefits of the Hearst pattern
+detector (slots 2 and 3), while still addressing Concat's issues with
+similarity arguments (slot 1) {\em and} distributional inclusion (slot 4).
+
+The union of all the feature vectors $F_1, \ldots, F_n$ from repeated iteration form a
+$4n$-dimensional feature vector which we use as input to another classifier.
+This classifier is trained on the exact same training data as each of the
+individual Hearst Pattern detectors, so the procedure only acts as a method of
+feature extraction. We use an SVM with an RBF-kernel, as we found it to work
+best, though several nonlinear classifiers also to do well.
+
+The only free hyperparameter of the model is $n$, the number of iterations of
+the PCA-like procedure. We found that performance improves substantially on all
+data sets with at least two iterations, but then falls off slowly after five or
+more iterations. We chose to use four iterations for all final models.
+
+
 \begin{table}
 \centering
 \begin{small}
@@ -653,6 +743,47 @@ appear in the data set.}
 
 
 \subsection{Lexical Substitution}
+
+We propose a new measure, called Probability-in-Context (PIC), based
+on SGNS context vectors to estimate the appropriateness
+of a lexical substitute. Similar to \balAddCos, the measure has two equally-weighted,
+independent components measuring the appropriateness of the substitute
+for both the target and the context, each taking the form of a softmax:\footnote{Note that $P(s|t)$ measures paradigmatic similarity
+  of $s$ and $t$, while $P(s|C)$ is syntagmatic fit to the
+  context.
+  %Both take the same shape of a dot product.
+  For $P(s|t)$,
+  Mikolov et al.~\shortcite{mikolov:iclr13} show that cosine
+  similarity of SGNS embeddings predicts
+  paradigmatic similarity. $P(s|C)$ can be interpreted as the PMI of
+  $s$ and $C$~\cite{Levy:2014tp}.}
+\begin{align*}
+  \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
+  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^T t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
+  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^T\left[Wc + b\right]\right\}
+\end{align*}
+
+The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
+distribution sums to one. This measure has two free parameters, $W$ and $b$,
+which act as a linear transformation over the context vectors. These parameters
+are estimated from the {\em original corpus}, and are trained to maximize
+the prediction of a {\em target} from only its syntactic contexts (c.f. Section~\ref{sec:training}).
+Given this formulation, a natural question is why not train the embeddings to optimize the
+softmax directly? We choose to parameterize the measure rather than the
+embeddings because (i) SGNS embeddings are already popular and readily
+available and
+(ii) it ensures the quality of embeddings remains constant across experimental 
+settings.
+
+To measure the importance of parameterization, we
+also compare to a non-parameterized PIC (\ourmeas), which only uses a softmax over the
+dot product:
+\begin{align*}
+  \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
+  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^T c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
+\end{align*}
+
+
 
 \begin{table}
 \begin{center}
@@ -700,8 +831,8 @@ ranking tasks (P@1, P@3).}
 
 \subsection{Short Term}
 
-\subsection{On Lexical Entailment}
-\subsection{On Lexical Substitution}
+\subsubsection{On Lexical Entailment}
+\subsubsection{On Lexical Substitution}
 
 To date, there has been little attempt to document the relation between
 Lexical Substitution and Lexical Entailment Detection
