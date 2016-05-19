@@ -411,7 +411,17 @@ for predicting Lexical Entailment, and analysis as to how and why they work.
 In Section~\ref{sec:lexsub}, we present some a model designed for Lexical
 Substitution.
 
-\subsection{Asym Model for Lexical Entailment}
+\subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
+
+In 2014, we presented a novel, supervised model for the task of Lexical
+Entailment Detection. At the time, the primary
+motivation for the model was to develop a classifier that was inherently
+asymmetric: baseline similarity scores like cosine have the unfortunate
+property that
+
+\begin{equation*}
+  \text{cosine}(a, b) = \text{cosine}(b, a)
+\end{equation*}
 
 \begin{table}
 \begin{center}
@@ -435,7 +445,6 @@ Substitution.
 \end{table}
 
 
-\subsubsection{Verification of Distributional Inclusion Hypothesis}
 
 
 In order to test how well our supervised model is capturing the notion
