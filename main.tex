@@ -440,7 +440,11 @@ learned in a leave-one-out cross validation setting.
 
 One significant advantage of this model was its direct connection to the
 Distributional Inclusion Hypothesis: since our model used the vector difference
-as input, it was naturally measuring whether $a_i$ was greater than $c_i$.
+as input, it was naturally measuring whether $a_i$ was greater than $c_i$,
+effectively acting as a strict-subset measurement. The element-wise-squared
+part of the input features capture whether they have a large absolute difference,
+allowing asym to capture the ``equal'' part of the ``less than or equal''
+relation.
 
 \begin{table}
 \begin{center}
