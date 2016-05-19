@@ -449,8 +449,12 @@ Inclusion Hypothesis}, which presupposes that the DIH holds, but only for
 particularly relevant dimensions.
 
 To evaluate our model, we trained and measured accuracy of the asym model on
-two data sets in a variation of leave-one-out cross validation and measuring
-absolute accuracy.
+two data sets in a variation of leave-one-out cross validation (LOOCV) and
+measuring absolute accuracy. In this variation of LOOCV, we selected one word
+from the vocabulary in the data sets, and considered {\em all pairs} with that
+word to be test pairs. The remainder of word pairs, which did not contain the
+held out word, were treated as training pairs. This prevented classifiers from
+memorizing that words like {\em animal} are simply more likely to be hypernyms.
 
 \begin{table}
 \begin{center}
