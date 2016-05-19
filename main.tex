@@ -426,7 +426,7 @@ implies {\em child}, the the opposite is does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard.
 
-To rememdy this, we proposed Asym, a supervised classifier based on the
+To remedy this, we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
 rough conditional probability that two words $a$ and $c$ exhibited a particular
 lexical relation (the antecedent and consequent). The model learned a simple
@@ -435,6 +435,12 @@ difference element-wise-squared as input features:
 \begin{equation*}
   \text{asym({a}, {c})} = \sigma\left({w}^\top \langle{a} - {c}; ({a} - {c})^2\rangle + b\right)
 \end{equation*}
+The model was parameterized by a vector $w$ and intercept $b$, which we
+learned in a leave-one-out cross validation setting.
+
+One significant advantage of this model was its direct connection to the
+Distributional Inclusion Hypothesis: since our model used the vector difference
+as input, it was naturally measuring whether $a_i$ was greater than $c_i$.
 
 \begin{table}
 \begin{center}
