@@ -465,7 +465,9 @@ BLESS} \cite{baroni:2011:gems}, which contains annotations  of word relations
 for 200 unambiguous, concrete nouns from 17 broad categories. Each noun is
 annotated with its co-hyponyms, meronyms, hypernym and some random words. Since
 there were four relations, we trained four one-vs-all classifiers, and
-predicted the relation with the highest score.
+predicted the relation with the highest score; in this way, the model
+can actually learn to detect 3 types of lexical relations, though this
+was not our primary research interest at the time.
 
 \begin{table}
   \centering
@@ -498,7 +500,7 @@ predicted the relation with the highest score.
      \hline
   \end{tabular}
   \caption{Mean Average Precision for the unsupervised measures before
-  after selecting the top dimensions from the asym model.}
+  after selecting the top dimensions from the Asym model.}
   \label{tab:mapscores}
 \end{table}
 
