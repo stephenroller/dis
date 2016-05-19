@@ -714,7 +714,7 @@ Formally, the vector projection of $x$ onto
 a vector $\hat p$, $\text{proj}_{\hat p}(x)$ finds the {\em component} of $x$
 which is in the direction of $\hat p$,
 \begin{equation*}
-  \text{proj}_{\hat p}(x) = \left(\frac{x^T\hat p}{\|\hat p\|}\right)\hat p.
+  \text{proj}_{\hat p}(x) = \left(\frac{x^\top\hat p}{\|\hat p\|}\right)\hat p.
 \end{equation*}
 Figure~\ref{fig:vecproj} gives a geometric illustration of the vector
 projection. If $x$ forms the hypotenuse of a right
@@ -760,7 +760,7 @@ $\hat p_i$ applied to $H_i$; (3) the Hearst detector $\hat p_i$ applied to $w_i$
 (4) the difference of 2 and 3.
 \begin{align*}
   & F_i(\langle H_i, w_i\rangle, \hat p_i)\\
-  & \qquad = \langle H_i^Tw, H_i^T\hat p_i, w_i^T\hat p_i, H_i^T\hat p_i - w_i^T\hat p_i\rangle
+  & \qquad = \langle H_i^\topw, H_i^\top\hat p_i, w_i^\top\hat p_i, H_i^\top\hat p_i - w_i^\top\hat p_i\rangle
 \end{align*}
 These four ``meta''-features capture all the benefits of the Hearst pattern
 detector (slots 2 and 3), while still addressing Concat's issues with
@@ -795,8 +795,8 @@ for both the target and the context, each taking the form of a softmax:\footnote
   $s$ and $C$~\cite{Levy:2014tp}.}
 \begin{align*}
   \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
-  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^T t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
-  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^T\left[Wc + b\right]\right\}
+  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
+  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\}
 \end{align*}
 
 The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
@@ -816,7 +816,7 @@ also compare to a non-parameterized PIC (\ourmeas), which only uses a softmax ov
 dot product:
 \begin{align*}
   \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
-  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^T c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
+  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
 \end{align*}
 
 
@@ -937,7 +937,7 @@ and $b$. We find that the $W$ matrix is nearly diagonal, with the values along
 the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the rest
 of the matrix normally distributed roughly around 0 ($\mu$=2e-5, $\sigma$=0.02). This
 is to say, the \ourmeasparam~model is approximately learning to {\em exaggerate} the
-magnitude of the dot product, $s^Tc$. This suggests one could even replace our
+magnitude of the dot product, $s^\top c$. This suggests one could even replace our
 parameter $W$ with a single scaling parameter, though we leave this
 for future work.
 
