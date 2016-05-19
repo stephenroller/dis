@@ -722,17 +722,16 @@ more iterations. We chose to use four iterations for all final models.
     \hline
     {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Train} & {\bf RTE Test}\\
     \hline
-    Always guess neutral & 64.3 & 73.9 & 73.3  \\
-    Gold standard annotations&100.0 & 95.0 & 95.5  \\
+    Always guess neutral               & 64.3 & 73.9 & 73.3  \\
+    Gold standard annotations          &100.0 & 95.0 & 95.5  \\
     \hline
-    Base only            & 64.3 & 73.8 & 73.4  \\
-    Wordform only        & 67.3 & 77.0 & 76.7  \\
-    WordNet only         & 75.1 & 81.9 & 81.3  \\
-    Dist (Lexical) only  & 71.5 & 78.7 & 77.7  \\
-    Dist (Phrasal) only  & 66.9 & 75.9 & 75.1  \\
-    Asym only            & 70.1 & 77.3 & 77.2  \\
+    Base only                          & 64.3 & 73.8 & 73.4  \\
+    Wordform only                      & 67.3 & 77.0 & 76.7  \\
+    WordNet only                       & 75.1 & 81.9 & 81.3  \\
+    Cosine binning only                & 71.5 & 78.7 & 77.7  \\
+    \newcite{roller:2014:coling} only  & 70.1 & 77.3 & 77.2  \\
     \hline
-    All features         & 79.9 & 84.0 & 83.0  \\
+    All features                       & 79.9 & 84.0 & 83.0  \\
     \hline
 \end{tabular}
 \end{small}
@@ -825,6 +824,104 @@ dot product:
 ranking tasks (P@1, P@3).}
 \label{tab:precision}
 \end{table}
+
+Table~\ref{tab:precision} contains results for all measures across all
+experimental settings.
+
+The first observation we make is that the \ourmeasparam~measure performs best
+in all evaluations on all data sets by a significant margin.\footnote{Wilcoxon signed-rank test, $p < 0.01$}
+In the GAP evaluation, all measures
+perform substantially better than the \ooc~baseline, and the \ourmeas~measure
+performs comparably to \balAddCos. We note that context-sensitive
+measures give the most improvement in SE07, reflecting its greater emphasis on
+polysemy.
+
+As we turn to the all-words ranking evaluations, we observe that the absolute numbers are
+much lower, reflecting the increased difficulty of the task. We also see the
+that \ourmeas~and \ourmeasparam~both improve greatly over all baselines: The
+\ourmeas~measure is a relative 30\% improvement over \balAddCos~in SE07 and
+Coinco, and the \ourmeasparam~measure is a relative 50\% improvement over
+\balAddCos~in 5 evaluations.
+
+Since both measures have a clear improvement over the baselines, especially in
+the more difficult all-words task, we next strive to understand why.
+
+\begin{table*}[t]
+  \begin{center}
+  \begin{tabular}{|cccc|}
+    \hline
+    \ooc             & \balAddCos            & \ourmeas         & \ourmeasparam\\
+    \hline\hline
+    \multicolumn{4}{|c|}{You can sort of challenge them well, did you}\\
+    \multicolumn{4}{|c|}{{\bf really} know the time when you said yes?}\\
+    \hline
+    {    trully              } & {    proably             } & {    realy               } & {\bf actually            } \\
+    {\bf actually            } & {    trully              } & {\bf truly               } & {\bf truly               } \\
+    {    actaully            } & {    acutally            } & {\bf actually            } & {    already             } \\
+    {    acutally            } & {    actaully            } & {    hardly              } & {    barely              } \\
+    {    proably             } & {    probaly             } & {\bf definitely          } & {    just                } \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Example where the \ourmeasparam~performs better in the All-Words Ranking task. The target word and correct answers
+  are bolded.}
+  \label{tab:cherry}
+\end{table*}
+
+We first provide a cherry-picked examples to give intuitions about why
+our model performs better. Table~\ref{tab:cherry} contains the cherry example,
+where our model performs better than prior work. While OOC
+and \balAddCos~both suggest replacements with reasonable semantics, but are
+all misspelled. \ourmeas~and \ourmeasparam~only pick words with the correct spellings,
+with the exception of ``realy.''
+
+We consider a few experiments with this hypothesis that the measures do better
+because they capture better {\em unigram} statistics than the baselines. Recent literature found that the vector
+norm of SGNS embeddings correlates strongly with word frequency
+\cite{wilson:arxiv15}. We verified this for ourselves, computing the Spearman's
+rank correlation between the corpus unigram frequency and the vector length
+and found $rho = 0.90$, indicating the two correlate very strongly. Since the
+dot product is also the unnormalized cosine, it follows that \ourmeas~and
+\ourmeasparam~should depend on unigram frequency.
+
+To verify that the \ourmeas~and \ourmeasparam~measures are indeed preferring more frequent
+substitutes, we compare the single best predictions (P@1) of the \balAddCos~and
+\ourmeas~systems on all-words prediction on Coinco. Roughly 42\% of the predictions made
+by the systems are identical, but of the remaining items, 74\% of
+predictions made by \ourmeas~have a higher corpus frequency than \balAddCos~(where
+chance is 50\%). We find \balAddCos~and \ourmeasparam~
+make the same prediction 37\% of the time, and \ourmeasparam~predicts a
+more frequent word in 83\% of remaining items. The results for SE07 and
+TWSI2 are similar.
+
+This indicates that the unigram bias is even higher for \ourmeasparam~than
+\ourmeas. To gain more insight, we manually inspect the learned parameters $W$
+and $b$. We find that the $W$ matrix is nearly diagonal, with the values along
+the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the rest
+of the matrix normally distributed roughly around 0 ($\mu$=2e-5, $\sigma$=0.02). This
+is to say, the \ourmeasparam~model is approximately learning to {\em exaggerate} the
+magnitude of the dot product, $s^Tc$. This suggests one could even replace our
+parameter $W$ with a single scaling parameter, though we leave this
+for future work.
+
+To inspect the bias $b$, we compute the inner product of the $b$ vector with
+the word embedding matrix, to find each word's a priori bias, and correlate it with word frequencies. We find
+$rho=0.25$, indicating that $b$ is also capturing unigram
+statistics.
+
+Is it helpful in lexical substitution to prefer more frequent substitutes? To
+test this, we pool all annotator responses for all contexts in Coinco, and find
+the number of times a substitute is given correlates strongly with frequency
+($rho=0.54$).
+
+These results emphasize the importance of incorporating unigram
+frequencies when attempting the lexical substitution task (as with
+many other tasks in NLP). Compared to
+cosine, the dot product in \ourmeas~stresses unigram frequency, and
+the parameters $W$ and $b$ strengthen this tendency.
+%  (as with so many
+% other tasks in NLP). Such a result may seem obvious in retrospect, but many
+% prior works in Lexical Substitution simply do not take this into account.
 
 
 \section{Proposed Work}
