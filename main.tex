@@ -420,6 +420,75 @@ corpora used in machine translation and distributional semantics.
 
 \begin{table}
 \begin{center}
+  \begin{small}
+  \begin{tabular}{|llll|}
+    \hline
+    LEDS & BLESS & Medical & TM14\\
+    \hline
+     %% baroni           %% bless             %% levy               %% turney_lemma           \\
+     material       &      goods             &     item           &      sensitiveness          \\
+     structure      &      lifeform          &     unlockable     &      tactility              \\
+     object         & {\bf item}             &     succor         &      palate                 \\
+     process        & {\bf equipment}        &     team-up        &      stiffness              \\
+     activity       & {\bf herbivore}        &     non-essential  &      content                \\
+%     environment    &      omnivore         %&     40px           &      ductility              \\
+%     element        & {\bf creature}        %&     crimefighter   &      musculature            \\
+%{\bf practice}      &      life-form        %&     material       &      dimensionality         \\
+%     nature         & {\bf artifact}        %&     assitance      &      quality                \\
+%     organism       & {\bf pest}            %&     nourishment    &      angulation             \\
+    \hline
+  \end{tabular}
+  \end{small}
+\end{center}
+\caption{Most similar words to the prototype $\hat H$ learned by the Concat model. Bold items
+appear in the data set.}
+\label{tab:wordsim}
+\end{table}
+
+
+
+\begin{table}
+\begin{center}
+  \begin{small}
+  \begin{tabular}{|ll|}
+    \hline
+    LEDS & BLESS\\
+    \hline
+      nmod:such\_as+animal             &  nmod:such\_as+submarine           \\
+      acl:relcl+identifiable           &  nmod:such\_as+ship                \\
+      nmod:of\depinv+determine         &  nmod:such\_as+seal                \\
+      nmod:of\depinv+categorisation    &  nmod:such\_as+plane               \\
+      compound+many                    &  nmod:such\_as+rack                \\
+      %nmod:such\_as+pot                &  nmod:such\_as+rope                \\
+      %nmod:such\_as+bone               &  nmod:such\_as+box                 \\
+      %nmod:of\depinv+strangeness       &  nmod:such\_as+bat                 \\
+      %amod+unassociated                &  nmod:such\_as+pot                 \\
+      %compound+similar                 &  nmod:such\_as+container           \\
+    \hline
+    Medical & TM14\\
+    \hline
+      nmod:such\_as+patch              &  amod+desire                       \\
+      nmod:such\_as+skin               &  amod+heighten                     \\
+      nmod:including+skin              &  nsubj\depinv+disparate            \\
+      nmod:such\_as+tooth              &  nmod:such\_as+honey               \\
+      nmod:such\_as+feather            &  nmod:with\depinv+body             \\
+      %nmod:including+finger            &  nsubj\depinv+unconstrained        \\
+      %nmod:such\_as+ear                &  compound\depinv+gratification     \\
+      %nmod:such\_as+heart              &  compound\depinv+comfort     \\
+      %nmod:such\_as+foot               &  nsubj\depinv+composite            \\
+      %compound+similar                 &  nmod:such\_as+label               \\
+\hline
+  \end{tabular}
+  \end{small}
+\end{center}
+\caption{Most similar contexts to the prototype $\hat H$ learned by the Concat model.}
+\label{tab:ctxsim}
+\end{table}
+
+
+
+\begin{table}
+\begin{center}
 \begin{tabular}{|l|rrrr|}
   \hline
   Model                        &   LEDS   &  BLESS   &   Medical &      TM14  \\
