@@ -345,16 +345,15 @@ as well as the community hoped, the community began working
 on entailment detection as a supervised task. \newcite{baroni:2012:eacl}
 proposed, as a preliminary baseline of a novel data set, training a simple
 baseline classifier to predict whether word pairs were either hypernyms or
-nonhypernyms. Although they reported accuracies in the high 90s, others
-later realized this was due to issues of {\em lexical memorization}, or
-a special kind of overfitting
+nonhypernyms. Although they reported accuracies in the high 90s, others later
+realized this was due to issues of {\em lexical memorization}, or a special
+kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
 recent works have emphasized their performance when {\em individual words are
-held out entire}, so that the same word can never appear in both training
-and testing sets \cite{roller:2014:coling,kruszewski:2015:tacl,levy:2015:naacl}.
-In our work, we focus primarily on this task of zero-shot lexical entailment
-prediction, with emphasis on analysis and understanding of what these models
-can capture, and how it relates to some linguistic theories.
+held out entire}, so that the same word can never appear in both training and
+testing sets \cite{roller:2014:coling,kruszewski:2015:tacl,levy:2015:naacl}.
+We discuss more about this issue of Lexical Memorization in
+Section~\ref{sec:lexmem}.
 
 \subsection{Lexical Substitution}
 
@@ -405,6 +404,7 @@ corpora used in machine translation and distributional semantics.
 \section{Completed work}
 
 \subsection{Concerning Lexical Memorization}
+\label{sec:lexmem}
 
 Partially motivation for methodology of 
 
