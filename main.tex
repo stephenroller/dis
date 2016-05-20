@@ -455,6 +455,7 @@ from the vocabulary in the data sets, and considered {\em all pairs} with that
 word to be test pairs. The remainder of word pairs, which did not contain the
 held out word, were treated as training pairs. This prevented classifiers from
 memorizing that words like {\em animal} are simply more likely to be hypernyms.
+All models were trained on a 
 
 We evaluate our model on two data sets. The first, {\bf LEDS}
 \cite{baroni:2012:eacl}, contains 1385 hyponym-hypernym pairs as positive
@@ -468,6 +469,57 @@ there were four relations, we trained four one-vs-all classifiers, and
 predicted the relation with the highest score; in this way, the model
 can actually learn to detect 3 types of lexical relations, though this
 was not our primary research interest at the time.
+
+Table~{\ref:asymresults} shows our initial experimental results for the
+Asym classifier.
+
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc|cc|}
+  \hline
+  Data set        &  \multicolumn{2}{c|}{\bless } & \multicolumn{2}{c|}{\entailment} \\
+  \hline
+  Random Baseline        &  \multicolumn{2}{c|}{.46 } &  \multicolumn{2}{c|}{.50 } \\
+  \hline
+  Classifier                 &   \svm          &   {\logregs}                             &   \svm          &   {\logregs}          \\
+  \hline
+  \UpWWr           &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
+  \UpSr            &    .73          &     .80            &     .78         &     .82            \\
+  \typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
+% \mikolovr        &    .46          &     .77            \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{Average accuracy of {\svm} and {\logreg}
+on {\bless} and {\entailment}
+  using different spaces for feature generation.}
+  \label{tab:bless-and-entailment-v-space}
+\end{table}
+
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|rrrr|}
+  \hline
+  Model                          &   LEDS   &  BLESS   &   Medical &      TM14  \\
+  \hline
+  Cosine (Baseline)              &    .789  &    .225  &    .165  &      .674  \\
+  \hline
+  \newcite{baroni:2012:eacl}     &          &          &          &            \\
+  Concat                         &    .802  &    .689  &    .257  &      .722  \\
+  Diff                           &    .809  &    .496  &    .226  &      .672  \\
+  Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
+  Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
+  HD   \cite{roller:2016:arxiv}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  \hline
+\end{tabular}
+\end{center}
+\caption{Mean F1 scores for each model and data set.}
+\label{tab:results1}
+\end{table}
+
+
 
 \begin{table}
   \centering
@@ -505,27 +557,6 @@ was not our primary research interest at the time.
 \end{table}
 
 
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|rrrr|}
-  \hline
-  Model                          &   LEDS   &  BLESS   &   Medical &      TM14  \\
-  \hline
-  Cosine (Baseline)              &    .789  &    .225  &    .165  &      .674  \\
-  \hline
-  \newcite{baroni:2012:eacl}     &          &          &          &            \\
-  Concat                         &    .802  &    .689  &    .257  &      .722  \\
-  Diff                           &    .809  &    .496  &    .226  &      .672  \\
-  Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
-  Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  HD   \cite{roller:2016:arxiv}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
-  \hline
-\end{tabular}
-\end{center}
-\caption{Mean F1 scores for each model and data set.}
-\label{tab:results1}
-\end{table}
 
 
 
