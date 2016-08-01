@@ -174,7 +174,10 @@ Lexical Substitution model can be improved by removing or alleviating a strong
 independence assumption in the previous model, and how the Lexical Substitution
 and Relationship Detection models could be potentially unified.
 
+
 \section{Background and Related Work}
+
+\subsection{Textual Entailment}
 
 \subsection{Distributional Semantics}
 Distributional Semantics is a powerful tool for automatically inducing semantic
@@ -402,11 +405,6 @@ lexical substitution data sets are relatively small compared to the size of the
 corpora used in machine translation and distributional semantics.
 
 \section{Completed work}
-
-\subsection{Concerning Lexical Memorization}
-\label{sec:lexmem}
-
-Partially motivation for methodology of 
 
 \subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
 
@@ -655,7 +653,7 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
 
 
 
-\subsubsection{Subsystem in complete RTE system}
+\subsection{Subsystem in complete RTE system}
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
@@ -718,11 +716,13 @@ WordNet. These pairs include \textit{note
   $\to$ paper}, \textit{swimmer $\to$ racer}, \textit{eat $\to$ bite},
 and \textit{stand $\to$ wait}. 
 
+\subsection{H-Features and Multi-prototype Hypernymy Classifier}
 
 
+\subsubsection{Concerning Lexical Memorization}
+\label{sec:lexmem}
 
-\subsubsection{Analysis of Learned Classifier}
-
+Partially motivation for methodology of 
 
 \begin{table}
 \begin{center}
@@ -1083,6 +1083,7 @@ To date, there has been little attempt to document the relation between
 Lexical Substitution and Lexical Entailment Detection
 
 \subsection{Long Term}
+
 
 \section{Conclusion}
 
