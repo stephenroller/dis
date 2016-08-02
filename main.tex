@@ -1194,6 +1194,11 @@ We propose that the Lexical Substitution model described in
 Section~\ref{sec:lexsubmodel} be used to provide additional information to
 the Lexical Entailment classifier used in Section~\ref{sec:rtesubsystem}.
 
+There are at least two possibilities for how a Lexical Substitution model could
+contribute to the task. The first, and one we believe most likely to be
+helpful, is to simply add the context-similarity features of the Lexical
+Substitution model as another feature in the Lexical Entailment classifier.
+
 Ultimately though, we suspect improvements to RTE from our Lexical Substitution
 model may be marginal, or even negative, as polysemy is not common in the
 primary RTE data set that we use.
