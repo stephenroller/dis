@@ -1098,7 +1098,8 @@ distributional model which reuses information when possible.
 
 In this section, we propose and discuss several additional experiments which
 should be completed for the final thesis. We break the section into experiments
-for Lexical Entailment, and experiments for Lexical Substitution.
+for Lexical Entailment, and experiments for Lexical Substitution. All are
+proposed primarily with integration into a final RTE subsystem in mind.
 
 \subsubsection{Lexical Entailment}
 
@@ -1151,7 +1152,7 @@ whether it will pick out additional Hearst patterns indicative of other
 relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
 and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
-\paragraph{H-features for RTE}
+\paragraph{Multiprototypes and H-features for RTE}
 
 The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
 prediction model can provide strong improvements in a complete, end-to-end RTE
@@ -1166,13 +1167,18 @@ that it will also be able to be able to improve the full system. However, it
 remamins unclear what is the best way to integrate it with additional
 hand-engineered features used in the RTE system.  One possibility would be to
 simply use the multiprototype's feature extraction procedure to provide
-additional information to the lexical entailment classifier.
+additional information to the lexical entailment classifier. Yet the classifier
+used in Section~\ref{sec:rtesubsystem} was a linear classifier over the hand
+engineered features, which outperformed nonlinear versions. Unfortunately, we
+found in Section~\ref{sec:multiprototype} that the final ensemble classifier
+{\em must} be nonlinear, else it does not gain any additional power in the
+repeated iterations. Resolving this conflict may be difficult, though we
+suspect it may be alleviated by more careful hyperparameter tuning of nonlinear
+models.
 
-Evaluated Asym as part of complete RTE system
+These proposed experiments will also need to be tightly coupled with the
+complete non-hypernymy detector discussed in the previous section.
 
-Need to follow up to see how Feature Detector model works in as component
-
-Especially when predicting multiple relations
 
 \subsubsection{Lexical Substitution}
 
