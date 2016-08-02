@@ -1080,9 +1080,31 @@ the parameters $W$ and $b$ strengthen this tendency.
 
 \paragraph{Non-hypernymy relations}
 
+Asym was evaluated on accuracy of four classes: hypernymy, cohyponymy, meronomy, random
+
+Feature Detector Model evaluated only on F1 score for hypernymy and lexical entailment
+
+Can the Feature Detector model do better on four-way classification?
+
+What will be the Hearst Patterns it learns?
+
 \paragraph{H-features for RTE}
 
+Evaluated Asym as part of complete RTE system
+
+Need to follow up to see how Feature Detector model works in as component
+
+Especially when predicting multiple relations
+
 \subsubsection{Lexical Substitution}
+
+Already using word similarity in RTE
+
+Why not add a context similarity feature?
+
+Would integrate both components of LexSub models into RTE system.
+
+Improvements may be marginal or negative, as polysemy is not common in SICK.
 
 \paragraph{Lexical Substitution in RTE}
 
@@ -1093,7 +1115,33 @@ Lexical Substitution and Lexical Entailment Detection
 
 \subsubsection{Taxonomic Consistency in Hypernymy Prediction}
 
+Suppose:
+
+High confidence (cat, animal) is hypernymy
+
+High confidence (dog, cat) is co-hyponymy
+
+Low confidence (dog, animal) is co-hyponymy
+
+Revise predictions to make a well formed taxonomy
+
+
+Snow et al. (2004, 2006) proposed this using linear interpolation and a probabilistic model; does this still work?
+
+Can we improve upon this with something better?
+
+MLNs offer one possibility with weighted rules
+
+Could even handle multiple set relations (refl, trans, anti-refl)
+
+
 \subsubsection{Extra context in Lexical Substitution}
+
+Can we utilize longer contexts?
+
+Can we jointly model the syntactic neighbors?
+
+Both ideas could be enabled with Neural Networks (LSTMs) or Linguistic Knowledge
 
 \subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
 
