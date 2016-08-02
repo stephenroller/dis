@@ -1106,7 +1106,23 @@ for Lexical Entailment, and experiments for Lexical Substitution.
 
 In Section~\ref{sec:multiprototype}, we discussed how the multi-prototype model
 is able to exploit multiple H-feature classifiers in order to improve the results
-and modeling power of 
+and modeling power of a hypernymy detection system. Indeed the multi-prototype
+model outperformed the Asym and Ksim models when evaluated on the same metric of
+F1-score in hypernymy prediction.
+
+However, there exist many relations {\em other} than hypernymy are useful to
+distinguish in textual entailment: for example, we saw in
+Section~\ref{sec:rtesubsystem} that cosine similarity is indicative of entailment
+at moderate levels, where it reflects general similarity, but {\em counter-indicative}
+of entailment at very high levels, where it is most indicative of co-hyponymy.
+Indeed, dividing word relationships into hypernymy and non-hypernymy could be
+viewed as dividing the world into living and nonliving things: while this is
+a very important distinguishing feature, it may be helpful to identify a bit more
+information.
+
+Indeed, the results shown in Table~\ref{tab:bless-and-entailment-v-space} show
+the accuracy of the Asym and Baroni classifiers on a four-way relationship prediction
+task: hypernymy, cohyponymy, meronomy, and random.
 
 Asym was evaluated on accuracy of four classes: hypernymy, cohyponymy, meronomy, random
 
