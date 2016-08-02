@@ -1128,6 +1128,20 @@ binary hypernymy-or-not classification task. We propose the multi-prototype
 model of Section~\ref{sec:multiprototype} be extended and evaluated on its
 performance in other relationships.
 
+There are multiple ways that the model could be extended. The one we believe
+will be most successful is one that trains several binary multi-prototype models:
+one for hypernymy-vs-nonhypernymy, one for meronomy-vs-nonhypernymy, etc.
+Similar to how the PCA procedure was used only as a form of feature-extraction
+for the final prediction, each of the binary classifier iterations will be also
+used for feature extraction for a final classifier.
+That is, we will use the procedure described in Section~\ref{tab:multiprototype}
+to extract several iterations of features for hypernymy, then completely repeat
+the procedure for meronomy and co-hyponymy. The resulting features from each
+of the classifiers will be concatenated for a final four-way classifier prediction.
+
+There are several interesting research questions that stem from this procedure,
+beyond final accuracy scores. 
+
 Asym was evaluated on accuracy of four classes: hypernymy, cohyponymy, meronomy, random
 
 Feature Detector Model evaluated only on F1 score for hypernymy and lexical entailment
