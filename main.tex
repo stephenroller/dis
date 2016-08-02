@@ -1182,7 +1182,7 @@ are useful useful for predicting co-hyponymy or meronomy, it also stands to
 reason that they should be useful in the final RTE subsystem. We will need to
 explore the best form of combination with both kept in mind.
 
-\subsubsection{Lexical Substitution}
+\subsubsection{Lexical Substitution in RTE}
 
 In Section~\ref{sec:tasks}, we argued that Lexical Substitution is strongly
 related to the tasks of lexical and textual entailment, partially standing
@@ -1213,9 +1213,20 @@ since our Lexical Substitution model gives a score over the entire vocabulary,
 the binning may need to be logarithmic, or measured as a percent of vocabulary
 which is a better substitute than the queried consequent.
 
-Ultimately though, we suspect improvements to RTE from our Lexical Substitution
-model may be marginal, or even negative, as polysemy is not common in the
-primary RTE data set that we use.
+The second possibility for how Lexical Substitution could contribute is in
+the {\em alignment} preprocessing procedure: while we currently only choose
+which word pairs to align with our greedy cosine-similarity based method, it
+could be that the $P(s|C)$ model provides additional information to make
+smarter alignments. For example, we each token in the antecedent, we could
+align it with the consequent's token that acts as the best lexical substitute
+{\em in-context}, rather than the out-of-context measure we presently use.
+
+Ultimately though, we suspect improvements to RTE from either proposed
+application of the Lexical Substitution model may be marginal, or even
+negative, as polysemy is not common in the RTE data set that we use. We may
+need to manually identify which RTE pairs exhibit polysemy the strongest, or
+manually construct a small data set of sentences with polysemy in order to
+show positive results.
 
 Already using word similarity in RTE
 
