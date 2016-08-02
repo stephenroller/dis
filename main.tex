@@ -1198,9 +1198,20 @@ There are at least two possibilities for how a Lexical Substitution model could
 contribute to the task. The first, and one we believe most likely to be
 helpful, is to simply add the context-similarity features of the Lexical
 Substitution model as another feature in the Lexical Entailment classifier.
-That is, for a pair of words in the SICK data set, measure the similarity of their
-contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in Equation~\ref{eqn:pic}
-and Equation~\ref{eqn:npic}.
+That is, for a pair of words in the SICK data set, measure the similarity of
+their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
+Equation~\ref{eqn:pic} and Equation~\ref{eqn:npic}. This could possibly help
+with some tricky cases where two senses of a word could lead to different conclusions.
+For example, ``EXAMPLE HERE.''
+
+It may also be necessary to use a similar trick to the cosine binning technique
+described in Section~\ref{sec:rtesubsystem}: it could be that different levels
+of contextual similarity give different indications as to entailment, especially
+given the close relationship between our Lexical Substitution model and
+cosine similarity. Variations on this trick may also be necessary to test:
+since our Lexical Substitution model gives a score over the entire vocabulary,
+the binning may need to be logarithmic, or measured as a percent of vocabulary
+which is a better substitute than the queried consequent.
 
 Ultimately though, we suspect improvements to RTE from our Lexical Substitution
 model may be marginal, or even negative, as polysemy is not common in the
