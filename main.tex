@@ -1153,6 +1153,21 @@ and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
 \paragraph{H-features for RTE}
 
+The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
+prediction model can provide strong improvements in a complete, end-to-end RTE
+system, especially when combined with traditionally hand-engineered features.
+Yet, as we also saw in Section~\ref{sec:multiprototype}, the multiprototype
+model allows for greater modeling power and significant improvements on multiple
+lexical entailment systems. Yet we do not yet know how much the multiprototype
+model is able to contribute as one part of the larger RTE pipeline.
+
+We suspect, given its substantial improvements over Asym in lexical data sets,
+that it will also be able to be able to improve the full system. However, it
+remamins unclear what is the best way to integrate it with additional
+hand-engineered features used in the RTE system.  One possibility would be to
+simply use the multiprototype's feature extraction procedure to provide
+additional information to the lexical entailment classifier.
+
 Evaluated Asym as part of complete RTE system
 
 Need to follow up to see how Feature Detector model works in as component
