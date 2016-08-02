@@ -1138,17 +1138,18 @@ That is, we will use the procedure described in Section~\ref{tab:multiprototype}
 to extract several iterations of features for hypernymy, then completely repeat
 the procedure for meronomy and co-hyponymy. The resulting features from each
 of the classifiers will be concatenated for a final four-way classifier prediction.
+Another alternative would be to try to learn the four-way classifiers concurrently
+(e.g., a softmax instead of logistic regression), and extract the corresponding
+H-features at this level.
 
-There are several interesting research questions that stem from this procedure,
-beyond final accuracy scores. 
-
-Asym was evaluated on accuracy of four classes: hypernymy, cohyponymy, meronomy, random
-
-Feature Detector Model evaluated only on F1 score for hypernymy and lexical entailment
-
-Can the Feature Detector model do better on four-way classification?
-
-What will be the Hearst Patterns it learns?
+There are interesting research questions that stem from this procedure, beyond
+just final performance scores. One is what distributional-level features will
+be learned as prototypical of meronyms, or co-hyponyms? As we saw in
+Section~\ref{sec:prototypicality}, the classifier automatically learned to pick
+out well-known Hearst patterns, indicative of hypernymy. It remains to be seen
+whether it will pick out additional Hearst patterns indicative of other
+relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
+and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
 \paragraph{H-features for RTE}
 
