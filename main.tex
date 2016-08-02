@@ -717,6 +717,7 @@ WordNet. These pairs include \textit{note
 and \textit{stand $\to$ wait}. 
 
 \subsection{H-Features and Multi-prototype Hypernymy Classifier}
+\label{sec:multiprototype}
 
 
 \subsubsection{Concerning Lexical Memorization}
@@ -798,6 +799,7 @@ Ksim and Cosine. To this end, we propose a novel model which exploits the
 Concat classifier, extends its modeling power, and adds two other types of
 evidence proposed in the literature: overall similarity, and distributional
 inclusion.
+
 
 The model works through an iterative procedure similar to Principal Component
 Analysis (PCA). Each iteration repeatedly trains a Concat classifier under the
@@ -1101,6 +1103,10 @@ for Lexical Entailment, and experiments for Lexical Substitution.
 \subsubsection{Lexical Entailment}
 
 \paragraph{H-features for non-Hypernymy Relations}
+
+In Section~\ref{sec:multiprototype}, we discussed how the multi-prototype model
+is able to exploit multiple H-feature classifiers in order to improve the results
+and modeling power of 
 
 Asym was evaluated on accuracy of four classes: hypernymy, cohyponymy, meronomy, random
 
