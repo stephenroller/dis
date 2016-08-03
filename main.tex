@@ -1269,6 +1269,13 @@ than hypernymy: for example, if we are highly confident that two words are
 co-hyponyms, then we can become more confident that they share the same
 hypernyms, and vice versa.
 
+This idea of enforcing taxonomic consistency is not new: it was previously
+explored a little bit in \newcite{snow:2004:nips}, who used syntactic Hearst
+Patterns to make predictions about hypernymy, and then linearly interpolated
+the probabilities of predictions in order to better conform to a prior. Later,
+\newcite{snow:2006:acl} proposed a probabilistic model over {\em taxonomies},
+based on the degree to which they violate the transitivity of hypernymy and
+reflexiveness of co-hyponymy.
 
 This
 turns out to be an idea previously explored in the works of
