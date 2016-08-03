@@ -1242,13 +1242,18 @@ pairs of words are made independently: the prediction of whether ``cat is an
 animal'' has no bearing on whether ``dog is an animal'', aside from their
 distributional similarity. While this is a straightforward application of
 machine learning principles to the problem, it ignores one important fact: that
-hypernymy prediction is actually one aspect of predicting the full ontology.
+hypernymy is just one aspect of a complete, well-structured ontology or
+taxonomy. Yet, since we predict each word pair individually, there is no
+guarantee the final output of the system over all pairs will also be
+well-structured.
 
-However, as discussed in the short term proposals,
-hypernymy prediction is not the only important word relationship that could
-be predicted from distributional information. Indeed, if we posit that the
-non-hypernymy relations can be predicted from even moderate accuracy,
-then the additional information provided could 
+For example, consider a system which makes the following predictions:
+
+As discussed in the short term proposals, hypernymy prediction is not the only
+important word relationship that could be predicted from distributional
+information. Indeed, if we posit that the non-hypernymy relations can be
+predicted from even moderate accuracy, then the additional information provided
+could 
 
 This is not the first time such a procedure has been proposed
 
