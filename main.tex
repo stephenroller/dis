@@ -335,6 +335,7 @@ We discuss more about this issue of Lexical Memorization in
 Section~\ref{sec:lexmem}.
 
 \subsection{Lexical Substitution}
+\label{sec:lexsub}
 
 While the Lexical Entailment task described above is mostly about predicting
 fixed, global relationships between words, Lexical Substitution is about
@@ -1168,7 +1169,7 @@ explore the best form of combination with both kept in mind.
 
 \subsubsection{Lexical Substitution in RTE}
 
-In Section~\ref{sec:tasks}, we argued that Lexical Substitution is strongly
+In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is strongly
 related to the tasks of lexical and textual entailment, partially standing
 as a form of context-specific synonym detection. Unfortunately, we have
 yet to provide any results indicating that Lexical Substitution may actually
@@ -1184,7 +1185,7 @@ helpful, is to simply add the context-similarity features of the Lexical
 Substitution model as another feature in the Lexical Entailment classifier.
 That is, for a pair of words in the SICK data set, measure the similarity of
 their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
-Equation~\ref{eqn:pic} and Equation~\ref{eqn:npic}. This could possibly help
+Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. This could possibly help
 with some tricky cases where two senses of a word could lead to different conclusions.
 For example, ``EXAMPLE HERE.''
 
@@ -1548,7 +1549,8 @@ where ${\bf W_r}$ is a matrix. This is essentially the same as the linear
 regression model proposed in the above paragraph, but performed at a different
 step. Unfortunately, tensor factorization can be very difficult
 \cite{needcite}, and there is no such convenient canonical factorization for
-tensors, as the SVD is for matrices \cite{needcite}. Finding the ideal
+tensors, as the SVD is for matrices, though Tucker Decomposition
+is one well-studied approach \cite{tucker:1966:psy}. Finding the ideal
 factorization could be a very difficult optimization problem \cite{needcite}.
 An excellent place to start would be in the Information Extraction literature,
 especially those focused on Statistical Relational Learning. These works seek
