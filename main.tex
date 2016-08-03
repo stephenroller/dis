@@ -1499,6 +1499,15 @@ still plentiful enough for modeling. But in defining a cutoff at all, we
 are also ignoring a lot of information: by Zipf's law, half of the data
 is in the long tail. Do we really want to throw away all this data?
 
+We ask then, to what degree can the {\em syntactic relations} be separated
+from the {\em words} in syntactic distributional spaces? That is, can we
+assume there is some form of {\em composition function} where the relation
+is applied to the word? Mathematically, we might say that instead of modeling
+{\tt nsubj\_dog} as a vector, we will model it as:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = {\tt nsubj}(\vec{dog})
+\end{equation*}
+
 \section{Conclusion}
 
 \pagebreak
