@@ -1575,7 +1575,19 @@ substantial improvements on both tasks of Lexical Entailment {\em and} Lexical
 Substitution. For example, we saw in Table~\ref{tab:ctxsim} that certain
 syntactic relations are indicative of hypernymy. Therefore, being able to plug
 in any two words to and estimate the liklihood that they will stand in this
-observed relation.
+syntactic relation, like {\tt nmod:such\_as}. Ideally, this should work even
+better than directly searching a large corpus to see if the two words are
+actually {\em observed} in relation, since the model would assume that similar
+words will stand in similar relations.
+
+The problem would also contribute even more greatly to the Lexical Substitution
+model we presented. For many examples in our data set, our model does not have
+any context vector representation for one or more of the syntactic neighbors
+observed. In a preliminary examination, we found that some X\% of the CoInCo
+data set contain at least one context which not available in our vector space.
+The ability to {\em generate} representations for these contexts would be
+a simple way to provide the model with more disambiguating information, which
+should help in the end task.
 
 \section{Conclusion}
 
