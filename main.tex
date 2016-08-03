@@ -1272,41 +1272,15 @@ hypernyms, and vice versa.
 This idea of enforcing taxonomic consistency is not new: it was previously
 explored a little bit in \newcite{snow:2004:nips}, who used syntactic Hearst
 Patterns to make predictions about hypernymy, and then linearly interpolated
-the probabilities of predictions in order to better conform to a prior. Later,
-\newcite{snow:2006:acl} proposed a probabilistic model over {\em taxonomies},
-based on the degree to which they violate the transitivity of hypernymy and
-reflexiveness of co-hyponymy.
+the probabilities of predictions in order to better conform to these hard
+taxonomic constraints. Later, \newcite{snow:2006:acl} proposed a probabilistic
+model over {\em taxonomies}, allowing them to propose an algorithm for
+searching over entire taxonomies constrained by rules about the transitivity of
+hypernymy, and reflexivity of co-hyponymy. This taxonomy search is then used in
+order to find the single taxonomy which has maximal probability according to
+the evidence provided by Hearst patterns, while also not violating any of the
+hard constraints.
 
-This
-turns out to be an idea previously explored in the works of
-\newcite{snow:2004:nips} and \newcite{snow:2006:acl}. 
-
-
-
-For example, consider a system which makes the following predictions:
-
-As discussed in the short term proposals, hypernymy prediction is not the only
-important word relationship that could be predicted from distributional
-information. Indeed, if we posit that the non-hypernymy relations can be
-predicted from even moderate accuracy, then the additional information provided
-could 
-
-This is not the first time such a procedure has been proposed
-
-Suppose:
-
-High confidence (cat, animal) is hypernymy
-
-High confidence (dog, cat) is co-hyponymy
-
-Low confidence (dog, animal) is co-hyponymy
-
-Revise predictions to make a well formed taxonomy
-
-
-Snow et al. (2004, 2006) proposed this using linear interpolation and a probabilistic model; does this still work?
-
-Can we improve upon this with something better?
 
 MLNs offer one possibility with weighted rules
 
