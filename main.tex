@@ -1455,7 +1455,16 @@ The other possibility is to use LSTMs in order to jointly model the different
 modifiers. Since LSTMs are able to handle a variable-length sequence as input,
 they seem to be a good candidate for creating a joint model over all the
 attachments in a principled manner. Unfortunately, LSTMs also assume that the
-{\em order} of the sequence is important, which is not the case for our model.
+{\em order} of the sequence is important, which is not the case for our problem:
+there is no inherent ordering of syntactic attachments. We could canonicalize
+the ordering (simply insisting that, for example, subjects are always presented
+before objects), but it remains unclear whether this is useful. We could also
+{\em randomize} the order the attachments are presented: since there are many
+permutations, this could substantially increase the amount of training data
+available, since each sentence could then generate many training examples: one
+where subject is first, one where object is first, etc. However, preliminary
+experiments showed difficulty with this second approach: the $PIC$ model came
+about when our first attempts at using LSTMs were unsuccessful.
 
 \subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
 
