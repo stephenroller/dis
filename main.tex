@@ -1302,11 +1302,13 @@ a set of weighted First Order Logic (FOL) rules and a database of atoms, and
 give reweighted predictions about the probabilities of atoms based on their
 consistency with the logical rules. MLNs offer the possibility to encode many
 different relations as rules, and perform joint updating of all lexical
-relationship predictions.  For example, the rules for transitivity and
-reflexivity could be encoded as:
-
-\begin{equation}
-  \forall (x,y,z)
+relationship predictions.  For example, the rules for transitivity and reflexivity
+discussed in \newcite{snow:2006:acl} could be encoded as:
+\begin{align*}
+  \forall x,y,z. &~\text{hyper}(x,y) \wedge \text{hyper}(y, z) \rightarrow \text{hyper}(x, z),\\
+  \forall x,y. &~\text{cohyp}(x,y) \leftrightarrow \text{cohyp}(y,x).
+\end{align*}
+and the rule for reflexivity could also be encoded:
 
 
 MLNs offer one possibility with weighted rules
