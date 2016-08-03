@@ -1542,7 +1542,9 @@ for the rarest syntactic relations, where there could easily be more parameters
 in $W$ than examples, though perhaps heavy regularization of $W$, or even
 constraining it to be diagonal could be beneficial. Modeling the behavior in
 this way would draw greater parallels to other areas of the literature,
-like compositional distributional semantics \cite{needcite}
+like compositional distributional semantics \cite{needcite}, the
+bilinear models proposed in GloVe \cite{pennington:2014:acl}, and the recursive
+composition model proposed by \newcite{needcite}.
 
 Alternatively, we could  try to learn the distributional vectors from scratch
 using a similar model. Recall that the dimensionality reduction procedure
@@ -1557,10 +1559,15 @@ and a relation-context pair ($r, c$) as:
 \end{equation*}
 where ${\bf W_r}$ is a matrix. This is essentially the same as the linear
 regression model proposed in the above paragraph, but performed at a different
-step. Unfortunately, tensor factorization can be very difficult \cite{needcite},
-and there is no such convenient canonical factorization for tensors, as the
-SVD is for matrices.
+step. Unfortunately, tensor factorization can be very difficult
+\cite{needcite}, and there is no such convenient canonical factorization for
+tensors, as the SVD is for matrices \cite{needcite}. Finding the ideal
+factorization could be a very difficult optimization problem \cite{needcite}.
 
+Regardless, if we assume that we {\em can} find any model which successfully
+predicts context vectors in a generative manner, then it could lead to
+substantial improvements on both tasks of Lexical Entailment {\em and} Lexical
+Substitution. For example, we saw in Table~\ref{tab:ctxsim}
 
 \section{Conclusion}
 
