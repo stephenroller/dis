@@ -1405,8 +1405,9 @@ hypernymy relationship or not, acting as a modern neural-network version of
 predict the {\em last word} in the chain, performing the operation for billions
 of syntactic chains extracted from large corpora. This model would have the
 capability of capturing and remembering relevant long-distance information
-whenever it is helpful in predicting the final word.
-
+whenever it is helpful in predicting the final word. The greatest challenge
+in applying this model is scaling it, as LSTM models can take days or weeks
+to train when their final output is a prediction over the entire vocabulary.
 
 
 \paragraph{Joint Models of Syntactic Neighbors}
