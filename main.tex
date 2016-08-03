@@ -1540,9 +1540,11 @@ we would learn a separate $W$ for {\tt nsubj}, {\tt dobj}, etc:
 This gives the model many more free parameters, but may present some difficulty
 for the rarest syntactic relations, where there could easily be more parameters
 in $W$ than examples, though perhaps heavy regularization of $W$, or even
-constraining it to be diagonal could be beneficial.
+constraining it to be diagonal could be beneficial. Modeling the behavior in
+this way would draw greater parallels to other areas of the literature,
+like compositional distributional semantics \cite{needcite}
 
-Similarly, we could actually try to learn the distributional vectors from scratch
+Alternatively, we could  try to learn the distributional vectors from scratch
 using a similar model. Recall that the dimensionality reduction procedure
 simply tries to predict the Pointwise Mutual Information between a word and
 a context. Rather than performing the dimensionality reduction, then regression,
@@ -1551,8 +1553,13 @@ In this way, a successful model may look something more like {\em tensor
 factorization}. For example, we could model the pmi between a word ($v$),
 and a relation-context pair ($r, c$) as:
 \begin{equation*}
-  PMI(v, r, c) = {\bf v}^\top {\bf W}_{r} {\bf c}
+  PMI(v, r, c) = {\bf v}^\top {\bf W}_{r} {\bf c},
 \end{equation*}
+where ${\bf W_r}$ is a matrix. This is essentially the same as the linear
+regression model proposed in the above paragraph, but performed at a different
+step. Unfortunately, tensor factorization can be very difficult \cite{needcite},
+and there is no such convenient canonical factorization for tensors, as the
+SVD is for matrices.
 
 
 \section{Conclusion}
