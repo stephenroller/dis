@@ -1320,7 +1320,25 @@ both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
 candidates for improving lexical relationship prediction by enforcing taxonomic
 consistency.
 
-\subsubsection{Extra context in Lexical Substitution}
+\subsubsection{Wider contexts in Lexical Substitution}
+
+In the model of Lexical Substitution discussed in Section~\ref{sec:pic}, we
+showed how the syntactic neighbors of a target word are useful in predicting
+what are the lexical substitutes, or in-context synonyms, of the target word.
+Although the syntactic neighbors can indeed capture some kinds of {\em long-distance
+dependencies}, there is much greater deal of context available which is
+presently not used by the model: namely, the {\em entire rest of the sentence}.
+
+Consider, for example, if the model were able to asked to find the best verb
+to fill-in-the-blank in the following two sentences:
+
+\begin{center}
+  {\em The dog \_\_\_ the tennis ball.}\\
+  {\em The dog \_\_\_ the meat ball.}
+\end{center}
+
+In both cases, the model will be given the exact same context for the missing
+verb: its subject should be {\em dog} and its object should be {\em ball}.
 
 Can we utilize longer contexts?
 
