@@ -1500,20 +1500,36 @@ are also ignoring a lot of information: by Zipf's law, half of the data
 is in the long tail. Do we really want to throw away all this data?
 
 We ask then, to what degree can the {\em syntactic relations} be separated
-from the {\em words} in syntactic distributional spaces? That is, can we
-assume there is some form of {\em composition function} which combines how a
-word behaves when standing in a particular syntactic relation with another?
+from the {\em words} in syntactic distributional spaces? 
 Can these context vectors we rely heavily on in our work be {\em generatively
-modeled}?
-
+modeled}? Perhaps one way to approach this would be to model it as a
+composition function:
 \begin{equation*}
   \vec{ {\tt nsubj\_dog} } = f({\tt nsubj}, \vec{dog})
 \end{equation*}
 In this view, we would need to learn one function, $f$, which took in a syntactic
 relation and a dog, and produced a {\em context vector} on how dog acts in the
-subject position. How could this work? One possibility would be to use vector
-concatenation, treating the relation and the word as separate components,
-independent of each other.
+subject position. One possibility would be to use vector concatenation,
+treating the relation and the word as separate components, independent of each
+other. Intuitively, this does not seem to capture the the essence of our
+proposal, but it could act as a baseline model:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = \langle \vec{dog} ; \vec{nsubj} \rangle
+\end{equation*}
+
+Another possibility would be to treat the procedure as a form of post-processing
+generalization. For example, we could learn the context vectors as we do now, and
+then attempt to learn to predict the observed context vectors from the input
+components. For example, perhaps after performing the concatenation, a simple
+linear regression could combine them:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}
+\end{equation*}
+This is a relatively weak model, but it would still enable us to predict
+information about novel combinations of syntactic relations and words. The
+model could be even more sophisticated, being a neural network instead; however,
+neural networks are known to be easier to train for classification than
+regression \cite{needcite}.
 
 
 \section{Conclusion}
