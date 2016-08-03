@@ -1420,7 +1420,25 @@ means that one of these questions may be given more weight than another, but the
 are still considered independently: the question is never ``What does a dog do
 to a ball?''
 
-Can we utilize longer contexts?
+It is worth considering whether this independence assumption can be relaxed
+in some way. Intuitively, it seems obvious that a joint model should be helpful.
+Yet, one major issue is that the number of syntactic neighbors is variable:
+consider that a verb may have attachments may have only one attachment (intransitive),
+two attachments (transitive), or more (ditransitive, prepositional phrase attachments,
+adverbs, etc). Similarly, nouns can also stand in many syntactic relations
+simultaneously (compound, adjective, prepositional phrase, verb relation, and
+others). Since the number of attachments is variable, it's difficult to define
+a coherent probabilistic model which does not demand at least {\em some}
+independence assumptions.
+
+Even if we could define such a model, it would likely be plagued the typical
+extreme sparsity issues: for many sentences in our data set, an {\em exact}
+combination of attachments seen is unlikely to appear anywhere, even in
+extremely large corpora. Therefore, a naive joint model is likely to estimate
+the probability as zero for most everything.
+
+As with the inclusion of wider context, one option would be
+linguistic
 
 Can we jointly model the syntactic neighbors?
 
