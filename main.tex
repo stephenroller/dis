@@ -1501,12 +1501,16 @@ is in the long tail. Do we really want to throw away all this data?
 
 We ask then, to what degree can the {\em syntactic relations} be separated
 from the {\em words} in syntactic distributional spaces? That is, can we
-assume there is some form of {\em composition function} where the relation
-is applied to the word? Mathematically, we might say that instead of modeling
-{\tt nsubj\_dog} as a vector, we will model it as:
+assume there is some form of {\em composition function}?
 \begin{equation*}
-  \vec{ {\tt nsubj\_dog} } = {\tt nsubj}(\vec{dog})
+  \vec{ {\tt nsubj\_dog} } = f({\tt nsubj}, \vec{dog})
 \end{equation*}
+In this view, we would need to learn one function, $f$, which took in a syntactic
+relation and a dog, and produced a {\em context vector} on how dog acts in the
+subject position. How could this work? One possibility would be to use vector
+concatenation, treating the relation and the word as separate components,
+independent of each other.
+
 
 \section{Conclusion}
 
