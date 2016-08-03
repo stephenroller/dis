@@ -1247,6 +1247,19 @@ taxonomy. Yet, since we predict each word pair individually, there is no
 guarantee the final output of the system over all pairs will also be
 well-structured.
 
+For example, a hypernymy prediction model could predict that both ``animal is a
+hypernym of dog'' and that ``dog is a hypernym of animal'', is though we know
+hypernymy is non-reflexive; or it could predict that ``a golden retriever is a
+dog'' and ``dog is an animal'' but incorrectly predict that ``gold retriever is
+{\em not} an animal,'' violating the transitive property of hypernymy. These
+properties of hypernymy are inherent to how it is defined, and our models
+should be take this into account.
+
+With this in mind, is it possible to modify our model such that taxonomic
+consistency of the output is guaranteed, or at least more consistent?
+
+
+
 For example, consider a system which makes the following predictions:
 
 As discussed in the short term proposals, hypernymy prediction is not the only
