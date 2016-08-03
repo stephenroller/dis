@@ -1409,8 +1409,16 @@ whenever it is helpful in predicting the final word. The greatest challenge
 in applying this model is scaling it, as LSTM models can take days or weeks
 to train when their final output is a prediction over the entire vocabulary.
 
-
 \paragraph{Joint Models of Syntactic Neighbors}
+
+Another issue with the lexical substitution model discussed in Section~\ref{sec:pic}
+is that the model fundamentally assumes independence between each of the syntactic
+neighbors. Ultimately, the model suggests substitutes in the above examples by
+asking, ``What does a dog do? What is done to a ball? What is the intersection
+of these two sets?'' That it uses the unnormalized inner products in Equation~\ref{eqn:pic}
+means that one of these questions may be given more weight than another, but they
+are still considered independently: the question is never ``What does a dog do
+to a ball?''
 
 Can we utilize longer contexts?
 
