@@ -1429,7 +1429,10 @@ adverbs, etc). Similarly, nouns can also stand in many syntactic relations
 simultaneously (compound, adjective, prepositional phrase, verb relation, and
 others). Since the number of attachments is variable, it's difficult to define
 a coherent probabilistic model which does not demand at least {\em some}
-independence assumptions.
+independence assumptions. Even if we were to define the model over all possible
+syntactic relations for every word, the issue would not be solved: consider
+a ``small, furry, brown mouse,'' which has three modifiers all standing
+in the {\tt adjmod} relation.
 
 Even if we could define such a model, it would likely be plagued the typical
 extreme sparsity issues: for many sentences in our data set, an {\em exact}
@@ -1437,12 +1440,12 @@ combination of attachments seen is unlikely to appear anywhere, even in
 extremely large corpora. Therefore, a naive joint model is likely to estimate
 the probability as zero for most everything.
 
-As with the inclusion of wider context, one option would be
-linguistic
-
-Can we jointly model the syntactic neighbors?
-
-Both ideas could be enabled with Neural Networks (LSTMs) or Linguistic Knowledge
+As with the proposed methods for including wider contexts, we could potentially
+address these issues using either linguistic knowledge, or neural networks.
+To address the concerns using linguistic knowledge, we could again mark certain
+rules should be modeled jointly, and assume independence between the remaining
+syntactic relations. For example, we could model transitive verbs jointly,
+but assume independence from adverbs and prepositional modifiers.
 
 \subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
 
