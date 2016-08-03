@@ -1489,7 +1489,15 @@ to model selectional preferences: without distinguishing these relations,
 the model would be much like to the bag-of-words spaces.
 
 Yet, modeling each of these contexts independently also seems to be wasting
-a large amount of information: is there 
+a large amount of information: that it is the same lexical item being modified
+by two different syntactic relations. If this information is ignored, then
+we must assume we have excellent corpus statistics for how every word stands
+in every relation. Yet this rarely happens, and one of the important
+steps in constructing a syntactic distributional space is to limit modeling
+to only the top one million most frequent contexts, where the statistics are
+still plentiful enough for modeling. But in defining a cutoff at all, we
+are also ignoring a lot of information: by Zipf's law, half of the data
+is in the long tail. Do we really want to throw away all this data?
 
 \section{Conclusion}
 
