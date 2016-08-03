@@ -69,30 +69,6 @@ Doctoral Dissertation Proposal}
 \tableofcontents
 \pagebreak
 
-%\section*{Table of Contents}
-%\begin{itemize}
-%  \item Introduction
-%    \begin{itemize}
-%      \item Distributional Semantics
-%      \item Lexical Entailment
-%      \item Lexical Substitution
-%    \end{itemize}
-%  \item Identifying Lexical Relations
-%    \begin{itemize}
-%      \item Asym (COLING 2014)
-%      \item TACL 2016
-%    \end{itemize}
-%  \item Lexical Substitution
-%    \begin{itemize}
-%      \item NAACL 2016
-%    \end{itemize}
-%  \item Proposed Work
-%    \begin{itemize}
-%      \item 
-%    \end{itemize}
-%\end{itemize}
-%\pagebreak
-
 \section{Introduction}
 
 As the field of Natural Language Processing (NLP) has developed, significant
@@ -407,6 +383,7 @@ corpora used in machine translation and distributional semantics.
 \section{Completed work}
 
 \subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
+\label{sec:asym}
 
 In 2014, we presented a novel, supervised model for the task of Lexical
 Entailment Detection. At the time, the primary
@@ -506,7 +483,7 @@ on {\bless} and {\entailment}
   Diff                           &    .809  &    .496  &    .226  &      .672  \\
   Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
   Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  HD   \cite{roller:2016:arxiv}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  HD   \cite{roller:2016:emnlp}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
   \hline
 \end{tabular}
 \end{center}
@@ -653,7 +630,8 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
 
 
 
-\subsection{Subsystem in complete RTE system}
+\subsection{Subsystem in complete RTE system \cite{beltagy:2016:cl}}
+\label{sec:rtesubsystem}
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
@@ -716,7 +694,7 @@ WordNet. These pairs include \textit{note
   $\to$ paper}, \textit{swimmer $\to$ racer}, \textit{eat $\to$ bite},
 and \textit{stand $\to$ wait}. 
 
-\subsection{H-Features and Multi-prototype Hypernymy Classifier}
+\subsection{H-Features and Multi-prototype Hypernymy Classifier \cite{roller:2016:emnlp}}
 \label{sec:multiprototype}
 
 
@@ -882,7 +860,8 @@ the PCA-like procedure. We found that performance improves substantially on all
 data sets with at least two iterations, but then falls off slowly after five or
 more iterations. We chose to use four iterations for all final models.
 
-\subsection{Lexical Substitution}
+\subsection{Lexical Substitution \cite{roller:2016:naacl}}
+\label{sec:lexsubmodel}
 
 \begin{figure}
   \centering
@@ -910,6 +889,7 @@ for both the target and the context, each taking the form of a softmax:\footnote
   \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
   P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
   P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\}
+  \label{eqn:pic}
 \end{align*}
 
 The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
