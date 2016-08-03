@@ -1383,6 +1383,14 @@ increasing the sparsity of the data: the vast majority of 3-hop syntactic
 patterns will occur only once in corpus. Indeed, if we use this linguistic approach,
 these issues of scaling and sparsity will plague our model as well.
 
+The other possibility for this problem would be to employ modern neural network
+models, like the Long Short Term Memory (LSTM) model \cite{hochreiter:1997:nc}.
+The LSTM model has become extremely popular in the field of Natural Language
+Processing, thanks to recent advances in network initialization \cite{glorot},
+training techniques \cite{adam,adagrad}, and hardware like Graphics Processing
+Units (GPUs). Indeed, LSTMs are the basis for the successful model of
+\newcite{kawakami:2016:iclr} mentioned previously.
+
 
 
 \paragraph{Joint Models of Syntactic Neighbors}
