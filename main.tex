@@ -1270,16 +1270,20 @@ co-hyponyms, then we can become more confident that they share the same
 hypernyms, and vice versa.
 
 This idea of enforcing taxonomic consistency is not new: it was previously
-explored a little bit in \newcite{snow:2004:nips}, who used syntactic Hearst
-Patterns to make predictions about hypernymy, and then linearly interpolated
-the probabilities of predictions in order to better conform to these hard
-taxonomic constraints. Later, \newcite{snow:2006:acl} proposed a probabilistic
-model over {\em taxonomies}, allowing them to propose an algorithm for
-searching over entire taxonomies constrained by rules about the transitivity of
-hypernymy, and reflexivity of co-hyponymy. This taxonomy search is then used in
-order to find the single taxonomy which has maximal probability according to
-the evidence provided by Hearst patterns, while also not violating any of the
-hard constraints.
+explored by \newcite{caraballo:1999:acl}, who use a clustering algorithm in
+order to find co-hyponym terms, and then predict their hypernym using entire
+clusters. It was also examined some in \newcite{snow:2004:nips}, who used
+syntactic Hearst Patterns to make predictions about hypernymy, and then
+linearly interpolated the probabilities of predictions in order to better
+conform to these hard taxonomic constraints. Later, \newcite{snow:2006:acl}
+proposed a probabilistic model over {\em taxonomies}, allowing them to propose
+an algorithm for searching over entire taxonomies constrained by rules about
+the transitivity of hypernymy, and reflexivity of co-hyponymy. This taxonomy
+search is then used in order to find the single taxonomy which has maximal
+probability according to the evidence provided by Hearst patterns, while also
+not violating any of the hard constraints. Others, such as
+\newcite{caraballo:1999:acl}, have also used information about co-hyponyms in
+order to make predictions of hypernymy.
 
 
 MLNs offer one possibility with weighted rules
