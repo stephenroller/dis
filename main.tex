@@ -1531,6 +1531,17 @@ model could be even more sophisticated, being a neural network instead; however,
 neural networks are known to be easier to train for classification than
 regression \cite{needcite}.
 
+Another variation of this linear regression idea, would be to model each
+syntactic relation as a function {\em applied} to the vector. For example,
+we would learn a separate $W$ for {\tt nsubj}, {\tt dobj}, etc:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = W_{{\tt nsubj}}\vec{dog}
+\end{equation*}
+This gives the model many more free parameters, but may present some difficulty
+for the rarest syntactic relations, where there could easily be more parameters
+in $W$ than examples, though perhaps heavy regularization of $W$, or even
+constraining it to be diagonal could be beneficial.
+
 
 \section{Conclusion}
 
