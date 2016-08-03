@@ -1563,11 +1563,15 @@ step. Unfortunately, tensor factorization can be very difficult
 \cite{needcite}, and there is no such convenient canonical factorization for
 tensors, as the SVD is for matrices \cite{needcite}. Finding the ideal
 factorization could be a very difficult optimization problem \cite{needcite}.
+An excellent place to start would be in the Information Extraction literature,
+which often seeks to find representations for (subject, verb, object) triples.
 
 Regardless, if we assume that we {\em can} find any model which successfully
 predicts context vectors in a generative manner, then it could lead to
 substantial improvements on both tasks of Lexical Entailment {\em and} Lexical
-Substitution. For example, we saw in Table~\ref{tab:ctxsim}
+Substitution. For example, we saw in Table~\ref{tab:ctxsim} that certain
+syntactic relations are indicative of hypernymy. Therefore, being able to plug
+in any two words to and estimate the liklihood that this observed relation
 
 \section{Conclusion}
 
