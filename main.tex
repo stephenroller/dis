@@ -1322,6 +1322,7 @@ consistency.
 
 \subsubsection{Sophisticated Contexts for Lexical Substitution}
 
+\paragraph{Wider Contexts in Lexical Substitution}
 In the model of Lexical Substitution discussed in Section~\ref{sec:pic}, we
 showed how the syntactic neighbors of a target word are useful in predicting
 what are the lexical substitutes, or in-context synonyms, of the target word.
@@ -1357,6 +1358,11 @@ entire sentence} as input, though their model also depends heavily on the use
 of machine translation data as a sort of proxy for Word Sense Disambiguation
 information. Nonetheless, it is clear that there is more useful information
 available than our own Lexical Substitution model is allotted.
+
+There two distinct ways we could implement wider contexts into our Lexical
+Substitution model: using linguistic knowledge, and using neural networks.
+
+\paragraph{Joint Models of Syntactic Neighbors}
 
 Can we utilize longer contexts?
 
