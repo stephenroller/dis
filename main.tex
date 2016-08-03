@@ -1542,6 +1542,18 @@ for the rarest syntactic relations, where there could easily be more parameters
 in $W$ than examples, though perhaps heavy regularization of $W$, or even
 constraining it to be diagonal could be beneficial.
 
+Similarly, we could actually try to learn the distributional vectors from scratch
+using a similar model. Recall that the dimensionality reduction procedure
+simply tries to predict the Pointwise Mutual Information between a word and
+a context. Rather than performing the dimensionality reduction, then regression,
+we could encode our generative principals into the dimensionality reduction.
+In this way, a successful model may look something more like {\em tensor
+factorization}. For example, we could model the pmi between a word ($v$),
+and a relation-context pair ($r, c$) as:
+\begin{equation*}
+  PMI(v, r, c) = {\bf v}^\top {\bf W}_{r} {\bf c}
+\end{equation*}
+
 
 \section{Conclusion}
 
