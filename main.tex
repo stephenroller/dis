@@ -1398,8 +1398,14 @@ analysis \cite{needcite}, machine translation \cite{needcite}, textual entailmen
 lexical entailment \cite{schwartz:2016:acl}.
 
 More concretely, we could integrate wider syntax using an approach similar to
-that of \newcite{schwartz:2016:acl}. In their model, the syntactic chain
-between two given words was used to predict whether
+that of \newcite{schwartz:2016:acl}. In their model, a syntactic chains
+connecting two target words was used to classify whether the words stand in a
+hypernymy relationship or not, acting as a modern neural-network version of
+\newcite{snow:2004:nips}. We propose using similar syntactic chains to simply
+predict the {\em last word} in the chain, performing the operation for billions
+of syntactic chains extracted from large corpora. This model would have the
+capability of capturing and remembering relevant long-distance information
+whenever it is helpful in predicting the final word.
 
 
 
