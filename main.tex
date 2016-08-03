@@ -862,7 +862,7 @@ data sets with at least two iterations, but then falls off slowly after five or
 more iterations. We chose to use four iterations for all final models.
 
 \subsection{Lexical Substitution \cite{roller:2016:naacl}}
-\label{sec:lexsubmodel}
+\label{sec:pic}
 
 \begin{figure}
   \centering
@@ -1176,7 +1176,7 @@ yet to provide any results indicating that Lexical Substitution may actually
 contribute to the complete RTE system.
 
 We propose that the Lexical Substitution model described in
-Section~\ref{sec:lexsubmodel} be used to provide additional information to
+Section~\ref{sec:pic} be used to provide additional information to
 the Lexical Entailment classifier used in Section~\ref{sec:rtesubsystem}.
 
 There are at least two possibilities for how a Lexical Substitution model could
@@ -1540,7 +1540,7 @@ simply tries to predict the Pointwise Mutual Information between a word and
 a context. Rather than performing the dimensionality reduction, then regression,
 we could encode our generative principals into the dimensionality reduction.
 In this way, a successful model may look something more like {\em tensor
-factorization}. For example, we could model the pmi between a word ($v$),
+factorization}. For example, we could model the PMI between a word ($v$),
 and a relation-context pair ($r, c$) as:
 \begin{equation*}
   PMI(v, r, c) = {\bf v}^\top {\bf W}_{r} {\bf c},
@@ -1558,7 +1558,10 @@ However, an excellent place to start would be in the Information Extraction
 literature, especially those focused on Statistical Relational Learning. These
 works seek to find generative representations for (subject, verb, object)
 triples, like {\tt IBornIn(John, Athens)}, and there is a rich literature
-regarding approaches to this very difficult problem
+regarding approaches to this very difficult problem.
+The approach of \newcite{nickel:2011:icml} is closest to the model we actually
+proposed above, but since there has been significant advances in both time
+and space complexity
 \cite{socher:2013:nips,riedel:2013:naacl,yang:2014:iclr,kuleshov:2015:aistats,trouillon:2016:icml}.
 
 Regardless, if we assume that we {\em can} find any model which successfully
