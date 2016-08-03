@@ -1366,7 +1366,17 @@ model additional syntactic patterns from large corpora. That is, in
 addition to modeling the direct neighbors of words which constructing our
 distributional space, we could also add pattern-based rules for modeling
 indirect neighbors. For example, we could introduce an additional context
-in our distributional space for {\tt dobj+compound+\_+meat}; that is, model a verb's
+in our distributional space for {\tt dobj+compound+\_+meat}; that is, an
+additional column for which the direct object of a verb is compounded with
+``meat'', and so on for other nouns. Indeed, since our model uses collapsed
+prepositional phrases, this is already partially implemented (e.g., we already
+model ``to the store'' as {\tt prep:to\_store} rather than just {\tt prep:to}).
+
+A variation of this approach was discussed in \newcite{pado:2007:cl}, the
+original proposal of syntactic distributional spaces. In their model, they also
+extracted contexts for dependency chains two and three hops away from the
+target word, rather than the only the direct neighbors. Since then, most models
+tend to direct
 
 
 
