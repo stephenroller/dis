@@ -1256,9 +1256,18 @@ properties of hypernymy are inherent to how it is defined, and our models
 should be take this into account.
 
 With this in mind, is it possible to modify our model such that taxonomic
-consistency of the output is guaranteed, or at least more consistent? This
-turns out to be an idea previously explored in the works of \newcite{snow:2004:nips}
-and \newcite{snow:2006:acl}. 
+consistency of the output is guaranteed, or at least more consistent? One
+possibility would be to use the {\em confidence scores} associated with the
+hypernymy predictions, and simply revise the least-confident predictions to
+be consistent in a post-processing step. For example, in our reflexive example
+above, the more confident of the two predictions will be assumed to be
+the correct one.
+
+Furthermore, if we assume the 
+
+This
+turns out to be an idea previously explored in the works of
+\newcite{snow:2004:nips} and \newcite{snow:2006:acl}. 
 
 
 
