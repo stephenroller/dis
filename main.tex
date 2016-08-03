@@ -881,16 +881,18 @@ for both the target and the context, each taking the form of a softmax:\footnote
   context.
   %Both take the same shape of a dot product.
   For $P(s|t)$,
-  Mikolov et al.~\shortcite{mikolov:iclr13} show that cosine
+  Mikolov et al.~\shortcite{mikolov:2013:iclr} show that cosine
   similarity of SGNS embeddings predicts
   paradigmatic similarity. $P(s|C)$ can be interpreted as the PMI of
-  $s$ and $C$~\cite{Levy:2014tp}.}
-\begin{align*}
+  $s$ and $C$~\cite{levy:2014:nips}.}
+\begin{equation}
+  \begin{aligned}
   \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
   P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
   P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\}
+  \end{aligned}
   \label{eqn:pic}
-\end{align*}
+\end{equation}
 
 The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
 distribution sums to one. This measure has two free parameters, $W$ and $b$,
@@ -907,10 +909,13 @@ settings.
 To measure the importance of parameterization, we
 also compare to a non-parameterized PIC (\ourmeas), which only uses a softmax over the
 dot product:
-\begin{align*}
+\begin{equation}
+  \begin{aligned}
   \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
   P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
-\end{align*}
+  \end{aligned}
+  \label{eqn:npic}
+\end{equation}
 
 
 
@@ -1053,7 +1058,6 @@ the parameters $W$ and $b$ strengthen this tendency.
 % other tasks in NLP). Such a result may seem obvious in retrospect, but many
 % prior works in Lexical Substitution simply do not take this into account.
 
-\pagebreak
 \section{Proposed Work}
 
 We now describe the general proposed methods of further research. The proposed
@@ -1115,7 +1119,7 @@ one for hypernymy-vs-nonhypernymy, one for meronomy-vs-nonhypernymy, etc.
 Similar to how the PCA procedure was used only as a form of feature-extraction
 for the final prediction, each of the binary classifier iterations will be also
 used for feature extraction for a final classifier.
-That is, we will use the procedure described in Section~\ref{tab:multiprototype}
+That is, we will use the procedure described in Section~\ref{sec:multiprototype}
 to extract several iterations of features for hypernymy, then completely repeat
 the procedure for meronomy and co-hyponymy. The resulting features from each
 of the classifiers will be concatenated for a final four-way classifier prediction.
@@ -1126,7 +1130,7 @@ H-features at this level.
 There are interesting research questions that stem from this procedure, beyond
 just final performance scores. One is what distributional-level features will
 be learned as prototypical of meronyms, or co-hyponyms? As we saw in
-Section~\ref{sec:prototypicality}, the classifier automatically learned to pick
+Table~\ref{tab:ctxsim}, the classifier automatically learned to pick
 out well-known Hearst patterns, indicative of hypernymy. It remains to be seen
 whether it will pick out additional Hearst patterns indicative of other
 relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
