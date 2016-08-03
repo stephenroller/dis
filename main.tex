@@ -1300,21 +1300,25 @@ end-to-end RTE system of \newcite{beltagy:2016:cl}: Markov Logic Networks
 logical inference over sets of weighted atoms and logical rules. MLNs are given
 a set of weighted First Order Logic (FOL) rules and a database of atoms, and
 give reweighted predictions about the probabilities of atoms based on their
-consistency with the logical rules. MLNs offer the possibility to encode many
+consistency with the logical rules. MLNs can encode many
 different relations as rules, and perform joint updating of all lexical
 relationship predictions.  For example, the rules for transitivity and reflexivity
 discussed in \newcite{snow:2006:acl} could be encoded as:
 \begin{align*}
   \forall x,y,z. &~\text{hyper}(x,y) \wedge \text{hyper}(y, z) \rightarrow \text{hyper}(x, z),\\
-  \forall x,y. &~\text{cohyp}(x,y) \leftrightarrow \text{cohyp}(y,x).
+  \forall x,y. &~\text{cohyp}(x,y) \leftrightarrow \text{cohyp}(y,x),
 \end{align*}
-and the rule for reflexivity could also be encoded:
+but other rules, such that co-hyponyms share a hypernym, may also be encoded:
+\begin{align*}
+  \forall x,y,z. &~\text{cohyp}(x,y) \wedge \text{hyper}(x,z) \rightarrow \text{hyper}(y,z).
+\end{align*}
 
-
-MLNs offer one possibility with weighted rules
-
-Could even handle multiple set relations (refl, trans, anti-refl)
-
+MLNs ability to incorporate {\em weighted rules} would also give room for
+flexibility in constraint importance, and allow for {\em some} violations of
+constraints when the evidence is simply overwhelming. Therefore, we believe
+both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
+candidates for improving lexical relationship prediction by enforcing taxonomic
+consistency.
 
 \subsubsection{Extra context in Lexical Substitution}
 
