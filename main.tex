@@ -1281,9 +1281,32 @@ an algorithm for searching over entire taxonomies constrained by rules about
 the transitivity of hypernymy, and reflexivity of co-hyponymy. This taxonomy
 search is then used in order to find the single taxonomy which has maximal
 probability according to the evidence provided by Hearst patterns, while also
-not violating any of the hard constraints. Others, such as
-\newcite{caraballo:1999:acl}, have also used information about co-hyponyms in
-order to make predictions of hypernymy.
+not violating any of the hard constraints.
+
+Although \newcite{snow:2006:acl} found their taxonomy searching algorithm
+highly successful with the use of the lexico-syntactic patterns indicative
+of hypernymy, such an approach is yet to be tried on classifiers which make
+use of distributional information about words. Therefore, the most reasonable
+first course of action would to reimplement and examine whether their model
+is compatible with the distributional models of hypernymy prediction. On one
+hand, it could help tremendously; on the other hand, their model supports only
+two forms of constraints (transitivity of hypernymy and reflexivity of
+co-hyponyms), leaving open questions about how other constraints should be
+imposed.
+
+Another possibility is through the use of the same technology powering the
+end-to-end RTE system of \newcite{beltagy:2016:cl}: Markov Logic Networks
+(MLNs).  Markov Logic Networks provide a framework for doing probabilistic
+logical inference over sets of weighted atoms and logical rules. MLNs are given
+a set of weighted First Order Logic (FOL) rules and a database of atoms, and
+give reweighted predictions about the probabilities of atoms based on their
+consistency with the logical rules. MLNs offer the possibility to encode many
+different relations as rules, and perform joint updating of all lexical
+relationship predictions.  For example, the rules for transitivity and
+reflexivity could be encoded as:
+
+\begin{equation}
+  \forall (x,y,z)
 
 
 MLNs offer one possibility with weighted rules
