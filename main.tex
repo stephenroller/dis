@@ -1320,7 +1320,7 @@ both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
 candidates for improving lexical relationship prediction by enforcing taxonomic
 consistency.
 
-\subsubsection{More Sophisticated Contexts for Lexical Substitution}
+\subsubsection{Sophisticated Contexts for Lexical Substitution}
 
 In the model of Lexical Substitution discussed in Section~\ref{sec:pic}, we
 showed how the syntactic neighbors of a target word are useful in predicting
@@ -1345,7 +1345,18 @@ the additional information about the ball, the model has absolutely no way
 to distinguish these two cases. How can this information be integrated into the
 model?
 
-Presen
+Even beyond this simple example, it's already clear from prior work that
+additional context can be very useful in the task.
+\newcite{vandecruys:2011:emnlp}, for example, proposed model which combined
+a syntactic distributional space with a bag-of-words distributional space with
+a very large window by finding a shared latent representation of both spaces,
+showing modest improvements over each individual space. Furthermore,
+\newcite{kawakami:2016:iclr} obtained state-of-the-art results on Lexical
+Substitution using a neural network language model which encodes the {\em
+entire sentence} as input, though their model also depends heavily on the use
+of machine translation data as a sort of proxy for Word Sense Disambiguation
+information. Nonetheless, it is clear that there is more useful information
+available than our own Lexical Substitution model is allotted.
 
 Can we utilize longer contexts?
 
