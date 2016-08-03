@@ -1320,7 +1320,7 @@ both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
 candidates for improving lexical relationship prediction by enforcing taxonomic
 consistency.
 
-\subsubsection{Wider contexts in Lexical Substitution}
+\subsubsection{More Sophisticated Contexts for Lexical Substitution}
 
 In the model of Lexical Substitution discussed in Section~\ref{sec:pic}, we
 showed how the syntactic neighbors of a target word are useful in predicting
@@ -1330,7 +1330,7 @@ dependencies}, there is much greater deal of context available which is
 presently not used by the model: namely, the {\em entire rest of the sentence}.
 
 Consider, for example, if the model were able to asked to find the best verb
-to fill-in-the-blank in the following two sentences:
+to fill-in-the-blank in the following two simple sentences:
 
 \begin{center}
   {\em The dog \_\_\_ the tennis ball.}\\
@@ -1338,7 +1338,14 @@ to fill-in-the-blank in the following two sentences:
 \end{center}
 
 In both cases, the model will be given the exact same context for the missing
-verb: its subject should be {\em dog} and its object should be {\em ball}.
+verb: its subject should be {\em dog} and its object should be {\em ball}. However,
+humans know that the dog is more likely to {\em chase} or {\em fetch} the tennis
+ball, while it is more likely to {\em eat} the meat ball. Without being provided
+the additional information about the ball, the model has absolutely no way
+to distinguish these two cases. How can this information be integrated into the
+model?
+
+Presen
 
 Can we utilize longer contexts?
 
