@@ -1362,7 +1362,12 @@ available than our own Lexical Substitution model is allotted.
 There two distinct ways we could implement wider contexts into our Lexical
 Substitution model: using linguistic knowledge, and using neural networks.
 In the former, we could simply use existing linguistic knowledge in order to
-mine syntactic patterns from large corpora and 
+model additional syntactic patterns from large corpora. That is, in
+addition to modeling the direct neighbors of words which constructing our
+distributional space, we could also add pattern-based rules for modeling
+indirect neighbors. For example, we could introduce an additional context
+in our distributional space for {\tt dobj+compound+\_+meat}; that is, model a verb's
+
 
 
 \paragraph{Joint Models of Syntactic Neighbors}
