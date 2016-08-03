@@ -1547,16 +1547,19 @@ and a relation-context pair ($r, c$) as:
 \end{equation*}
 where ${\bf W_r}$ is a matrix. This is essentially the same as the linear
 regression model proposed in the above paragraph, but performed at a different
-step. Unfortunately, tensor factorization can be very difficult
-\cite{needcite}, and there is no such convenient canonical factorization for
+step. Unfortunately, tensor factorization is generally very difficult
+\cite{haastad:1990:ja,hillar:2013:jacm}, and there is no such convenient canonical factorization for
 tensors, as the SVD is for matrices, though Tucker Decomposition
 is one well-studied approach \cite{tucker:1966:psy}. Finding the ideal
-factorization could be a very difficult optimization problem \cite{needcite}.
-An excellent place to start would be in the Information Extraction literature,
-especially those focused on Statistical Relational Learning. These works seek
-to find generative representations for (subject, verb, object) triples, like
-{\tt IBornIn(John, Athens)}, and there is a rich literature regarding approaches
-to this very difficult problem \cite{riedel:2013:naacl,trouillon:2016:icml}.
+factorization is likely to be a very difficult optimization problem without
+major simplifying assumptions, and one beyond our own expertise.
+
+However, an excellent place to start would be in the Information Extraction
+literature, especially those focused on Statistical Relational Learning. These
+works seek to find generative representations for (subject, verb, object)
+triples, like {\tt IBornIn(John, Athens)}, and there is a rich literature
+regarding approaches to this very difficult problem
+\cite{riedel:2013:naacl,trouillon:2016:icml}.
 
 Regardless, if we assume that we {\em can} find any model which successfully
 predicts context vectors in a generative manner, then it could lead to
