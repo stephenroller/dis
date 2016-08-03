@@ -1386,8 +1386,9 @@ approach, these issues of scaling and sparsity will plague our model as well.
 The other possibility for this problem would be to employ modern neural network
 models, like the Long Short Term Memory (LSTM) model \cite{hochreiter:1997:nc}.
 The LSTM model has become extremely popular in the field of Natural Language
-Processing, thanks to recent advances in network initialization \cite{glorot:2010:aistats},
-training techniques \cite{duchi:2011:jmlr,kingma:2014:arxiv}, and hardware like Graphics Processing
+Processing, thanks to recent advances in network initialization
+\cite{glorot:2010:aistats}, training techniques
+\cite{duchi:2011:jmlr,kingma:2014:arxiv}, and hardware like Graphics Processing
 Units (GPUs). Indeed, LSTMs are the basis for the successful model of
 \newcite{kawakami:2016:iclr} mentioned previously. LSTMs are a form of a
 Recurrent Neural Network, which takes as input a variable-length sequence of
@@ -1395,11 +1396,12 @@ items (tokens), and make some prediction. They have been successfully applied
 countless areas of NLP, including language modeling
 \cite{sundermeyer:2012:lstm,jozefowicz:2016:arxiv}, sentiment analysis
 \cite{kumar:2015:arxiv}, machine translation \cite{sutskever:2014:nips},
-textual entailment \cite{bowman:2015:emnlp}, question answering \cite{hermann:2015:nips}, and
-recently even lexical entailment \cite{schwartz:2016:acl}.
+textual entailment \cite{bowman:2015:emnlp}, question answering
+\cite{hermann:2015:nips}, and recently even lexical entailment
+\cite{shwartz:2016:acl}.
 
 More concretely, we could integrate wider syntax using an approach similar to
-that of \newcite{schwartz:2016:acl}. In their model, a syntactic chains
+that of \newcite{shwartz:2016:acl}. In their model, a syntactic chains
 connecting two target words was used to classify whether the words stand in a
 hypernymy relationship or not, acting as a modern neural-network version of
 \newcite{snow:2004:nips}. We propose using similar syntactic chains to simply
