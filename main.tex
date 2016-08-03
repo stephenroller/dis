@@ -1441,11 +1441,21 @@ extremely large corpora. Therefore, a naive joint model is likely to estimate
 the probability as zero for most everything.
 
 As with the proposed methods for including wider contexts, we could potentially
-address these issues using either linguistic knowledge, or neural networks.
-To address the concerns using linguistic knowledge, we could again mark certain
+address these issues using either linguistic knowledge, or neural networks.  To
+address the concerns using linguistic knowledge, we could again mark certain
 rules should be modeled jointly, and assume independence between the remaining
-syntactic relations. For example, we could model transitive verbs jointly,
-but assume independence from adverbs and prepositional modifiers.
+syntactic relations. For example, we could model transitive verbs jointly, but
+assume independence from adverbs and prepositional modifiers; or we could
+jointly model two adjective modifiers, but assume independence once we
+encounter three or more. Again, rules similar to the ones discussed in
+\newcite{pado:2007:cl} would be a good starting point, and others could be
+proposed in qualitative analysis of the data.
+
+The other possibility is to use LSTMs in order to jointly model the different
+modifiers. Since LSTMs are able to handle a variable-length sequence as input,
+they seem to be a good candidate for creating a joint model over all the
+attachments in a principled manner. Unfortunately, LSTMs also assume that the
+{\em order} of the sequence is important, which is not the case for our model.
 
 \subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
 
