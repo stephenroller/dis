@@ -1376,7 +1376,12 @@ A variation of this approach was discussed in \newcite{pado:2007:cl}, the
 original proposal of syntactic distributional spaces. In their model, they also
 extracted contexts for dependency chains two and three hops away from the
 target word, rather than the only the direct neighbors. Since then, most models
-tend to direct
+have focused mostly on direct neighbors (except for prepositional phrases), as
+this approach introduces many additional contexts, making the model
+significantly more complex and memory intensive, while also dramatically
+increasing the sparsity of the data: the vast majority of 3-hop syntactic
+patterns will occur only once in corpus. Indeed, if we use this linguistic approach,
+these issues of scaling and sparsity will plague our model as well.
 
 
 
