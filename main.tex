@@ -443,7 +443,7 @@ predicted the relation with the highest score; in this way, the model
 can actually learn to detect 3 types of lexical relations, though this
 was not our primary research interest at the time.
 
-Table~{\ref:asymresults} shows our initial experimental results for the
+Table~\ref{tab:asymresults} shows our initial experimental results for the
 Asym classifier.
 
 \begin{table}
@@ -1616,7 +1616,22 @@ contribute to the RTE Lexical Entailment Classifier. Progress in these areas
 would contribute significantly to our thesis that our models extract useful
 lexical information for Recognizing Textual Entailment.
 
-Finally, we discussed different long-term directions for future research.
+Finally, we discussed different long-term directions for future research. These
+ideas are much larger, and less guaranteed than the short-term research
+proposals, but also reflect our opinion on where the field should go from here.
+Namely, we considered how Hypernymy and Relationship prediction could be
+improved by imposing simple constraints inherent to ontologies. We also
+discussed several ways in which more context could be exploited in Lexical
+Substitution, or how we could remove some of the independence assumptions made
+by our current model: we note that improvements could easily come by either
+exploiting linguistic knowledge about how different syntactic relations
+interact, or by using very successful neural network technologies. Lastly, we
+considered how current syntactic distributional spaces make an inefficient use
+of the available information, and discussed ways they could be extended to be
+{\em generative} over syntactic relations, instead of just artificially
+limiting the statistics they model. Improvements in these spaces would likely
+improve performance of distributional models in many tasks, including
+Lexical Entailment and Lexical Substitution.
 
 \pagebreak
 \bibliographystyle{aclcite}
