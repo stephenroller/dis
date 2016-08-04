@@ -55,14 +55,15 @@ Doctoral Dissertation Proposal}
   analysis and insight as to how and why these models are anble to generalize
   to novel lexical items, and relate this to prior linguistic and NLP research.
 
-  We propose several short- and long-term extensions to this work. In the
-  out-of-context models, we propose applying our model to a broader group of
-  lexical relations, and including additional useful features in
-  classification.  In the in-context work, we propose extensions which improve
-  handling of very rare context items, analyzing the relationships between
-  paraphrases. In the long-term, we propose stronger models of in-context
-  representations, and unifying the out-of-context and in-context models in
-  one of several possible ways.
+  (Summary of proposed items here)
+  %We propose several short- and long-term extensions to this work. In the
+  %out-of-context models, we propose applying our model to a broader group of
+  %lexical relations, and including additional useful features in
+  %classification.  In the in-context work, we propose extensions which improve
+  %handling of very rare context items, analyzing the relationships between
+  %paraphrases. In the long-term, we propose stronger models of in-context
+  %representations, and unifying the out-of-context and in-context models in
+  %one of several possible ways.
 \end{abstract}
 
 %\pagebreak
@@ -73,18 +74,22 @@ Doctoral Dissertation Proposal}
 
 As the field of Natural Language Processing (NLP) has developed, significant
 progress has been made in many areas of research, especially those in ``lower''
-levels of the Vauquois Triangle, like Part-of-Speech tagging and Parsing.  Even
-difficult semantics tasks, like Sentiment Analysis and Document Classification,
-have made significant progress NEEDCITE. Today, there is great deal of emphasis
-on sophisticated semantics tasks that require inference and synthesis of
-knowledge. These include tasks like Question Answering (QA), where computers
-must read and answer questions about passages NEEDCITE, and Recognizing Textual
-Entailment (RTE), where computers must decide whether a hypothesis utterance
-logically follows from a given text \cite{marelli:2014:semeval}.
+levels of the Vauquois Triangle \cite{needcite}, like Part-of-Speech tagging
+\cite{needcite} and Parsing \cite{needcite}.  Even difficult semantics tasks,
+like Named Entity Recognition \cite{needcite}, Sentiment Analysis
+\cite{socher:2013:nips} and Document Classification \cite{zhang:2016:naacl},
+and Coreference Resolution \cite{needcite}, have made significant progress.
+
+Today, there is great deal of emphasis on sophisticated semantics
+tasks that require inference and synthesis of knowledge. These include tasks
+like Question Answering (QA), where computers must read and answer questions
+about passages NEEDCITE, and Recognizing Textual Entailment (RTE), where
+computers must decide whether a hypothesis utterance logically follows from a
+given text \cite{marelli:2014:semeval,bowman:2015:emnlp,beltagy:2016:cl}.
 
 Much progress has been made in systems which perform these sort of sophisticated
 logical inferences, especially as common benchmarks and data sets have started
-to become common \cite{marelli:2014:semeval,bowman:2015:emnlp,NEEDCITE}. Yet these
+to become common \cite{marelli:2014:semeval,bowman:2015:emnlp}. Yet these
 systems ultimately must work over individual lexical items to form a
 conclusion, and require knowledge about the relationships between lexical
 items. Consider the following example:
