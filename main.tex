@@ -1590,6 +1590,23 @@ probably the most ambitious and difficult of our long term proposals.
 
 \section{Conclusion}
 
+Distributional Semantics has come a long way in its ability to contribute to
+difficult Natural Language Processing tasks. In this proposal, we several
+methods for distilling {\em lexical knowledge} out of distributional vectors.
+We discussed two models of hypernymy detection, which take as input pairs of
+words, and predict whether those models stand in a hypernymy relation.  Through
+detailed analysis, we have a clear picture of how these models work, and how
+they relate to some of the linguistic theories on Lexical Entailment, like the
+Distributional Inclusion Hypothesis. We also saw that at least one of these
+models is able to positively contribute to a Fully Featured Lexical Entailment
+classifier, which uses a wide variety of lexical cues and resources, like
+WordNet and distributional similarity, in order to improve performance in an
+end-to-end RTE system. We also discussed a new model of Lexical Substitution,
+which we argue is related to lexical entailment by acting as a form of
+{\em in-context synonym prediction}. Our Lexical Substitution model outperforms
+some comparable baselines, and analysis shows its improvements derive
+predominantly from exploiting simple priors.
+
 \pagebreak
 \bibliographystyle{aclcite}
 \bibliography{refs}
