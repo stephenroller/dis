@@ -271,8 +271,9 @@ dimensions (or sometimes as large as the entire vocab, e.g.
 or more dimensions, e.g. \newcite{baroni:2011:gems}. Efficiently dealing
 with these large, extremely sparse vectors can sometime be troublesome, so
 we often opt to use some form of {\em dimensionality reduction}, like
-Singular Value Decomposition \cite{landauer:1997:pr}. In dimensionality
-reduction, the co-occurrence matrix $M$ is usually assumed to be factorizable
+Singular Value Decomposition (SVD) \cite{landauer:1997:pr} or Nonnegative Matrix
+Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality
+reduction, the co-occurrence matrix $M$ is typically assumed to be factorizable
 into two lower-rank matrices,
 \begin{equation*}
   M = VC^{\top}
