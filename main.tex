@@ -267,8 +267,8 @@ One final notion in Distributional Semantics we wish to review is that of
 dimensionality reduction. As described earlier, the distributional vector
 spaces are very high-dimensional; bag-of-words spaces have many thousands of
 dimensions (or sometimes as large as the entire vocab, e.g.
-\newcite{pennington:2014:emnlp}, while syntactic spaces often have a million
-or more dimensions, e.g. \newcite{baroni:2011:gems}. Efficiently dealing
+\newcite{pennington:2014:emnlp}, while syntactic spaces often have a millions,
+e.g. \newcite{baroni:2010:cl}. Efficiently dealing
 with these large, extremely sparse vectors can sometime be troublesome, so
 we often opt to use some form of {\em dimensionality reduction}, like
 Singular Value Decomposition (SVD) \cite{landauer:1997:pr} or Nonnegative Matrix
@@ -309,14 +309,18 @@ indicative of hypernymy; and possessives, like ``X's Y'', can be indicative
 of meronomy. In fact, the previous sentence contains several Hearst patterns
 {\em about} Hearst patterns. Later, the Hearst pattern method by
 \newcite{snow:2004:nips} to include a variety of syntactic patterns rather than
-pure textual patterns. In another vein of research, others have proposed how
-hypernymy relationships might be viewed holistically in corpora. One
-lasting hypothesis has been the Distributional Inclusion Hypothesis (DIH)
+pure textual patterns. By using syntactic parses, some longer distance patterns
+are more easily captured, like ``X such as Y and Z'', which can be more
+trivially transformed to ``X such as Z'' in a syntactic parse.
+
+In another vein of research, others have proposed how
+hypernymy relationships might be viewed holistically in corpora.
+One lasting hypothesis has been the Distributional Inclusion Hypothesis (DIH)
 \cite{zhitomirsky-geffet:2005:acl}, which states that the contexts in which a
 hypernym appears should be a superset of all its hyponyms, or subordinate
-words. Though this seems to be strictly false\footnote{Consider {\em \#The animal
-barked loudly at its bowl of animal food.}}, a considerable amount of work has
-assumed it to be at least partially true, including our own.
+words. Though this seems to be strictly false\footnote{Consider {\em \#The
+animal barked loudly at its bowl of animal food.}}, a considerable amount of
+work has assumed it to be at least partially true, including our own.
 
 Early work in identify lexical entailments using distributional spaces was
 focused mostly on attempts to find unsupervised similarity measures to identify
