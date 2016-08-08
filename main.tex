@@ -121,7 +121,7 @@ incomplete. As such, dependence on manually constructed resources represents one
 systems. Even modern Neural Network approaches, which attempt to learn
 entailments without explicitly depending on these resources, cannot make
 entailment predictions about words which were not in the training data
-NEEDCITE.
+\cite{bowman:2015:emnlp,cheng:2016:arxiv}.
 
 Distributional Semantics offers a potential solution to these issues of lexical
 coverage. Distributional Semantics takes inspiration from the famous quote,
@@ -244,7 +244,9 @@ In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of similarity results in
 emphasizing more topical similarity, e.g. doctor and hospital, while smaller
-windows emphasize more functional similarity, e.g. doctor and surgeon NEEDCITE.
+windows emphasize more functional similarity, e.g. doctor and surgeon
+\cite{needcite,levy:2014:acl}.
+
 Context can be also defined as {\em syntactic neighbors} extracted
 from a dependency parse \cite{pado:2007:cl}. For example, in Figure~\ref{fig:syn},
 the contexts for the word {\em chased} would be {\em nsubj+dog} and {\em
@@ -256,8 +258,8 @@ relations to occur with certain arguments.
   \centering
   \includegraphics[width=0.75\textwidth]{figures/syn}
 \caption{Example of a dependency parse for ``The dog chased its tail.'' In
-a syntactic distributional space, the labeled graph edges define contexts
-rather than a window.}
+a syntactic distributional space, contexts are defined as adjacent nodes
+with their labeled edges.}
 \label{fig:syn}
 \end{figure}
 
