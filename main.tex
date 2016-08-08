@@ -109,15 +109,15 @@ at some text.
 Although significant progress has been made on the text of
 Rich Textual Entailment, many of these systems ultimately depend on some lexical
 resources
-\cite{marelli:2014:semeval,lai:2014:semeval,beltagy:2014:semeval,beltagy:2016:cl}.
+\cite{beltagy:2014:semeval,bjerva:2014:semeval,lai:2014:semeval,marelli:2014:semeval,beltagy:2016:cl}.
 The most famous lexical resource is WordNet \cite{miller:1995:acm}, which organizes the lexicon into a
 large ontology containing many thousands of annotations of relationships
-between different lexical items, though countless other resources also exist
+between different lexical items, though many other resources also exist
 and are used \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
 Unfortunately,
 resources as thorough as WordNet are extremely expensive and intensive to
 create, and since language is ever-changing, they are inevitably always
-incomplete, and represent one weak point in Natural Language Understanding
+incomplete. As such, dependence on manually constructed resources represents one weak point in some Natural Language Understanding
 systems. Even modern Neural Network approaches, which attempt to learn
 entailments without explicitly depending on these resources, cannot make
 entailment predictions about words which were not in the training data
