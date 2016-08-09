@@ -413,10 +413,14 @@ implies {\em child}, the the opposite surely does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard. This was recognized widely in the literature, and numerous
 asymmetric, unsupervised similarity measures were proposed
-but their performance tended to be lackluster or brittle
 \cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
+mostly inspired by the Distributional Inclusion Hypothesis.
+However, their performance tended to be lackluster \cite{clarke:2009:gems} or
+brittle \cite{kotlerman:2010:nle}. This lead to the question: are the measures
+just sensitive to noise in distributional vectors, or is the Distributional
+Inclusion Hypothesis fundamentally flawed?
 
-These 
+
 
 The most successful models tended to be based on the Distributional Inclusion
 Hypothesis of \newcite{zhitomirsky-geffet:2005:acl}, which states that
