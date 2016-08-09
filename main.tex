@@ -446,8 +446,9 @@ pair of words $(H, w)$, we compute the final feature space defined as:
 \begin{align*}
   A_i(H, w) & = H_i - w_i\\
   B_i(H, w) & = (H_i - w_i)^2\\
-  {\text features}(H, w) & = \langle A; B\rangle
+  \text{features}(H, w) & = \langle A; B\rangle,
 \end{align*}
+where $\langle A; B\rangle$ is the vector {\em concatenation}.
 
 , we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
