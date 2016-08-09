@@ -421,14 +421,14 @@ just sensitive to noise in distributional vectors, or is the Distributional
 Inclusion Hypothesis fundamentally flawed?
 
 To this end, we consider how the problem could be recast as a supervised
-classification problem, and proposed Asym, a simple supervised model
-that is inherent asymmetric. At its core, the model is inspired by the famous
-result of \newcite{mikolov:2013:iclr}, who observed that vector subtraction
-can be used to perform some kinds of analogical reasoning:
-\begin{equation*}
-  {\tt king} - {\tt man} + {\tt woman} \approx {\tt queen}.
-\end{equation*}
-
+classification problem, and propos Asym, a simple supervised model that is
+inherent asymmetric \cite{roller:2014:coling}. At its core, the model is
+inspired by the famous result of \newcite{mikolov:2013:iclr}, who observed that
+vector subtraction can be used to perform some kinds of analogical reasoning
+in some kinds of Distributional Spaces: e.g.,
+${\tt king} - {\tt man} + {\tt woman} \approx {\tt queen}$. Interestingly,
+this vector subtraction approach reasonably models many sophisticated relationships
+like gender, singular/plural, verb conjugations, and capital/country.
 
 
 The most successful models tended to be based on the Distributional Inclusion
