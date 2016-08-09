@@ -491,29 +491,32 @@ predicted the relation with the highest score; in this way, the model
 can actually learn to detect 3 types of lexical relations, though this
 was not our primary research interest at the time.
 Table~\ref{tab:asymresults} shows our initial experimental results for the
-Asym classifier.
+Asym classifier, as well as performance of a baseline .
 
 \begin{table}
   \begin{center}
   \begin{tabular}{|l|cc|cc|}
   \hline
+  Classifier                 &   \cite{baroni:2011:gems}          &   \cite{roller:2014:coling}    &   \cite{baroni:2011:gems}          &   \cite{roller:2014:coling}\\
+  \hline
+  \hline
   Data set        &  \multicolumn{2}{c|}{\bless } & \multicolumn{2}{c|}{\entailment} \\
   \hline
   Random Baseline        &  \multicolumn{2}{c|}{.46 } &  \multicolumn{2}{c|}{.50 } \\
   \hline
-  Classifier                 &   \svm          &   {\logregs}                             &   \svm          &   {\logregs}          \\
-  \hline
   Window 2 BoW     &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
-  %Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
-  \typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
+  Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
+  %\typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
 % \mikolovr        &    .46          &     .77            \\
   \hline
   \end{tabular}
   \end{center}
-  \caption{Average accuracy of {\svm} and {\logreg}
+  \caption{Accuracy of {\svm} and {\logreg}
 on {\bless} and {\entailment}
-  using different spaces for feature generation.}
-  \label{tab:bless-and-entailment-v-space}
+  using different spaces for feature generation. Performance is measured as
+  the average accuracy across all folds of the leave-one-out cross validation
+  experiment}
+  \label{tab:asymresults}
 \end{table}
 
 In order to test how well our supervised model is capturing the notion
