@@ -426,14 +426,19 @@ that is inherent asymmetric \cite{roller:2014:coling}.
 
 At its core, the model is inspired by the famous result of
 \newcite{mikolov:2013:iclr}, who observed that vector subtraction can be used
-to perform some kinds of analogical reasoning in some kinds of Distributional
-Spaces: e.g., ${\tt king} - {\tt man} + {\tt woman} \approx {\tt queen}$.
-Interestingly, this vector subtraction approach reasonably models both
-grammatical relationships (singular/plural, verb conjugations) and some
-semantic relationships (gender, capital/country).
+to perform some kinds of analogical reasoning in some kinds of distributional
+spaces: e.g., ${\tt king} - {\tt man} + {\tt woman} \approx {\tt queen}$.
+Interestingly, this vector subtraction approach reasonably models many
+grammatical relationships (singular/plural, verb conjugations) and some limited
+semantic relationships (gender, capital/country). Asym exploits this
+behavior for the task of hypernymy and lexical relationship prediction.
 
 
-Asym 
+The Asym model is a simple model which uses the {\em vector difference} between
+the hypothesized hypernym and hyponym as input features to an off-the-shelf
+classifier. For example, given a distributional vector for {\tt animal} and
+a vector for {\tt cat}, we will input ${\tt animal} - {\tt cat}$ as input
+to the classifier.
 
 , we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
