@@ -437,8 +437,17 @@ behavior for the task of hypernymy and lexical relationship prediction.
 The Asym model is a simple model which uses the {\em vector difference} between
 the hypothesized hypernym and hyponym as input features to an off-the-shelf
 classifier. For example, given a distributional vector for {\tt animal} and
-a vector for {\tt cat}, we will input ${\tt animal} - {\tt cat}$ as input
-to the classifier.
+a vector for {\tt cat}, we use the vector ${\tt animal} - {\tt cat}$ as the
+features for a positive example, while the vectors for
+${\tt cat} - {\tt animal}$ and ${\tt animal} - {\tt sofa}$ are inputted
+as negative examples. Additionally, we also give the {\em element-wise squared
+difference vector} as features to the classifier. That is, for a given hypernym, hyponym
+pair of words $(H, w)$, we compute the final feature space defined as:
+\begin{align*}
+  A_i(H, w) & = H_i - w_i\\
+  B_i(H, w) & = (H_i - w_i)^2\\
+  {\text features}(H, w) & = \langle A; B\rangle
+\end{align*}
 
 , we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
