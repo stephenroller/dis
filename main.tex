@@ -500,37 +500,35 @@ Table~\ref{tab:asymresults} shows our initial experimental results.
 
 \begin{table}
   \centering
-  \begin{tabular}{|l|l|c|}
+  \begin{tabular}{|ll|c|}
     {\bf Classifier} & {\bf Space} & {\bf Acc.}\\
-    \multicolumn{3}{ {\bf LEDS}}\\
-
-
-
-\begin{table}
-  \begin{center}
-  \begin{tabular}{|l|cc|cc|}
-  \hline
-  Classifier                 &   \cite{Baroni 2011}          &   {Asym}    &   \cite{baroni:2011:gems}          &   \cite{roller:2014:coling}\\
-  \hline
-  \hline
-  Data set        &  \multicolumn{2}{c|}{\bless } & \multicolumn{2}{c|}{\entailment} \\
-  \hline
-  Random Baseline        &  \multicolumn{2}{c|}{.46 } &  \multicolumn{2}{c|}{.50 } \\
-  \hline
-  Window 2 BoW     &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
-  Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
-  %\typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
-% \mikolovr        &    .46          &     .77            \\
-  \hline
+    \hline\hline
+    \multicolumn{3}{c|}{ {\bf LEDS}}\\
+    \hline
+    Random Baseline           &     -   & .50\\
+    \cite{baroni:2011:gems}   & Window 2 & .81\\
+    \cite{roller:2014:coling} & Window 2 & {\bf .85}\\
+    \cite{baroni:2011:gems}   & Sentence & .78\\
+    \cite{roller:2014:coling} & Sentence & .82
+    \hline\hline
+    \multicolumn{3}{c|}{ {\bf BLESS}}\\
+    \hline
+    Always guess {\em no-relation} & - & .46\\
+    \cite{baroni:2011:gems}   & Window 2 & .76\\
+    \cite{roller:2014:coling} & Window 2 & {\bf .84}\\
+    \cite{baroni:2011:gems}   & Sentence & .73\\
+    \cite{roller:2014:coling} & Sentence & .80
+    \hline
   \end{tabular}
   \end{center}
-  \caption{Accuracy of {\svm} and {\logreg}
-on {\bless} and {\entailment}
+  \caption{Accuracy of {\svm} and {\logreg} on {\bless} and {\entailment}
   using different spaces for feature generation. Performance is measured as
   the average accuracy across all folds of the leave-one-out cross validation
-  experiment}
+  experiment.}
   \label{tab:asymresults}
 \end{table}
+
+
 
 In order to test how well our supervised model is capturing the notion
 of selective distributional inclusion, we test each of the unsupervised
