@@ -496,8 +496,8 @@ We compare our model with two baselines: the first is a random baseline,
 which just guesses randomly for the balanced LEDS data set, and always
 the most common class ({\em no-relation}) for BLESS. We also compare to the
 model proposed in \newcite{baroni:2011:gems}, which uses the {\em concatenation}
-of the $H$ and $w$ vectors and trains an off-the-shelf polynomial SVM.
-Table~\ref{tab:asymresults} shows our initial experimental results.
+of the $H$ and $w$ vectors and trains an off-the-shelf polynomial Support
+Vector Machine \cite{needcite}.
 
 \begin{table}
   \centering
@@ -530,6 +530,13 @@ Table~\ref{tab:asymresults} shows our initial experimental results.
 \end{table}
 
 
+Table~\ref{tab:asymresults} shows the results for our initial experiment.
+First we notice that both models strongly outperform the random baselines,
+indicating there is some successful learning in the models. We also see that
+the Window 2 space performs better than the Sentence space in all four
+comparisons, indicating it is likely the task depends more heavily {\em
+functional} properties of words than {\em topical} properties of words. We will
+see further evidence of this in Section~\ref{sec:multiprototype}.
 
 In order to test how well our supervised model is capturing the notion
 of selective distributional inclusion, we test each of the unsupervised
