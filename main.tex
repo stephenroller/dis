@@ -421,26 +421,17 @@ performance tend to be lackluster \cite{clarke:2009:gems} or brittle
 overly sensitive to noise in distributional vectors, or is the Distributional
 Inclusion Hypothesis fundamentally flawed? If the unsupervised are measures
 are simply too sensitive to noise, perhaps using supervised techniques can
-improve performance.
+improve performance.  To this end, we propose Asym, a simple supervised model
+that is inherent asymmetric \cite{roller:2014:coling}. 
 
-Interestingly, to our knowledge, only one paper treated the problem as a
-supervised classification task before 2014: although many had tried using
-lexical pattern matching techniques, like Hearst patterns
-\cite{hearst:1992:coling,snow:2004:nips}, only \newcite{baroni:2011:gems} had
-tried supervised classification; even then, their model was only proposed as
-a baseline model in early analysis of their new data set, BLESS.
+At its core, the model is inspired by the famous result of
+\newcite{mikolov:2013:iclr}, who observed that vector subtraction can be used
+to perform some kinds of analogical reasoning in some kinds of Distributional
+Spaces: e.g., ${\tt king} - {\tt man} + {\tt woman} \approx {\tt queen}$.
+Interestingly, this vector subtraction approach reasonably models both
+grammatical relationships (singular/plural, verb conjugations) and some
+semantic relationships (gender, capital/country).
 
-Around the same time
-
-To answer this e consider how the problem could be recast as a
-supervised classification problem, and propos Asym, a simple supervised model
-that is inherent asymmetric \cite{roller:2014:coling}. At its core, the model
-is inspired by the famous result of \newcite{mikolov:2013:iclr}, who observed
-that vector subtraction can be used to perform some kinds of analogical
-reasoning in some kinds of Distributional Spaces: e.g., ${\tt king} - {\tt man}
-+ {\tt woman} \approx {\tt queen}$. Interestingly, this vector subtraction
-approach reasonably models both grammatical relationships (singular/plural,
-verb conjugations) and some semantic relationships (gender, capital/country).
 
 Asym 
 
