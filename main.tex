@@ -485,13 +485,18 @@ positive examples. As such the model only contains hypernymy and random
 relations, and we train a binary classifier. The second data set is {\bf
 BLESS} \cite{baroni:2011:gems}, which contains annotations of word relations
 for 200 unambiguous, concrete nouns from 17 broad categories. Each noun is
-annotated with its co-hyponyms, meronyms, hypernym and some random words. Since
-there were four relations, we trained four one-vs-all classifiers, and
+annotated with its co-hyponyms, meronyms, hypernym and some random words.
+Since there were four relations, we trained four one-vs-all classifiers, and
 predicted the relation with the highest score; in this way, the model
-can actually learn to detect 3 types of lexical relations, though this
+can learns to detect three different lexical relations, though this
 was not our primary research interest at the time.
-Table~\ref{tab:asymresults} shows our initial experimental results for the
-Asym classifier, as well as performance of a baseline .
+
+We compare our model with two baselines: the first is a random baseline,
+which just guesses randomly for the balanced LEDS data set, and always
+the most common class ({\em no-relation}) for BLESS. We also compare to the
+model proposed in \newcite{baroni:2011:gems}, which uses the {\em concatenation}
+of the $H$ and $w$ vectors and trains an off-the-shelf polynomial SVM.
+Table~\ref{tab:asymresults} shows our initial experimental results.
 
 \begin{table}
   \begin{center}
