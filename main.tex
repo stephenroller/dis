@@ -450,8 +450,8 @@ pair of words $(H, w)$, we compute the final feature space defined as:
 \end{align*}
 where $\langle A; B\rangle$ is the vector {\em concatenation}. This computation
 is performed for all examples in our data set, and then the features$(H, w)$
-vector are inputted to a supervised classifier, along with the classification
-label.
+vector and the classification label are used to train a Logistic Regression
+classifier.
 
 One significant advantage of this model over the prior work is its direct
 connection to the Distributional Inclusion Hypothesis: since our model uses the
@@ -483,7 +483,6 @@ there were four relations, we trained four one-vs-all classifiers, and
 predicted the relation with the highest score; in this way, the model
 can actually learn to detect 3 types of lexical relations, though this
 was not our primary research interest at the time.
-
 Table~\ref{tab:asymresults} shows our initial experimental results for the
 Asym classifier.
 
@@ -497,8 +496,8 @@ Asym classifier.
   \hline
   Classifier                 &   \svm          &   {\logregs}                             &   \svm          &   {\logregs}          \\
   \hline
-  \UpWWr           &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
-  \UpSr            &    .73          &     .80            &     .78         &     .82            \\
+  Window 2 BoW     &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
+  Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
   \typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
 % \mikolovr        &    .46          &     .77            \\
   \hline
@@ -509,83 +508,6 @@ on {\bless} and {\entailment}
   using different spaces for feature generation.}
   \label{tab:bless-and-entailment-v-space}
 \end{table}
-
-
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|rrrr|}
-  \hline
-  Model                          &   LEDS   &  BLESS   &   Medical &      TM14  \\
-  \hline
-  Cosine (Baseline)              &    .789  &    .225  &    .165  &      .674  \\
-  \hline
-  \newcite{baroni:2012:eacl}     &          &          &          &            \\
-  Concat                         &    .802  &    .689  &    .257  &      .722  \\
-  Diff                           &    .809  &    .496  &    .226  &      .672  \\
-  Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
-  Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  HD   \cite{roller:2016:emnlp}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
-  \hline
-\end{tabular}
-\end{center}
-\caption{Mean F1 scores for each model and data set.}
-\label{tab:results1}
-\end{table}
-
-
-
-\begin{table}
-  \centering
-  \begin{tabular}{|l|cc cc|}
-    \hline
-    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
-    \hline\hline
-    \multicolumn{5}{|c|}{DIH Measures Before Dimension Selection}\\
-    \hline
-    \cosine        &     .68     &     .20    &     .27     &     .27    \\
-%    \balAPinc      &     .56     &     .23    &     .31     &     .28    \\
-%    \WeedsPrec     &     .52     &     .22    &     .33     &     .28    \\
-    \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
-    \invCL         &     .60     &     .18    &     .31     &     .28    \\
-    \hline
-    \hline
-    %Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
-    %\hline\hline
-    % ------------------------------------------------------------------
-    % THESE VALUES WERE CREATED IN THE HOLD-ONE-CONCEPT-OUT SETTING
-    % ------------------------------------------------------------------
-    \multicolumn{5}{|c|}{DIH Measures After Dimension Selection}\\
-    \hline
-    \cosine        &   .69      &    .20    &    .24     &    .28    \\
-%    \balAPinc      &   .54      &    .35    &    .26     &    .28    \\
-%    \WeedsPrec     &   .50      &    .38    &    .27     &    .29    \\
-    \ClarkeDE      &   .55      &    .39    &    .24     &    .29    \\
-    \invCL         &   .42      &{\bf.58}   &    .24     &    .29    \\
-    % ------------------------------------------------------------------
-     \hline
-  \end{tabular}
-  \caption{Mean Average Precision for the unsupervised measures before
-  after selecting the top dimensions from the Asym model.}
-  \label{tab:mapscores}
-\end{table}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.75\textwidth]{plots/window}
-  \caption{Caption here.}
-  \label{fig:windowsize}
-\end{figure}
-
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=0.75\textwidth]{plots/kernel}
-%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
-%  \label{fig:kernel}
-%\end{figure}
-
-
-
 
 In order to test how well our supervised model is capturing the notion
 of selective distributional inclusion, we test each of the unsupervised
@@ -672,6 +594,63 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
 
 
 
+
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|cc cc|}
+    \hline
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    \hline\hline
+    \multicolumn{5}{|c|}{DIH Measures Before Dimension Selection}\\
+    \hline
+    \cosine        &     .68     &     .20    &     .27     &     .27    \\
+%    \balAPinc      &     .56     &     .23    &     .31     &     .28    \\
+%    \WeedsPrec     &     .52     &     .22    &     .33     &     .28    \\
+    \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
+    \invCL         &     .60     &     .18    &     .31     &     .28    \\
+    \hline
+    \hline
+    %Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    %\hline\hline
+    % ------------------------------------------------------------------
+    % THESE VALUES WERE CREATED IN THE HOLD-ONE-CONCEPT-OUT SETTING
+    % ------------------------------------------------------------------
+    \multicolumn{5}{|c|}{DIH Measures After Dimension Selection}\\
+    \hline
+    \cosine        &   .69      &    .20    &    .24     &    .28    \\
+%    \balAPinc      &   .54      &    .35    &    .26     &    .28    \\
+%    \WeedsPrec     &   .50      &    .38    &    .27     &    .29    \\
+    \ClarkeDE      &   .55      &    .39    &    .24     &    .29    \\
+    \invCL         &   .42      &{\bf.58}   &    .24     &    .29    \\
+    % ------------------------------------------------------------------
+     \hline
+  \end{tabular}
+  \caption{Mean Average Precision for the unsupervised measures before
+  after selecting the top dimensions from the Asym model.}
+  \label{tab:mapscores}
+\end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{plots/window}
+  \caption{Caption here.}
+  \label{fig:windowsize}
+\end{figure}
+
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=0.75\textwidth]{plots/kernel}
+%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
+%  \label{fig:kernel}
+%\end{figure}
+
+
+
+
+
+
 \subsection{Subsystem in complete RTE system \cite{beltagy:2016:cl}}
 \label{sec:rtesubsystem}
 
@@ -738,6 +717,27 @@ and \textit{stand $\to$ wait}.
 
 \subsection{H-Features and Multi-prototype Hypernymy Classifier \cite{roller:2016:emnlp}}
 \label{sec:multiprototype}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|rrrr|}
+  \hline
+  Model                          &   LEDS   &  BLESS   &   Medical &      TM14  \\
+  \hline
+  Cosine (Baseline)              &    .789  &    .225  &    .165  &      .674  \\
+  \hline
+  \newcite{baroni:2012:eacl}     &          &          &          &            \\
+  Concat                         &    .802  &    .689  &    .257  &      .722  \\
+  Diff                           &    .809  &    .496  &    .226  &      .672  \\
+  Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
+  Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
+  HD   \cite{roller:2016:emnlp}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  \hline
+\end{tabular}
+\end{center}
+\caption{Mean F1 scores for each model and data set.}
+\label{tab:results1}
+\end{table}
 
 
 \subsubsection{Concerning Lexical Memorization}
