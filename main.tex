@@ -471,12 +471,12 @@ word to be test pairs. The remainder of word pairs, which did not contain the
 held out word, are treated as training pairs. This prevent classifiers from
 memorizing that words like {\em animal} are simply more likely to be hypernyms.
 
-Since different types of distributional spaces exhibit different properties, we
-evaluate our model on three different distributional spaces: the first two,
-which use a simple Bag-of-Words context, differ in their context window size.
-The {\em Window-2 BoW} space counts content words two words to the left and
-right of targets as contexts, while the {\em Sentence BoW} space counts all
-content words within complete sentence bounadries.
+Since different types of distributional spaces exhibit different properties
+\cite{pado:2007:cl}, we evaluate our model on two distributional
+spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
+counts content words two words to the left and right of targets as contexts,
+while the {\em Sentence BoW} space counts all content words within complete
+sentence bounadries.
 
 We evaluate our model on two data sets. The first, {\bf LEDS}
 \cite{baroni:2012:eacl}, contains 1385 hyponym-hypernym pairs as positive
@@ -504,7 +504,7 @@ Asym classifier.
   Classifier                 &   \svm          &   {\logregs}                             &   \svm          &   {\logregs}          \\
   \hline
   Window 2 BoW     &    .76          & {\bf.84}       &     .81         & {\bf.85}         \\
-  Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
+  %Sentence BoW     &    .73          &     .80            &     .78         &     .82            \\
   \typedmr         &     -           &     .82            &     .65         &  {\bf.85}            \\
 % \mikolovr        &    .46          &     .77            \\
   \hline
