@@ -412,8 +412,10 @@ However, lexical relationships are very often asymmetric: although {\em girl}
 implies {\em child}, the the opposite surely does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard. This was recognized widely in the literature, and numerous
-asymmetric, unsupervised similarities were proposed
-\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005,acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis}.
+asymmetric, unsupervised similarity measures were proposed
+\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005,acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
+but their performance was often lackluster or brittle \cite{kotlerman:2010:nle}.
+
 
 To remedy this, we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
