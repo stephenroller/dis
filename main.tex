@@ -403,8 +403,8 @@ corpora used in machine translation and distributional semantics.
 \subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
 \label{sec:asym}
 
-In 2014, we presented a novel, supervised model for the task of Lexical
-Entailment Detection. At the time, the primary
+In 2014, we presented a novel, supervised model for the task of Hypernymy Detection.
+At the time, the primary
 motivation for the model was to develop a classifier that was inherently
 asymmetric: baseline similarity scores like cosine have the unfortunate
 property that they're symmetric: $\text{cosine}(a, b) = \text{cosine}(b, a)$.
@@ -413,12 +413,17 @@ implies {\em child}, the the opposite surely does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard. This was recognized widely in the literature, and numerous
 asymmetric, unsupervised similarity measures were proposed
-\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis}.
+but their performance tended to be lackluster or brittle
+\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
+
+These 
+
 The most successful models tended to be based on the Distributional Inclusion
 Hypothesis of \newcite{zhitomirsky-geffet:2005:acl}, which states that
 the grammatical contexts of a hypernym should be a superset of its hyponyms'
-contexts.
-but their performance was often lackluster or brittle \cite{kotlerman:2010:nle}.
+contexts. However, most of these measures had lackluster or brittle
+performance \cite{clarke:2009:gems,kotlerman:2010:nle}. Nonetheless, we
+hypothesized these approaches were generally on the right track
 
 One hypothesis we considered was the fundamental intuition behind the
 Distributional Inclusion Hypothesis may still be correct
