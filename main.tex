@@ -413,11 +413,21 @@ implies {\em child}, the the opposite surely does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard. This was recognized widely in the literature, and numerous
 asymmetric, unsupervised similarity measures were proposed
-\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005,acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
+\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis}.
+The most successful models tended to be based on the Distributional Inclusion
+Hypothesis of \newcite{zhitomirsky-geffet:2005:acl}, which states that
+the grammatical contexts of a hypernym should be a superset of its hyponyms'
+contexts.
 but their performance was often lackluster or brittle \cite{kotlerman:2010:nle}.
 
+One hypothesis we considered was the fundamental intuition behind the
+Distributional Inclusion Hypothesis may still be correct
 
-To remedy this, we proposed Asym, a supervised classifier based on the
+To remedy
+ the task using supervised approaches. Prior to our work, only one other paper had tried
+super
+
+, we proposed Asym, a supervised classifier based on the
 {\em vector difference} between two word vectors. The asym model provided
 rough conditional probability that two words $a$ and $c$ exhibited a particular
 lexical relation (the antecedent and consequent). The model learned a simple
