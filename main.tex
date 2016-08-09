@@ -10,6 +10,7 @@
 \usepackage{alltt}
 \usepackage{subfig}
 \usepackage{aliases}
+\usepackage{multirow}
 
 \title{Identifying Lexical Relationships and Subsitutes with Distributional Semantics}
 \author{Stephen Roller\\
@@ -500,27 +501,27 @@ Table~\ref{tab:asymresults} shows our initial experimental results.
 
 \begin{table}
   \centering
-  \begin{tabular}{|ll|c|}
+  \begin{tabular}{|lc|c|}
+    \hline
     {\bf Classifier} & {\bf Space} & {\bf Acc.}\\
     \hline\hline
-    \multicolumn{3}{c|}{ {\bf LEDS}}\\
+    \multicolumn{3}{|c|}{{\bf LEDS}}\\
     \hline
     Random Baseline           &     -   & .50\\
-    \cite{baroni:2011:gems}   & Window 2 & .81\\
-    \cite{roller:2014:coling} & Window 2 & {\bf .85}\\
-    \cite{baroni:2011:gems}   & Sentence & .78\\
-    \cite{roller:2014:coling} & Sentence & .82
+    \newcite{baroni:2011:gems}   & Window 2 & .81\\
+    \newcite{roller:2014:coling} & Window 2 & {\bf .85}\\
+    \newcite{baroni:2011:gems}   & Sentence & .78\\
+    \newcite{roller:2014:coling} & Sentence & .82\\
     \hline\hline
-    \multicolumn{3}{c|}{ {\bf BLESS}}\\
+    \multicolumn{3}{|c|}{{\bf BLESS}}\\
     \hline
     Always guess {\em no-relation} & - & .46\\
-    \cite{baroni:2011:gems}   & Window 2 & .76\\
-    \cite{roller:2014:coling} & Window 2 & {\bf .84}\\
-    \cite{baroni:2011:gems}   & Sentence & .73\\
-    \cite{roller:2014:coling} & Sentence & .80
+    \newcite{baroni:2011:gems}   & Window 2 & .76\\
+    \newcite{roller:2014:coling} & Window 2 & {\bf .84}\\
+    \newcite{baroni:2011:gems}   & Sentence & .73\\
+    \newcite{roller:2014:coling} & Sentence & .80\\
     \hline
   \end{tabular}
-  \end{center}
   \caption{Accuracy of {\svm} and {\logreg} on {\bless} and {\entailment}
   using different spaces for feature generation. Performance is measured as
   the average accuracy across all folds of the leave-one-out cross validation
