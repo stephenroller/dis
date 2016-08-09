@@ -407,12 +407,9 @@ In 2014, we presented a novel, supervised model for the task of Lexical
 Entailment Detection. At the time, the primary
 motivation for the model was to develop a classifier that was inherently
 asymmetric: baseline similarity scores like cosine have the unfortunate
-property that
-\begin{equation*}
-  \text{cosine}(a, b) = \text{cosine}(b, a).
-\end{equation*}
+property that they're symmetric: $\text{cosine}(a, b) = \text{cosine}(b, a)$.
 However, lexical relationships are very often asymmetric: although {\em girl}
-implies {\em child}, the the opposite is does not hold. As such, trying to
+implies {\em child}, the the opposite surely does not hold. As such, trying to
 perform lexical entailment based solely on symmetric measures will always
 fail hard.
 
