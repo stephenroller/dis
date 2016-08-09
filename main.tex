@@ -403,22 +403,25 @@ corpora used in machine translation and distributional semantics.
 \subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
 \label{sec:asym}
 
-In 2014, we presented a novel, supervised model for the task of Hypernymy Detection.
-At the time, the primary
-motivation for the model was to develop a classifier that was inherently
-asymmetric: baseline similarity scores like cosine have the unfortunate
-property that they're symmetric: $\text{cosine}(a, b) = \text{cosine}(b, a)$.
-However, lexical relationships are very often asymmetric: although {\em girl}
-implies {\em child}, the the opposite surely does not hold. As such, trying to
-perform lexical entailment based solely on symmetric measures will always
-fail hard. This was recognized widely in the literature, and numerous
-asymmetric, unsupervised similarity measures were proposed
+Most baseline similarity measures in distributional semantics, like cosine,
+have the unfortunate property that they're symmetric: $\text{cosine}(a, b) =
+\text{cosine}(b, a)$. While this necessary in some applications, like clustering
+\cite{needcite}, it is a fatal flaw in any application involving
+lexical entailment: although {\em girl} implies {\em child}, but
+the opposite does not hold. As such, trying to perform lexical entailment based solely on
+symmetric measures will always fail hard.
+
+This has been recognized widely in the
+literature for some time, and numerous asymmetric, unsupervised similarity measures have been
+proposed
 \cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
-mostly inspired by the Distributional Inclusion Hypothesis.
-However, their performance tended to be lackluster \cite{clarke:2009:gems} or
-brittle \cite{kotlerman:2010:nle}. This lead to the question: are the measures
-just sensitive to noise in distributional vectors, or is the Distributional
-Inclusion Hypothesis fundamentally flawed?
+mostly inspired by the Distributional Inclusion Hypothesis. However, their
+performance tend to be lackluster \cite{clarke:2009:gems} or brittle
+\cite{kotlerman:2010:nle}. This lead to the question: are the measures just
+overly sensitive to noise in distributional vectors, or is the Distributional
+Inclusion Hypothesis fundamentally flawed? If the unsupervised are measures
+are simply too sensitive to noise, perhaps using supervised techniques can
+improve performance.
 
 To answer this question, we consider how the problem could be recast as a
 supervised classification problem, and propos Asym, a simple supervised model
