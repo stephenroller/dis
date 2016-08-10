@@ -736,26 +736,13 @@ as strongly as WordNet on the end-to-end task.
 
 We also perform a qualitative analysis to compare the Distributional Similarity
 classifier with the Asym classifier. We manually inspect and compare the
-predictions and errors made by each, and find that
-Asym does substantially better at distinguishing hypernymy from co-hyponymy.
-This is what we had hoped to find, given the findings in Section~\ref{sec:asym},
-and that cosine is known to heavily favor co-hyponymy \cite{baroni:2011:gems}.
-However, we also find that cosine features are better at discovering synonymy,
-and that Asymmetric frequently mistakes antonymy as an entailing.
-
-We also qualitatively compare the distributional similarity classifier with the classifier
-which used the full set of features
-with the full feature set, we found that, as expected, the distributional features
-miss many hypernyms and falsely classify many co-hyponyms as
-entailing: We manually analyzed a sample of 170 pairs that the distributional classifier
-falsely classifies as entailing. Of these, 67 were co-hyponyms (39\%), 33 were
-antonyms (19\%), and 32 were context-specific pairs like
-\textit{stir/fry}. On the other hand, most (87\%)
- cases of entailment that the distributional classifier detects but the
-all-features classifier misses are word pairs that have no link in
-WordNet. These pairs include \textit{note
-  $\to$ paper}, \textit{swimmer $\to$ racer}, \textit{eat $\to$ bite},
-and \textit{stand $\to$ wait}. 
+predictions and errors made by each, and find that Asym does substantially
+better at distinguishing hypernymy from co-hyponymy.  This is what we had hoped
+to find, given the findings in Section~\ref{sec:asym}, and that cosine is known
+to heavily favor co-hyponymy \cite{baroni:2011:gems}.  However, we also find
+that cosine features are better at discovering synonymy, and that Asymmetric
+frequently mistakes antonymy as an entailing. Additional qualitative analyses comparing
+all of these models are available in \newcite{beltagy:2016:cl}.
 
 \subsection{H-Features and Multi-prototype Hypernymy Classifier \cite{roller:2016:emnlp}}
 \label{sec:multiprototype}
