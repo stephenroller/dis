@@ -704,6 +704,7 @@ inference errors, and other issues in the logical inference engine of
     Always guess neutral & 56.6 & 69.3 \\
     Gold standard annotations&100.0 & 94.6 \\
     \hline
+    Wordform only        & 57.4 & 70.4 \\
     Dist. Sim. only      & 68.8 & 76.7 \\
     WordNet only         & 79.1 & 84.2 \\
     Asym only            & 76.8 & 79.2 \\
@@ -715,6 +716,13 @@ inference errors, and other issues in the logical inference engine of
 \caption{Accuracies for various Lexical Entailment classifiers on the RRR (Intrinsic) and SICK (RTE) datasets.}
 \label{tab:evallexical}
 \end{table}
+
+In general, we find that Asym performs relatively well, even compared some of
+the hand-engineered features proposed by \newcite{lai:2014:semeval}, indicating
+that Asym is flexible and able to learn beyond just the LEDS and BLESS datasets.
+Unsurprisingly, the classifiers which use only Wordform features or only
+distributional similarity both perform much worse than those based on the
+rich WordNet resource.
 
 Again we see that WordNet features have the highest contribution. Distributional rules still perform better
 than the baseline, but the gap between distributional features and
