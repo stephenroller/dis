@@ -401,7 +401,7 @@ corpora used in machine translation and distributional semantics.
 
 \section{Completed work}
 
-\subsection{Asym Model for Lexical Entailment \cite{roller:2014:coling}}
+\subsection{Asym Model for Lexical Entailment (Roller et al., 2014)}
 \label{sec:asym}
 
 Most baseline similarity measures in distributional semantics, like cosine,
@@ -606,7 +606,7 @@ scores weakened. Altogether, this is evidence that the Asym measure is
 indeed, conforming to our Selective Distributional Inclusion interpretation.
 
 
-\subsection{Subsystem in complete RTE system \cite{beltagy:2016:cl}}
+\subsection{Subsystem in complete RTE system (Beltagy et al., 2016)}
 \label{sec:rtesubsystem}
 
 Beyond showing that Asym is better able to improve performance on lexical
@@ -746,7 +746,7 @@ that cosine features are better at discovering synonymy, and that Asymmetric
 frequently mistakes antonymy as an entailing. Additional qualitative analyses comparing
 all of these models are available in \newcite{beltagy:2016:cl}.
 
-\subsection{H-Features for Hypernymy Classification \cite{roller:2016:emnlp}}
+\subsection{H-Features for Hypernymy Classification (Roller and Erk, 2016b)}
 \label{sec:hfeatures}
 
 %In the previous sections, we saw that the Asym classifier is able to to learn
@@ -985,7 +985,7 @@ the PCA-like procedure. We found that performance improves substantially on all
 datasets with at least two iterations, but then falls off slowly after five or
 more iterations. We chose to use four iterations for all final models.
 
-\subsection{Lexical Substitution \cite{roller:2016:naacl}}
+\subsection{Lexical Substitution (Roller and Erk, 2016a)}
 \label{sec:pic}
 
 \begin{figure}
@@ -1050,15 +1050,15 @@ dot product:
   \hline
   {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
   \hline\hline
-  \multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
-  \hline
-  \ooc               &     44.2   &     44.5  &     57.9       \\
-  \addCos            &     51.2   &     46.3  &     62.2       \\
-  \balAddCos         &     49.6   &     46.5  &     61.3       \\
-  \hline
-  \ourmeas           &     51.3   &     46.4  &     61.8       \\
-  \ourmeasparam      & {\bf52.4}  & {\bf48.3} & {\bf62.8}      \\
-  \hline\hline
+  %\multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
+  %\hline
+  %\ooc               &     44.2   &     44.5  &     57.9       \\
+  %\addCos            &     51.2   &     46.3  &     62.2       \\
+  %\balAddCos         &     49.6   &     46.5  &     61.3       \\
+  %\hline
+  %\ourmeas           &     51.3   &     46.4  &     61.8       \\
+  %\ourmeasparam      & {\bf52.4}  & {\bf48.3} & {\bf62.8}      \\
+  %\hline\hline
   \multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@1)}\\
   \hline
   \ooc               &     11.7   &    10.9   &      9.8       \\
@@ -1068,16 +1068,16 @@ dot product:
   \ourmeas           &     17.3   &    16.3   &     11.1       \\
   \ourmeasparam      & {\bf19.7}  &{\bf18.2}  & {\bf13.7}      \\
   \hline
-  \hline
-  \multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@3)}\\
-  \hline
-  \ooc               &     9.7    &     8.6   &     7.0       \\
-  \addCos            &     9.0    &     7.9   &     6.1       \\
-  \balAddCos         &     9.8    &     9.1   &     7.4       \\
-  \hline
-  \ourmeas           &    13.1    &    12.1   &     7.9       \\
-  \ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
-  \hline
+  %\hline
+  %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@3)}\\
+  %\hline
+  %\ooc               &     9.7    &     8.6   &     7.0       \\
+  %\addCos            &     9.0    &     7.9   &     6.1       \\
+  %\balAddCos         &     9.8    &     9.1   &     7.4       \\
+  %\hline
+  %\ourmeas           &    13.1    &    12.1   &     7.9       \\
+  %\ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
+  %\hline
 \end{tabular}
 \end{center}
 \caption{Lexical Substitution results for candidate ranking (GAP) and all-words
