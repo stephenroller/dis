@@ -759,6 +759,33 @@ which uses the concatenation of these LHS and RHS features as well. In this
 section, we address this inconsistency, and propose a new Multiprototype
 classification model for hypernymy detection.
 
+It turns out, two important hyperparameters are important to resolving this
+paradox: the first is which distributional space is used. In unpublished
+experiments, we find that narrower contexts windows perform better than wide
+windows, and that syntactic spaces perform best, regardless of model or
+dataset. Figure~\ref{fig:hyperparms}a shows the performance of one model across
+four datasets: BLESS, LEDS, and two additional datasets which cover general
+lexical entailments in a {\bf Medical} domain \cite{levy:2014:conll}, and {\bf
+TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
+\cite{turney:2015:nle}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.45\textwidth]{plots/window}
+  \includegraphics[width=0.45\textwidth]{plots/kernel}
+  \caption{(a) Performance over different BoW context window sizes. 0 indicates a syntactic space.
+           (b) Comparing Logistic Regression with Linear, Polynomial, and RBF SVMs.}
+  \label{fig:hyperparms}
+\end{figure}
+
+
+
+that syntactic distributional spaces performed better
+than any BoW space on multiple datasets and with multiple models. This is
+consistent with our findings in Section~\ref{sec:asym}, which found that
+narrower windows.
+
+
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|rrrr|}
@@ -779,16 +806,8 @@ classification model for hypernymy detection.
 \label{tab:results1}
 \end{table}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.75\textwidth]{plots/window}
-  \caption{Caption here.}
-  \label{fig:windowsize}
-\end{figure}
-
 %\begin{figure}
 %  \centering
-%  \includegraphics[width=0.75\textwidth]{plots/kernel}
 %  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
 %  \label{fig:kernel}
 %\end{figure}
