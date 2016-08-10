@@ -649,12 +649,19 @@ To train the lexical entailment classifier, we extract {\em lexical rules} from
 the SICK dataset using a variation on Robinson Resolution \cite{needcite}. The
 full details are outside the scope of this document, but briefly, we employ
 an off-the-shelf semantic parser called Boxer, which translates sentences into
-First Order Logical formulas \cite{needcite}. Then, by assuming entity coreference
-\footnote{Human annotators
-tend to view entities appearing in both sentences as {\em coreferent}, e.g.,
-``The airplane lands {\em contradicts} An airplane crashes;'' although these
-two sentences are not strictly contradictory, annotators assume
-airplane is the same in both sentences, and conclude contradiction.}
+First Order Logical formulas \cite{needcite}. We then use theorem proving
+techniques in order to extract lexical rules which {\em must} be true in the dataset.
+For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
+eliminate {\em girl} and automatically conclude that {\em talks} lexically
+entails {\em speaks}. Lexical pairs which could {\em not} be automatically
+inferred were manually annotated by two of the authors \cite{beltagy:2016:cl}.
+
+Then, by assuming entity coreference,
+\footnote{Human annotators tend to view entities appearing in both sentences as
+{\em coreferent}, e.g., ``The airplane lands {\em contradicts} An airplane
+crashes;'' although these two sentences are not strictly contradictory,
+annotators assume airplane is the same in both sentences, and conclude
+contradiction.} we can use theorem proving techniques to 
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
