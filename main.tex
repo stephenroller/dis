@@ -655,13 +655,16 @@ For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
 eliminate {\em girl} and automatically conclude that {\em talks} lexically
 entails {\em speaks}. Lexical pairs which could {\em not} be automatically
 inferred were manually annotated by two of the authors \cite{beltagy:2016:cl}.
+The result is a novel dataset of lexical entailment pairs, which we can use
+to train a lexical entailment classifier.
 
-Then, by assuming entity coreference,
-\footnote{Human annotators tend to view entities appearing in both sentences as
-{\em coreferent}, e.g., ``The airplane lands {\em contradicts} An airplane
-crashes;'' although these two sentences are not strictly contradictory,
-annotators assume airplane is the same in both sentences, and conclude
-contradiction.} we can use theorem proving techniques to 
+We train and compare the performance of several lexical entailment classifiers
+which employ a variety of hand-engineered features and lexicons like WordNet.
+Most of the hand-engineered features come from \newcite{lai:2014:semeval},
+which we broadly categorize into three categories: Wordform features (e.g., do
+the words have the same lemma?); WordNet features (e.g., are the words
+hypernyms in WordNet?); and Distributional Similarity (e.g., cosine distance
+between two words in a distributional space).
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
