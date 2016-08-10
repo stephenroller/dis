@@ -675,7 +675,9 @@ animal}) were more likely entailments than those with high similarity
 (cosine of $\sim.95$, like {\em cat} and {\em dog}).
 Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
-antecedent (LHS) and consequent (RHS) vectors.
+antecedent (LHS) and consequent (RHS) vectors. For both the distributional
+simirity features, and the Asym model, we use two distributional spaces:
+one which uses a BoW window of two words, and one based on syntactic contexts.
 
 We evaluate all of the lexical entailment classifiers listed above on two
 variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
@@ -683,9 +685,9 @@ setup, the lexical entailment classifiers are evaluated on their performance on
 the RRR dataset in a standard 10-fold cross-validation setup. In the RTE setup,
 the classifiers are trained on items extracted from the training portion of the
 RTE dataset, and then used as the sole source of lexical knowledge in an
-end-to-end, complete RTE system developed by \newcite{needcite} to predict the
-test portion of the RTE dataset. This ensures we are actually testing whether
-Asym is able to contribute in a rich RTE pipeline.
+end-to-end, complete RTE system developed by \newcite{beltagy:2013:starsem} to
+predict the test portion of the RTE dataset. This ensures we are actually
+testing whether Asym is able to contribute in a rich RTE pipeline.
 
 Table~\ref{tab:evallexical} shows performance of the various lexical entailment
 classifiers on each of our evaluation settings. We also report a degenerate
@@ -693,7 +695,7 @@ baseline (always guess Neutral), and an upper baseline, which always gives Gold
 Standard lexical entailment decisions. Note that this upper baseline on the RTE
 task is {\em not} 100\%, due to a mixture of issues like parsing errors,
 inference errors, and other issues in the logical inference engine of
-\newcite{needcite}.
+\newcite{beltagy:2013:starsem}.
 
 \begin{table}
 \centering
@@ -757,12 +759,10 @@ which uses the concatenation of these LHS and RHS features as well. In this
 section, we address this inconsistency, and propose a new Multiprototype
 classification model for hypernymy detection.
 
-This is curious,
-given that the model of \newcite{baroni:2011:gems} contains these Concat
-vectors, but 
-of \newcite{baroni:2011:gems} also uses these LHS and RHS features (called
-Concat features from now on), but with a polynomial SVM instead of a linear
-classifier. Interestingly, we can also directly compare
+First, we consider one important parameter which differed between the original
+Asym experiments and the RTE experiments: in the former, we only used
+distributional spaces based on BoW features, in in the latter, we
+used both BoW and syntactic distributional spaces.
 
 \begin{table}
 \begin{center}
