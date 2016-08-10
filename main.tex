@@ -554,14 +554,20 @@ vectors} obtained in the Singular Value Decomposition. We then select the 500
 features most similar to the model's hyperplane, and then extract a
 distributional space limited to only these context items. If our Selective
 Distributional Inclusion Hypothesis is true, we would expect these 500
-dimensions to highly-compliment existing similarity measures based on
+dimensions to highly compliment existing similarity measures based on
 the Distributional Inclusion Hypothesis. A careful reader should note this
 is necessary, but {\em not} sufficient to show the model obeys the SDIH, as
 we are effectively comparing unsupervised models with supervised ones.
 
-We measure the behavior of three existing distributional similarity measures on
-their ability to distinguish hypernymy and non-hypernymy relations, both before
-and after the feature selection procedure. 
+We measure every word pair's similarity using three similarity measures:
+our baseline, cosine similarity, should not change substantially between the
+original and selective distributional spaces; The second similarity measure,
+ClarkeDE, measures roughly what percentage of the hyponyms' mass is contained
+within the hypernym, i.e.,
+\begin{equation*}
+  {\text ClarkeDE}(H, w) = \frac{\sum_i min(H_i, w_i)}{\sum_i H_i};
+\end{equation}
+ClarkeDE similarity
 
 We Finally, we
 measured the ability of three distributional similarity measures
