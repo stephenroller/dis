@@ -502,25 +502,16 @@ Vector Machine \cite{needcite}.
 
 \begin{table}
   \centering
-  \begin{tabular}{|lc|c|}
+  \begin{tabular}{|lc|cc|}
     \hline
-    {\bf Classifier} & {\bf Space} & {\bf Acc.}\\
-    \hline\hline
-    \multicolumn{3}{|c|}{{\bf LEDS}}\\
+    {\bf Classifier} & {\bf Space} & {\bf LEDS.} & {\bf BLESS.}\\
     \hline
-    Random Baseline           &     -   & .50\\
-    \newcite{baroni:2011:gems}   & Window 2 & .81\\
-    \newcite{roller:2014:coling} & Window 2 & {\bf .85}\\
-    \newcite{baroni:2011:gems}   & Sentence & .78\\
-    \newcite{roller:2014:coling} & Sentence & .82\\
-    \hline\hline
-    \multicolumn{3}{|c|}{{\bf BLESS}}\\
+    Random Baseline              &   -      & .50          & .46      \\
     \hline
-    Always guess {\em no-relation} & - & .46\\
-    \newcite{baroni:2011:gems}   & Window 2 & .76\\
-    \newcite{roller:2014:coling} & Window 2 & {\bf .84}\\
-    \newcite{baroni:2011:gems}   & Sentence & .73\\
-    \newcite{roller:2014:coling} & Sentence & .80\\
+    \newcite{baroni:2011:gems}   & Window 2 & .81          & .76      \\
+    \newcite{roller:2014:coling} & Window 2 & {\bf .85}    & {\bf .84}\\
+    \newcite{baroni:2011:gems}   & Sentence & .78          & .73      \\
+    \newcite{roller:2014:coling} & Sentence & .82          & .80      \\
     \hline
   \end{tabular}
   \caption{Accuracy of {\svm} and {\logreg} on {\bless} and {\entailment}
@@ -605,7 +596,7 @@ Table~\ref{tab:mapscores} shows the results of this experiment.
 As expected, all measures except for cosine assign higher MAP values to
 hypernyms than they did in the original space, though only invCL that ranks
 hypernyms significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank
-test, $p < .001$}. We also see that the performance of our cosine baseline
+test, $p < .001$} We also see that the performance of our cosine baseline
 remains relatively unchanged by the feature selection procedure, and that
 the the Clarke and invCL measures have their co-hyponymy and meronomy
 scores weakened. Altogether, this is evidence that the Asym measure is
