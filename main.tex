@@ -734,26 +734,17 @@ distributional information.  Finally, we observe a classifier which combines
 all of these features together does the best on the Intrinsic accuracy, but not
 as strongly as WordNet on the end-to-end task.
 
-Again we see that WordNet features have the highest contribution. Distributional rules still perform better
-than the baseline, but the gap between distributional features and
-WordNet is much more apparent. 
-Perhaps most encouraging is the very high performance of the Asymmetric features: by
-themselves, they perform substantially better
-than just the distributional features. We investigate this further
-below in Section~\ref{subsubsec:asym}. 
+We also perform a qualitative analysis to compare the Distributional Similarity
+classifier with the Asym classifier. We manually inspect and compare the
+predictions and errors made by each, and find that
+Asym does substantially better at distinguishing hypernymy from co-hyponymy.
+This is what we had hoped to find, given the findings in Section~\ref{sec:asym},
+and that cosine is known to heavily favor co-hyponymy \cite{baroni:2011:gems}.
+However, we also find that cosine features are better at discovering synonymy,
+and that Asymmetric frequently mistakes antonymy as an entailing.
 
-As with the entire dataset, we once again see that all the features are
-highly complementary, and intrinsic accuracy is greatly improved by
-using all the features together. It may be surprising that these significant
-gains in intrinsic accuracy do not translate to improvements on the
-RTE tasks; in fact, there is a minor drop from using all features compared
-to only using WordNet. This most likely depends on {\em which} pairs the
-system gets right or wrong. For sentences involving multiple lexical rules,
-errors become disproportionately costly. As such, the high-precision
-WordNet predictions are slightly better on the RTE task.
-
-In a qualitative analysis comparing a
-classifier with only cosine distributional features to a classifier
+We also qualitatively compare the distributional similarity classifier with the classifier
+which used the full set of features
 with the full feature set, we found that, as expected, the distributional features
 miss many hypernyms and falsely classify many co-hyponyms as
 entailing: We manually analyzed a sample of 170 pairs that the distributional classifier
