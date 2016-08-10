@@ -477,7 +477,8 @@ Since different types of distributional spaces exhibit different properties
 spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
 counts content words two words to the left and right of targets as contexts,
 while the {\em Sentence BoW} space counts all content words within complete
-sentence bounadries.
+sentence bounadries. Both spaces are reduced to 300 dimensions using the
+Singular Value Decomposition \cite{landauer:1997:pr}.
 
 We evaluate our model on two data sets. The first, {\bf LEDS}
 \cite{baroni:2012:eacl}, contains 1385 hyponym-hypernym pairs as positive
@@ -546,6 +547,11 @@ severely hurt the performance of our model, emphasizing these features
 immense importance. We will discuss more of why these features are so
 important in Section~\ref{sec:lexmem}.
 
+We also test our interpretation of Asym as measuring a form of {\em Selective}
+Distributional Inclusion. After learning the model's parameters from data,
+we used the hyperplane to select which distributional features were {\em most}
+selected by the classifier. We did this by comparing the model's learned
+hyperplane to the {\em context vectors} obtained in the Singular Value
 In order to test how well our supervised model is capturing the notion
 of selective distributional inclusion, we test each of the unsupervised
 measures on a smaller space, limited only to the dimensions preferred by
