@@ -747,8 +747,14 @@ all of these models are available in \newcite{beltagy:2016:cl}.
 \subsection{H-Features and Multi-prototype Hypernymy Classifier \cite{roller:2016:emnlp}}
 \label{sec:multiprototype}
 
-In the previous sections, we saw that the Asym classifier is able to improve
-upon both a model previously proposed in the literature \cite{baroni:2011:gems}.
+In the previous sections, we saw that the Asym classifier is able to to learn
+to classify word pairs as hypernymy and non-hypernymy, and that is able to
+perform reasonably in an end-to-end RTE system. However, we also saw in our RTE
+experiments that Asym can be improved upon by simply concatenating the Asym
+difference vectors with vectors for the LHS and the RHS. Curiously, the model
+of \newcite{baroni:2011:gems} also uses these LHS and RHS features (called
+Concat features from now on), but with a polynomial SVM instead of a linear
+classifier. Interestingly, we can also compare the
 
 \begin{table}
 \begin{center}
