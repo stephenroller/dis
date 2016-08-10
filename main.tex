@@ -618,13 +618,33 @@ entailment classifiers are used as to generate {\em logical rules}; an inference
 engine based on Markov Logic Networks (MLNs) is then used to form predictions
 about complete {\em sentential} entailment.
 
-To this end, we employ the {\bf SICK} dataset, which contains nearly 10k
-sentence pairs, evenly split between training and test sets
-\cite{marelli:2014:semeval}. Sentence pairs were extracted randomly image
-caption data sets, and then simplified and extended to cover semantic issues
-like negation and quantifiers, and then manually annotated as {\em entailing}
-(the antecedent implies the consequent), {\em contradicting} (the antecedent
-implies the opposite of the consequent), or neutral (neither of the above).  .
+To this end, we employ the Sentences Involving Compositional Knowledge ({\bf
+SICK}) dataset, which contains nearly 10k sentence pairs, evenly split between
+training and test sets \cite{marelli:2014:semeval}. Sentence pairs were
+extracted randomly image caption datasets, and then simplified and extended to
+cover semantic issues like negation and quantifiers, and then manually
+annotated as {\em entailing} (the antecedent implies the consequent), {\em
+contradicting} (the antecedent implies the opposite of the consequent), or
+neutral (neither of the above). Two examples from the data set are shown
+in Table~\ref{tab:sickexample}.
+
+\begin{table}
+  \centering
+  \begin{tabular}{|ll|}
+    \hline
+    {\bf Label} & {\bf Antecedent/Consequent}\\
+    \hline
+    Entailing & A: Two teams are competing in a football match\\
+    & C: Two groups of people are playing football\\
+    \hline
+    Contradicting & A: The brown hourse is near a red barrel at the rodeo\\
+    & C: The brown horse is far from a red barrel at the rodeo\\
+    \hline
+  \end{tabular}
+  \caption{Example entailing and contradicting sentences from the SICK dataset.}
+  \label{tab:sickexample}
+\end{table}
+
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
