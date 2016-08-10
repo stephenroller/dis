@@ -548,10 +548,18 @@ immense importance. We will discuss more of why these features are so
 important in Section~\ref{sec:lexmem}.
 
 We also test our interpretation of Asym as measuring a form of {\em Selective}
-Distributional Inclusion. After learning the model's parameters from data,
-we used the hyperplane to select which distributional features were {\em most}
-selected by the classifier. We did this by comparing the model's learned
-hyperplane to the {\em context vectors} obtained in the Singular Value
+Distributional Inclusion. After training the model's parameters from the entire
+BLESS data set, we compare the model's learned hyperplane to the {\em context
+vectors} obtained in the Singular Value Decomposition. We then select the 500
+features most similar to the model's hyperplane, and then extract a
+distributional space limited to only these context items. If our Selective
+Distributional Inclusion Hypothesis is true, we would expect these 500
+dimensions to highly-compliment existing similarity measures based on
+the Distributional Inclusion Hypothesis.
+
+We Finally, we
+measured the ability of three distributional similarity measures
+
 In order to test how well our supervised model is capturing the notion
 of selective distributional inclusion, we test each of the unsupervised
 measures on a smaller space, limited only to the dimensions preferred by
