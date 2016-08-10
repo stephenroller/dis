@@ -584,56 +584,31 @@ space, the selective distributional space has higher Clarke and invCL values
 for hypernyms, and lower Clarke and invCL values for the other relations.
 Table~\ref{tab:mapscores} shows the results of this experiment.
 
-As expected, all measures except for {\cosine} assign higher scores to
-hypernyms than they did in the original space (compare to {\UpWW} part of
-Table~\ref{tab:mapscores}).  But it is only {\invCL} that ranks hypernyms
-significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank test,
-$p < .001$}
-
 \begin{table}
   \centering
-  \begin{tabular}{|l|cc cc|}
+  \begin{tabular}{|l|cc cc||cccc|}
     \hline
-    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    & \multicolumn{4}{c||}{Original Space} & \multicolumn{4}{|c|}{Selective Space}\\
     \hline\hline
-    \multicolumn{5}{|c|}{DIH Measures Before Dimension Selection}\\
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
     \hline
-    \cosine        &     .68     &     .20    &     .27     &     .27    \\
-    \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
-    \invCL         &     .60     &     .18    &     .31     &     .28    \\
+    cosine        &     .68     &     .20    &     .27     &     .27    &   .69      &    .20    &    .24     &    .28    \\
+    Clarke      &     .66     &     .19    &     .28     &     .28    &   .55      &    .39    &    .24     &    .29    \\
+    invCL         &     .60     &     .18    &     .31     &     .28    &   .42      &{\bf.58}   &    .24     &    .29    \\
     \hline
-    \hline
-    %Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
-    %\hline\hline
-    % ------------------------------------------------------------------
-    % THESE VALUES WERE CREATED IN THE HOLD-ONE-CONCEPT-OUT SETTING
-    % ------------------------------------------------------------------
-    \multicolumn{5}{|c|}{DIH Measures After Dimension Selection}\\
-    \hline
-    \cosine        &   .69      &    .20    &    .24     &    .28    \\
-    \ClarkeDE      &   .55      &    .39    &    .24     &    .29    \\
-    \invCL         &   .42      &{\bf.58}   &    .24     &    .29    \\
-    % ------------------------------------------------------------------
-     \hline
   \end{tabular}
   \caption{Mean Average Precision for the unsupervised measures before
   after selecting the top dimensions from the Asym model.}
   \label{tab:mapscores}
 \end{table}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.75\textwidth]{plots/window}
-  \caption{Caption here.}
-  \label{fig:windowsize}
-\end{figure}
+As expected, all measures except for {\cosine} assign higher scores to
+hypernyms than they did in the original space (compare to {\UpWW} part of
+Table~\ref{tab:mapscores}).  But it is only {\invCL} that ranks hypernyms
+significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank test,
+$p < .001$}
 
-%\begin{figure}
-%  \centering
-%  \includegraphics[width=0.75\textwidth]{plots/kernel}
-%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
-%  \label{fig:kernel}
-%\end{figure}
+
 
 
 
@@ -727,6 +702,23 @@ and \textit{stand $\to$ wait}.
 \caption{Mean F1 scores for each model and data set.}
 \label{tab:results1}
 \end{table}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{plots/window}
+  \caption{Caption here.}
+  \label{fig:windowsize}
+\end{figure}
+
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=0.75\textwidth]{plots/kernel}
+%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
+%  \label{fig:kernel}
+%\end{figure}
+
+
+
 
 
 \subsubsection{Concerning Lexical Memorization}
