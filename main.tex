@@ -769,6 +769,16 @@ lexical entailments in a {\bf Medical} domain \cite{levy:2014:conll}, and {\bf
 TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
 \cite{turney:2015:nle}.
 
+The other important hyperparameter is the {\em type} of classification model
+used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use of a
+Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an RBF
+SVM. In general, we find that the linear models vastly outperform the nonlinear
+models, though RBFs can be improved some in hyperparameter optimization. This
+helps explain why the model of \newcite{baroni:2011:gems} does poorly in our
+Asym experiments, since it relies on a polynomial SVM.
+
+
+
 \begin{figure}
   \centering
   \includegraphics[width=0.45\textwidth]{plots/window}
@@ -777,11 +787,6 @@ TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
            (b) Comparing Logistic Regression with Linear, Polynomial, and RBF SVMs.}
   \label{fig:hyperparms}
 \end{figure}
-
-The other important hyperparameter is the {\em type} of classification model
-used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use
-of a Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an
-RBF SVM.
 
 that syntactic distributional spaces performed better
 than any BoW space on multiple datasets and with multiple models. This is
