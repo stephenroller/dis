@@ -562,15 +562,17 @@ we are effectively comparing unsupervised models with supervised ones.
 We measure every word pair's similarity using three similarity measures:
 cosine, Clarke, and invCL. Cosine similarity acts as our control, and
 should not change substantially between the
-original and selective distributional spaces; The second similarity measure,
+original and selective distributional spaces, while the others, which are
+based on Distributional Inclusion, should. The second similarity measure,
 {\em Clarke}, measures roughly what percentage of the hyponyms' mass is contained
-within the hypernym \cite{clarke:2009:gems}, i.e.,
+within the hypernym \cite{clarke:2009:gems}:
 \begin{equation*}
   \text{Clarke}(H, w) = \frac{\sum_i \min(H_i, w_i)}{\sum_i H_i};
 \end{equation*}
-The final similarity measure, {\em invCL}, extends ClarkeDE to additionally
+The final similarity measure, {\em invCL}, extends Clarke to additionally
 measure what percentage of the hypernym's mass is {\em not} contained within
-the hyponym,
+the hyponym \cite{lenci:2012:starsem}, extending Clarke to roughly measure
+{\em strict} containment:
 \begin{equation*}
   \text{invCL}(H, w) = \sqrt{\text{Clarke}(H, w)(1 - \text{Clarke}(w, H))}.
 \end{equation*}
