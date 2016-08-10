@@ -548,16 +548,16 @@ immense importance. We will discuss more of why these features are so
 important in Section~\ref{sec:lexmem}.
 
 We also test our interpretation of Asym as measuring a form of {\em Selective}
-Distributional Inclusion. After training the model's parameters from the entire
-BLESS data set, we compare the model's learned hyperplane to the {\em context
+Distributional Inclusion. After training the model's parameters on the BLESS
+data set, we compare the model's learned hyperplane to the {\em context
 vectors} obtained in the Singular Value Decomposition. We then select the 500
 features most similar to the model's hyperplane, and then extract a
 distributional space limited to only these context items. If our Selective
 Distributional Inclusion Hypothesis is true, we would expect these 500
-dimensions to highly compliment existing similarity measures based on
-the Distributional Inclusion Hypothesis. A careful reader should note this
-is necessary, but {\em not} sufficient to show the model obeys the SDIH, as
-we are effectively comparing unsupervised models with supervised ones.
+dimensions to highly compliment existing similarity measures based on the
+Distributional Inclusion Hypothesis. A careful reader should note this is
+necessary, but {\em not} sufficient to show the model obeys the SDIH, as we are
+effectively comparing unsupervised models with supervised ones.
 
 We measure every word pair's similarity using three similarity measures:
 cosine, Clarke, and invCL. Cosine similarity acts as our control, and
@@ -578,98 +578,17 @@ the hyponym \cite{lenci:2012:starsem}, extending Clarke to roughly measure
 \end{equation*}
 
 We compute all three similarity measures across all the word pairs in BLESS,
-and 
+and computed Mean Average Precision (MAP) across all pairs for each measure
+and distributional space. Ideally, we should see that, compared to the original
+space, the selective distributional space has higher Clarke and invCL values
+for hypernyms, and lower Clarke and invCL values for the other relations.
+Table~\ref{tab:mapscores} shows the results of this experiment.
 
-We Finally, we
-measured the ability of three distributional similarity measures
-
-In order to test how well our supervised model is capturing the notion
-of selective distributional inclusion, we test each of the unsupervised
-measures on a smaller space, limited only to the dimensions preferred by
-the classifier. We emphasize that we do {\em not} aim to show that our
-supervised method outperforms unsupervised methods, but rather
-that the unsupervised methods benefit greatly from feature selection.
-Additionally, we analyze  which dimensions are selected by
-the classifier to facilitate understanding of why these dimensions are
-important.
-
-We train the {\logreg} classifier using the dimensionality-reduced {\UpWWr} space with the
-same method we use in Section~\ref{sec:supervised}.
-% For each concept in {\bless}, we hold out one concept at a time and
-% train the {\logreg} classifier on the other 199 concepts using the {\UpWWr}
-% space. Again, we also remove training pairs which share a relata with
-% the training set. 
-We take the classifier's learned
-hyperplane separating hypernyms from other relations, and project
-the hyperplane back into the original {\UpWW} space.\footnote{Ideally
-  we would train on the original space to
-  inspect the relevant dimensions. However, there are more dimensions than examples,
-  so we train on the SVD space and backproject.}
-We select the 500 dimensions in the original space that are most
-relevant according to the classifier weights, and
-test the unsupervised measures on this new space, which we denote as
-{\UpWWu}.\footnote{
-Note that
-{\UpWWu} varies slightly from concept to concept, since the hyperplane is
-learned on a per-concept basis.
-It is important that we use the linear {\logreg} classifier for this
-reverse-projection procedure, as the separating hyperplane {\em must} be linear
-in order to complete the projection. In particular, the hyperplane in the
-{\svm} classifier cannot be easily backprojected, since it exists in a higher
-dimensional space than the projection matrix.
-Furthermore, it is
-important that we use a classifier trained using the difference features because of
-its analogy to the Distributional Inclusion Hypothesis.}
-
-The 500  most relevant dimensions are selected as follows:
-We select the 250 most negatively weighted original
-dimensions using the difference features $f$. 
-These are the features that have smaller values for hyponyms
-(e.g.\ \textit{dog}) than for hypernyms  (e.g.\
-\textit{animal}), so they characterize hypernymy.
-We further select the 250 most positively weighted
-original dimensions using the squared-differences features $g$. These
-are the ones where a large difference does not indicate hypernymy. 
-
-Table~\ref{tab:mapscores:unprojected} shows the MAP scores for three
-of the 
-measures in the new {\UpWWu} space. (The results for {\balAPinc} and
-{\WeedsPrec} are slightly worse than {\ClarkeDE}.)
-%We see the same overall picture as the
-%boxplots in Figure~\ref{fig:unprojectedplots}.  
-All measures except for {\cosine}
-assign higher scores to hypernyms than they did in the original space
-(compare to {\UpWW} part of Table~\ref{tab:mapscores}).
-But it is only {\invCL} that ranks hypernyms significantly higher 
-than co-hyponyms.\footnote{Wilcoxon signed-rank test, $p < .001$. 
-% \gbt{I don't think we need significance testing here, since it's
-% such a clear result, but I'm leaving it here commented out just in
-% case y'all want to include it}
-% The {\invCL} performs extremely well in the unprojected space, significantly
-% outperforming all other measures at distinguishing hypernymy, and significantly
-% outperforming {\invCL} measures computed using the {\UpWW} space.
-To check that the measures are being improved by the dimension selection and not just by restricting to a smaller space,
-%As a control, 
-we evaluated the similarity measures on a variation
-of the {\UpWW} space which uses 500 randomly selected dimensions from the
-original space.  The results are approximately unchanged from those on the original
-{\UpWW} space.
-}
-%% This indicates that the measures are not being improved
-%% just by restricting to a smaller space, but rather by the dimension
-%% selection.
-
-For this experiment, we train on all of {\bless}
-except for one concept and then evaluate the unsupervised models on
-the held-out concept -- that is a setting that could, in principle, be
-used as a hypernymy detector. If we instead train the supervised model
-on all of {\bless} to determine an upper bound of how well dimension
-selection can do on this dataset, MAP for {\invCL} rises to .67.
-
-
-
-
-
+As expected, all measures except for {\cosine} assign higher scores to
+hypernyms than they did in the original space (compare to {\UpWW} part of
+Table~\ref{tab:mapscores}).  But it is only {\invCL} that ranks hypernyms
+significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank test,
+$p < .001$}
 
 \begin{table}
   \centering
@@ -680,8 +599,6 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
     \multicolumn{5}{|c|}{DIH Measures Before Dimension Selection}\\
     \hline
     \cosine        &     .68     &     .20    &     .27     &     .27    \\
-%    \balAPinc      &     .56     &     .23    &     .31     &     .28    \\
-%    \WeedsPrec     &     .52     &     .22    &     .33     &     .28    \\
     \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
     \invCL         &     .60     &     .18    &     .31     &     .28    \\
     \hline
@@ -694,8 +611,6 @@ selection can do on this dataset, MAP for {\invCL} rises to .67.
     \multicolumn{5}{|c|}{DIH Measures After Dimension Selection}\\
     \hline
     \cosine        &   .69      &    .20    &    .24     &    .28    \\
-%    \balAPinc      &   .54      &    .35    &    .26     &    .28    \\
-%    \WeedsPrec     &   .50      &    .38    &    .27     &    .29    \\
     \ClarkeDE      &   .55      &    .39    &    .24     &    .29    \\
     \invCL         &   .42      &{\bf.58}   &    .24     &    .29    \\
     % ------------------------------------------------------------------
