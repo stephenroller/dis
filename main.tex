@@ -662,10 +662,10 @@ Resolution Rules).
 We train and compare the performance of several existing lexical entailment
 classifiers which employ a variety of hand-engineered features and lexicons
 like WordNet.  Most of the hand-engineered features come from
-\newcite{lai:2014:semeval}, which we broadly categorize into three categories:
-Wordform features (e.g., do the words have the same lemma?); WordNet features
-(e.g., are the words hypernyms in WordNet?); and Distributional Similarity
-(e.g., cosine distance between two words in a distributional space).
+\newcite{lai:2014:semeval}, which contain things like Wordform features (e.g.,
+do the words have the same lemma or Part-of-Speech?); WordNet features (e.g.,
+are the words hypernyms in WordNet?); and Distributional Similarity (e.g.,
+cosine distance between two words in a distributional space).
 
 We also present a novel extension of the real-valued distributional similarity
 features, by {\em binning} cosines into ranges (e.g. 0.0-0.1, \ldots, 0.9-1.0)
@@ -684,15 +684,17 @@ classifiers are evaluated on their performance on the RRR dataset in a standard 
 cross-validation setup. In the RTE setup, the classifiers are trained on items
 extracted from the training portion of the RTE dataset, and then used as the
 sole source of lexical knowledge in an end-to-end, complete RTE system developed
-by \newcite{needcite} to predict the test portion of the RTE dataset.
+by \newcite{needcite} to predict the test portion of the RTE dataset. This
+ensures we are actually testing whether Asym is able to contribute in a rich
+RTE pipeline.
 
-Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
-the lexical rules, which have single words on the LHS and RHS. In these
-experiments we use the same procedure as before, but omit the phrasal rules
-from the dataset. On the RTE tasks, we compute accuracy over only the SICK
-pairs which require at least one lexical rule. Note that a new ceiling
-score is needed, as some rules require both lexical and phrasal
-predictions, but we do not predict any phrasal rules.
+Table~\ref{tab:evallexical} shows performance of the various lexical entailment
+classifiers on each of our evaluation settings. We also report a degenerate
+baseline (always guess Neutral), and an upper baseline, which always gives Gold
+Standard lexical entailment decisions. Note that this upper baseline on the RTE
+task is {\em not} 100\%, due to a mixture of issues like parsing errors,
+inference errors, and other issues in the logical inference engine of
+\newcite{needcite}.
 
 \begin{table}
 \centering
@@ -703,16 +705,16 @@ predictions, but we do not predict any phrasal rules.
     Always guess neutral & 56.6 & 69.4 & 69.3 \\
     Gold standard annotations&100.0 & 93.2 & 94.6 \\
     \hline
-    Wordform only        & 57.4 & 70.4 & 70.9 \\
-    WordNet only         & 79.1 & 83.1 & 84.2 \\
+    %Wordform only        & 57.4 & 70.4 & 70.9 \\
     Dist. Sim. only      & 68.8 & 76.3 & 76.7 \\
+    WordNet only         & 79.1 & 83.1 & 84.2 \\
     Asym only            & 76.8 & 78.3 & 79.2 \\
     Asym + LHS + RHS     & 76.8 & 78.3 & 79.2 \\
     \hline
     All features         & 84.6 & 82.7 & 83.8 \\
     \hline
 \end{tabular}
-\caption{Cross-validation accuracy on Entailment on lexical rules only}
+\caption{Accuracies fo}
 \label{tab:evallexical}
 \end{table}
 
