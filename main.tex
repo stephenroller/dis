@@ -615,6 +615,15 @@ indeed, conforming to our Selective Distributional Inclusion interpretation.
 \subsection{Subsystem in complete RTE system \cite{beltagy:2016:cl}}
 \label{sec:rtesubsystem}
 
+Beyond showing that Asym is better able to improve performance on lexical
+relationship data sets, we should also show that it can improve performance
+in an end-to-end Recognizing Textual Entailment (RTE) system. Specifically, we compare Asym's performance
+to a variety of lexical entailment classifiers which use a variety of
+hand-engineered features and word lexicons.  These predictions made by lexical
+entailment classifiers are used as to generate {\em logical rules}; an inference
+engine based on Markov Logic Networks (MLNs) is then used to form predictions
+about complete {\em sentential} entailment.
+
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
 experiments we use the same procedure as before, but omit the phrasal rules
