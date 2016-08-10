@@ -9,8 +9,9 @@
 \usepackage{aclcite}
 \usepackage{alltt}
 \usepackage{subfig}
-\usepackage{aliases}
 \usepackage{multirow}
+
+\usepackage{aliases}
 
 \title{Identifying Lexical Relationships and Subsitutes with Distributional Semantics}
 \author{Stephen Roller\\
@@ -388,7 +389,7 @@ limitations/preferences about the types of arguments and modifiers words tend
 to take \cite{needcite}.
 
 Today, many have begun returning to the generation-and-ranking task
-\cite{melamud:2015:naacl,kawakami:2016:iclr,roller:2016:naacl,melaumud:2016:conll},
+\cite{melamud:2015:naacl,kawakami:2016:iclr,roller:2016:naacl,melamud:2016:conll},
 but opting to avoid lexical resources like WordNet.  Curiously, to date, the
 best performing systems in Lexical Substitution are ones which are unsupervised
 with respect to the task: either they are trained for some auxiliary task like
@@ -935,7 +936,7 @@ intuitively, is the original vector after the projection has been removed:
 
 \begin{figure}
   \begin{center}
-  \includegraphics[width=0.30\textwidth]{vecproj}
+  \includegraphics[width=0.30\textwidth]{figures/vecproj}
 \end{center}
 \caption{A vector $\hat p$ is used to break $H$ into two orthogonal components,
 its projection and the rejection over $\hat p$.}
