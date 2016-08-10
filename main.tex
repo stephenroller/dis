@@ -749,75 +749,47 @@ all of these models are available in \newcite{beltagy:2016:cl}.
 \subsection{H-Features for Hypernymy Classification \cite{roller:2016:emnlp}}
 \label{sec:hfeatures}
 
-In the previous sections, we saw that the Asym classifier is able to to learn
-to classify word pairs as hypernymy and non-hypernymy, and that is able to
-perform reasonably in an end-to-end RTE system. However, we also saw in our RTE
-experiments that Asym can be improved upon by simply concatenating the Asym
-difference vectors with vectors for the LHS and the RHS. This seems somewhat
-at odds in our comparisons between Aym and the model of \newcite{baroni:2011:gems},
-which uses the concatenation of these LHS and RHS features as well. In this
-section, we address this inconsistency, and propose a new H-feature
-classification model for hypernymy detection.
-
-Two important hyperparameters are important to resolving this
-paradox: the first is which distributional space is used. In unpublished
-experiments, we find that narrower contexts windows perform better than wide
-windows, and that syntactic spaces perform best, regardless of model or
-dataset. Figure~\ref{fig:hyperparms}a shows the performance of one model across
-four datasets: BLESS, LEDS, and two additional datasets which cover general
-lexical entailments in a {\bf Medical} domain \cite{levy:2014:conll}, and {\bf
-TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
-\cite{turney:2015:nle}.
-
-The other important hyperparameter is the {\em type} of classification model
-used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use of a
-Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an RBF
-SVM. In general, we find that the linear models vastly outperform the nonlinear
-models, though RBFs can be improved some in hyperparameter optimization. This
-helps explain why the model of \newcite{baroni:2011:gems} does poorly in our
-Asym experiments, since it relies on a polynomial SVM.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.45\textwidth]{plots/window}
-  \includegraphics[width=0.45\textwidth]{plots/kernel}
-  \caption{(a) Performance over different BoW context window sizes. 0 indicates a syntactic space.
-           (b) Comparing Logistic Regression with Linear, Polynomial, and RBF SVMs.}
-  \label{fig:hyperparms}
-\end{figure}
-
-\paragraph{On Lexical Memorization}
-
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|rrrr|}
-  \hline
-  Model                           &   LEDS   &  BLESS   &   Medical &      TM14  \\
-  \hline
-  Cosine (Baseline)               &    .789  &    .225  &    .165  &      .674  \\
-  \hline
-  Concat                          &    .802  &    .689  &    .257  &      .722  \\
-  Diff                            &    .809  &    .496  &    .226  &      .672  \\
-  Asym \cite{roller:2014:coling}  &    .878  &    .546  &    .227  &      .677  \\
-  Ksim \cite{levy:2015:naacl}     &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  MProto \cite{roller:2016:emnlp} &    .909  &{\bf.712} &{\bf.295} &      .726  \\
-  \hline
-\end{tabular}
-\end{center}
-\caption{Mean F1 scores for each model and dataset.}
-\label{tab:results1}
-\end{table}
-
+%In the previous sections, we saw that the Asym classifier is able to to learn
+%to classify word pairs as hypernymy and non-hypernymy, and that is able to
+%perform reasonably in an end-to-end RTE system. However, we also saw in our RTE
+%experiments that Asym can be improved upon by simply concatenating the Asym
+%difference vectors with vectors for the LHS and the RHS. This seems somewhat
+%at odds in our comparisons between Aym and the model of \newcite{baroni:2011:gems},
+%which uses the concatenation of these LHS and RHS features as well. In this
+%section, we address this inconsistency, and propose a new H-feature
+%classification model for hypernymy detection.
+%
+%Two important hyperparameters are important to resolving this
+%paradox: the first is which distributional space is used. In unpublished
+%experiments, we find that narrower contexts windows perform better than wide
+%windows, and that syntactic spaces perform best, regardless of model or
+%dataset. Figure~\ref{fig:hyperparms}a shows the performance of one model across
+%four datasets: BLESS, LEDS, and two additional datasets which cover general
+%lexical entailments in a {\bf Medical} domain \cite{levy:2014:conll}, and {\bf
+%TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
+%\cite{turney:2015:nle}.
+%
+%The other important hyperparameter is the {\em type} of classification model
+%used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use of a
+%Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an RBF
+%SVM. In general, we find that the linear models vastly outperform the nonlinear
+%models, though RBFs can be improved some in hyperparameter optimization. This
+%helps explain why the model of \newcite{baroni:2011:gems} does poorly in our
+%Asym experiments, since it relies on a polynomial SVM.
+%
+%In the remainder of this section, we will discuss an issue raised in the
+%literature about why classifiers which learn using the Concatenation of
+%the LHS and RHS vectors, and briefly show why Asym does not have this fault.
+%However, we show
+%
 %\begin{figure}
 %  \centering
-%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
-%  \label{fig:kernel}
+%  \includegraphics[width=0.45\textwidth]{plots/window}
+%  \includegraphics[width=0.45\textwidth]{plots/kernel}
+%  \caption{(a) Performance over different BoW context window sizes. 0 indicates a syntactic space.
+%           (b) Comparing Logistic Regression with Linear, Polynomial, and RBF SVMs.}
+%  \label{fig:hyperparms}
 %\end{figure}
-
-
-
-
 
 \subsubsection{Concerning Lexical Memorization}
 \label{sec:lexmem}
@@ -890,6 +862,38 @@ appear in the dataset.}
 \caption{Most similar contexts to the prototype $\hat H$ learned by the Concat model.}
 \label{tab:ctxsim}
 \end{table}
+
+
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|rrrr|}
+  \hline
+  Model                           &   LEDS   &  BLESS   &   Medical &      TM14  \\
+  \hline
+  Cosine (Baseline)               &    .789  &    .225  &    .165  &      .674  \\
+  \hline
+  Concat                          &    .802  &    .689  &    .257  &      .722  \\
+  Diff                            &    .809  &    .496  &    .226  &      .672  \\
+  Asym \cite{roller:2014:coling}  &    .878  &    .546  &    .227  &      .677  \\
+  Ksim \cite{levy:2015:naacl}     &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
+  MProto \cite{roller:2016:emnlp} &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  \hline
+\end{tabular}
+\end{center}
+\caption{Mean F1 scores for each model and dataset.}
+\label{tab:results1}
+\end{table}
+
+%\begin{figure}
+%  \centering
+%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
+%  \label{fig:kernel}
+%\end{figure}
+
+
+
+
 
 
 Knowing that the Concat classifier acts primarily as a feature detector, we
