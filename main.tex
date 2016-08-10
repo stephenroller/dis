@@ -664,29 +664,28 @@ classifiers which employ a variety of hand-engineered features and lexicons
 like WordNet.  Most of the hand-engineered features come from
 \newcite{lai:2014:semeval}, which contain things like Wordform features (e.g.,
 do the words have the same lemma or Part-of-Speech?); WordNet features (e.g.,
-are the words hypernyms in WordNet?); and Distributional Similarity (e.g.,
-cosine distance between two words in a distributional space).
+are the words hypernyms or co-hyponyms in WordNet?); and Distributional
+Similarity (e.g., cosine distance between two words in a distributional space).
 
 We also present a novel extension of the real-valued distributional similarity
-features, by {\em binning} cosines into ranges (e.g. 0.0-0.1, \ldots, 0.9-1.0)
+features, by {\em binning} cosines into ranges (e.g. 0.0--0.1, \ldots, 0.9--1.0)
 to transform them into binary-valued features, after observing that
-mid-similar terms (those with a cosine of $\sim 0.8$, like {\em cat} and {\em
+mid-similar terms (those with a cosine of $\sim.80$, like {\em cat} and {\em
 animal}) were more likely entailments than those with high similarity
-(cosine of $\sim 0.95$, like {\em cat} and {\em dog}).
+(cosine of $\sim.95$, like {\em cat} and {\em dog}).
 Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
 antecedent (LHS) and consequent (RHS) vectors.
 
-We evaluate all of the lexical entailment classifiers listed above on
-two variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
-setup, the lexical entailment
-classifiers are evaluated on their performance on the RRR dataset in a standard 10-fold
-cross-validation setup. In the RTE setup, the classifiers are trained on items
-extracted from the training portion of the RTE dataset, and then used as the
-sole source of lexical knowledge in an end-to-end, complete RTE system developed
-by \newcite{needcite} to predict the test portion of the RTE dataset. This
-ensures we are actually testing whether Asym is able to contribute in a rich
-RTE pipeline.
+We evaluate all of the lexical entailment classifiers listed above on two
+variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
+setup, the lexical entailment classifiers are evaluated on their performance on
+the RRR dataset in a standard 10-fold cross-validation setup. In the RTE setup,
+the classifiers are trained on items extracted from the training portion of the
+RTE dataset, and then used as the sole source of lexical knowledge in an
+end-to-end, complete RTE system developed by \newcite{needcite} to predict the
+test portion of the RTE dataset. This ensures we are actually testing whether
+Asym is able to contribute in a rich RTE pipeline.
 
 Table~\ref{tab:evallexical} shows performance of the various lexical entailment
 classifiers on each of our evaluation settings. We also report a degenerate
@@ -698,23 +697,22 @@ inference errors, and other issues in the logical inference engine of
 
 \begin{table}
 \centering
-\begin{tabular}{|lrrr|}
+\begin{tabular}{|lrr|}
     \hline
-    {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Train} & {\bf RTE Test}\\
+    {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Test}\\
     \hline
-    Always guess neutral & 56.6 & 69.4 & 69.3 \\
-    Gold standard annotations&100.0 & 93.2 & 94.6 \\
+    Always guess neutral & 56.6 & 69.3 \\
+    Gold standard annotations&100.0 & 94.6 \\
     \hline
-    %Wordform only        & 57.4 & 70.4 & 70.9 \\
-    Dist. Sim. only      & 68.8 & 76.3 & 76.7 \\
-    WordNet only         & 79.1 & 83.1 & 84.2 \\
-    Asym only            & 76.8 & 78.3 & 79.2 \\
-    Asym + LHS + RHS     & 76.8 & 78.3 & 79.2 \\
+    Dist. Sim. only      & 68.8 & 76.7 \\
+    WordNet only         & 79.1 & 84.2 \\
+    Asym only            & 76.8 & 79.2 \\
+    Asym + LHS + RHS     & 76.8 & 79.2 \\
     \hline
-    All features         & 84.6 & 82.7 & 83.8 \\
+    All features         & 84.6 & 83.8 \\
     \hline
 \end{tabular}
-\caption{Accuracies fo}
+\caption{Accuracies for various Lexical Entailment classifiers on the RRR (Intrinsic) and SICK (RTE) datasets.}
 \label{tab:evallexical}
 \end{table}
 
