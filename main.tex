@@ -133,7 +133,7 @@ Distributional Semantics is often sometimes called Vector Space Models (VSM) of
 language, as words are represented as vectors a high-dimensional vector space.
 Words with similar semantics will have similar vectors in this induced
 geometric space. Since VSMs do not require annotated corpora, they are used and
-studied as an alternative or predictor of particular lexical resources NEEDCITE.
+studied as an alternative or predictor of particular lexical resources \cite{needcite}.
 
 In this work, we approach the question as to whether Distributional Semantics
 can be leveraged to predict some of the lexical inferences necessary in tasks
@@ -381,19 +381,19 @@ to obtain a list of {\em candidate substitutes}. Then, using various custom
 features, they would extract features and learn to rank substitutes for their
 appropriateness \cite{mccarthy:2007:semeval}. Later, researchers began noting
 the difference between candidate generation and candidate ranking, and then
-focused research on mostly the ranking task \cite{NEEDCITE}. The vast majority
+focused research on mostly the ranking task \cite{needcite}. The vast majority
 of these systems are based on the notions of finding substitutes based on {\em
 Selectional Restrictions} and {\em Selectional Preferences}, or
 limitations/preferences about the types of arguments and modifiers words tend
-to take \cite{NEEDCITE}.
+to take \cite{needcite}.
 
 Today, many have begun returning to the generation-and-ranking task
-\cite{kawakami:2015:arxiv,melamud:2015:naacl,roller:2016:naacl}, but opting to
-avoid lexical resources like WordNet.  Curiously, to date, the best performing
-systems in Lexical Substitution are ones which are unsupervised with respect to
-the task: either they are trained for some auxiliary task like Machine
-Translation \cite{kawakami:2015:arxiv}, or they are similarity methods over
-distributional models \cite{roller:2016:naacl} or language modeling
+\cite{melamud:2015:naacl,kawakami:2016:iclr,roller:2016:naacl,melaumud:2016:conll},
+but opting to avoid lexical resources like WordNet.  Curiously, to date, the
+best performing systems in Lexical Substitution are ones which are unsupervised
+with respect to the task: either they are trained for some auxiliary task like
+Machine Translation \cite{kawakami:2016:iclr}, or they are similarity methods
+over distributional models \cite{roller:2016:naacl} or language modeling
 \cite{melamud:2015:naacl}. This could be because of a lack of recent effort in
 directly supervised versions of the task \cite{szarvas:2013:naacl}, or because
 lexical substitution datasets are relatively small compared to the size of the
@@ -1138,7 +1138,7 @@ with the exception of ``realy.''
 We consider a few experiments with this hypothesis that the measures do better
 because they capture better {\em unigram} statistics than the baselines. Recent literature found that the vector
 norm of SGNS embeddings correlates strongly with word frequency
-\cite{wilson:arxiv15}. We verified this for ourselves, computing the Spearman's
+\cite{wilson:2015:arxiv}. We verified this for ourselves, computing the Spearman's
 rank correlation between the corpus unigram frequency and the vector length
 and found $rho = 0.90$, indicating the two correlate very strongly. Since the
 dot product is also the unnormalized cosine, it follows that \ourmeas~and
