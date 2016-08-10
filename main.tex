@@ -759,11 +759,6 @@ which uses the concatenation of these LHS and RHS features as well. In this
 section, we address this inconsistency, and propose a new Multiprototype
 classification model for hypernymy detection.
 
-First, we consider one important parameter which differed between the original
-Asym experiments and the RTE experiments: in the former, we only used
-distributional spaces based on BoW features, in in the latter, we
-used both BoW and syntactic distributional spaces.
-
 \begin{table}
 \begin{center}
 \begin{tabular}{|l|rrrr|}
@@ -776,7 +771,7 @@ used both BoW and syntactic distributional spaces.
   Diff                           &    .809  &    .496  &    .226  &      .672  \\
   Asym \cite{roller:2014:coling} &    .878  &    .546  &    .227  &      .677  \\
   Ksim \cite{levy:2015:naacl}    &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  HD   \cite{roller:2016:emnlp}  &    .909  &{\bf.712} &{\bf.295} &      .726  \\
+  MProto\cite{roller:2016:emnlp} &    .909  &{\bf.712} &{\bf.295} &      .726  \\
   \hline
 \end{tabular}
 \end{center}
