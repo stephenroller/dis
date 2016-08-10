@@ -618,6 +618,14 @@ entailment classifiers are used as to generate {\em logical rules}; an inference
 engine based on Markov Logic Networks (MLNs) is then used to form predictions
 about complete {\em sentential} entailment.
 
+To this end, we employ the {\bf SICK} dataset, which contains nearly 10k
+sentence pairs, evenly split between training and test sets
+\cite{marelli:2014:semeval}. Sentence pairs were extracted randomly image
+caption data sets, and then simplified and extended to cover semantic issues
+like negation and quantifiers, and then manually annotated as {\em entailing}
+(the antecedent implies the consequent), {\em contradicting} (the antecedent
+implies the opposite of the consequent), or neutral (neither of the above).  .
+
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
 experiments we use the same procedure as before, but omit the phrasal rules
