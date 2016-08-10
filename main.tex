@@ -1,7 +1,7 @@
-\documentclass[letterpaper]{article}
+\documentclass[12pt]{article}
 
 \usepackage{times}
-%\usepackage{fullpage}
+\usepackage{fullpage}
 \usepackage{latexsym}
 \usepackage{amsmath}
 %\usepackage{hyperref}
@@ -746,7 +746,7 @@ that cosine features are better at discovering synonymy, and that Asymmetric
 frequently mistakes antonymy as an entailing. Additional qualitative analyses comparing
 all of these models are available in \newcite{beltagy:2016:cl}.
 
-\subsection{H-Features and Multi-prototype Hypernymy Classifier \cite{roller:2016:emnlp}}
+\subsection{H-Features and Multi-prototype Hypernymy Classifier\\ \cite{roller:2016:emnlp}}
 \label{sec:multiprototype}
 
 In the previous sections, we saw that the Asym classifier is able to to learn
@@ -759,7 +759,7 @@ which uses the concatenation of these LHS and RHS features as well. In this
 section, we address this inconsistency, and propose a new Multiprototype
 classification model for hypernymy detection.
 
-It turns out, two important hyperparameters are important to resolving this
+Two important hyperparameters are important to resolving this
 paradox: the first is which distributional space is used. In unpublished
 experiments, we find that narrower contexts windows perform better than wide
 windows, and that syntactic spaces perform best, regardless of model or
@@ -778,7 +778,10 @@ TM14}, a set of various non-hypernymy entailing relations (like cause-effect)
   \label{fig:hyperparms}
 \end{figure}
 
-
+The other important hyperparameter is the {\em type} of classification model
+used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use
+of a Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an
+RBF SVM.
 
 that syntactic distributional spaces performed better
 than any BoW space on multiple datasets and with multiple models. This is
