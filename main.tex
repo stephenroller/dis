@@ -656,15 +656,25 @@ eliminate {\em girl} and automatically conclude that {\em talks} lexically
 entails {\em speaks}. Lexical pairs which could {\em not} be automatically
 inferred were manually annotated by two of the authors \cite{beltagy:2016:cl}.
 The result is a novel dataset of lexical entailment pairs, which we can use
-to train a lexical entailment classifier.
+to train a lexical entailment classifier, which we call {\bf RRR} (RTE by
+Robinson Resolution).
 
-We train and compare the performance of several lexical entailment classifiers
-which employ a variety of hand-engineered features and lexicons like WordNet.
-Most of the hand-engineered features come from \newcite{lai:2014:semeval},
-which we broadly categorize into three categories: Wordform features (e.g., do
-the words have the same lemma?); WordNet features (e.g., are the words
-hypernyms in WordNet?); and Distributional Similarity (e.g., cosine distance
-between two words in a distributional space).
+We train and compare the performance of several existing lexical entailment
+classifiers which employ a variety of hand-engineered features and lexicons
+like WordNet.  Most of the hand-engineered features come from
+\newcite{lai:2014:semeval}, which we broadly categorize into three categories:
+Wordform features (e.g., do the words have the same lemma?); WordNet features
+(e.g., are the words hypernyms in WordNet?); and Distributional Similarity
+(e.g., cosine distance between two words in a distributional space).
+
+We also present a novel extension of the real-valued distributional similarity
+features, by {\em binning} cosines into ranges (e.g. 0.0-0.1, \ldots, 0.9-1.0)
+to transform them into binary-valued features, after observing that
+mid-similar terms (those with a cosine of $\sim 0.8$, like {\em cat} and {\em
+animal}) were more likely entailments than those with high similarity
+(cosine of $\sim 0.95$, like {\em cat} and {\em dog}).
+
+Finally, we also compare to the Asym classifier, trained on our new RRR dataset.
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
