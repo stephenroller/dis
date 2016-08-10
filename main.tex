@@ -560,14 +560,23 @@ is necessary, but {\em not} sufficient to show the model obeys the SDIH, as
 we are effectively comparing unsupervised models with supervised ones.
 
 We measure every word pair's similarity using three similarity measures:
-our baseline, cosine similarity, should not change substantially between the
+cosine, Clarke, and invCL. Cosine similarity acts as our control, and
+should not change substantially between the
 original and selective distributional spaces; The second similarity measure,
-ClarkeDE, measures roughly what percentage of the hyponyms' mass is contained
-within the hypernym, i.e.,
+{\em Clarke}, measures roughly what percentage of the hyponyms' mass is contained
+within the hypernym \cite{clarke:2009:gems}, i.e.,
 \begin{equation*}
-  {\text ClarkeDE}(H, w) = \frac{\sum_i min(H_i, w_i)}{\sum_i H_i};
-\end{equation}
-ClarkeDE similarity
+  \text{Clarke}(H, w) = \frac{\sum_i \min(H_i, w_i)}{\sum_i H_i};
+\end{equation*}
+The final similarity measure, {\em invCL}, extends ClarkeDE to additionally
+measure what percentage of the hypernym's mass is {\em not} contained within
+the hyponym,
+\begin{equation*}
+  \text{invCL}(H, w) = \sqrt{\text{Clarke}(H, w)(1 - \text{Clarke}(w, H))}.
+\end{equation*}
+
+We compute all three similarity measures across all the word pairs in BLESS,
+and 
 
 We Finally, we
 measured the ability of three distributional similarity measures
