@@ -1215,9 +1215,9 @@ proposed primarily with integration into a final RTE subsystem in mind.
 
 \paragraph{H-features for non-Hypernymy Relations}
 
-In Section~\ref{sec:hfeatures}, we discussed how the multi-prototype model
-is able to exploit multiple H-feature classifiers in order to improve the results
-and modeling power of a hypernymy detection system. Indeed the multi-prototype
+In Section~\ref{sec:hfeatures}, we discussed how the H-Features model
+is able to exploit multiple H-feature detectors in order to improve the results
+and modeling power of a hypernymy detection system. Indeed the H-features
 model outperformed the Asym and Ksim models when evaluated on the same metric of
 F1-score in hypernymy prediction.
 
@@ -1235,12 +1235,12 @@ Indeed, the results shown in Table~\ref{tab:bless-and-entailment-v-space} show
 the accuracy of the Asym and Baroni classifiers on a four-way relationship
 prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
 experiments in Section~\ref{sec:hfeatures} only describe performance in a
-binary hypernymy-or-not classification task. We propose the multi-prototype
+binary hypernymy-or-not classification task. We propose the H-features
 model of Section~\ref{sec:hfeatures} be extended and evaluated on its
 performance in other relationships.
 
-There are multiple ways that the model could be extended. The one we believe
-will be most successful is one that trains several binary multi-prototype models:
+There are several ways that the model could be extended. The one we believe
+will be most successful is one that trains several binary H-features models:
 one for hypernymy-vs-nonhypernymy, one for meronomy-vs-nonhypernymy, etc.
 Similar to how the PCA procedure was used only as a form of feature-extraction
 for the final prediction, each of the binary classifier iterations will be also
@@ -1262,21 +1262,21 @@ whether it will pick out additional Hearst patterns indicative of other
 relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
 and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
-\paragraph{Multiprototypes and H-features for RTE}
+\paragraph{H-features Model for RTE}
 
 The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
 prediction model can provide strong improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
-Yet, as we also saw in Section~\ref{sec:hfeatures}, the multiprototype
+Yet, as we also saw in Section~\ref{sec:hfeatures}, the H-features
 model allows for greater modeling power and significant improvements on multiple
-lexical entailment systems. Yet we do not yet know how much the multiprototype
+lexical entailment systems. Yet we do not yet know how much the H-features
 model is able to contribute as one part of the larger RTE pipeline.
 
 We suspect, given its substantial improvements over Asym in lexical datasets,
 that it will also be able to be able to improve the full system. However, it
 remamins unclear what is the best way to integrate it with additional
 hand-engineered features used in the RTE system.  One possibility would be to
-simply use the multiprototype's feature extraction procedure to provide
+simply use the H-features's feature extraction procedure to provide
 additional information to the lexical entailment classifier. Yet the classifier
 used in Section~\ref{sec:rtesubsystem} was a linear classifier over the hand
 engineered features, which outperformed nonlinear versions. Unfortunately, we
