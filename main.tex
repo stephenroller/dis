@@ -527,7 +527,7 @@ indicating there is some successful learning in the models. We also see that
 the Window 2 space performs better than the Sentence space in all four
 comparisons, indicating it is likely the task depends more heavily {\em
 functional} properties of words than {\em topical} properties of words. We will
-see further evidence of this in Section~\ref{sec:multiprototype}.
+see further evidence of this in Section~\ref{sec:hfeatures}.
 
 Finally, we see that the Asym model outperforms the model proposed by
 \newcite{baroni:2011:gems} in all four comparisons, indicating something about
@@ -727,7 +727,7 @@ distributional similarity both perform much worse than the information-rich
 WordNet features, or the more sophisticated Asym classifier.
 We also notice that the classifier which combines Asym with the LHS and RHS
 vectors performs substantially better than Asym does by itself, indicating
-a need for further study (c.f. Section~\ref{sec:multiprototype}).
+a need for further study (c.f. Section~\ref{sec:hfeatures}).
 
 Unsuprisingly, we find that the WordNet classifier does a bit better than the
 others, which is expected given that WordNet is an information-rich resource,
@@ -747,7 +747,7 @@ frequently mistakes antonymy as an entailing. Additional qualitative analyses co
 all of these models are available in \newcite{beltagy:2016:cl}.
 
 \subsection{H-Features for Hypernymy Classification \cite{roller:2016:emnlp}}
-\label{sec:multiprototype}
+\label{sec:hfeatures}
 
 In the previous sections, we saw that the Asym classifier is able to to learn
 to classify word pairs as hypernymy and non-hypernymy, and that is able to
@@ -756,7 +756,7 @@ experiments that Asym can be improved upon by simply concatenating the Asym
 difference vectors with vectors for the LHS and the RHS. This seems somewhat
 at odds in our comparisons between Aym and the model of \newcite{baroni:2011:gems},
 which uses the concatenation of these LHS and RHS features as well. In this
-section, we address this inconsistency, and propose a new Multiprototype
+section, we address this inconsistency, and propose a new H-feature
 classification model for hypernymy detection.
 
 Two important hyperparameters are important to resolving this
@@ -1215,7 +1215,7 @@ proposed primarily with integration into a final RTE subsystem in mind.
 
 \paragraph{H-features for non-Hypernymy Relations}
 
-In Section~\ref{sec:multiprototype}, we discussed how the multi-prototype model
+In Section~\ref{sec:hfeatures}, we discussed how the multi-prototype model
 is able to exploit multiple H-feature classifiers in order to improve the results
 and modeling power of a hypernymy detection system. Indeed the multi-prototype
 model outperformed the Asym and Ksim models when evaluated on the same metric of
@@ -1234,9 +1234,9 @@ information.
 Indeed, the results shown in Table~\ref{tab:bless-and-entailment-v-space} show
 the accuracy of the Asym and Baroni classifiers on a four-way relationship
 prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
-experiments in Section~\ref{sec:multiprototype} only describe performance in a
+experiments in Section~\ref{sec:hfeatures} only describe performance in a
 binary hypernymy-or-not classification task. We propose the multi-prototype
-model of Section~\ref{sec:multiprototype} be extended and evaluated on its
+model of Section~\ref{sec:hfeatures} be extended and evaluated on its
 performance in other relationships.
 
 There are multiple ways that the model could be extended. The one we believe
@@ -1245,7 +1245,7 @@ one for hypernymy-vs-nonhypernymy, one for meronomy-vs-nonhypernymy, etc.
 Similar to how the PCA procedure was used only as a form of feature-extraction
 for the final prediction, each of the binary classifier iterations will be also
 used for feature extraction for a final classifier.
-That is, we will use the procedure described in Section~\ref{sec:multiprototype}
+That is, we will use the procedure described in Section~\ref{sec:hfeatures}
 to extract several iterations of features for hypernymy, then completely repeat
 the procedure for meronomy and co-hyponymy. The resulting features from each
 of the classifiers will be concatenated for a final four-way classifier prediction.
@@ -1267,7 +1267,7 @@ and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
 prediction model can provide strong improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
-Yet, as we also saw in Section~\ref{sec:multiprototype}, the multiprototype
+Yet, as we also saw in Section~\ref{sec:hfeatures}, the multiprototype
 model allows for greater modeling power and significant improvements on multiple
 lexical entailment systems. Yet we do not yet know how much the multiprototype
 model is able to contribute as one part of the larger RTE pipeline.
@@ -1280,7 +1280,7 @@ simply use the multiprototype's feature extraction procedure to provide
 additional information to the lexical entailment classifier. Yet the classifier
 used in Section~\ref{sec:rtesubsystem} was a linear classifier over the hand
 engineered features, which outperformed nonlinear versions. Unfortunately, we
-found in Section~\ref{sec:multiprototype} that the final ensemble classifier
+found in Section~\ref{sec:hfeatures} that the final ensemble classifier
 {\em must} be nonlinear, else it does not gain any additional power in the
 repeated iterations. Resolving this conflict may be difficult, though we
 suspect it may be alleviated by more careful hyperparameter tuning of nonlinear
@@ -1374,7 +1374,7 @@ above, the more confident of the two predictions will be assumed to be
 the correct one.
 
 This idea would likely even benefit further from our short-term proposal to
-see how well the multi-prototype model does at predicting relations other
+see how well the H-features model does at predicting relations other
 than hypernymy: for example, if we are highly confident that two words are
 co-hyponyms, then we can become more confident that they share the same
 hypernyms, and vice versa.
@@ -1733,9 +1733,9 @@ outperforms some comparable baselines, and analysis shows its improvements
 derive predominantly from exploiting simple unigram priors.
 
 We also discussed multiple directions for how our work could be extended
-in the future. In the short term, we focus on exploring how our Multiprototype
+in the future. In the short term, we focus on exploring how our H-features
 model could also contribute to the RTE Lexical Entailment classifier, and
-whether the Multiprotype model is able to model relations other than hypernymy.
+whether the H-features model is able to model relations other than hypernymy.
 We also discussed several ways in which the Lexical Substitution model could
 contribute to the RTE Lexical Entailment Classifier. Progress in these areas
 would contribute significantly to our thesis that our models extract useful
