@@ -406,11 +406,11 @@ corpora used in machine translation and distributional semantics.
 
 Most baseline similarity measures in distributional semantics, like cosine,
 have the unfortunate property that they're symmetric: $\text{cosine}(a, b) =
-\text{cosine}(b, a)$. While this necessary in some applications, like clustering
-\cite{needcite}, it is a fatal flaw in any application involving
-lexical entailment: although {\em girl} implies {\em child}, but
-the opposite does not hold. As such, trying to perform lexical entailment based solely on
-symmetric measures will always fail hard.
+\text{cosine}(b, a)$. While this necessary to obey the Triangle Inequality, it
+is a fatal flaw in any application involving lexical entailment: although {\em
+girl} implies {\em child}, but the opposite does not hold. As such, trying to
+predict lexical entailment based solely using symmetric measures will always
+fail.
 
 This has been recognized widely in the
 literature for some time, and numerous asymmetric, unsupervised similarity measures have been
@@ -605,13 +605,11 @@ Table~\ref{tab:mapscores} shows the results of this experiment.
 As expected, all measures except for cosine assign higher MAP values to
 hypernyms than they did in the original space, though only invCL that ranks
 hypernyms significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank
-test, $p < .001$} 
-
-
-
-
-
-
+test, $p < .001$}. We also see that the performance of our cosine baseline
+remains relatively unchanged by the feature selection procedure, and that
+the the Clarke and invCL measures have their co-hyponymy and meronomy
+scores weakened. Altogether, this is evidence that the Asym measure is
+indeed, conforming to our Selective Distributional Inclusion interpretation.
 
 
 \subsection{Subsystem in complete RTE system \cite{beltagy:2016:cl}}
