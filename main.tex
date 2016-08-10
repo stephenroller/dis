@@ -674,7 +674,9 @@ mid-similar terms (those with a cosine of $\sim 0.8$, like {\em cat} and {\em
 animal}) were more likely entailments than those with high similarity
 (cosine of $\sim 0.95$, like {\em cat} and {\em dog}).
 
-Finally, we also compare to the Asym classifier, trained on our new RRR dataset.
+Finally, we also compare to the Asym classifier trained on our new RRR dataset,
+and on a variation of Asym which concatenates the Asym features with the
+antecedent (LHS) and consequent (RHS) vectors.
 
 Table~\ref{tab:evallexical} shows performance of the classifier on {\em only}
 the lexical rules, which have single words on the LHS and RHS. In these
@@ -695,8 +697,9 @@ predictions, but we do not predict any phrasal rules.
     \hline
     Wordform only        & 57.4 & 70.4 & 70.9 \\
     WordNet only         & 79.1 & 83.1 & 84.2 \\
-    Dist (Lexical) only  & 68.8 & 76.3 & 76.7 \\
-    \newcite{roller:2014:coling} only            & 76.8 & 78.3 & 79.2 \\
+    Dist. Sim. only      & 68.8 & 76.3 & 76.7 \\
+    Asym only            & 76.8 & 78.3 & 79.2 \\
+    Asym + LHS + RHS     & 76.8 & 78.3 & 79.2 \\
     \hline
     All features         & 84.6 & 82.7 & 83.8 \\
     \hline
