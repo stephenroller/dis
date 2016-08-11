@@ -807,8 +807,18 @@ models.
 After the publication of several supervised distributional models of hypernymy
 \cite{baroni:2011:gems,fu:2014:acl,roller:2014:coling,weeds:2014:coling},
 another study followed questioning whether these models truly learn to predict
-relationships, or if they were simply learning {\em prototypicality}
+relationships. \newcite{levy:2015:naacl} hypothesized that each of these models
+is learning about {\em prototypicality}, or simply what a prototypical
+hypernym looks like. For example, after learning that ``cat is an animal''
+and that ``dog is an animal,'' a prototypicality classifier may also conclude
+that ``sofa is an animal.'' That is, a prototypicality classifier will
+simply learn that {\em animal} is usually a hypernym, and will always
+predict this way.
+
+or if they were simply learning {\em prototypicality}
 \cite{levy:2015:naacl}.
+
+The crux of the argument 
 
 
 \begin{table}
