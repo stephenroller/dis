@@ -815,10 +815,17 @@ that ``sofa is an animal.'' That is, a prototypicality classifier will
 simply learn that {\em animal} is usually a hypernym, and will always
 predict this way.
 
-or if they were simply learning {\em prototypicality}
-\cite{levy:2015:naacl}.
-
-The crux of the argument 
+The crux of the argument is explained analytically by
+\newcite{levy:2015:naacl}, and hinges on observing that many of the models from
+the literature (including Asym) use {\em linear} classifiers. Thus, consider a
+classifier which takes the concatenation of the vectors $\wordpair$ learns a
+hyperplane $\hat p$ to make its prediction. Then the hyperplane $\hat p$ can
+also be viewed as a concatenation of two vectors:
+\begin{align*}
+  & \hat p^\top \langle H, w\rangle\\
+  & = \protopair^\top \wordpair\\
+  & = \hat H^\top H + \hat w^\top w
+\end{align*}
 
 
 \begin{table}
