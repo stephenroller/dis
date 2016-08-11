@@ -864,6 +864,11 @@ extend this behavior. For simplicity, we focus our analysis on the linear
 Concat classifier, which exhibits the same behavior as Diff, but in a
 more obvious way.
 
+In our qualitative experiment, we train a linear Concat classifier using
+syntactic distributional vectors on four separate data sets. We then analyze
+the trained models by comparing their hyperplanes to the {\em context vectors},
+similar to what was done in Section~\ref{sec:asym}.
+
 We train a linear Concat classifier using syntactic distributional vectors
 on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless were also
 used in the Asym experiments, and are datasets covering hypernymy and
@@ -874,7 +879,7 @@ entailment labels, and was farmed using Information Extraction techniques
 by \newcite{turney:2015:nle}.
 
 We inspect the hyperplanes learned by the Concat classifier by exploiting
-the {\em context vectors} described in Section~\ref{sec:dist}
+the {\em context vectors} described in Section~\ref{sec:dist}. We 
 
 For simplicity, we focus the remainder of our analysis on
 the linear Concat classifier, which exhibits the same prototypicality behavior
