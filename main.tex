@@ -440,16 +440,16 @@ grammatical relationships (singular/plural, verb conjugations) and some limited
 semantic relationships (gender, capital/country). Asym exploits this
 behavior for the task of hypernymy and lexical relationship prediction.
 
-
 The Asym model is a simple model which uses the {\em vector difference} between
-the hypothesized hypernym and hyponym as input features to an off-the-shelf
-classifier. For example, given a distributional vector for {\tt animal} and
-a vector for {\tt cat}, we use the vector ${\tt animal} - {\tt cat}$ as the
-features for a positive example, while the vectors for
-${\tt cat} - {\tt animal}$ and ${\tt animal} - {\tt sofa}$ are inputted
-as negative examples. Additionally, we also give the {\em element-wise squared
-difference vector} as features to the classifier. That is, for a given hypernym, hyponym
-pair of words $(H, w)$, we compute the final feature space defined as:
+the hypothesized hypernym-hyponym pair as input features to an off-the-shelf
+classifier. For example, given a (unit normalized) distributional vector for
+{\tt animal} and a vector for {\tt cat}, we use the vector
+${\tt animal} - {\tt cat}$ as the features for a positive example, while the
+vectors for ${\tt cat} - {\tt animal}$ and ${\tt animal} - {\tt sofa}$ are
+inputted as negative examples. Additionally, we also give the {\em element-wise
+squared difference vector} as features to the classifier. That is, for a given
+hypernym, hyponym pair of words $(H, w)$, we compute the final feature space
+defined as:
 \begin{align*}
   A_i(H, w) & = H_i - w_i\\
   B_i(H, w) & = (H_i - w_i)^2\\
@@ -834,6 +834,9 @@ Without having some form of this interaction, this Concat classifier has no way
 of estimating the relationship between the two words. Furthermore, a linear classifier
 which uses the Diff vectors as input ($H - w$) will also have this flaw,
 since the hyperplane $\hat p$ can be analyzed in this same fashion.
+
+In their work, \newcite{levy:2015:naacl} back up this analysis with experimental
+evidence, showing that when the training/testing set is constructed
 
 
 
