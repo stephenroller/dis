@@ -867,55 +867,19 @@ more obvious way.
 In our qualitative experiment, we train a linear Concat classifier using
 syntactic distributional vectors on four separate data sets. We then analyze
 the trained models by comparing their hyperplanes to the {\em context vectors},
-similar to what was done in Section~\ref{sec:asym}.
+similar to what was done in Section~\ref{sec:asym}. This is a radically
+different view of than the protypicality hypothesis of
+\newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy,
+our interpretation is that the models are learning about what {\em contexts}
+are useful for identifying hypernymy.
 
-We train a linear Concat classifier using syntactic distributional vectors
-on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless were also
-used in the Asym experiments, and are datasets covering hypernymy and
+We the model on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless
+were also used in the Asym experiments, and are datasets covering hypernymy and
 nonhypernymy relations. Medical is a dataset of pairs of medical words and
 entailment labels, and was farmed using Information Extraction techniques
-\cite{levy:2014:conll}. Finally, TM14 contains many varied word relations
-(like cause-effect, agent-object) which are annotated with entailment decisions
-by \newcite{turney:2015:nle}.
-
-We inspect the hyperplanes learned by the Concat classifier by exploiting
-the {\em context vectors} described in Section~\ref{sec:dist}. We 
-
-For simplicity, we focus the remainder of our analysis on
-the linear Concat classifier, which exhibits the same prototypicality behavior
-as Diff, but in a more obvious way. To this end, we train a linear Concat
-classifier on four data sets
-
-
-
-\begin{table}
-\begin{center}
-  \begin{small}
-  \begin{tabular}{|llll|}
-    \hline
-    LEDS & BLESS & Medical & TM14\\
-    \hline
-     %% baroni           %% bless             %% levy               %% turney_lemma           \\
-     material       &      goods             &     item           &      sensitiveness          \\
-     structure      &      lifeform          &     unlockable     &      tactility              \\
-     object         & {\bf item}             &     succor         &      palate                 \\
-     process        & {\bf equipment}        &     team-up        &      stiffness              \\
-     activity       & {\bf herbivore}        &     non-essential  &      content                \\
-%     environment    &      omnivore         %&     40px           &      ductility              \\
-%     element        & {\bf creature}        %&     crimefighter   &      musculature            \\
-%{\bf practice}      &      life-form        %&     material       &      dimensionality         \\
-%     nature         & {\bf artifact}        %&     assitance      &      quality                \\
-%     organism       & {\bf pest}            %&     nourishment    &      angulation             \\
-    \hline
-  \end{tabular}
-  \end{small}
-\end{center}
-\caption{Most similar words to the prototype $\hat H$ learned by the Concat model. Bold items
-appear in the dataset.}
-\label{tab:wordsim}
-\end{table}
-
-
+\cite{levy:2014:conll}. Finally, TM14 contains many varied word relations (like
+cause-effect, agent-object) which are annotated with entailment decisions by
+\newcite{turney:2015:nle}.
 
 \begin{table}
 \begin{center}
@@ -951,9 +915,24 @@ appear in the dataset.}
   \end{tabular}
   \end{small}
 \end{center}
-\caption{Most similar contexts to the prototype $\hat H$ learned by the Concat model.}
+\caption{Most similar contexts to the $\hat H$ hyperplane learned by a Concat classifier.}
 \label{tab:ctxsim}
 \end{table}
+
+Table~\ref{tab:ctxsim} shows the five contexts most similar to the hyperplane
+learned by each of the four models, and immediately explains why these models
+perform strongly. Nearly all of the features learned take the form of Hearst
+patterns \cite{hearst:1992:coling,snow:2004:nips}.  The most recognizable and
+common pattern learned is the ``such as'' pattern, as in ``animals such as
+cats''.  These patterns have been well known to be indicative of hypernymy for
+over two decades. Other interesting patterns are the ``including'' pattern
+(``animals including cats'') and ``many'' pattern (``many animals''). Although
+we list only the five most similar context items for the data sets, we find
+similar Hearst Pattern type contexts continue dominate the list for the next
+30-50 items. Taken together, it is remarkable that the model identified these
+patterns using only distributional vectors and only the positive/negative
+example pairs.
+
 
 
 
