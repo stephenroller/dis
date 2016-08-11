@@ -763,7 +763,8 @@ difference vectors with vectors for the LHS and the RHS (which we call Concat).
 In this section, we discuss some of the strengths and weaknesses of the Concat
 model, and how these relate to the Asym model. We then propose a novel
 classification model which combines and extends the strengths of all these
-models.
+models using an iterative procedure similar to Principal Component Analysis
+(PCA).
 
 %This seems somewhat at
 %odds in our comparisons between Aym and the model of
@@ -837,8 +838,9 @@ since the hyperplane $\hat p$ can be analyzed in this same fashion.
 
 In their work, \newcite{levy:2015:naacl} back up this analysis with experimental
 evidence, showing that when the training/testing set is constructed to
-ensure that no lexical items are shared between the training and test sets,
-the performance of several classifiers, like \newcite{baroni:2011:gems} and
+ensure that no lexical items are shared between the training and test sets
+(similar to the experiments in \newcite{roller:2014:coling}), the performance
+of several classifiers, like \newcite{baroni:2011:gems} and
 \newcite{weeds:2014:coling}, drop dramatically.
 
 Interestingly, Asym does not suffer this fundamental flaw: although it uses
@@ -849,7 +851,14 @@ square-difference features provide it these crucial inner product terms:
   & \sum_i (H_i - w_i)^2\\
   & = \sum_i H_i^2 + w_i^2 - 2({H}_i{w}_i)\\
   & = H^\top H + w^\top w - 2{\bf H^\top{w}}
-\end{align}
+\end{align*}
+This explains our observation in Section~\ref{sec:asym} that, without these
+square-difference terms, performance drops substantially.
+
+Nonetheless, this raises a concern about what the difference terms $H - w$
+actually provide. For simplicity, we focus the remainder of our analysis on
+the linear Concat classifier, which exhibits the same prototypicality behavior
+as Diff, but in a more obvious way.
 
 
 
