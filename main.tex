@@ -873,7 +873,7 @@ different view of than the protypicality hypothesis of
 interpretation is that the models are learning about what {\em contexts} are
 useful for identifying hypernymy.
 
-We the model on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless
+We the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
 were also used in the Asym experiments, and are datasets covering hypernymy and
 nonhypernymy relations. Medical is a dataset of pairs of medical words and
 entailment labels, and was farmed using Information Extraction techniques
@@ -884,34 +884,16 @@ cause-effect, agent-object) which are annotated with entailment decisions by
 \begin{table}
 \begin{center}
   \begin{small}
-  \begin{tabular}{|ll|}
+  \begin{tabular}{|llll|}
     \hline
-    LEDS & BLESS\\
+    LEDS & BLESS & Medical & TM14\\
     \hline
-      nmod:such\_as+animal             &  nmod:such\_as+submarine           \\
-      acl:relcl+identifiable           &  nmod:such\_as+ship                \\
-      nmod:of\depinv+determine         &  nmod:such\_as+seal                \\
-      nmod:of\depinv+categorisation    &  nmod:such\_as+plane               \\
-      compound+many                    &  nmod:such\_as+rack                \\
-      %nmod:such\_as+pot                &  nmod:such\_as+rope                \\
-      %nmod:such\_as+bone               &  nmod:such\_as+box                 \\
-      %nmod:of\depinv+strangeness       &  nmod:such\_as+bat                 \\
-      %amod+unassociated                &  nmod:such\_as+pot                 \\
-      %compound+similar                 &  nmod:such\_as+container           \\
+      nmod:such\_as+animal             &  nmod:such\_as+submarine          &  nmod:such\_as+patch              &  amod+desire                        \\
+      acl:relcl+identifiable           &  nmod:such\_as+ship               &  nmod:such\_as+skin               &  amod+heighten                      \\
+      nmod:of\depinv+determine         &  nmod:such\_as+seal               &  nmod:including+skin              &  nsubj\depinv+disparate             \\
+      nmod:of\depinv+categorisation    &  nmod:such\_as+plane              &  nmod:such\_as+tooth              &  nmod:such\_as+honey                \\
+      compound+many                    &  nmod:such\_as+rack               &  nmod:such\_as+feather            &  nmod:with\depinv+body              \\
     \hline
-    Medical & TM14\\
-    \hline
-      nmod:such\_as+patch              &  amod+desire                       \\
-      nmod:such\_as+skin               &  amod+heighten                     \\
-      nmod:including+skin              &  nsubj\depinv+disparate            \\
-      nmod:such\_as+tooth              &  nmod:such\_as+honey               \\
-      nmod:such\_as+feather            &  nmod:with\depinv+body             \\
-      %nmod:including+finger            &  nsubj\depinv+unconstrained        \\
-      %nmod:such\_as+ear                &  compound\depinv+gratification     \\
-      %nmod:such\_as+heart              &  compound\depinv+comfort     \\
-      %nmod:such\_as+foot               &  nsubj\depinv+composite            \\
-      %compound+similar                 &  nmod:such\_as+label               \\
-\hline
   \end{tabular}
   \end{small}
 \end{center}
@@ -935,23 +917,16 @@ Altogether, it is remarkable that the model identified these patterns using
 {\em only} distributional vectors and only the positive/negative example pairs.
 Since the model can be interpretted as a sort of {\em feature detector}, we
 call this model the H-feature Detector Model. In the remainder of this section,
-we show how these H-features can be improved using an iterative procedure similar
-to Principal Component Analysis.
+we show how these H-features can be improved using an iterative procedure
+similar to Principal Component Analysis.
 
-\subsection{The H-Feature Detector Model}
+\subsubsection{The H-Feature Detector Model}
 
-
-
-
-
-
-Knowing that the Concat classifier acts primarily as a feature detector, we
-ask whether this can be combined with similarity-based insights of models like
-Asym and Ksim. To this end, we propose a novel model which exploits the
-Concat classifier, extends its modeling power, and adds two other types of
-evidence proposed in the literature: overall similarity, and distributional
-inclusion.
-
+Knowing that the Concat classifier acts primarily as a feature detector, we ask
+whether this can be combined with similarity-based insights of models like
+Asym. To this end, we propose a novel model which exploits the H-feature
+Detector model, extends its modeling power, and also adds in features for
+general similarity and distributional inclusion.
 
 The model works through an iterative procedure similar to Principal Component
 Analysis (PCA). Each iteration repeatedly trains a Concat classifier under the
@@ -1029,11 +1004,6 @@ individual Hearst Pattern detectors, so the procedure only acts as a method of
 feature extraction. We use an SVM with an RBF-kernel, as we found it to work
 best, though several nonlinear classifiers also to do well.
 
-The only free hyperparameter of the model is $n$, the number of iterations of
-the PCA-like procedure. We found that performance improves substantially on all
-datasets with at least two iterations, but then falls off slowly after five or
-more iterations. We chose to use four iterations for all final models.
-
 \begin{table}
 \centering
 \begin{small}
@@ -1044,17 +1014,17 @@ more iterations. We chose to use four iterations for all final models.
   \hline
   \multicolumn{5}{|c|}{Linear Models}\\
   \hline
-  Cosine only      &      .787   &      .208   &      .168     &      .676   \\
+  Cosine only (Baseline)      &      .787   &      .208   &      .168     &      .676   \\
   Concat           &      .794   &      .612   &      .218     &      .693   \\
-  Diff             &      .805   &      .440   &      .195     &      .665   \\
-  Asym             &      .865   &      .510   &      .210     &      .671   \\
+  Diff \cite{weeds:2014:coling}       &      .805   &      .440   &      .195     &      .665   \\
+  Asym \cite{roller:2014:coling}            &      .865   &      .510   &      .210     &      .671   \\
   %Concat+Diff      &      .801   &      .604   &      .224     &      .703   \\
-  Concat+Asym      &      .843   &  {\bf.631}  &      .240     &      .701   \\
+  Concat+Asym \cite{beltagy:2016:cl}     &      .843   &  {\bf.631}  &      .240     &      .701   \\
   \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
-  RBF              &      .779   &      .574   &      .215     &      .705   \\
-  Ksim             &      .893   &      .488   &      .224     &  {\bf.707}  \\
+  %RBF              &      .779   &      .574   &      .215     &      .705   \\
+  Ksim \cite{levy:2014:conll}            &      .893   &      .488   &      .224     &  {\bf.707}  \\
   H-Feature Detector &{\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
   \hline
 \end{tabular}
