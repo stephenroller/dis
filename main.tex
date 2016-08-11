@@ -826,6 +826,16 @@ also be viewed as a concatenation of two vectors:
   & = \protopair^\top \wordpair\\
   & = \hat H^\top H + \hat w^\top w
 \end{align*}
+This analysis shows that, when the hyperplane $\hat p$ is evaluated on a novel
+pair, it lacks any form of direct interaction between $H$ and $w$ like the
+inner product $H^\top w$, but rather only learns to capture the notion of
+hypernymy through $\hat H$ and $\hat w$, the {\em prototypicality vectors}.
+Without having some form of this interaction, this Concat classifier has no way
+of estimating the relationship between the two words. Furthermore, a linear classifier
+which uses the Diff vectors as input ($H - w$) will also have this flaw,
+since the hyperplane $\hat p$ can be analyzed in this same fashion.
+
+
 
 
 \begin{table}
