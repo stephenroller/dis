@@ -841,7 +841,9 @@ evidence, showing that when the training/testing set is constructed to
 ensure that no lexical items are shared between the training and test sets
 (similar to the experiments in \newcite{roller:2014:coling}), the performance
 of several classifiers, like \newcite{baroni:2011:gems} and
-\newcite{weeds:2014:coling}, drop dramatically.
+\newcite{weeds:2014:coling}, drop dramatically. \newcite{levy:2015:naacl} also
+propose a new model which incorporates the inner product term, which
+outperforms other models on several data sets.
 
 Interestingly, Asym does not suffer this fundamental flaw: although it uses
 the vector difference vectors as features, it also uses the square-difference
@@ -856,9 +858,25 @@ This explains our observation in Section~\ref{sec:asym} that, without these
 square-difference terms, performance drops substantially.
 
 Nonetheless, this raises a concern about what the difference terms $H - w$
-actually provide. For simplicity, we focus the remainder of our analysis on
+actually provide. We propose a qualitative experiment which explains, in
+clear terms, why these terms are valuable, and leads to another model to
+extend this behavior. For simplicity, we focus our analysis on the linear
+Concat classifier, which exhibits the same behavior as Diff, but in a
+more obvious way.
+
+We train a linear Concat classifier using syntactic distributional vectors
+on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless were also
+used in the Asym experiments, and are datasets covering hypernymy and
+nonhypernymy relations. Medical is a dataset of pairs of medical words and
+entailment labels, and was farmed using Information Extraction techniques
+\cite{levy:2014:conll}. Finally, TM14 contains many varied word relations
+(like cause-effect, agent-object) which are annotated with entailment decisions
+by \newcite{turney:2015:nle}.
+
+For simplicity, we focus the remainder of our analysis on
 the linear Concat classifier, which exhibits the same prototypicality behavior
-as Diff, but in a more obvious way.
+as Diff, but in a more obvious way. To this end, we train a linear Concat
+classifier on four data sets
 
 
 
