@@ -869,9 +869,9 @@ syntactic distributional vectors on four separate data sets. We then analyze
 the trained models by comparing their hyperplanes to the {\em context vectors},
 similar to what was done in Section~\ref{sec:asym}. This is a radically
 different view of than the protypicality hypothesis of
-\newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy,
-our interpretation is that the models are learning about what {\em contexts}
-are useful for identifying hypernymy.
+\newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
+interpretation is that the models are learning about what {\em contexts} are
+useful for identifying hypernymy.
 
 We the model on four data sets: LEDS, Bless, Medical, and TM14. LEDS and Bless
 were also used in the Asym experiments, and are datasets covering hypernymy and
@@ -921,46 +921,24 @@ cause-effect, agent-object) which are annotated with entailment decisions by
 
 Table~\ref{tab:ctxsim} shows the five contexts most similar to the hyperplane
 learned by each of the four models, and immediately explains why these models
-perform strongly. Nearly all of the features learned take the form of Hearst
-patterns \cite{hearst:1992:coling,snow:2004:nips}.  The most recognizable and
-common pattern learned is the ``such as'' pattern, as in ``animals such as
-cats''.  These patterns have been well known to be indicative of hypernymy for
-over two decades. Other interesting patterns are the ``including'' pattern
-(``animals including cats'') and ``many'' pattern (``many animals''). Although
-we list only the five most similar context items for the data sets, we find
-similar Hearst Pattern type contexts continue dominate the list for the next
-30-50 items. Taken together, it is remarkable that the model identified these
-patterns using only distributional vectors and only the positive/negative
-example pairs.
+perform strongly.  Nearly all of the contexts preferred by the model take the
+form of Hearst patterns \cite{hearst:1992:coling,snow:2004:nips}.  The most
+recognizable and common pattern learned is the ``such as'' pattern, as in
+``animals such as cats''.  These patterns have been well known to be indicative
+of hypernymy for over two decades. Other interesting patterns are the
+``including'' pattern (``animals including cats'') and ``many'' pattern (``many
+animals''). Although we list only the five most similar context items for the
+data sets, we find similar Hearst Pattern type contexts continue dominate the
+list for the next 30-50 items.
 
+Altogether, it is remarkable that the model identified these patterns using
+{\em only} distributional vectors and only the positive/negative example pairs.
+Since the model can be interpretted as a sort of {\em feature detector}, we
+call this model the H-feature Detector Model. In the remainder of this section,
+we show how these H-features can be improved using an iterative procedure similar
+to Principal Component Analysis.
 
-
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|rrrr|}
-  \hline
-  Model                           &   LEDS   &  BLESS   &   Medical &      TM14  \\
-  \hline
-  Cosine (Baseline)               &    .789  &    .225  &    .165  &      .674  \\
-  \hline
-  Concat                          &    .802  &    .689  &    .257  &      .722  \\
-  Diff                            &    .809  &    .496  &    .226  &      .672  \\
-  Asym \cite{roller:2014:coling}  &    .878  &    .546  &    .227  &      .677  \\
-  Ksim \cite{levy:2015:naacl}     &{\bf.912} &    .596  &{   .278} &  {\bf.730} \\
-  MProto \cite{roller:2016:emnlp} &    .909  &{\bf.712} &{\bf.295} &      .726  \\
-  \hline
-\end{tabular}
-\end{center}
-\caption{Mean F1 scores for each model and dataset.}
-\label{tab:results1}
-\end{table}
-
-%\begin{figure}
-%  \centering
-%  \caption{Caption here. Note this graph should probably be redone given the tuning procedure.}
-%  \label{fig:kernel}
-%\end{figure}
+\subsection{The H-Feature Detector Model}
 
 
 
@@ -969,7 +947,7 @@ example pairs.
 
 Knowing that the Concat classifier acts primarily as a feature detector, we
 ask whether this can be combined with similarity-based insights of models like
-Ksim and Cosine. To this end, we propose a novel model which exploits the
+Asym and Ksim. To this end, we propose a novel model which exploits the
 Concat classifier, extends its modeling power, and adds two other types of
 evidence proposed in the literature: overall similarity, and distributional
 inclusion.
@@ -1055,6 +1033,37 @@ The only free hyperparameter of the model is $n$, the number of iterations of
 the PCA-like procedure. We found that performance improves substantially on all
 datasets with at least two iterations, but then falls off slowly after five or
 more iterations. We chose to use four iterations for all final models.
+
+\begin{table}
+\centering
+\begin{small}
+\begin{tabular}{|l|rrrr|}
+  \hline
+  Model            &      LEDS   &      BLESS  &      Medical  &      TM14   \\
+  \hline
+  \hline
+  \multicolumn{5}{|c|}{Linear Models}\\
+  \hline
+  Cosine only      &      .787   &      .208   &      .168     &      .676   \\
+  Concat           &      .794   &      .612   &      .218     &      .693   \\
+  Diff             &      .805   &      .440   &      .195     &      .665   \\
+  Asym             &      .865   &      .510   &      .210     &      .671   \\
+  %Concat+Diff      &      .801   &      .604   &      .224     &      .703   \\
+  Concat+Asym      &      .843   &  {\bf.631}  &      .240     &      .701   \\
+  \hline
+  \multicolumn{5}{|c|}{Nonlinear Models}\\
+  \hline
+  RBF              &      .779   &      .574   &      .215     &      .705   \\
+  Ksim             &      .893   &      .488   &      .224     &  {\bf.707}  \\
+  H-Feature Detector &{\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
+  \hline
+\end{tabular}
+\end{small}
+\caption{Mean F1 scores for each model and data set.}
+\label{tab:results}
+\end{table}
+
+
 
 \subsection{Lexical Substitution (Roller and Erk, 2016a)}
 \label{sec:pic}
