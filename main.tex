@@ -1023,15 +1023,35 @@ best, though several nonlinear classifiers also to do well.
   \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
-  %RBF                                &      .779   &      .574   &      .215     &      .705   \\
-  Ksim \cite{levy:2014:conll}         &      .893   &      .488   &      .224     &  {\bf.707}  \\
-  H-Feature Detector                  &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
+  RBF                                         &      .779   &      .574   &      .215     &      .705   \\
+  Ksim \cite{levy:2014:conll}                 &      .893   &      .488   &      .224     &  {\bf.707}  \\
+  H-Feature Detector \cite{roller:2016:emnlp} &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
   \hline
 \end{tabular}
 \end{small}
 \caption{Mean F1 scores for each model and data set.}
-\label{tab:results}
+\label{tab:hfeatureresults}
 \end{table}
+
+We compare our H-feature detector model to several existing and alternative
+baselines from the literature. Namely, we include a baseline Cosine classifier,
+which only learns a threshold which maximizes F1 score on the training set;
+three linear models of prior work, Concat, Diff and Asym; and the RBF and Ksim
+models found to be successful in \newcite{kruszewski:2015:tacl} and
+\newcite{levy:2015:naacl}. We also include two additional novel baselines,
+Concat+Asym, which was used in \newcite{beltagy:2016:cl}. We cannot include a
+baselines like Ksim+Asym, because Ksim is based on a custom SVM kernel which is
+not amenable to combinations.
+
+Table~\ref{tab:hfeatureresults} the results across all four data sets for all
+of the listed models. Our proposed model improves
+significantly\footnote{Bootstrap test, $p<.01$.} over Concat in the LEDS, BLESS
+and Medical data sets, indicating the benefits of combining these the aspects
+of similarity and distributional inclusion with the H-feature detectors of
+Concat.  The Concat+Asym classifier also improves over the Concat baseline,
+further emphasizing these benefits. Our model performs approximately the same
+as Ksim on the LEDS and TM14 data sets (no significant difference), while
+significantly outperforming it on BLESS and Medical data sets.
 
 
 
