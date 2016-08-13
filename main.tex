@@ -184,6 +184,49 @@ kinds of lexical semantics necessary for RTE. We do not attempt to argue that
 these tasks are completely sufficient, but one goal of our thesis to show
 developments in these tasks improves practical RTE.
 
+\subsection{Recognizing Textual Entailment}
+\label{sec:textent}
+
+In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
+task, a long standing, challenging semantic problem for Natural Language
+Understanding systems. One of the original papers detailing the
+challenge describes it as ``recognizing, given two text fragments, whether the
+meaning of one text can be inferred (entailed) from the other''
+\cite{dagan:2006:mlc}. Since this original definition, many other datasets
+\cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
+countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
+for a thorough survey).
+
+One important theory in Philosophy of Language circles is that of
+compositional semantics, famously described by \newcite{montague:1970:theoria},
+but with a long history outside the scope of this document. In compositional
+semantics, the meanings of sentences can be described {\em compositionally} and
+modeled using formal logical systems, like First Order Logic (FOL). These
+FOL formulae are built iteratively, usually by modeling grammatical structures
+as lambda expressions which are iteratively applied to derive a final
+representation of the sentence \cite{kamp:2013:discourse}. These theories
+of language have become the motivation of several modern language understanding
+systems \cite{maccartney:2008:coling,beltagy:2013:starsem,bjerva:2014:semeval}.
+However, these systems face a fundamental problem: only the semantics of the
+{\em sentence} is described logically, but the semantics of individual words
+is left unspecified. As one old joke goes, ``What is the meaning of life?
+{\em life}$'$.\footnote{Attributed to Barbara Partee and Terry Parsons
+\url{http://mailman.uib.no/public/corpora/2010-January/009847.html}}
+
+To compensate for this fact, systems often employ a wide collection of lexical
+resources \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl},
+such as WordNet \cite{miller:1995:acm} or PPDB \cite{ganitkevitch:2013:naacl}.
+These rich resources provide an excellent source of common sense knowledge
+and word relationships which can be used as a sort of knowledge-base during
+logical reasoning. However, these resources are often very expensive to create,
+and, since language is ever changing, inherently incomplete.
+
+Naturally, this raises the question of whether it is possible to distill
+information about lexical items in a more automatic fashion. Next, we will
+discuss Distributional Semantics and Vector Space Models, which provide an
+automatic induction of word meaning using only large, readily available
+corpora.
+
 \subsection{Distributional Semantics}
 \label{sec:dist}
 
@@ -239,11 +282,9 @@ these vectors using {\em cosine similarity}:
   \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
 \end{equation}
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
-or {\em kennel}, and cosine similarity is defined over the range of $[0,
-1]$.\footnote{Some distributional spaces allow for negative dimensions, making
-the range of cosine [-1, 1] instead} Words with similar vectors will have a
-small angle between them, and therefore a high cosine similarity (e.g. close to
-1).
+or {\em kennel}, and cosine similarity is defined over the range of $[-1, 1]$.
+Words with similar vectors will have a small angle between them, and therefore
+a high cosine similarity (e.g. close to 1).
 
 \paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
@@ -316,46 +357,6 @@ Interestingly, the recent, extremely popular Skip-Gram Negative Sampling (SGNS)
 algorithm \cite{mikolov:2013:iclr} can also be viewed as a form of
 dimensionality reduction \cite{levy:2014:nips,levy:2015:tacl}.
 
-\subsection{Recognizing Textual Entailment}
-\label{sec:textent}
-
-In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
-task, a long standing, challenging semantic problem for Natural Language
-Understanding systems. One of the original papers detailing the
-challenge describes it as ``recognizing, given two text fragments, whether the
-meaning of one text can be inferred (entailed) from the other''
-\cite{dagan:2006:mlc}. Since this original definition, many other datasets
-\cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
-countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
-for a thorough survey).
-
-One important theory in Philosophy of Language circles is that of
-compositional semantics, famously described by \newcite{montague:1970:theoria},
-but with a long history outside the scope of this document. In compositional
-semantics, the meanings of sentences can be described {\em compositionally} and
-modeled using formal logical systems, like First Order Logic (FOL). These
-FOL formulae are built iteratively, usually by modeling grammatical structures
-as lambda expressions which are iteratively applied to derive a final
-representation of the sentence \cite{kamp:2013:discourse}. These theories
-of language have become the motivation of several modern language understanding
-systems \cite{maccartney:2008:coling,beltagy:2013:starsem,bjerva:2014:semeval}.
-However, these systems face a fundamental problem: only the semantics of the
-{\em sentence} is described logically, but the semantics of individual words
-is left unspecified. As one old joke goes, ``What is the meaning of life?
-{\em life}$'$.\footnote{Attributed to Barbara Partee and Terry Parsons
-\url{http://mailman.uib.no/public/corpora/2010-January/009847.html}}
-
-To compensate for this fact, systems often employ a wide collection of lexical
-resources \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl},
-such as WordNet \cite{miller:1995:acm} or PPDB \cite{ganitkevitch:2013:naacl}.
-These rich resources provide an excellent source of common sense knowledge
-and word relationships which can be used as a sort of knowledge-base during
-logical reasoning. However, these resources are often very expensive to create,
-and, since language is ever changing, inherently incomplete.
-
-, starting with atomic representations for
-words, and building more complex representations, often by modeling grammatical
-structures as lambda expressions that return FOL form
 
 
 \subsection{Lexical Entailment}
