@@ -1084,14 +1084,16 @@ the target word, but these are typically ignored in the literature.} and must
 provide {\em substitutes} which can replace the given target word, while
 preserving the meaning of the entire sentence.
 
-Distributional Semantics offers a tempting solution to this problem, given
-its ability to measure the graded levels of similarity between words
-\cite{dinu:2010:emnlp}. However, the obvious issue with distributional semantics
-is that word meaning is typically estimated as a single, fixed point in space.
-Therefore, distributional semantics should have issues with conflating word
-senses. Although there exist some methods for estimating word meaning as
-multiple points \newcite{reisenger:2010:naacl,neelakantan:2014:emnlp} or regions of space
-\newcite{vilnis:2015:iclr}.
+Distributional Semantics offers a tempting solution to this problem, given its
+ability to measure the graded levels of similarity between words
+\cite{dinu:2010:emnlp}. However, the obvious issue with distributional
+semantics is that word meaning is typically estimated as a single, fixed point
+in space.  Therefore, distributional semantics should have issues with
+conflating word senses. Although there exist some methods for estimating word
+meaning as multiple points \cite{reisinger:2010:naacl,neelakantan:2014:emnlp}
+or regions of space \cite{vilnis:2015:iclr}, the vast majority of attempts on
+LexSub tend to use single-point estimates
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
 
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
