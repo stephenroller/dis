@@ -226,9 +226,9 @@ co-occurrences}, or words appearing to the left or right of the target word
 {\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
 statistical patterns begin to form. For example, the word {\em furry} is likely
 to be used to describe both {\em cat} and {\em dog}, which is then reflected in
-the vector counts. After constructing vector representations for the words {\em
-cat} and {\em dog}, we can then compare these vectors using {\em cosine
-similarity}:
+the vector counts \cite{lund:1996:brmic}. After constructing vector
+representations for the words {\em cat} and {\em dog}, we can then compare
+these vectors using {\em cosine similarity}:
 \begin{equation}
   \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
 \end{equation}
@@ -241,21 +241,21 @@ small angle between them, and therefore a high cosine similarity (e.g. close to
 
 \paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
-construction than raw co-occurrence counts \cite{turney:2010:jair}.
-Typically, words and contexts below a certain threshold are omitted from the
-co-occurrence matrix, as extremely rare words have few counts and therefore
-impoverished representations. The co-occurrence matrix is also usually
-transformed using some non-linearity; one common choice is Positive Pointwise
-Mutual Information (PPMI), where the raw co-occurence count between a word $w$
-and context $c$ is transformed,
+construction than raw co-occurrence counts.  Typically, words and contexts
+below a certain threshold are omitted from the co-occurrence matrix, as
+extremely rare words have few counts and therefore impoverished representations
+\cite{turney:2010:jair}. The co-occurrence matrix is also usually transformed
+using some nonlinearity; one common choice is Positive Pointwise Mutual
+Information (PPMI) \cite{bullinaria:2007:brm}, where the raw co-occurence count
+between a word $w$ and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
 \end{equation*}
 Pointwise Mutual Information measures roughly how many times more likely do two
 items co-occur more often than chance would dictate, while Positive PMI
-additionally ignores those which occur less often than chance
-\cite{bullinaria:2007:brm}.  Other transformations, like conditional
-probability \cite{deerwester:1990:jsis,blei:2003:jmlr}, and Softplus
+additionally ignores those which occur less often than chance.  Other
+transformations, like conditional probability
+\cite{hofman:1999:sigir,blei:2003:jmlr}, and Softplus
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
 each emphasizes different kinds of similarity.
 
