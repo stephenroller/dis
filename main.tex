@@ -220,7 +220,7 @@ of word vectors.}
 
 In its simplest form, vectors are induced by defining a vector space where
 each dimension in the space corresponds to a particular context word. A large,
-unannotated corpus of text is then iterated, finding instances of a given word,
+unannotated corpus of text is then processed, finding instances of a given word,
 like {\em dog}, and incrementing a count for each of the word's {\em
 co-occurrences}, or words appearing to the left or right of the target word
 {\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
@@ -229,21 +229,24 @@ to be used to describe both {\em cat} and {\em dog}, which is then reflected in
 the vector counts. After constructing vector representations for the words {\em
 cat} and {\em dog}, we can then compare these vectors using {\em cosine
 similarity}:
-\begin{equation*}
+\begin{equation}
   \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
-\end{equation*}
+\end{equation}
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
-or {\em kennel}, and cosine similarity is defined over the range of $[0, 1]$.
-Words with similar vectors will have a small angle between them, and therefore
-a high cosine similarity (e.g. close to 1).
+or {\em kennel}, and cosine similarity is defined over the range of $[0,
+1]$.\footnote{Some distributional spaces allow for negative dimensions, making
+the range of cosine [-1, 1] instead} Words with similar vectors will have a
+small angle between them, and therefore a high cosine similarity (e.g. close to
+1).
 
 In practice, usually the distributional vectors are more sophisticated in their
-construction than raw co-occurrence counts. Typically, words and contexts below
-a certain threshold are omitted from the co-occurrence matrix, as extremely
-rare words have few counts and therefore impoverished representations. The
-co-occurrence matrix is also usually transformed using some non-linearity;
-one common choice is Positive Pointwise Mutual Information (PPMI), where the
-raw co-occurence count between a word $w$ and context $c$ is transformed,
+construction than raw co-occurrence counts \newcite{turney:2010:jair}.
+Typically, words and contexts below a certain threshold are omitted from the
+co-occurrence matrix, as extremely rare words have few counts and therefore
+impoverished representations. The co-occurrence matrix is also usually
+transformed using some non-linearity; one common choice is Positive Pointwise
+Mutual Information (PPMI), where the raw co-occurence count between a word $w$
+and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
 \end{equation*}
