@@ -250,11 +250,12 @@ and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
 \end{equation*}
-Pointwise Mutual Information measures roughly how many times more likely
-do these two items co-occur more than chance, while Positive PMI additionally
-co-occurrences which occur less often than chance. Different transformations,
-like Mutual Information, conditional probability, and softplus, are also
-sometimes seen in the literature, and each emphasizes different forms of
+Pointwise Mutual Information measures roughly how many times more likely do two
+items co-occur more often than chance would dictate, while Positive PMI
+additionally ignores those which occur less often than chance \cite{bullinaria:2007:brm}.
+Other transformations, like Mutual Information \cite{needcite}, conditional
+probability \cite{needcite}, and softplus \newcite{pennington:2014:emnlp}, are
+also sometimes seen in the literature, and each emphasizes different kinds of
 similarity.
 
 Another important aspect of Distributional Semantics is how context is defined.
@@ -263,14 +264,14 @@ as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of similarity results in
 emphasizing more topical similarity, e.g. doctor and hospital, while smaller
 windows emphasize more functional similarity, e.g. doctor and surgeon
-\cite{needcite,levy:2014:acl}.
+\cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
-Context can be also defined as {\em syntactic neighbors} extracted
-from a dependency parse \cite{pado:2007:cl}. For example, in Figure~\ref{fig:syn},
-the contexts for the word {\em chased} would be {\em nsubj+dog} and {\em
-dobj+tail}. Distributional Spaces defined in this manner tend to emphasize
-the {\em selectional preferences} of words, or the tendency of certain
-relations to occur with certain arguments.
+Context can be also defined as {\em syntactic neighbors} extracted from a
+dependency parse \cite{pado:2007:cl}. For example, in Figure~\ref{fig:syn}, the
+contexts for the word {\em chased} would be {\em nsubj+dog} and {\em
+dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
+{\em selectional preferences} of words, or the tendency of certain relations to
+occur with certain arguments.
 
 \begin{figure}
   \centering
