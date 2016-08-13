@@ -1085,7 +1085,12 @@ provide {\em substitutes} which can replace the given target word, while
 preserving the meaning of the entire sentence.
 
 Distributional Semantics offers a tempting solution to this problem, given
-its ability to measure the graded levels of similarity between words \newcite{
+its ability to measure the graded levels of similarity between words
+\cite{dinu:2010:emnlp}. However, the obvious issue with distributional semantics
+is that word meaning is typically estimated as a single, fixed point in space.
+Therefore, distributional semantics should have issues with conflating word
+senses. Although there exist some methods for estimating word meaning as
+multiple points \newcite{reisenger:2010:emnlp}
 
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
