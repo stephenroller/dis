@@ -94,42 +94,40 @@ logically follows from a given text
 
 Much progress has been made in systems which perform these sort of sophisticated
 logical inferences, especially as common benchmarks and datasets have started
-to become common \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. Yet many
-of these systems must ultimately consider the semantics of individual lexical
-items to form a conclusion, and require knowledge about the relationships
-between these lexical items \cite{montague:1970:theoria,kamp:2013:discourse}.
-systems ultimately must work over individual lexical items to form a
-conclusion, and require knowledge about the relationships between lexical
-items. Consider the following example:
-\footnote{Mention ``Montague's curse'', as I like to call it?}
+to become common \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. Yet
+in any sophisticated, compositional model of semantics, systems must
+ultimately consider the semantics of individual lexical
+items to form a conclusion \cite{montague:1970:theoria,kamp:2013:discourse}.
+This often requires an understanding about the many different relationships
+that can occur between lexical items. Consider the following example:
 \begin{quote}
-  Text: The bright girl reads a book.\\
-  Hypothesis: The smart child looks at pages of text.
+  Text (Antecedent): The bright girl reads a book.\\
+  Hypothesis (Consequent): A smart child looks at pages of text.
 \end{quote}
-Any language processing system wishing to infer the second sentence from
-the first must know quite a bit of world knowledge: it must know that
-girl is a kind of child, and that bright and smart are synonyms in this
-context; that books contain pages of text, and that reading involves looking
-at some text.
+Any language processing system wishing to infer the second sentence from the
+first must know quite a bit of world knowledge: it must know that girl is a
+kind of child (hypernymy), and that bright and smart have the same meaning in
+this context (synonymy); that books contain pages of text (meronomy), and that
+reading involves looking at these pages (world knowledge).
 
-Although significant progress has been made on the text of
-Rich Textual Entailment, many of these systems ultimately depend on some lexical
-resources
+Although significant progress has been made on the text of Rich Textual
+Entailment, many of these systems ultimately depend on some lexical resources
 \cite{beltagy:2014:semeval,bjerva:2014:semeval,lai:2014:semeval,marelli:2014:semeval,beltagy:2016:cl}.
-The most famous lexical resource is WordNet \cite{miller:1995:acm}, which organizes the lexicon into a
-large ontology containing many thousands of annotations of relationships
-between different lexical items, though many other resources also exist
-and are used \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
-Unfortunately,
-resources as thorough as WordNet are extremely expensive and intensive to
-create, and since language is ever-changing, they are inevitably always
-incomplete. As such, dependence on manually constructed resources represents one weak point in some Natural Language Understanding
-systems. Even modern Neural Network approaches, which attempt to learn
-entailments without explicitly depending on these resources, cannot make
-entailment predictions about words which were not in the training data
+Possibly the most famous lexical resource is WordNet \cite{miller:1995:acm},
+which organizes the lexicon into a large ontology (taxonomy) containing many
+thousands of annotations of relationships between different lexical items,
+though many other resources also exist and are used
+\cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
+Unfortunately, resources as thorough as WordNet are extremely expensive and
+intensive to create, and since language is ever-changing, they are inevitably
+always incomplete. As such, dependence on manually constructed resources
+represents one weak point in some Natural Language Understanding systems. Even
+modern Neural Network approaches, which attempt to learn entailments without
+explicitly depending on these resources, often cannot make entailment
+predictions about words which were not in the training data
 \cite{bowman:2015:emnlp,cheng:2016:arxiv}.
 
-Distributional Semantics offers a potential solution to these issues of lexical
+Distributional Semantics offers one potential solution to these issues of lexical
 coverage. Distributional Semantics takes inspiration from the famous quote,
 ``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In
 Distributional Semantics, representations of word meaning are automatically
