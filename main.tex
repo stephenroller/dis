@@ -241,7 +241,7 @@ small angle between them, and therefore a high cosine similarity (e.g. close to
 
 \paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
-construction than raw co-occurrence counts \newcite{turney:2010:jair}.
+construction than raw co-occurrence counts \cite{turney:2010:jair}.
 Typically, words and contexts below a certain threshold are omitted from the
 co-occurrence matrix, as extremely rare words have few counts and therefore
 impoverished representations. The co-occurrence matrix is also usually
@@ -255,7 +255,7 @@ Pointwise Mutual Information measures roughly how many times more likely do two
 items co-occur more often than chance would dictate, while Positive PMI
 additionally ignores those which occur less often than chance
 \cite{bullinaria:2007:brm}.  Other transformations, like conditional
-probability \cite{deerwester:1990:jsis,blei:2003:jmlr}, and softplus
+probability \cite{deerwester:1990:jsis,blei:2003:jmlr}, and Softplus
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
 each emphasizes different kinds of similarity.
 
@@ -263,10 +263,10 @@ each emphasizes different kinds of similarity.
 Another important aspect of Distributional Semantics is how context is defined.
 In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
-alternatives. For example, using very large windows of similarity results in
-emphasizing more topical similarity, e.g. doctor and hospital, while smaller
-windows emphasize more functional similarity, e.g. doctor and surgeon
-\cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
+alternatives. For example, using very large windows of co-occurrence or even
+entire documents results in emphasizing more topical similarity, e.g. doctor
+and hospital, while smaller windows emphasize more functional similarity, e.g.
+doctor and surgeon \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
 Context can be also defined as {\em syntactic neighbors} extracted from a
 dependency parse. For example, in Figure~\ref{fig:syn}, the
@@ -303,8 +303,9 @@ into two lower-rank matrices,
 \end{equation*}
 where $V$ is some lower dimension representation of word vectors, and $C$
 is the corresponding lower dimension representation of the context items.
-Interestingly, the recent, popular Word2Vec algorithm \cite{mikolov:2013:iclr}
-can also be viewed as a form of dimensionality reduction \cite{levy:2014:nips}.
+Interestingly, the recent, popular Skip-Gram Negative Sampling (SGNS) algorithm
+\cite{mikolov:2013:iclr} can also be viewed as a form of dimensionality
+reduction \cite{levy:2014:nips}.
 
 \subsection{Textual Entailment}
 \label{sec:textent}
