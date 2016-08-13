@@ -106,10 +106,10 @@ between lexical items. Consider the following example:
   Hypothesis (Consequent): A smart child looks at pages of text.
 \end{quote}
 Any language processing system wishing to infer the second sentence from the
-first must know quite a bit of world knowledge: it must know that girl is a
-kind of child (hypernymy), and that bright and smart have the same meaning in
-this context (synonymy); that books contain pages of text (meronomy), and that
-reading involves looking at these pages (world knowledge).
+first must know quite a bit of information about these words: it must know that
+girl is a kind of child (hypernymy), and that bright and smart have the same
+meaning in this context (synonymy); that books contain pages of text
+(meronomy), and that reading involves looking at these pages (world knowledge).
 
 Although significant progress has been made on the text of Rich Textual
 Entailment, many of these systems ultimately depend on some lexical resources
@@ -140,14 +140,19 @@ geometric space. Since VSMs do not require annotated corpora, they are used and
 studied as an alternative or predictor of particular lexical resources
 \cite{snow:2004:nips,baroni:2011:gems}.
 
-In this work, we approach the question as to whether Distributional Semantics
+In our work, we approach the question as to whether Distributional Semantics
 can be leveraged to predict some of the lexical inferences necessary in tasks
 like RTE. Namely, we present techniques and models for predicting specific
 lexical relationships, entailments, and subsitutions using Distributional
 Semantics. In Lexical Relationship detection and Entailment detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
-relationships) or meronymy (has-a relationships). We present two original
-models which can learn to predict hypernymy and sometimes other relations,
+relationships) or meronymy (has-a relationships). We present three original
+models which can learn to predict hypernymy or general entailment relations
+\cite{roller:2014:coling,beltagy:2016:cl,roller:2016:emnlp}. In these works,
+we also make significant contributions in experimental setups which prevent
+issue with lexical memorization \cite{roller:2014:coling}, and understanding
+of how these models work \cite{roller:2016:emnlp}.
+
 and characterize their performance on different datasets, relations. We also
 present an original model for Lexical Substitution, in which we must predict a
 context-specific synonym for a given target word; we argue that Lexical
