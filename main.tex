@@ -153,22 +153,21 @@ performance on different datasets. In these works, we also make significant
 contributions in experimental setups which prevent issue with lexical
 memorization \cite{roller:2014:coling}, and understanding of how these models
 work \cite{roller:2016:emnlp}.  We also present an original model for Lexical
-Substitution, in which we must predict a context-specific synonym for a given
-target word; we argue that Lexical Substitution is a form of lexical entailment
-in context.
+Substitution, where one must predict a context-specific synonym for a given
+target word in a sentential context \cite{roller:2016:naacl}. In this document,
+we also argue that Lexical Substitution is a form of lexical entailment in
+context.
 
-Finally, we propose several extensions to this completed work. In the
-short-term, we propose drawing a stronger connection between Lexical
-Substitution and lexical relationships, analyzing the sort of lexical
-relationships which we can and cannot predict in our model. We propose
-extending our Lexical Substitution model to better handle out-of-vocabulary
-(OoV) issues for very rare context items. We also propose further analysis of
-our Lexical Relationship models to see if additional relationships can be
-automatically predicted, and consider whether the model can do all-words
-relationship prediction.  In the long-term, we wish to consider whether our
-Lexical Substitution model can be improved by removing or alleviating a strong
-independence assumption in the previous model, and how the Lexical Substitution
-and Relationship Detection models could be potentially unified.
+Finally, we propose several short- and long-term extensions to our completed
+work. In the short-term, we focus mainly on how our more recent work may be
+expanded to lexical relationships other than hypernymy, and how our recent
+publications may  contribute as a component in an end-to-end RTE system, which
+would cement the connection between our work and Textual Entailment. In the
+long-term, we propose three broad directions forward: (1) providing better
+internal consistency in the predictions made by our system; (2) integration
+of larger contexts into our Lexical Substitution model; and (3) improved
+models of distributional semantics which more efficiently use syntactic
+information.
 
 
 \section{Background and Related Work}
