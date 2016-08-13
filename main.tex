@@ -89,17 +89,18 @@ require complex inference and synthesis of knowledge. These include tasks like
 Question Answering (QA), where computers must read and answer questions about
 passages \cite{hermann:2015:nips,weston:2016:iclr}, and Recognizing Textual
 Entailment (RTE), where computers must decide whether a hypothesis utterance
-logically follows from a given text
+logically follows (or can be inferred) from a given text
 \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}.
 
-Much progress has been made in systems which perform these sort of sophisticated
-logical inferences, especially as common benchmarks and datasets have started
-to become common \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. Yet
-in any sophisticated, compositional model of semantics, systems must
-ultimately consider the semantics of individual lexical
-items to form a conclusion \cite{montague:1970:theoria,kamp:2013:discourse}.
-This often requires an understanding about the many different relationships
-that can occur between lexical items. Consider the following example:
+Much progress has been made in systems which perform these sort of
+sophisticated logical inferences, especially as common benchmarks and datasets
+have started to become common
+\cite{dagan:2006:mlc,giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval,bowman:2015:emnlp}.
+Yet in any sophisticated, compositional model of semantics, systems must
+ultimately consider the semantics of individual lexical items to form a
+conclusion \cite{montague:1970:theoria,kamp:2013:discourse}.  This often
+requires an understanding about the many different relationships that can occur
+between lexical items. Consider the following example:
 \begin{quote}
   Text (Antecedent): The bright girl reads a book.\\
   Hypothesis (Consequent): A smart child looks at pages of text.
