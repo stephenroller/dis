@@ -175,13 +175,13 @@ information.
 
 In this section, we review some of the background critical to this proposal.
 We begin with a discussion of Distributional Semantics, emphasizing how it is
-typically computed in modern applications. Next, we introduce the Recognizing
+typically computed in modern applications. Next, we briefly discuss the Recognizing
 Textual Entailment (RTE) task, and discuss how lexical semantics plays a key
 role in this task. Finally, we dicuss the Lexical Entailment (LexEnt) and
 Lexical Substitution (LexSub) tasks, which we view as strong proxies for the
 kinds of lexical semantics necessary for RTE. We do not attempt to argue that
-these tasks are completely sufficient, but the goal of our thesis to
-developments in these tasks to improve practical RTE.
+these tasks are completely sufficient, but one goal of our thesis to show
+developments in these tasks improves practical RTE.
 
 \subsection{Distributional Semantics}
 \label{sec:dist}
@@ -218,7 +218,7 @@ a reputation among {dog} trainers of having
 \begin{minipage}{3cm}
 \includegraphics[width=3cm]{figures/vsm}
 \end{minipage}
-\caption{Contexts of the word {\em dog}, and cartoon drawing
+\caption{(a) Example contexts of the word {\em dog}, and (b) a cartoon drawing
 of word vectors.}
 \label{fig:vsm}
 \end{figure}
@@ -262,7 +262,7 @@ additionally ignores those which occur less often than chance.  Other
 transformations, like conditional probability
 \cite{hofman:1999:sigir,blei:2003:jmlr}, and Softplus
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
-each emphasizes different kinds of similarity.
+emphasize different aspects of lexical similarity.
 
 \paragraph{Syntactic Contexts}
 Another important aspect of Distributional Semantics is how context is defined.
@@ -315,11 +315,12 @@ Interestingly, the recent, extremely popular Skip-Gram Negative Sampling (SGNS)
 algorithm \cite{mikolov:2013:iclr} can also be viewed as a form of
 dimensionality reduction \cite{levy:2014:nips,levy:2015:tacl}.
 
-\subsection{Textual Entailment}
+\subsection{Recognizing Textual Entailment}
 \label{sec:textent}
 
-Recognizing Textual Entailment (RTE) is a long standing, challenging semantic
-task in Natural Language Processing. One of the original papers detailing the
+In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
+task, a long standing, challenging semantic problem for Natural Language
+Understanding systems. One of the original papers detailing the
 challenge describes it as ``recognizing, given two text fragments, whether the
 meaning of one text can be inferred (entailed) from the other''
 \cite{dagan:2006:mlc}. Since this original definition, many other datasets
