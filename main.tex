@@ -1075,7 +1075,17 @@ This is called {\em polysemy}, and is a major issue in distributional
 semantics.
 
 One possible approach to dealing with this issue of polysemy is to model how
-word meaning {\em shifts} in a given context.
+word meaning {\em shifts} in a given context; that is, we can explicitly
+model what happens to a word based on its used in a sentential context. Since
+c. 2007, one popular way to measure this has been the Lexical Substitution
+task. In the Lexical Substitution task, the program is provided with a sentential
+context,\footnote{The CoInCo dataset also provides the sentences before and after
+the target word, but these are typically ignored in the literature.} and must
+provide {\em substitutes} which can replace the given target word, while
+preserving the meaning of the entire sentence.
+
+Distributional Semantics offers a tempting solution to this problem, given
+its ability to measure the graded levels of similarity between words \newcite{
 
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
@@ -1128,7 +1138,7 @@ dot product:
 \begin{center}
 \begin{tabular}{|l|r|r|r|}
   \hline
-  {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
+  {\bf Measure} & {\bf SE07} & {\bf CoInCo} & {\bf TWSI2}\\
   \hline\hline
   %\multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
   %\hline
@@ -1160,8 +1170,8 @@ dot product:
   %\hline
 \end{tabular}
 \end{center}
-\caption{Lexical Substitution results for candidate ranking (GAP) and all-words
-ranking tasks (P@1, P@3).}
+\caption{Lexical Substitution results for the all-words prediction task, measured
+in Mean Precision@1.}
 \label{tab:precision}
 \end{table}
 
