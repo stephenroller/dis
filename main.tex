@@ -239,6 +239,7 @@ the range of cosine [-1, 1] instead} Words with similar vectors will have a
 small angle between them, and therefore a high cosine similarity (e.g. close to
 1).
 
+\paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
 construction than raw co-occurrence counts \newcite{turney:2010:jair}.
 Typically, words and contexts below a certain threshold are omitted from the
@@ -254,10 +255,11 @@ Pointwise Mutual Information measures roughly how many times more likely do two
 items co-occur more often than chance would dictate, while Positive PMI
 additionally ignores those which occur less often than chance \cite{bullinaria:2007:brm}.
 Other transformations, like Mutual Information \cite{needcite}, conditional
-probability \cite{needcite}, and softplus \newcite{pennington:2014:emnlp}, are
+probability \cite{needcite}, and softplus \cite{pennington:2014:emnlp}, are
 also sometimes seen in the literature, and each emphasizes different kinds of
 similarity.
 
+\paragraph{Syntactic Contexts}
 Another important aspect of Distributional Semantics is how context is defined.
 In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
@@ -267,11 +269,12 @@ windows emphasize more functional similarity, e.g. doctor and surgeon
 \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
 Context can be also defined as {\em syntactic neighbors} extracted from a
-dependency parse \cite{pado:2007:cl}. For example, in Figure~\ref{fig:syn}, the
+dependency parse. For example, in Figure~\ref{fig:syn}, the
 contexts for the word {\em chased} would be {\em nsubj+dog} and {\em
 dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
 {\em selectional preferences} of words, or the tendency of certain relations to
-occur with certain arguments.
+occur with certain arguments
+\cite{pado:2007:cl,erk:2008:emnlp,baroni:2010:cl,levy:2014:acl}.
 
 \begin{figure}
   \centering
@@ -282,6 +285,7 @@ with their labeled edges.}
 \label{fig:syn}
 \end{figure}
 
+\paragraph{Dimensionality Reduction}
 One final notion in Distributional Semantics we wish to review is that of
 dimensionality reduction. As described earlier, the distributional vector
 spaces are very high-dimensional; bag-of-words spaces have many thousands of
