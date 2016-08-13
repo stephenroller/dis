@@ -84,17 +84,17 @@ like Named Entity Recognition \cite{needcite}, Sentiment Analysis
 \cite{socher:2013:nips} and Document Classification \cite{zhang:2016:naacl},
 and Coreference Resolution \cite{durrett:2013:emnlp}.
 
-Today, there is great deal of emphasis on sophisticated semantics
-tasks that require inference and synthesis of knowledge. These include tasks
-like Question Answering (QA), where computers must read and answer questions
-about passages \cite{hermann:2015:nips,needcite}, and Recognizing Textual
+Today, there is great deal of focus on sophisticated semantics tasks that
+require complex inference and synthesis of knowledge. These include tasks like
+Question Answering (QA), where computers must read and answer questions about
+passages \cite{hermann:2015:nips,weston:2016:iclr}, and Recognizing Textual
 Entailment (RTE), where computers must decide whether a hypothesis utterance
 logically follows from a given text
-\cite{marelli:2014:semeval,bowman:2015:emnlp,beltagy:2016:cl}.
+\cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}.
 
 Much progress has been made in systems which perform these sort of sophisticated
 logical inferences, especially as common benchmarks and datasets have started
-to become common \cite{marelli:2014:semeval,bowman:2015:emnlp}. Yet these
+to become common \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. Yet these
 systems ultimately must work over individual lexical items to form a
 conclusion, and require knowledge about the relationships between lexical
 items. Consider the following example:
@@ -320,6 +320,9 @@ meaning of one text can be inferred (entailed) from the other''
 \cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
 for a thorough survey).
+
+The task more easily be described through an example pair of sentences:
+
 
 \subsection{Lexical Entailment}
 
