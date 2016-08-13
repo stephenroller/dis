@@ -333,9 +333,15 @@ compositional semantics, famously described by \newcite{montague:1970:theoria},
 but with a long history outside the scope of this document. In compositional
 semantics, the meanings of sentences can be described {\em compositionally} and
 modeled using formal logical systems, like First Order Logic (FOL). These
-FOL formulae are built iteratively, starting with atomic representations for
-words, and building more complex representations based on the grammatical
-structure of the sentence \cite{kamp:2013:discourse}.
+FOL formulae are built iteratively, usually by modeling grammatical structures
+as lambda expressions which are iteratively applied to derive a final
+representation of the sentence \cite{kamp:2013:discourse}.
+
+
+
+, starting with atomic representations for
+words, and building more complex representations, often by modeling grammatical
+structures as lambda expressions that return FOL form
 
 
 \subsection{Lexical Entailment}
