@@ -167,9 +167,6 @@ and Relationship Detection models could be potentially unified.
 \section{Background and Related Work}
 \label{sec:background}
 
-\subsection{Textual Entailment}
-\label{sec:textent}
-
 \subsection{Distributional Semantics}
 \label{sec:dist}
 
@@ -289,6 +286,9 @@ where $V$ is some lower dimension representation of word vectors, and $C$
 is the corresponding lower dimension representation of the context items.
 Interestingly, the recent, popular Word2Vec algorithm \cite{mikolov:2013:iclr}
 can also be viewed as a form of dimensionality reduction \cite{levy:2014:nips}.
+
+\subsection{Textual Entailment}
+\label{sec:textent}
 
 \subsection{Lexical Entailment}
 
@@ -1060,7 +1060,7 @@ significantly outperforming it on BLESS and Medical data sets.
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.75\textwidth]{figures/substitution}
+  \includegraphics[width=0.5\textwidth]{figures/substitution}
   \caption{Caption here.}
   \label{fig:substitution}
 \end{figure}
@@ -1070,12 +1070,12 @@ Substitution (Lexsub) task. As described in Section~\ref{sec:lexsub}, we view
 Lexsub as the best means of capturing the lexical relation {\em synonymy} into
 our thesis. Until now, we have assumed that words are mononymous, or that they
 have only one meaning. However, words like ``bright'' have multiple meanings,
-which change depending on context, as in ``bright girl'' and ``bright lamp.''
+which change depending on context, as in ``bright girl'' and ``bright coat.''
 This is called {\em polysemy}, and is a major issue in distributional
 semantics, since word meaning is typically modeled as single point
 estimates \newcite{turney:2010:jair,erk:2012:llc}.
 
-One possible approach to dealing with this issue of polysemy is to model how
+One popular approach to dealing with this issue of polysemy is to model how
 word meaning {\em shifts} in a given context; that is, we can explicitly
 model what happens to a word based on its used in a sentential context. Since
 c. 2007, one popular way to measure this has been the Lexical Substitution
