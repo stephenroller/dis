@@ -290,22 +290,25 @@ One final notion in Distributional Semantics we wish to review is that of
 dimensionality reduction. As described earlier, the distributional vector
 spaces are very high-dimensional; bag-of-words spaces have many thousands of
 dimensions (or sometimes as large as the entire vocab, e.g.
-\newcite{pennington:2014:emnlp}, while syntactic spaces often have a millions,
-e.g. \newcite{baroni:2010:cl}. Efficiently dealing
-with these large, extremely sparse vectors can sometime be troublesome, so
-we often opt to use some form of {\em dimensionality reduction}, like
-Singular Value Decomposition (SVD) \cite{landauer:1997:pr} or Nonnegative Matrix
-Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality
-reduction, the co-occurrence matrix $M$ is typically assumed to be factorizable
-into two lower-rank matrices,
+\newcite{mikolov:2013:iclr,pennington:2014:emnlp}), while syntactic spaces often
+have a millions, e.g. \newcite{baroni:2010:cl}. Efficiently dealing with these
+large, extremely sparse vectors can sometime be troublesome, so we often opt to
+use some form of {\em dimensionality reduction}, like Singular Value
+Decomposition (SVD) \cite{deerwester:1990:jsis,landauer:1997:pr} or Nonnegative
+Matrix Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality reduction,
+the co-occurrence matrix $M$ is typically assumed to be factorizable into two
+lower-rank matrices,
 \begin{equation*}
   M = VC^{\top}
 \end{equation*}
 where $V$ is some lower dimension representation of word vectors, and $C$
-is the corresponding lower dimension representation of the context items.
-Interestingly, the recent, popular Skip-Gram Negative Sampling (SGNS) algorithm
-\cite{mikolov:2013:iclr} can also be viewed as a form of dimensionality
-reduction \cite{levy:2014:nips}.
+is the corresponding lower dimension representation of the context items. These
+projections of words and contexts into the same latent space goes to the
+earliest days of distributional semantics \cite{deerwester:1990:jsis}, and
+is critical to many of the contributions of our completed work.
+Interestingly, the recent, extremely popular Skip-Gram Negative Sampling (SGNS)
+algorithm \cite{mikolov:2013:iclr} can also be viewed as a form of
+dimensionality reduction \cite{levy:2014:nips,levy:2015:tacl}.
 
 \subsection{Textual Entailment}
 \label{sec:textent}
