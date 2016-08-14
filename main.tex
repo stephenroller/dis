@@ -1192,7 +1192,13 @@ Figure~\ref{fig:substitution}. For a given target ``bright,'' we will choose
 the substitute (``smart'' or ``colorful'') which is {\em closer} to the
 given context. If the context is ``scientist'' as in ``bright scientist,''
 we will shift our prediction away from ``colorful'' and closer to ``smart,''
-and vice versa for ``bright coat.''
+and vice versa for ``bright coat.'' This remains one of the simplest successful
+models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also propose
+a few other variants of this measure, including {\em balCosAdd}, which equally
+weights the out-of-context similarity with the in-context appropriateness:
+\begin{equation}
+  \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
+\end{equation}
 
 % subsection subsection name (end)
 
