@@ -1237,15 +1237,15 @@ dot product:
 We compare our model to that of an out-of-context baseline (cosine) and the
 {\em addCos} and {\em balAddCos} models of \newcite{melamud:2015:vsm}, which
 outperformed other prior work at the time of its publication. We compare the
-models on three data sets: SemEval07, the original LexSub data set
+models on three data sets: SE07, the original LexSub data set
 \cite{mccarthy:2007:semeval} which was explicitly developed to model polysemy;
 CoInCo, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
 to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
-measures whether our best substitute\footnote{Excluding any words sharing the
-same lemma as the target} is contained within the gold set of substitutes
-provided by human annotators.
+measures whether our best substitute is contained within the gold set of
+substitutes provided by human annotators.\footnote{Excluding any words sharing
+the same lemma as the target}
 
 \begin{table}
 \begin{center}
@@ -1288,11 +1288,11 @@ in Mean Precision@1.}
 \label{tab:lexsub}
 \end{table}
 
-Table~\ref{tab:lexsub} contains results for all measures across all
-experimental settings.
-
+Table~\ref{tab:lexsub} contains results for all measures across all datasets.
 The first observation we make is that the \ourmeasparam~measure performs best
-in all evaluations on all datasets by a significant margin.\footnote{Wilcoxon signed-rank test, $p < 0.01$}
+in all datasets by a significant margin.\footnote{Wilcoxon signed-rank test, $p
+< 0.01$}. We also note that our measures provide more improvement on SE07
+
 In the GAP evaluation, all measures
 perform substantially better than the \ooc~baseline, and the \ourmeas~measure
 performs comparably to \balAddCos. We note that context-sensitive
