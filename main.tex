@@ -1166,6 +1166,18 @@ of \newcite{melamud:2015:vsm} depend on syntactic context vectors, which
 have been found more successful than just BoW measures in the literature
 \newcite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
 
+In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
+using a mixture of {\em out-of-context similarity} and {\em in-context
+appropriateness}. The out-of-context similarity uses standard distributional
+semantics cosine similarity in order to estimate how similar the target is
+to the substitute, and remains fixed regardless of the sentential context.
+For this reason, this out-of-context (OOC) similarity is also used as a baseline
+in the literature.
+
+
+The in-context appropriateness measure, on the other hand,
+varies 
+
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
 of a lexical substitute. Similar to \balAddCos, the measure has two equally-weighted,
