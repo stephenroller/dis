@@ -280,6 +280,7 @@ representations for the words {\em cat} and {\em dog}, we can then compare
 these vectors using {\em cosine similarity}:
 \begin{equation}
   \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
+  \label{eq:cos}
 \end{equation}
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
 or {\em kennel}, and cosine similarity is defined over the range of $[-1, 1]$.
@@ -1169,12 +1170,25 @@ have been found more successful than just BoW measures in the literature
 In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
 using a mixture of {\em out-of-context similarity} and {\em in-context
 appropriateness}. The out-of-context similarity uses standard distributional
-semantics cosine similarity in order to estimate how similar the target is
-to the substitute, and remains fixed regardless of the sentential context.
-For this reason, this out-of-context (OOC) similarity is also used as a baseline
-in the literature.
+semantics cosine similarity (Eq.~\ref{eq:cos}) in order to estimate how similar
+the target is to the substitute, and remains fixed regardless of the sentential
+context.  For this reason, this out-of-context (OOC) similarity is also used as
+a baseline in the literature.
 
-
+The in-context appropriateness, on the otherhand, attempts to directly model
+whether a proposed substitute fits in the given sentential context. That is, if
+one replaces the target with the substitute directly, would a reader still
+consider this word grammatical, regardless of whether the semantics stay fixed.
+To this end, it assumes the sentence is parsed, so that we have the full set of
+syntactic neighbors of the target, $C$. Each of the context vectors
+corresponding to elements of $C$ are then evaluated for their fit with the
+proposed substitute. For a given target $t$, substitute $s$ and context $C$,
+the final addCos score is given as:
+\begin{equation}
+  {\text addCos}(s|t,C) = {\text cosine}(s, t) + \sum_{c\in C} {\text cosine}(s, c)
+\end{equation*}
+The final addCos measure of \newcite{melamud:2015:vsm} is
+then defined as, for 
 The in-context appropriateness measure, on the other hand,
 varies 
 
