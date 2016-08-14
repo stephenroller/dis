@@ -473,7 +473,14 @@ a narrow lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
 At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we believe
-it is also an important proxy to improvements on Textual Entailment.
+it is also an important proxy to improvements on Textual Entailment. Namely,
+synonymy is highly sensitive to the effects of polysemy, as shown in our
+ongoing example, and therefore is necessary to explicitly model. Furthermore,
+it is possible to view Lexical Substitution as a kind of lexical entailment
+{\em in context}: if the substitutes replace the target and preserve the
+meaning of the sentence, then it follows that the target {\em entails} the
+substitute. While other lexical relationships are also affected by
+hypernymy\footnote{``Crane'' is both a ``bird'' and an ``equipment.''}
 
 \section{Completed work}
 
