@@ -1320,67 +1320,18 @@ more difficult all-words task, we next strive to understand why.
 \end{table*}
 
 To understand this, we characterize the performance in a cherry-picked example,
-given in Table~\ref{tab:cherry}. However, we note that the intutions explained
-here are also backed up quantitatively in the original paper
-\cite{roller:2016:naacl}. In our example, we see that all four measures tend
-to pick excellent substitutes which {\em semantically} agree with the original
-target.
+given in Table~\ref{tab:cherry}.  In our example, we see that all four measures
+tend to pick excellent substitutes which {\em semantically} agree with the
+original target. However, the OOC and balAddCos models have a large number of
+misspelled works in their list, while the nPIC and PIC measures contain
+generally correct spellings. This is because, somewhat surprisingly, the {\em
+length} of the distributional vectors correlates strongly with the {\em
+unigram} statistics of the word. Therefore, by using the unnormalized inner
+product, rather than cosine, our model naturally incorporates unigram priors,
+allowing it to downweight rare, similar words. Indeed, a quantitative analysis
+of the $W$ and $b$ parameters finds that they additionally exaggerate this
+unigram bias \cite{roller:2016:naacl}.
 
-
-We first provide a cherry-picked examples to give intuitions about why
-our model performs better. Table~\ref{tab:cherry} contains the cherry example,
-where our model performs better than prior work. While OOC
-and \balAddCos~both suggest replacements with reasonable semantics, but are
-all misspelled. \ourmeas~and \ourmeasparam~only pick words with the correct spellings,
-with the exception of ``realy.''
-
-We consider a few experiments with this hypothesis that the measures do better
-because they capture better {\em unigram} statistics than the baselines. Recent literature found that the vector
-norm of SGNS embeddings correlates strongly with word frequency
-\cite{wilson:2015:arxiv}. We verified this for ourselves, computing the Spearman's
-rank correlation between the corpus unigram frequency and the vector length
-and found $rho = 0.90$, indicating the two correlate very strongly. Since the
-dot product is also the unnormalized cosine, it follows that \ourmeas~and
-\ourmeasparam~should depend on unigram frequency.
-
-To verify that the \ourmeas~and \ourmeasparam~measures are indeed preferring more frequent
-substitutes, we compare the single best predictions (P@1) of the \balAddCos~and
-\ourmeas~systems on all-words prediction on Coinco. Roughly 42\% of the predictions made
-by the systems are identical, but of the remaining items, 74\% of
-predictions made by \ourmeas~have a higher corpus frequency than \balAddCos~(where
-chance is 50\%). We find \balAddCos~and \ourmeasparam~
-make the same prediction 37\% of the time, and \ourmeasparam~predicts a
-more frequent word in 83\% of remaining items. The results for SE07 and
-TWSI2 are similar.
-
-This indicates that the unigram bias is even higher for \ourmeasparam~than
-\ourmeas. To gain more insight, we manually inspect the learned parameters $W$
-and $b$. We find that the $W$ matrix is nearly diagonal, with the values along
-the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the rest
-of the matrix normally distributed roughly around 0 ($\mu$=2e-5, $\sigma$=0.02). This
-is to say, the \ourmeasparam~model is approximately learning to {\em exaggerate} the
-magnitude of the dot product, $s^\top c$. This suggests one could even replace our
-parameter $W$ with a single scaling parameter, though we leave this
-for future work.
-
-To inspect the bias $b$, we compute the inner product of the $b$ vector with
-the word embedding matrix, to find each word's a priori bias, and correlate it with word frequencies. We find
-$rho=0.25$, indicating that $b$ is also capturing unigram
-statistics.
-
-Is it helpful in lexical substitution to prefer more frequent substitutes? To
-test this, we pool all annotator responses for all contexts in Coinco, and find
-the number of times a substitute is given correlates strongly with frequency
-($rho=0.54$).
-
-These results emphasize the importance of incorporating unigram
-frequencies when attempting the lexical substitution task (as with
-many other tasks in NLP). Compared to
-cosine, the dot product in \ourmeas~stresses unigram frequency, and
-the parameters $W$ and $b$ strengthen this tendency.
-%  (as with so many
-% other tasks in NLP). Such a result may seem obvious in retrospect, but many
-% prior works in Lexical Substitution simply do not take this into account.
 
 \section{Proposed Work}
 
