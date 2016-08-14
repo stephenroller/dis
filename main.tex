@@ -367,9 +367,13 @@ girl {\em is a} child; a dog {\em is an} animal), and meronomy (a girl {\em
 has} eyes; a dog {has a} tail), but also many nonclassical ones too. For
 example, a {\em dissertation} implies a {\em committee}, but the exact
 relationship between these items would be difficult to pigeonhole into a
-category, or generalize to other items.
+category, or generalize to other items. Regardless, as shown in our example
+sentence in the Introduction, understanding and predicting these relationships
+is crucial to performing certain inferences in RTE: without some basic lexical
+relationships, even the easiest textual entailment pairs would be out of
+reach.
 
-There has been a great deal of research around predicting lexical entailment
+There has been a great deal of research around predicting lexical relationships
 automatically from text; we cannot possibly enumerate all the work on this
 problem done in all of NLP, but we aim to cover some influential approaches,
 and emphasize attempts to do this with distributional semantics.
@@ -417,18 +421,18 @@ based on the Distributional Inclusion Hypothesis in one form or another
 \cite{clarke:2009:gems}, or a hybrid of DIH and cosine similarity
 \cite{kotlerman:2010:nle,lenci:2012:starsem}.
 
-Increasingly, it became obvious that unsupervised measures did not work
-as well as the community hoped, the community began working
-on entailment detection as a supervised task. \newcite{baroni:2012:eacl}
-proposed, as a preliminary baseline of a novel dataset, training a simple
-baseline classifier to predict whether word pairs were either hypernyms or
-nonhypernyms. Although they reported accuracies in the high 90s, others later
-realized this was due to issues of {\em lexical memorization}, or a special
-kind of overfitting
+Increasingly, it became obvious that unsupervised measures did not work as well
+as the community hoped, the community began working on entailment detection as
+a supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary
+baseline of a novel dataset, training a simple baseline classifier to predict
+whether word pairs were either hypernyms or nonhypernyms. Although they
+reported accuracies in the high 90s, others later realized this was due to
+issues of {\em lexical memorization}, or a special kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
 recent works have emphasized their performance when {\em individual words are
 held out entire}, so that the same word can never appear in both training and
-testing sets \cite{roller:2014:coling,kruszewski:2015:tacl,levy:2015:naacl}.
+testing sets
+\cite{roller:2014:coling,kruszewski:2015:tacl,levy:2015:naacl,shwartz:2016:acl,roller:2016:naacl}.
 We discuss more about this issue of Lexical Memorization in
 Section~\ref{sec:lexmem}.
 
@@ -1654,7 +1658,7 @@ showing modest improvements over each individual space. Furthermore,
 Substitution using a neural network language model which encodes the {\em
 entire sentence} as input, though their model also depends heavily on the use
 of machine translation data as a sort of proxy for Word Sense Disambiguation
-information. Nonetheless, it is clear that there is more useful information
+information. It is clear that there is more useful information
 available than our own Lexical Substitution model is allotted.
 
 There two distinct ways we could implement wider contexts into our Lexical
