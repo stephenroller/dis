@@ -1210,42 +1210,33 @@ softmax:
   \begin{aligned}
   \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
   P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\
-  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\}
+  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\},
   \end{aligned}
   \label{eqn:pic}
 \end{equation}
-Our model differs from {\em balAddCos} one major way: we base our similarity
+where the $Z_t$ and $Z_C$ are normalizing constants.
+Our model differs from {\em balAddCos} in one major way: we base our similarity
 estimates using the unnormalized inner product $s^\top t$ and $s^\top c$,
 rather than normalized cosine similarities. We also introduce two additional
-parameters, $W$ and $b$, which act as a simple linear transformation over
-the original vectors. 
+parameters, $W$ and $b$, which act as a simple linear transformation over the
+original context vectors. These parameters are learned from the original
+corpus, and serve only to tune how the distributional vectors act in this
+alternative objective function.
 
-The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
-distribution sums to one. This measure has two free parameters, $W$ and $b$,
-which act as a linear transformation over the context vectors.
-
-
-These parameters
-are estimated from the {\em original corpus}, and are trained to maximize
-the prediction of a {\em target} from only its syntactic contexts (c.f. Section~\ref{sec:training}).
-Given this formulation, a natural question is why not train the embeddings to optimize the
-softmax directly? We choose to parameterize the measure rather than the
-embeddings because (i) SGNS embeddings are already popular and readily
-available and
-(ii) it ensures the quality of embeddings remains constant across experimental 
-settings.
-
-To measure the importance of parameterization, we
-also compare to a non-parameterized PIC (\ourmeas), which only uses a softmax over the
+To identify the importance of this parameterization versus our similarity measure, we
+also introduce to a non-parameterized PIC ({\em nPIC}), which only uses a softmax over the
 dot product:
 \begin{equation}
   \begin{aligned}
   \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
-  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
+  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\}
   \end{aligned}
   \label{eqn:npic}
 \end{equation}
 
+We compare our model to that of an out-of-context baseline (cosine) and the
+{\em addCos} and {\em balAddCos} models of \newcite{melamud:2015:vsm}, which
+outperformed other prior work at the time of its publication
 
 
 \begin{table}
