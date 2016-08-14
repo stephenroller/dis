@@ -473,14 +473,15 @@ a narrow lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
 At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we believe
-it is also an important proxy to improvements on Textual Entailment. Namely,
-synonymy is highly sensitive to the effects of polysemy, as shown in our
-ongoing example, and therefore is necessary to explicitly model. Furthermore,
-it is possible to view Lexical Substitution as a kind of lexical entailment
-{\em in context}: if the substitutes replace the target and preserve the
-meaning of the sentence, then it follows that the target {\em entails} the
-substitute. While other lexical relationships are also affected by
-hypernymy\footnote{``Crane'' is both a ``bird'' and an ``equipment.''}
+it is also an important proxy to improvements on Textual Entailment. Namely, it
+is possible to view Lexical Substitution as a kind of lexical entailment {\em
+in context}: if the substitutes replace the target and preserve the meaning of
+the sentence, then it follows that the target {\em entails} the substitute.
+Indeed, in one Lexical Substitution data set, explicit WordNet synonymy only
+captured about 9.4\% of all the substitutes in the data
+\cite{kremer:2014:eacl}. For this reason, we believe that Textual Entailment
+can benefit more from modeling Lexical Substitution as an entire task, rather
+limiting this phenomenon to pure synonymy.
 
 \section{Completed work}
 
@@ -1150,9 +1151,9 @@ significantly outperforming it on BLESS and Medical data sets.
 \end{figure}
 
 In this last section of our work, we switch over to our efforts on the Lexical
-Substitution (Lexsub) task. As described in Section~\ref{sec:lexsub}, we view
-Lexsub as the best means of capturing the lexical relation {\em synonymy} into
-our thesis.
+Substitution (LexSub) task. As described in Section~\ref{sec:lexsub}, we view
+LexSub as as capturing a wide degree of lexical entailments {\em in context},
+including synonymy of polysemous words.
 
 We propose a new measure, called Probability-in-Context (PIC), which extends
 a previously successful, simple model to estimate the appropriateness of a
