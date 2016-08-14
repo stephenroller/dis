@@ -439,18 +439,11 @@ Section~\ref{sec:lexmem}.
 \subsection{Lexical Substitution}
 \label{sec:lexsub}
 
-While the Lexical Entailment task described above is mostly about predicting
-fixed, global relationships between words, Lexical Substitution is about
-finding specific synonyms for words {\em in a given sentential context}.
-That is, we wish to also consider how polysemy can change some of the
-lexical entailments we can derive from a system.
-
 Until now, we have assumed that words are mononymous, or that they have only
 one meaning. However, words like ``bright'' have multiple meanings, which
 change depending on context, as in ``bright girl'' and ``bright coat.'' This is
-called {\em polysemy}, and is a major issue in distributional semantics, since
-word meaning is typically modeled as single point estimates
-\newcite{turney:2010:jair,erk:2012:llc}.
+called {\em polysemy}, and is a major issue in Natural Language Understanding,
+since it adds yet another layer of possible ambiguity in sentence meaning.
 
 One approach to dealing with this issue of polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
@@ -460,7 +453,8 @@ Lexical Substitution task, the program is provided with a sentential
 context,\footnote{The CoInCo dataset also provides the sentences before and
 after the target word, but these are usually ignored in the literature.} and
 must provide {\em substitutes} which can replace the given target word, while
-preserving the meaning of the entire sentence.
+preserving the meaning of the entire sentence
+\cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 
 Distributional Semantics offers a tempting solution to this problem, given its
 ability to measure the graded levels of similarity between words
@@ -521,6 +515,9 @@ lexical substitution datasets are relatively small compared to the size of the
 corpora used in machine translation and distributional semantics.
 
 \section{Completed work}
+
+In this section, we discuss our recent publications relativent to this proposal,
+and emphasize their major contributions to the field.
 
 \subsection{Asym Model for Lexical Entailment (Roller et al., 2014)}
 \label{sec:asym}
