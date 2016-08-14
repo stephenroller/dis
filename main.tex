@@ -1183,14 +1183,18 @@ To this end, it assumes the sentence is parsed, so that we have the full set of
 syntactic neighbors of the target, $C$. Each of the context vectors
 corresponding to elements of $C$ are then evaluated for their fit with the
 proposed substitute. For a given target $t$, substitute $s$ and context $C$,
-the final addCos score is given as:
+the final addCos score is given as
 \begin{equation}
-  {\text addCos}(s|t,C) = {\text cosine}(s, t) + \sum_{c\in C} {\text cosine}(s, c)
-\end{equation*}
-The final addCos measure of \newcite{melamud:2015:vsm} is
-then defined as, for 
-The in-context appropriateness measure, on the other hand,
-varies 
+  \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
+\end{equation}
+The model can be intuitively understood using the diagram in
+Figure~\ref{fig:substitution}. For a given target ``bright,'' we will choose
+the substitute (``smart'' or ``colorful'') which is {\em closer} to the
+given context. If the context is ``scientist'' as in ``bright scientist,''
+we will shift our prediction away from ``colorful'' and closer to ``smart,''
+and vice versa for ``bright coat.''
+
+% subsection subsection name (end)
 
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
