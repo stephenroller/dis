@@ -412,8 +412,8 @@ distributional space, and the right similarity measure, perhaps hypernym pairs,
 or at least candidate pairs, could be readily identified using only word
 vectors. This view was further highlighted by the fact that the ubiquitious
 cosine similarity tends to highlight co-hyponym pairs more than other relations
-\cite{weeds:2004:coling,baroni:2011:gems}. Many of the proposed measures were based on the
-Distributional Inclusion Hypothesis in one form or another
+\cite{weeds:2004:coling,baroni:2011:gems}. Many of the proposed measures were
+based on the Distributional Inclusion Hypothesis in one form or another
 \cite{clarke:2009:gems}, or a hybrid of DIH and cosine similarity
 \cite{kotlerman:2010:nle,lenci:2012:starsem}.
 
@@ -576,9 +576,9 @@ was not our primary research interest at the time.
 We compare our model with two baselines: the first is a random baseline,
 which just guesses randomly for the balanced LEDS dataset, and always
 the most common class ({\em no-relation}) for BLESS. We also compare to the
-model proposed in \newcite{baroni:2011:gems}, which uses the {\em concatenation}
+model proposed in \newcite{baroni:2012:eacl}, which uses the {\em concatenation}
 of the $H$ and $w$ vectors and trains an off-the-shelf polynomial Support
-Vector Machine \cite{needcite}.
+Vector Machine \cite{cortes:1995:ml}.
 
 \begin{table}
   \centering
@@ -588,9 +588,9 @@ Vector Machine \cite{needcite}.
     \hline
     Random Baseline              &   -      & .50          & .46      \\
     \hline
-    \newcite{baroni:2011:gems}   & Window 2 & .81          & .76      \\
+    \newcite{baroni:2012:eacl}   & Window 2 & .81          & .76      \\
     \newcite{roller:2014:coling} & Window 2 & {\bf .85}    & {\bf .84}\\
-    \newcite{baroni:2011:gems}   & Sentence & .78          & .73      \\
+    \newcite{baroni:2012:eacl}   & Sentence & .78          & .73      \\
     \newcite{roller:2014:coling} & Sentence & .82          & .80      \\
     \hline
   \end{tabular}
