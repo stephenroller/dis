@@ -441,9 +441,46 @@ Section~\ref{sec:lexmem}.
 
 While the Lexical Entailment task described above is mostly about predicting
 fixed, global relationships between words, Lexical Substitution is about
-finding specific paraphrases for words {\em in a given sentential context}.
-That is, we wish to also consider how polysemy can change the sort of
-lexical entailments derived by a system.
+finding specific synonyms for words {\em in a given sentential context}.
+That is, we wish to also consider how polysemy can change some of the
+lexical entailments we can derive from a system.
+
+Until now, we have assumed that words are mononymous, or that they have only
+one meaning. However, words like ``bright'' have multiple meanings, which
+change depending on context, as in ``bright girl'' and ``bright coat.'' This is
+called {\em polysemy}, and is a major issue in distributional semantics, since
+word meaning is typically modeled as single point estimates
+\newcite{turney:2010:jair,erk:2012:llc}.
+
+One approach to dealing with this issue of polysemy is to model how word
+meaning {\em shifts} in a given context; that is, we can explicitly model what
+happens to a word based on its used in a sentential context. Since c. 2007,
+one popular way to measure this has been the Lexical Substitution task.  In the
+Lexical Substitution task, the program is provided with a sentential
+context,\footnote{The CoInCo dataset also provides the sentences before and
+after the target word, but these are usually ignored in the literature.} and
+must provide {\em substitutes} which can replace the given target word, while
+preserving the meaning of the entire sentence.
+
+Distributional Semantics offers a tempting solution to this problem, given its
+ability to measure the graded levels of similarity between words
+\cite{dinu:2010:emnlp}. However, the obvious issue with distributional
+semantics is that word meaning is typically estimated as a single, fixed point
+in space.  Therefore, distributional semantics should have issues with
+conflating word senses. Although there exist some methods for estimating word
+meaning as multiple points \cite{reisinger:2010:naacl,neelakantan:2014:emnlp}
+or regions of space \cite{vilnis:2015:iclr}, the vast majority of attempts on
+LexSub still rely on single-point estimates
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
+
+
+Interestingly, although there have been both supervised
+\cite{biemann:2012:lrec,needcite} and unsupervised (c.f. above) attempts on
+this task, currently unsupervised measures hold a narrow lead
+\cite{melamud:2015:naacl,melamud:2016:conll}.
+
+
+
 
 Consider again our example from the introduction: while the previous section
 aims to understand that a {\em girl is-a child}, it does not attempt to find a
@@ -1146,38 +1183,7 @@ significantly outperforming it on BLESS and Medical data sets.
 In this last section of our work, we switch over to our efforts on the Lexical
 Substitution (Lexsub) task. As described in Section~\ref{sec:lexsub}, we view
 Lexsub as the best means of capturing the lexical relation {\em synonymy} into
-our thesis. Until now, we have assumed that words are mononymous, or that they
-have only one meaning. However, words like ``bright'' have multiple meanings,
-which change depending on context, as in ``bright girl'' and ``bright coat.''
-This is called {\em polysemy}, and is a major issue in distributional
-semantics, since word meaning is typically modeled as single point
-estimates \newcite{turney:2010:jair,erk:2012:llc}.
-
-One popular approach to dealing with this issue of polysemy is to model how
-word meaning {\em shifts} in a given context; that is, we can explicitly
-model what happens to a word based on its used in a sentential context. Since
-c. 2007, one popular way to measure this has been the Lexical Substitution
-task. In the Lexical Substitution task, the program is provided with a sentential
-context,\footnote{The CoInCo dataset also provides the sentences before and after
-the target word, but these are usually ignored in the literature.} and must
-provide {\em substitutes} which can replace the given target word, while
-preserving the meaning of the entire sentence.
-
-Distributional Semantics offers a tempting solution to this problem, given its
-ability to measure the graded levels of similarity between words
-\cite{dinu:2010:emnlp}. However, the obvious issue with distributional
-semantics is that word meaning is typically estimated as a single, fixed point
-in space.  Therefore, distributional semantics should have issues with
-conflating word senses. Although there exist some methods for estimating word
-meaning as multiple points \cite{reisinger:2010:naacl,neelakantan:2014:emnlp}
-or regions of space \cite{vilnis:2015:iclr}, the vast majority of attempts on
-LexSub tend to use single-point estimates
-\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
-Interestingly, although there have been both supervised
-\cite{biemann:2012:lrec,needcite} and unsupervised (c.f. above) attempts on
-this task, currently unsupervised measures hold a narrow lead
-\cite{melamud:2015:naacl,melamud:2016:conll}.
-
+our thesis.
 
 We propose a new measure, called Probability-in-Context (PIC), which extends
 a previously successful, simple model to estimate the appropriateness of a
