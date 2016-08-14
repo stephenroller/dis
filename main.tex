@@ -1289,25 +1289,13 @@ in Mean Precision@1.}
 \end{table}
 
 Table~\ref{tab:lexsub} contains results for all measures across all datasets.
-The first observation we make is that the \ourmeasparam~measure performs best
-in all datasets by a significant margin.\footnote{Wilcoxon signed-rank test, $p
-< 0.01$}. We also note that our measures provide more improvement on SE07
-
-In the GAP evaluation, all measures
-perform substantially better than the \ooc~baseline, and the \ourmeas~measure
-performs comparably to \balAddCos. We note that context-sensitive
-measures give the most improvement in SE07, reflecting its greater emphasis on
-polysemy.
-
-As we turn to the all-words ranking evaluations, we observe that the absolute numbers are
-much lower, reflecting the increased difficulty of the task. We also see the
-that \ourmeas~and \ourmeasparam~both improve greatly over all baselines: The
-\ourmeas~measure is a relative 30\% improvement over \balAddCos~in SE07 and
-Coinco, and the \ourmeasparam~measure is a relative 50\% improvement over
-\balAddCos~in 5 evaluations.
-
-Since both measures have a clear improvement over the baselines, especially in
-the more difficult all-words task, we next strive to understand why.
+We observe that PIC outperforms all other models by a significant
+margin\footnote{Wilcoxon signed-rank test, $p < 0.01$}, including a relative
+30\% improvement over balAddCos in SE07 and CoInCo. The nPIC also improves
+substantially over the other baselines, indicating we gain benefit both from
+the new objective function, as well as the additional parameterization.  Since
+both measures have a clear improvement over the baselines, especially in the
+more difficult all-words task, we next strive to understand why.
 
 \begin{table*}[t]
   \begin{center}
@@ -1326,10 +1314,18 @@ the more difficult all-words task, we next strive to understand why.
     \hline
   \end{tabular}
   \end{center}
-  \caption{Example where the \ourmeasparam~performs better in the All-Words Ranking task. The target word and correct answers
+  \caption{Example where the \ourmeasparam~performs strictly better than other models. The target word and correct answers
   are bolded.}
   \label{tab:cherry}
 \end{table*}
+
+To understand this, we characterize the performance in a cherry-picked example,
+given in Table~\ref{tab:cherry}. However, we note that the intutions explained
+here are also backed up quantitatively in the original paper
+\cite{roller:2016:naacl}. In our example, we see that all four measures tend
+to pick excellent substitutes which {\em semantically} agree with the original
+target.
+
 
 We first provide a cherry-picked examples to give intuitions about why
 our model performs better. Table~\ref{tab:cherry} contains the cherry example,
