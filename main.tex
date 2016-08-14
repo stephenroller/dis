@@ -466,52 +466,11 @@ meaning as multiple points \cite{reisinger:2010:naacl,neelakantan:2014:emnlp}
 or regions of space \cite{vilnis:2015:iclr}, the vast majority of attempts on
 LexSub still rely on single-point estimates
 \cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
-
 Interestingly, although there have been both supervised
 \cite{biemann:2012:lrec,needcite} and unsupervised (c.f. above) attempts on
-this task, currently unsupervised measures hold a narrow lead
-\cite{melamud:2015:naacl,melamud:2016:conll}.
+this task using distributional semantics, currently unsupervised measures hold
+a narrow lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
-
-
-
-Consider again our example from the introduction: while the previous section
-aims to understand that a {\em girl is-a child}, it does not attempt to find a
-relationship between {\em bright} and {\em smart}. This is because the word
-{\em bright} has multiple meanings, and there needs to be some sort of
-reasoning in order to consider that the appropriate synonym of {\em bright}
-is {\em smart} in this context, but not {\em luminous} or {\em colorful}.
-More formally, in Lexical Substitution, we wish to identify what
-words could replace a given target word in a particular sentence, while
-perserving the meaning of the whole sentence. Evaluation is typically
-performed by comparing a system's predictions to actual substitutes generated
-by humans asked to perform the same task.
-
-In the original SemEval 2007 version of the Lexical Substitution Task, systems
-were required to generate up to ten potential substitutes for the given target
-word and context, and not given any additional information. As such, early
-Lexical Substitution systems relied heavily on lexical resources like WordNet
-to obtain a list of {\em candidate substitutes}. Then, using various custom
-features, they would extract features and learn to rank substitutes for their
-appropriateness \cite{mccarthy:2007:semeval}. Later, researchers began noting
-the difference between candidate generation and candidate ranking, and then
-focused research on mostly the ranking task \cite{needcite}. The vast majority
-of these systems are based on the notions of finding substitutes based on {\em
-Selectional Restrictions} and {\em Selectional Preferences}, or
-limitations/preferences about the types of arguments and modifiers words tend
-to take \cite{needcite}.
-
-Today, many have begun returning to the generation-and-ranking task
-\cite{melamud:2015:naacl,kawakami:2016:iclr,roller:2016:naacl,melamud:2016:conll},
-but opting to avoid lexical resources like WordNet.  Curiously, to date, the
-best performing systems in Lexical Substitution are ones which are unsupervised
-with respect to the task: either they are trained for some auxiliary task like
-Machine Translation \cite{kawakami:2016:iclr}, or they are similarity methods
-over distributional models \cite{roller:2016:naacl} or language modeling
-\cite{melamud:2015:naacl}. This could be because of a lack of recent effort in
-directly supervised versions of the task \cite{szarvas:2013:naacl}, or because
-lexical substitution datasets are relatively small compared to the size of the
-corpora used in machine translation and distributional semantics.
 
 \section{Completed work}
 
