@@ -596,17 +596,18 @@ Vector Machine \cite{cortes:1995:ml}.
   \centering
   \begin{tabular}{|lc|cc|}
     \hline
-    {\bf Classifier} & {\bf Space} & {\bf LEDS.} & {\bf BLESS.}\\
+    {\bf Classifier} & {\bf Space} & {\bf LEDS} & {\bf BLESS}\\
     \hline
     Random Baseline              &   -      & .50          & .46      \\
     \hline
-    \newcite{baroni:2012:eacl}   & Window 2 & .81          & .76      \\
-    \newcite{roller:2014:coling} & Window 2 & {\bf .85}    & {\bf .84}\\
-    \newcite{baroni:2012:eacl}   & Sentence & .78          & .73      \\
-    \newcite{roller:2014:coling} & Sentence & .82          & .80      \\
+    \cite{baroni:2012:eacl}   & Window 2 & .81          & .76      \\
+    Asym \cite{roller:2014:coling} & Window 2 & {\bf .85}    & {\bf .84}\\
+    \cite{baroni:2012:eacl}   & Sentence & .78          & .73      \\
+    Asym \cite{roller:2014:coling} & Sentence & .82          & .80      \\
     \hline
   \end{tabular}
-  \caption{Accuracy of {\svm} and {\logreg} on {\bless} and {\entailment}
+  \caption{Accuracy of \newcite{baroni:2012:eacl} and \newcite{roller:2014:coling} on
+  {\bless} and {\entailment}
   using different spaces for feature generation. Performance is measured as
   the average accuracy across all folds of the leave-one-out cross validation
   experiment.}
@@ -621,8 +622,7 @@ comparisons, indicating it is likely the task depends more heavily {\em
 functional} properties of words than {\em topical} properties of words.
 
 Finally, we see that the Asym model outperforms the model proposed by
-\newcite{baroni:2011:gems} in all four comparisons, indicating
-our feature architecture is superior to mere concatenation.
+\newcite{baroni:2012:eacl} in all four comparisons.
 Interestingly, we found that dropping the square-difference terms
 severely hurt the performance of our model, emphasizing these features immense
 importance. We will discuss more of why these features are so important in
