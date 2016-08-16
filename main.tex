@@ -140,17 +140,17 @@ like RTE. Namely, we present techniques and models for predicting specific
 lexical relationships, entailments, and subsitutions using Distributional
 Semantics. In Lexical Relationship Detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
-relationships) or meronymy (has-a relationships). We present three original
-models which can learn to predict hypernymy or general entailment relations
+relationships) or meronymy (has-a relationships). This is sometimes supplanted
+by Lexical Entailment Detection, where we must predict a coarser entailment
+prediction. We present two original models which can learn to predict hypernymy
+or general entailment relations
 \cite{roller:2014:coling,beltagy:2016:cl,roller:2016:emnlp}, and evaluate their
 performance on different datasets. In these works, we also make significant
 contributions in experimental setups which prevent issue with lexical
-memorization \cite{roller:2014:coling}, and understanding of how these models
+memorization \cite{roller:2014:coling}, and insight into how these models
 work \cite{roller:2016:emnlp}.  We also present an original model for Lexical
 Substitution, where one must predict a context-specific synonym for a given
-target word in a sentential context \cite{roller:2016:naacl}. In this document,
-we also argue that Lexical Substitution is a form of lexical entailment in
-context.
+target word in a sentential context \cite{roller:2016:naacl}.
 
 Finally, we propose several short- and long-term extensions to our completed
 work. In the short-term, we focus mainly on how our more recent work may be
@@ -173,8 +173,8 @@ typically computed in modern applications. Next, we briefly discuss the Recogniz
 Textual Entailment (RTE) task, and discuss how lexical semantics plays a key
 role in this task. Finally, we dicuss the Lexical Entailment (LexEnt) and
 Lexical Substitution (LexSub) tasks, which we view as strong proxies for the
-kinds of lexical semantics necessary for RTE. We do not attempt to argue that
-these tasks are completely sufficient, but one goal of our thesis to show
+kinds of lexical semantics necessary for RTE. We do not argue that
+these tasks are completely sufficient, but one goal of our thesis to show that
 developments in these tasks improves practical RTE.
 
 \subsection{Recognizing Textual Entailment}
@@ -182,29 +182,30 @@ developments in these tasks improves practical RTE.
 
 In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
 task, a long standing, challenging semantic problem for Natural Language
-Understanding systems. One of the original papers detailing the
-challenge describes it as ``recognizing, given two text fragments, whether the
+Understanding systems. One of the first benchmark papers
+describes RTE as ``recognizing, given two text fragments, whether the
 meaning of one text can be inferred (entailed) from the other''
 \cite{dagan:2006:mlc}. Since this original definition, many other datasets
 \cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
 for a thorough survey).
 
-One important theory in Philosophy of Language circles is that of
-compositional semantics, famously described by \newcite{montague:1970:theoria},
-but with a long history outside the scope of this document. In compositional
-semantics, the meanings of sentences can be described {\em compositionally} and
-modeled using formal logical systems, like First Order Logic (FOL). These
-FOL formulae are built iteratively, usually by modeling grammatical structures
-as lambda expressions which are iteratively applied to derive a final
-representation of the sentence \cite{kamp:2013:discourse}. These theories
-of language have become the motivation of several modern language understanding
-systems \cite{maccartney:2008:coling,beltagy:2013:starsem,bjerva:2014:semeval}.
-However, these systems face a fundamental problem: only the semantics of the
-{\em sentence} is described logically, but the semantics of individual words
-is left unspecified. As one old joke goes, ``What is the meaning of life?
-{\em life}$'$.\footnote{Attributed to Barbara Partee and Terry Parsons
-\url{http://mailman.uib.no/public/corpora/2010-January/009847.html}}
+REWRITE
+%One important theory in Philosophy of Language circles is that of
+%compositional semantics, famously described by \newcite{montague:1970:theoria},
+%but with a long history outside the scope of this document. In compositional
+%semantics, the meanings of sentences can be described {\em compositionally} and
+%modeled using formal logical systems, like First Order Logic (FOL). These
+%FOL formulae are built iteratively, usually by modeling grammatical structures
+%as lambda expressions which are iteratively applied to derive a final
+%representation of the sentence \cite{kamp:2013:discourse}. These theories
+%of language have become the motivation of several modern language understanding
+%systems \cite{maccartney:2008:coling,beltagy:2013:starsem,bjerva:2014:semeval}.
+%However, these systems face a fundamental problem: only the semantics of the
+%{\em sentence} is described logically, but the semantics of individual words
+%is left unspecified. As one old joke goes, ``What is the meaning of life?
+%{\em life}$'$.\footnote{Attributed to Barbara Partee and Terry Parsons
+%\url{http://mailman.uib.no/public/corpora/2010-January/009847.html}}
 
 To compensate for this fact, systems often employ a wide collection of lexical
 resources \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl},
@@ -215,8 +216,8 @@ logical reasoning. However, these resources are often very expensive to create,
 and, since language is ever changing, inherently incomplete.
 
 Naturally, this raises the question of whether it is possible to distill
-information about lexical items in a more automatic fashion. Next, we will
-discuss Distributional Semantics and Vector Space Models, which provide an
+information about lexical items in a more automatic fashion. We turn now to
+Distributional Semantics and Vector Space Models, which provide an
 automatic induction of word meaning using only large, readily available
 corpora.
 
