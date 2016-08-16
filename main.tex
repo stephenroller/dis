@@ -1433,16 +1433,15 @@ explore the best form of combination with both kept in mind.
 In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is strongly
 related to the tasks of lexical and textual entailment, partially standing
 as a kind of in-context entailment. We have yet to provide any results
-indicating that Lexical Substitution does actually contribute in an
-RTE system.
+indicating that Lexical Substitution contributes in an
+RTE system.  We propose that the Lexical Substitution model described in
+Section~\ref{sec:pic} be used as additional features in the Lexical
+Entailment classifier described in Section~\ref{sec:rtesubsystem}. We hope that
+our Lexical Substitution model can positively contribute to the RTE pipeline,
+but suspect improvements may be marginal or negative.
 
-We propose that the Lexical Substitution model described in
-Section~\ref{sec:pic} be used to provide additional information to
-the Lexical Entailment classifier used in Section~\ref{sec:rtesubsystem}.
-
-There are at least two possibilities for how a Lexical Substitution model could
-contribute to the task. The first, and one we believe most likely to be
-helpful, is to simply add the context-similarity features of the Lexical
+The obvious way our Lexical Substitution model could contribute to the
+task is by simply including the context-similarity features of the Lexical
 Substitution model as another feature in the Lexical Entailment classifier.
 That is, for a pair of words in the SICK dataset, measure the similarity of
 their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
@@ -1457,20 +1456,10 @@ was necessary for getting distributional similarity to contribute. Similar
 tricks, like binning or separating out the components of PIC, are likely
 necessary in order to see positive contribution.
 
-The second possibility for how Lexical Substitution could contribute is in
-the {\em alignment} preprocessing procedure: while we currently only choose
-which word pairs to align with our greedy cosine-similarity based method, it
-could be that the $P(s|C)$ model provides additional information to make
-smarter alignments. For example, we each token in the antecedent, we could
-align it with the consequent's token that acts as the best lexical substitute
-{\em in-context}, rather than the out-of-context measure we presently use.
-
-Ultimately though, we suspect improvements to RTE from either proposed
-application of the Lexical Substitution model may be marginal, or even
-negative, as polysemy is not common in the RTE dataset that we use. We may
-need to manually identify which RTE pairs exhibit polysemy the strongest, or
-manually construct a small dataset of sentences with polysemy in order to
-show positive results.
+Ultimately though, we suspect improvements to RTE  may be marginal, or even
+negative, as polysemy is uncommon in the SICK dataset. We may need to manually
+identify which RTE pairs exhibit polysemy the strongest, or manually construct
+a small dataset of sentences with polysemy in order to show positive results.
 
 \subsection{Long Term Proposals}
 
