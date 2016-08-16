@@ -1368,22 +1368,16 @@ modeling power of a hypernymy detection system, and improves results over
 comparable models.
 
 However, there are many relations {\em other} than hypernymy which are useful
-in textual entailment: for example, we mentioned in
-Section~\ref{sec:rtesubsystem} that cosine similarity is indicative of entailment
-at moderate levels, where it reflects general similarity, but {\em counter-indicative}
-of entailment at very high levels, where it is most indicative of co-hyponymy.
-Indeed, dividing word relationships into hypernymy and non-hypernymy could be
-viewed as dividing the world into living and nonliving things: while this is
-a very important distinguishing feature, it may be helpful to identify a bit more
-information.
-
+in considering textual entailment: for example, identifying co-hyponymy is
+useful as a negative signal for entailment, and identifying meronomy is
+critical to our motivating example in the Introduction.
 Indeed, the results shown in Table~\ref{tab:asymresults} show
-the accuracy of the Asym and Baroni classifiers on a four-way relationship
+the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
 prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
-experiments in Section~\ref{sec:hfeatures} only describe performance in a
+experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
 binary hypernymy-or-not classification task. We propose the H-features
 model of Section~\ref{sec:hfeatures} be extended and evaluated on its
-performance in other relationships.
+performance in other nonhypernymy relationships.
 
 There are several ways that the model could be extended. The one we believe
 will be most successful is one that trains several binary H-features models:
