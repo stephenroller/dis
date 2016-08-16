@@ -30,33 +30,27 @@ Doctoral Dissertation Proposal}
   As the field of Natural Language Processing has developed, more ambitious
   semantic tasks are starting to be addressed, such as Question Answering, and
   Recognizing Textual Entailment. Systems which approach these tasks can
-  perform sophisticated inference between sentences of Natural Language, but
-  often have exhibit issues of Montague-style semantics, where the meaning of
-  {\em life} is {\em life$'$}. Such systems depend heavily on lexical resources
-  like WordNet to provide critical information like the relationships between
-  lexical items, or whether one lexical item entails another. However, lexical
-  resources are expensive to create and maintain, and can never be
-  comprehensive.
+  perform sophisticated inference between sentences, but depend heavily on
+  lexical resources like WordNet to provide critical information like the
+  relationships between lexical items, or whether one lexical item entails
+  another. However, lexical resources are expensive to create and maintain, and
+  are never be comprehensive.
 
   Distributional Semantics has long provided a method to automatically induce
   meaning representations for lexical items from large corpora with little or
-  no annotation efforts. In Distributional Semantics, words are modeled as
-  vectors in high-dimensional spaces, induced by counting or modeling the
-  contexts in which a word appears. The resulting representations are excellent
+  no annotation efforts. The resulting representations are excellent
   as proxies of semantic similarity: words will have similar representations if
   their semantic meanings are similar. Yet, knowing two words are similar does
   not tell us their relationship, or whether one entails the other.
 
-  In this work, we present several techniques for automatically identifying
-  specific relationships or entailments from distributional representations of
-  lexical semantics. Broadly, this work falls into two distinct but related
-  areas: the first predicts specific taxonomic relations and entailment
-  decisions between lexical items devoid of context;
-  the second predicts specific lexical paraphrases in complete sentences. In
-  both cases, we evaluate and emphasize generalization to novel lexical items
-  which are devoid of any explicit semantic annotations.  We also provide
-  analysis and insight as to how and why these models are anble to generalize
-  to novel lexical items, and relate this to prior linguistic and NLP research.
+  We present several techniques for automatically identifying specific
+  relationships or entailments from distributional representations of lexical
+  semantics. Broadly, this work falls into two distinct but related areas: the
+  first predicts specific taxonomic relations and entailment decisions between
+  lexical items devoid of context; the second predicts specific lexical
+  paraphrases in complete sentences.  We provide insight of how and why these
+  models are able to generalize to novel lexical items, and relate this to
+  prior linguistic and NLP research.
 
   (Summary of proposed items here)
   %We propose several short- and long-term extensions to this work. In the
@@ -78,7 +72,7 @@ Doctoral Dissertation Proposal}
 
 As the field of Natural Language Processing (NLP) has developed, significant
 progress has been made in many areas of research, especially those in ``lower''
-levels of the Bernard Vauquois's famed Triangle, like Part-of-Speech tagging
+levels of Bernard Vauquois's famed Triangle, like Part-of-Speech tagging
 \cite{toutanova:2003:naacl} and Parsing \cite{chen:2014:emnlp}.  Significant progress
 has also been made even in some very difficult semantics tasks,
 like Named Entity Recognition \cite{needcite}, Sentiment Analysis
@@ -95,12 +89,12 @@ logically follows (or can be inferred) from a given text
 
 Much progress has been made in systems which perform these sort of
 sophisticated logical inferences, especially as common benchmarks and datasets
-have started to become common
+have become available
 \cite{dagan:2006:mlc,giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval,bowman:2015:emnlp}.
 Yet in any sophisticated, compositional model of semantics, systems must
 ultimately consider the semantics of individual lexical items to form a
 conclusion \cite{montague:1970:theoria,kamp:2013:discourse}.  This often
-requires an understanding about the many different relationships that can occur
+requires an understanding about the different relationships that can occur
 between lexical items. Consider the following example:
 \begin{quote}
   Text (Antecedent): The bright girl reads a book.\\
@@ -112,16 +106,15 @@ girl is a kind of child (hypernymy), and that bright and smart have the same
 meaning in this context (synonymy); that books contain pages of text
 (meronomy), and that reading involves looking at these pages (world knowledge).
 
-Although significant progress has been made on the text of Rich Textual
+Although significant progress has been made on the task of Recognizing Textual
 Entailment, many of these systems ultimately depend on some lexical resources
 \cite{beltagy:2014:semeval,bjerva:2014:semeval,lai:2014:semeval,marelli:2014:semeval,beltagy:2016:cl}.
 Possibly the most famous lexical resource is WordNet \cite{miller:1995:acm},
-which organizes the lexicon into a large ontology (taxonomy) containing many
-thousands of annotations of relationships between different lexical items,
+which organizes the lexicon into a large ontology (taxonomy),
 though many other resources also exist and are used
 \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
-Unfortunately, resources as thorough as WordNet are extremely expensive and
-intensive to create, and since language is ever-changing, they are inevitably
+Unfortunately, resources as thorough as WordNet are extremely resource
+intensive to create, and as language is ever-changing, they are inevitably
 always incomplete. As such, dependence on manually constructed resources
 represents one weak point in some Natural Language Understanding systems. Even
 modern Neural Network approaches, which attempt to learn entailments without
