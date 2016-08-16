@@ -746,18 +746,20 @@ First Order Logical formulas \cite{bos:2008:step}. We then use theorem proving
 techniques in order to extract lexical rules which {\em must} be true in the dataset.
 For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
 eliminate {\em girl} and automatically conclude that {\em talks} lexically
-entails {\em speaks}. Crucially, by knowing entailment decisions about the
+entails {\em speaks}.
+
+Crucially, by knowing entailment decisions about the
 entire sentences, and by performing unification over their logical structures,
-we can use theorem proving to automatically label certain {\em atomic rules} as
-true or false.
+we can use theorem proving to automatically label certain atomic rules as
+true or false. These same atomic rules, like {\em talks entails speaks}, can
+be interpreted as {\em lexical entailment pairs} for use in a lexical entailment
+classifier. Most, but not all, pairs can be labeled automatically, and those
+that cannot are manually annotated by two of the authors \cite{beltagy:2016:cl}.
+The final result is a novel dataset of lexical entailment pairs, which we call
+RRR (Robinson Resolution Rules), which we use to train and compare lexical
+entailment classifiers.
 
-Lexical pairs which could {\em not} be automatically
-inferred were manually annotated by two of the authors \cite{beltagy:2016:cl}.
-The result is a novel dataset of lexical entailment pairs, which we can use
-to train a lexical entailment classifier, which we call {\bf RRR} (Robinson
-Resolution Rules).
-
-We train and compare the performance of several existing lexical entailment
+We compare the performance of several existing lexical entailment
 classifiers which employ a variety of hand-engineered features and lexicons
 like WordNet.  Most of the hand-engineered features come from
 \newcite{lai:2014:semeval}, which contain things like Wordform features (e.g.,
@@ -770,7 +772,10 @@ features, by {\em binning} cosines into ranges (e.g. 0.0--0.1, \ldots, 0.9--1.0)
 to transform them into binary-valued features, after observing that
 mid-similar terms (those with a cosine of $\sim.80$, like {\em cat} and {\em
 animal}) were more likely entailments than those with high similarity
-(cosine of $\sim.95$, like {\em cat} and {\em dog}).
+(cosine of $\sim.95$, like {\em cat} and {\em dog}). We found this binning
+technique significantly improved the contribution of distributional similarity
+in feature-engineered lexical entailment classifiers.
+
 Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
 antecedent (LHS) and consequent (RHS) vectors. For both the distributional
