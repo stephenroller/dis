@@ -1360,14 +1360,15 @@ proposed primarily with integration into a final RTE subsystem in mind.
 
 \paragraph{H-features for non-Hypernymy Relations}
 
-In Section~\ref{sec:hfeatures}, we discussed how the H-Features model
-is able to exploit multiple H-feature detectors in order to improve the results
-and modeling power of a hypernymy detection system. Indeed the H-features
-model outperformed the Asym and Ksim models when evaluated on the same metric of
-F1-score in hypernymy prediction.
+In Section~\ref{sec:hfeatures}, we discussed how certain distributional models
+act as {\em H-feature} detectors, which identify contexts highly indicative
+of hypernymy, and discuss our model which exploits
+multiple H-feature detectors in order to improve the
+modeling power of a hypernymy detection system, and improves results over
+comparable models.
 
-However, there exist many relations {\em other} than hypernymy are useful to
-distinguish in textual entailment: for example, we saw in
+However, there are many relations {\em other} than hypernymy which are useful
+in textual entailment: for example, we mentioned in
 Section~\ref{sec:rtesubsystem} that cosine similarity is indicative of entailment
 at moderate levels, where it reflects general similarity, but {\em counter-indicative}
 of entailment at very high levels, where it is most indicative of co-hyponymy.
