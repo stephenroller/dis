@@ -392,22 +392,13 @@ pure n-gram patterns. By using syntactic parses, some longer distance patterns
 are more easily captured, like ``X such as Y and Z'', which can be easily
 transformed to ``X such as Z'' using a syntactic parse.
 
-More recently, groups have begun researching how lexical relationships could be
-mined automatically using distributional semantics. Since distributional
+More recently, groups have begun researching how lexical relationships may be
+mined automatically using VSMs. Since distributional
 semantics provides a way of estimating word meaning automatically from only
-large, unannotated corpora, it widely hoped that it can be used to identify
-word relationships \cite{baroni:2011:gems,baroni:2012:eacl}. Ideally, this could
-be used to augment existing lexical resources like WordNet, or for bootstrapping
-a WordNet-like resource in new languages, especially ones where large corpora
-exist, but not the resources to hire a team of lexicographers.
-
-One lasting hypothesis specifically about hypernymy detection has been the
-Distributional Inclusion Hypothesis (DIH) \cite{zhitomirsky-geffet:2005:acl},
-which states that the contexts in which a hypernym appears should be a superset
-of all its hyponyms, or subordinate words. Though this seems to be strictly
-false\footnote{Consider {\em ``\#The animal barked loudly at its bowl of animal
-food.''}}, a considerable amount of work has assumed it to be at least
-partially true.
+large, unannotated corpora, it hoped that it can be used to identify
+word relationships \cite{baroni:2011:gems,baroni:2012:eacl}. Ideally, this
+could be used to augment existing lexical resources like WordNet, bootstrapping
+a WordNet-like resource in new languages, and downstream tasks like RTE and QA.
 
 Early work in identify lexical entailments using distributional spaces was
 focused mostly on attempts to find unsupervised similarity measures to identify
@@ -418,7 +409,15 @@ distributional space, and the right similarity measure, perhaps hypernym pairs,
 or at least candidate pairs, could be readily identified using only word
 vectors. This view was further highlighted by the fact that the ubiquitious
 cosine similarity tends to highlight co-hyponym pairs more than other relations
-\cite{weeds:2004:coling,baroni:2011:gems}. Many of the proposed measures were
+\cite{weeds:2004:coling,baroni:2011:gems}.
+One lasting hypothesis about hypernymy detection has been the
+Distributional Inclusion Hypothesis (DIH) \cite{zhitomirsky-geffet:2005:acl},
+which states that the contexts in which a hypernym appears should be a superset
+of all its hyponyms, or subordinate words. Though this seems to be strictly
+false,\footnote{Consider {\em The \#animal barked loudly at its bowl of \#animal
+food.}} a considerable amount of work has assumed it to be at least
+partially true.
+Many of the proposed measures were
 based on the Distributional Inclusion Hypothesis in one form or another
 \cite{clarke:2009:gems}, or a hybrid of DIH and cosine similarity
 \cite{kotlerman:2010:nle,lenci:2012:starsem}.
