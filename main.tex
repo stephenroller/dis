@@ -1195,12 +1195,14 @@ a baseline in the literature.
 The in-context appropriateness attempts to directly model
 whether a proposed substitute fits in the given sentential context. That is, if
 one replaces the target with the substitute directly, would a reader still
-consider this word grammatical, regardless of whether the semantics stay fixed.
+consider this word {\em selectionally} agrees in the sentence. For example,
+the in-context measures will give a low score for {\em dog purrs}, since dogs
+usually do not purr.
 To this end, it assumes the sentence is parsed, so that we have the full set of
 syntactic neighbors of the target, $C$. Each of the context vectors
 corresponding to elements of $C$ are then evaluated for their fit with the
-proposed substitute. For a given target $t$, substitute $s$ and context $C$,
-the final addCos score is given as
+proposed substitute, as illustrated in Figure~\ref{fig:syn}. For a given target
+$t$, substitute $s$ and context $C$, the final addCos score is given as
 \begin{equation}
   \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
 \end{equation}
@@ -1217,7 +1219,7 @@ weights the out-of-context similarity with the in-context appropriateness:
   \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
 \end{equation}
 
-In our work, we proposea new measure, called Probability-in-Context (PIC),
+In our work, we propose a new measure, called Probability-in-Context (PIC),\footnote{PIC is not strictly a probability measure; the name is a backronym for the purpose of the paper's title.}
 which estimates the appropriateness of a substitue in a given context
 \cite{roller:2016:naacl}.  Similar to \balAddCos, the measure has two
 equally-weighted, independent components measuring the appropriateness of the
