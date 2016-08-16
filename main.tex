@@ -746,7 +746,12 @@ First Order Logical formulas \cite{bos:2008:step}. We then use theorem proving
 techniques in order to extract lexical rules which {\em must} be true in the dataset.
 For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
 eliminate {\em girl} and automatically conclude that {\em talks} lexically
-entails {\em speaks}. Lexical pairs which could {\em not} be automatically
+entails {\em speaks}. Crucially, by knowing entailment decisions about the
+entire sentences, and by performing unification over their logical structures,
+we can use theorem proving to automatically label certain {\em atomic rules} as
+true or false.
+
+Lexical pairs which could {\em not} be automatically
 inferred were manually annotated by two of the authors \cite{beltagy:2016:cl}.
 The result is a novel dataset of lexical entailment pairs, which we can use
 to train a lexical entailment classifier, which we call {\bf RRR} (Robinson
