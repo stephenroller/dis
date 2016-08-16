@@ -1175,7 +1175,7 @@ To this end, it assumes the sentence is parsed, so that we have the full set of
 syntactic neighbors of the target, $C$. Each of the context vectors
 corresponding to elements of $C$ are then evaluated for their fit with the
 proposed substitute, as illustrated in Figure~\ref{fig:syn}. For a given target
-$t$, substitute $s$ and context $C$, the final addCos score is given as
+$t$, substitute $s$ and context $C$, the final \addCos score is given as
 \begin{equation}
   \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
 \end{equation}
@@ -1235,9 +1235,10 @@ Coinco, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
 to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
-measures whether our best substitute is contained within the gold set of
-substitutes provided by annotators.\footnote{Excluding any words sharing
-the same lemma as the target}
+measures whether our best proposed substitute is contained within the set of gold
+substitutes provided by annotators. In all models, We exclude any words sharing
+the same lemma as the target, e.g. if the target is ``barking'' we do not
+propose ``bark.''
 
 \begin{table}
 \begin{center}
@@ -1256,7 +1257,7 @@ the same lemma as the target}
   %\hline\hline
   %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@1)}\\
   %\hline
-  Out-of-context Baseline                  &     11.7   &    10.9   &      9.8       \\
+  Cosine (OOC Baseline)                    &     11.7   &    10.9   &      9.8       \\
   addCos                                   &     12.9   &    10.5   &      7.9       \\
   balAddCos                                &     13.4   &    11.8   &      9.8       \\
   \hline
@@ -1285,9 +1286,9 @@ We observe that PIC outperforms all other models by a significant
 margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
 30\% improvement over balAddCos in SE07 and Coinco. The nPIC also improves
 substantially over the other baselines, indicating we gain benefit both from
-the new objective function, as well as the additional parameterization.  Since
-both measures have a clear improvement over the baselines, especially in the
-more difficult all-words task, we next strive to understand why.
+the new objective function and the additional parameterization.  We next
+strive to understand why both measures have a clear improvements over the
+baseline models.
 
 \begin{table*}[t]
   \begin{center}
@@ -1297,7 +1298,7 @@ more difficult all-words task, we next strive to understand why.
     \hline\hline
     \multicolumn{4}{|c|}{You can sort of challenge them well, did you}\\
     \multicolumn{4}{|c|}{{\bf really} know the time when you said yes?}\\
-    \hline
+    \hline\hline
     {    trully              } & {    proably             } & {    realy               } & {\bf actually            } \\
     {\bf actually            } & {    trully              } & {\bf truly               } & {\bf truly               } \\
     {    actaully            } & {    acutally            } & {\bf actually            } & {    already             } \\
@@ -1311,14 +1312,15 @@ more difficult all-words task, we next strive to understand why.
   \label{tab:cherry}
 \end{table*}
 
-To understand this, we characterize the performance in a cherry-picked example,
+We characterize the models using a cherry-picked example,
 given in Table~\ref{tab:cherry}.  In our example, we see that all four measures
 tend to pick excellent substitutes which {\em semantically} agree with the
-original target. However, the OOC and balAddCos models have a large number of
+original target. However, the cosine and {\em balAddCos} models have a large number of
 misspelled works in their list, while the nPIC and PIC measures contain
 generally correct spellings. This is because, somewhat surprisingly, the {\em
 length} of the distributional vectors correlates strongly with the {\em
-unigram} statistics of the word. Therefore, by using the unnormalized inner
+unigram} statistics of the word \cite{wilson:2015:arxiv}.
+Therefore, by using the unnormalized inner
 product, rather than cosine, our model naturally incorporates unigram priors,
 allowing it to downweight rare, similar words. Indeed, a quantitative analysis
 of the $W$ and $b$ parameters finds that they additionally exaggerate this
