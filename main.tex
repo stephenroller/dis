@@ -515,7 +515,7 @@ that is inherent asymmetric and interpretable under the DIH
 At its core, the model is inspired by the famous result of
 \newcite{mikolov:2013:iclr}, who observed that vector subtraction can be used
 to perform some kinds of analogical reasoning in some kinds of distributional
-spaces: e.g., ${\em king} - {\em man} + {\em woman} \approx {\em queen}$.
+spaces: e.g., {\em king}$ - ${\em man}$ + ${\em woman}$ \approx ${\em queen}.
 Interestingly, this vector subtraction approach reasonably models many
 grammatical relationships (singular/plural, verb conjugations) and some limited
 semantic relationships (gender, capital/country). Asym exploits this
@@ -524,9 +524,9 @@ behavior for the task of hypernymy and lexical relationship prediction.
 The Asym model is a simple model which uses the {\em vector difference} between
 the hypothesized hypernym-hyponym pair as input features to an off-the-shelf
 classifier. For example, given a (unit normalized) distributional vector for
-{\tt animal} and a vector for {\tt cat}, we use the vector
-${\tt animal} - {\tt cat}$ as a positive example, while the
-vectors for ${\tt cat} - {\tt animal}$ and ${\tt animal} - {\tt sofa}$ are
+{\em animal} and a vector for {\tt cat}, we use the vector
+{\em animal}$ - ${\em cat} as a positive example, while the
+vectors for {\em cat}$ - ${\em animal} and {\em animal}$ - ${\em sofa} are
 inputted as negative examples. Additionally, we also give the {\em element-wise
 squared difference vector} as features to the classifier. Formally, for a given
 (hypernym, hyponym) pair of words, $(H, w)$, we compute the final feature space
@@ -1227,7 +1227,7 @@ substitute for both the target and the context, each taking the form of a
 softmax:
 \begin{equation}
   \begin{aligned}
-  \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
+  \mbox{PIC}(s | t, C) &\propto P(s | t) \times P(s | C)\\
   P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\
   P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\},
   \end{aligned}
@@ -1235,16 +1235,16 @@ softmax:
 \end{equation}
 where the $Z_t$ and $Z_C$ are normalizing constants.
 Our model differs from {\em balAddCos} in one major way: we base our similarity
-estimates using the unnormalized inner product $s^\top t$ and $s^\top c$,
+estimates using the {\em unnormalized} inner product $s^\top t$ and $s^\top c$,
 rather than normalized cosine similarities. We also introduce two additional
 parameters, $W$ and $b$, which act as a simple linear transformation over the
 original context vectors. These parameters are learned from the original
-corpus, and serve only to tune how the distributional vectors act in this
+corpus, and serve only to tune how the fixed distributional vectors act in this
 alternative objective function.
 
-To identify the importance of this parameterization versus our similarity measure, we
-also introduce to a non-parameterized PIC ({\em nPIC}), which only uses a softmax over the
-dot product:
+To identify the contribution of this parameterization versus the softmax
+objective, we also introduce to a non-parameterized PIC ({\em nPIC}), which
+does not contain the extra parameters:
 \begin{equation}
   \begin{aligned}
   \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
@@ -1258,7 +1258,7 @@ We compare our model to that of an out-of-context baseline (cosine) and the
 outperformed other prior work at the time of its publication. We compare the
 models on three data sets: SE07, the original LexSub data set
 \cite{mccarthy:2007:semeval} which was explicitly developed to model polysemy;
-CoInCo, a recent LexSub data set which contains substitutes for all content
+Coinco, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
 to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
@@ -1270,7 +1270,7 @@ the same lemma as the target}
 \begin{center}
 \begin{tabular}{|l|r|r|r|}
   \hline
-  {\bf Measure} & {\bf SE07} & {\bf CoInCo} & {\bf TWSI2}\\
+  {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
   \hline\hline
   %\multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
   %\hline
@@ -1309,8 +1309,8 @@ in Mean Precision@1.}
 
 Table~\ref{tab:lexsub} contains results for all measures across all datasets.
 We observe that PIC outperforms all other models by a significant
-margin\footnote{Wilcoxon signed-rank test, $p < 0.01$}, including a relative
-30\% improvement over balAddCos in SE07 and CoInCo. The nPIC also improves
+margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
+30\% improvement over balAddCos in SE07 and Coinco. The nPIC also improves
 substantially over the other baselines, indicating we gain benefit both from
 the new objective function, as well as the additional parameterization.  Since
 both measures have a clear improvement over the baselines, especially in the
@@ -1350,7 +1350,6 @@ product, rather than cosine, our model naturally incorporates unigram priors,
 allowing it to downweight rare, similar words. Indeed, a quantitative analysis
 of the $W$ and $b$ parameters finds that they additionally exaggerate this
 unigram bias \cite{roller:2016:naacl}.
-
 Intutively, it seems natural that unigram biases should hold a strong role in
 Lexical Substitution, and that our model should be able to easily exploit
 this information.
@@ -1874,7 +1873,7 @@ words will stand in similar relations.
 The problem would also contribute even more greatly to the Lexical Substitution
 model we presented. For many examples in our dataset, our model does not have
 any context vector representation for one or more of the syntactic neighbors
-observed. In a preliminary examination, we found that some X\% of the CoInCo
+observed. In a preliminary examination, we found that some X\% of the Coinco
 dataset contain at least one context which not available in our vector space.
 The ability to {\em generate} representations for these contexts would be
 a simple way to provide the model with more disambiguating information, which
