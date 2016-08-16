@@ -971,9 +971,10 @@ similar to what was done in Section~\ref{sec:asym}. This is a radically
 different view of than the protypicality hypothesis of
 \newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
 interpretation is that the Concat and Diff models learn about what {\em
-contexts} are useful for identifying hypernymy.
+contexts} are useful for identifying hypernymy. This interpretation and
+experiment represents one of the core contributions of our work.
 
-We the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
+We train the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
 were also used in the Asym experiments, and are datasets covering hypernymy and
 nonhypernymy relations. Medical is a dataset of pairs of medical words and
 entailment labels, and was farmed using Information Extraction techniques
@@ -1016,7 +1017,8 @@ list for the next 30-50 items.
 Altogether, it is remarkable that the model identified these patterns using
 {\em only} distributional vectors and only the positive/negative example pairs.
 Since the model can be interpretted as a sort of {\em feature detector}, we
-call this model the H-feature Detector Model.  We now show how these H-features
+call this model the H-feature Detector Model.
+We now show how these H-features
 can be improved using an iterative procedure similar to Principal Component
 Analysis.
 
