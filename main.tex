@@ -970,9 +970,9 @@ the trained models by comparing their hyperplanes to the {\em context vectors},
 similar to what was done in Section~\ref{sec:asym}. This is a radically
 different view of than the protypicality hypothesis of
 \newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
-interpretation is that the Concat and Diff models learn about what {\em
-contexts} are useful for identifying hypernymy. This interpretation and
-experiment represents one of the core contributions of our work.
+interpretation is that the Concat and Diff models learn to act as {\em feature
+detectors}, which are useful in identifying hypernymy. This interpretation and
+following represents one of the core contributions of our work.
 
 We train the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
 were also used in the Asym experiments, and are datasets covering hypernymy and
@@ -1011,8 +1011,8 @@ recognizable and common pattern learned is the ``such as'' pattern, as in
 of hypernymy for over two decades. Other interesting patterns are the
 ``including'' pattern (``animals including cats'') and ``many'' pattern (``many
 animals''). Although we list only the five most similar context items for the
-data sets, we find similar Hearst Pattern type contexts continue dominate the
-list for the next 30-50 items.
+data sets, we find similar Hearst Pattern type contexts continue to dominate
+the list for the next 30-50 items.
 
 Altogether, it is remarkable that the model identified these patterns using
 {\em only} distributional vectors and only the positive/negative example pairs.
