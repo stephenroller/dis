@@ -115,9 +115,9 @@ though many other resources also exist and are used
 \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
 Unfortunately, resources as thorough as WordNet are extremely resource
 intensive to create, and as language is ever-changing, they are inevitably
-always incomplete. As such, dependence on manually constructed resources
+always incomplete. As such, any dependence on manually constructed resources
 represents one weak point in some Natural Language Understanding systems. Even
-modern Neural Network approaches, which attempt to learn entailments without
+recent neural network approaches, which attempt to learn entailments without
 explicitly depending on these resources, often cannot make entailment
 predictions about words which were not in the training data
 \cite{bowman:2015:emnlp,cheng:2016:arxiv}.
@@ -127,18 +127,18 @@ coverage. Distributional Semantics takes inspiration from the famous quote,
 ``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In
 Distributional Semantics, representations of word meaning are automatically
 induced by counting or modeling the {\em contexts} in which a word appears.
-Distributional Semantics is often sometimes called Vector Space Models (VSM) of
+Distributional Semantics is often called Vector Space Models (VSMs) of
 language, as words are represented as vectors a high-dimensional vector space.
-Words with similar semantics will have similar vectors in this induced
-geometric space. Since VSMs do not require annotated corpora, they are used and
+Words with similar semantics will have similar vectors in this
+space. Since VSMs do not require annotated corpora, they are used and
 studied as an alternative or predictor of particular lexical resources
-\cite{snow:2004:nips,baroni:2011:gems}.
+\cite{baroni:2012:eacl,erk:2008:emnlp,turney:2010:jair}.
 
-In our work, we approach the question as to whether Distributional Semantics
+In our work, we consider how VSMs
 can be leveraged to predict some of the lexical inferences necessary in tasks
 like RTE. Namely, we present techniques and models for predicting specific
 lexical relationships, entailments, and subsitutions using Distributional
-Semantics. In Lexical Relationship detection and Entailment detection, we must
+Semantics. In Lexical Relationship Detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
 relationships) or meronymy (has-a relationships). We present three original
 models which can learn to predict hypernymy or general entailment relations
