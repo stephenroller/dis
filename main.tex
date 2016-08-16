@@ -234,9 +234,11 @@ words which are constructed by counting or modeling the contexts in which a
 particular word appears. According to the Distributional Hypothesis then, words
 with similar {\em vectors} can be assumed to have similar {\em meanings}
 \cite{turney:2010:jair}. For this reason, they are often referred to as
-Vector Space Models (VSMs) of language; they have also become immensely
-popular in the neural network literature with the name {\em word embeddings}.
-
+Vector Space Models (VSMs) of language. Variations on this idea have also
+become immensely popular in the neural networks community, with algorithms
+like Skip-gram Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
+\cite{pennington:2014:emnlp}, and have often replaced traditional count-based
+VSMs in the NLP community \cite{baroni:2014:acl}.
 
 \begin{figure}
 \centering
@@ -346,18 +348,19 @@ lower-rank matrices,
 \begin{equation*}
   M = VC^{\top}
 \end{equation*}
-where $V$ is some lower dimension representation of word vectors, and $C$
-is the corresponding lower dimension representation of the context items. These
+where $V$ is some lower dimension representation of word vectors, and $C$ is
+the corresponding lower dimension representation of the context items. These
 projections of words and contexts into the same latent space goes to the
 earliest days of distributional semantics \cite{deerwester:1990:jsis}, and is
 critical to many of the contributions of our completed work.  Interestingly,
-low dimensional VSMs have also become remarkably popular in the neural network
-literature, and the most popular algorithms for computing word embeddings, like
-Skip-Gram Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
-\cite{pennington:2014:emnlp} can be viewed explicitly as form of dimensionality
-reduction \cite{levy:2014:nips,levy:2015:tacl}.
+the most popular algorithms for computing word embeddings, like Skip-Gram
+Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
+\cite{pennington:2014:emnlp} can be viewed as form of dimensionality reduction
+\cite{levy:2014:nips,levy:2015:tacl}.
 
 \subsection{Lexical Entailment and Relationship Detection}
+
+REWRITE
 
 It can be difficult to give an exact definition of Lexical Entailment, but in
 this document we define it as any lexical relationship where a typical,
@@ -371,12 +374,10 @@ category, or generalize to other items. Regardless, as shown in our example
 sentence in the Introduction, understanding and predicting these relationships
 is crucial to performing certain inferences in RTE: without some basic lexical
 relationships, even the easiest textual entailment pairs would be out of
-reach.
-
-There has been a great deal of research around predicting lexical relationships
-automatically from text; we cannot possibly enumerate all the work on this
-problem done in all of NLP, but we aim to cover some influential approaches,
-and emphasize attempts to do this with distributional semantics.
+reach. There has been a great deal of research around predicting lexical
+relationships automatically from text; we cannot possibly enumerate all the
+work on this problem done in all of NLP, but we aim to cover some influential
+approaches, and emphasize attempts to do this with distributional semantics.
 
 One important, early work in this task was that of Hearst patterns
 \cite{hearst:1992:coling}, which are specific textual patterns highly
@@ -384,11 +385,12 @@ indicative of particular relationships. Common Hearst patterns include
 phrases like ``X such as Y,'' ``X including Y,'' which are both highly
 indicative of hypernymy; and possessives, like ``X's Y'', can be indicative
 of meronomy. In fact, the previous sentence contains several Hearst patterns
-{\em about} Hearst patterns. Later, the Hearst pattern method by
-\newcite{snow:2004:nips} to include a variety of syntactic patterns rather than
-pure textual patterns. By using syntactic parses, some longer distance patterns
-are more easily captured, like ``X such as Y and Z'', which can be more
-trivially transformed to ``X such as Z'' in a syntactic parse.
+{\em about} Hearst patterns. Later,
+\newcite{snow:2004:nips} extended this Hearst pattern approach
+to use syntactic patterns rather than
+pure n-gram patterns. By using syntactic parses, some longer distance patterns
+are more easily captured, like ``X such as Y and Z'', which can be easily
+transformed to ``X such as Z'' using a syntactic parse.
 
 More recently, groups have begun researching how lexical relationships could be
 mined automatically using distributional semantics. Since distributional
