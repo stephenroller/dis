@@ -456,18 +456,13 @@ while preserving the meaning of the entire sentence
 
 Distributional Semantics offers a tempting solution to this problem, given its
 ability to measure the graded levels of similarity between words
-\cite{erk:2008:emnlp}. However, the obvious issue with distributional
-semantics is that word meaning is typically estimated as a single, fixed point
-in space.  Therefore, distributional semantics should have issues with
-conflating word senses. Although there exist some methods for estimating word
-meaning as multiple points \cite{reisinger:2010:naacl,neelakantan:2014:emnlp}
-or regions of space \cite{vilnis:2015:iclr}, the vast majority of attempts on
-LexSub still rely on single-point estimates
+\cite{erk:2008:emnlp}. Interestingly, although there have been both supervised
+\cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised attempts on
 \cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
-Interestingly, although there have been both supervised
-\cite{biemann:2012:lrec,needcite} and unsupervised (c.f. above) attempts on
-this task using distributional semantics, currently unsupervised measures hold
-a narrow lead \cite{melamud:2015:naacl,melamud:2016:conll}.
+this task using distributional semantics, presently unsupervised measures hold
+a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
+
+MORE ON THIS NEXT PARAGRAPH
 
 At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we believe
@@ -478,26 +473,26 @@ the sentence, then it follows that the target {\em entails} the substitute.
 Indeed, in one Lexical Substitution data set, explicit WordNet synonymy only
 captured about 9.4\% of all the substitutes in the data
 \cite{kremer:2014:eacl}. For this reason, we believe that Textual Entailment
-can benefit more from modeling Lexical Substitution as an entire task, rather
-limiting this phenomenon to pure synonymy.
+can benefit more from modeling Lexical Substitution as a complete task, rather
+treating this phenomenon as pure synonymy.
 
 \section{Completed work}
 
-In this section, we discuss our recent publications relativent to this
+In this section, we discuss our publications related to this
 proposal, and emphasize our major contributions to the field. In short, we
 discuss two models for hypernymy detection, and compare and contrast them other
 work in the literature. We also discuss how one of these models can contribute
 as one component in an end-to-end RTE system. Finally, we discuss our model for
-the Lexical Substitution task, and explain why it improves upon prior work.
+the Lexical Substitution task, and why it improves upon prior work.
 
 \subsection{Asym Model for Lexical Entailment (Roller et al., 2014)}
 \label{sec:asym}
 
 Most baseline similarity measures in distributional semantics, like cosine,
-have the unfortunate property that they're symmetric: $\text{cosine}(a, b) =
-\text{cosine}(b, a)$. While this necessary to obey the Triangle Inequality, it
+have the unfortunate property that they are symmetric: $\text{cosine}(a, b) =
+\text{cosine}(b, a)$. While this often desirable, it
 is a fatal flaw in any application involving lexical entailment: although {\em
-girl} implies {\em child}, but the opposite does not hold. As such, trying to
+girl} implies {\em child}, but the opposite does not hold. As such, attempts to
 predict lexical entailment based solely using symmetric measures will always
 fail.
 
@@ -505,7 +500,9 @@ This has been recognized widely in the
 literature for some time, and numerous asymmetric, unsupervised similarity measures have been
 proposed
 \cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
-mostly inspired by the Distributional Inclusion Hypothesis. However, their
+mostly inspired by the Distributional Inclusion Hypothesis (DIH), which
+states that the contexts of a hypernym should be a superset of its hyponyms'.
+. However, their
 performance tend to be lackluster \cite{clarke:2009:gems} or brittle
 \cite{kotlerman:2010:nle}. This lead to the question: are the measures just
 overly sensitive to noise in distributional vectors, or is the Distributional
