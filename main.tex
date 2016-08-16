@@ -1432,9 +1432,9 @@ explore the best form of combination with both kept in mind.
 
 In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is strongly
 related to the tasks of lexical and textual entailment, partially standing
-as a form of context-specific synonym detection. Unfortunately, we have
-yet to provide any results indicating that Lexical Substitution may actually
-contribute to the complete RTE system.
+as a kind of in-context entailment. We have yet to provide any results
+indicating that Lexical Substitution does actually contribute in an
+RTE system.
 
 We propose that the Lexical Substitution model described in
 Section~\ref{sec:pic} be used to provide additional information to
@@ -1450,14 +1450,12 @@ Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
 significant issue in the SICK dataset, we believe the additional information
 about context will bolster predictions in borderline cases.
 
-It may also be necessary to use a similar trick to the cosine binning technique
-described in Section~\ref{sec:rtesubsystem}: it could be that different levels
-of contextual similarity give different indications as to entailment, especially
-given the close relationship between our Lexical Substitution model and
-cosine similarity. Variations on this trick may also be necessary to test:
-since our Lexical Substitution model gives a score over the entire vocabulary,
-the binning may need to be logarithmic, or measured as a percent of vocabulary
-which is a better substitute than the queried consequent.
+It may be necessary to find additional tricks in order to best integrate
+this information into the lexical entailment classifier; for example, we
+found the cosine binning trick described in Section~\ref{sec:rtesubsystem}
+was necessary for getting distributional similarity to contribute. Similar
+tricks, like binning or separating out the components of PIC, are likely
+necessary in order to see positive contribution.
 
 The second possibility for how Lexical Substitution could contribute is in
 the {\em alignment} preprocessing procedure: while we currently only choose
