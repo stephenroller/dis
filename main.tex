@@ -869,42 +869,6 @@ classification model which combines and extends the strengths of all these
 models using an iterative procedure similar to Principal Component Analysis
 (PCA).
 
-%This seems somewhat at
-%odds in our comparisons between Aym and the model of
-%\newcite{baroni:2011:gems}, which uses the concatenation of these LHS and RHS
-%features as well. In this section, we address this inconsistency, and propose a
-%new H-feature classification model for hypernymy detection.
-%
-%Two important hyperparameters are important to resolving this paradox: the
-%first is which distributional space is used. In unpublished experiments, we
-%find that narrower contexts windows perform better than wide windows, and that
-%syntactic spaces perform best, regardless of model or dataset.
-%Figure~\ref{fig:hyperparms}a shows the performance of one model across four
-%datasets: BLESS, LEDS, and two additional datasets which cover general lexical
-%entailments in a {\bf Medical} domain \cite{levy:2014:conll}, and {\bf TM14},
-%a set of various non-hypernymy entailing relations (like cause-effect)
-%\cite{turney:2015:nle}.
-%
-%The other important hyperparameter is the {\em type} of classification model
-%used. Figure~\ref{fig:hyperparms}b shows the performance comparing the use of
-%a Logistic Regression classifier with a Linear SVM, Polynomial SVM, and an RBF
-%SVM. In general, we find that the linear models vastly outperform the
-%nonlinear models, though RBFs can be improved some in hyperparameter
-%optimization. This helps explain why the model of \newcite{baroni:2011:gems}
-%does poorly in our Asym experiments, since it relies on a polynomial SVM.
-%
-%In the remainder of this section, we will discuss an issue raised in the
-%literature about why classifiers which learn using the Concatenation of the
-%LHS and RHS vectors, and briefly show why Asym does not have this fault.
-%However, we show
-%
-%\begin{figure} \centering \includegraphics[width=0.45\textwidth]{plots/window}
-%\includegraphics[width=0.45\textwidth]{plots/kernel} \caption{(a) Performance
-%over different BoW context window sizes. 0 indicates a syntactic space.  (b)
-%Comparing Logistic Regression with Linear, Polynomial, and RBF SVMs.}
-%\label{fig:hyperparms} \end{figure}
-
-
 \subsubsection{Concerning Lexical Memorization}
 \label{sec:lexmem}
 
@@ -1172,11 +1136,14 @@ while significantly outperforming it on BLESS and Medical data sets.
 \end{figure}
 
 In this last section of our work, we switch over to our efforts on the Lexical
-Substitution (LexSub) task. As described in Section~\ref{sec:lexsub}, we view
-LexSub as as capturing a wide degree of lexical entailments {\em in context},
-including synonymy of polysemous words.
+Substitution (LexSub) task. In the Lexical Substitution task, we are given
+a sentence and target word, and must choose possible substitutes from the
+entire vocabulary which preserve the meaning of the sentence.
+As described in Section~\ref{sec:lexsub}, we view
+LexSub as as proxy which captures a wide degree of lexical entailments {\em in
+context}, including synonymy issues of synonymy and polysemy. 
 
-We propose a new measure, called Probability-in-Context (PIC), which extends
+We propose a new measure, which extends
 a previously successful, simple model to estimate the appropriateness of a
 lexical substitute. As a introduction point for our measure, we review the work
 of \newcite{melamud:2015:vsm}, which introduced several unsupervised measures
