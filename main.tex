@@ -622,7 +622,8 @@ comparisons, indicating it is likely the task depends more heavily {\em
 functional} properties of words than {\em topical} properties of words.
 
 Finally, we see that the Asym model outperforms the model proposed by
-\newcite{baroni:2012:eacl} in all four comparisons.
+\newcite{baroni:2012:eacl} in all four comparisons, indicating our architecture
+has better lexical generalization.
 Interestingly, we found that dropping the square-difference terms
 severely hurt the performance of our model, emphasizing these features immense
 importance. We will discuss more of why these features are so important in
@@ -708,17 +709,17 @@ to a variety of lexical entailment classifiers which use a variety of
 hand-engineered features and word lexicons.  These predictions made by lexical
 entailment classifiers are used as to generate {\em logical rules}; an inference
 engine based on Markov Logic Networks (MLNs) is then used to form predictions
-about complete {\em sentential} entailment.
+about complete {\em sentential} entailment \cite{beltagy:2016:cl}.
 
-To this end, we employ the Sentences Involving Compositional Knowledge ({\bf
-SICK}) dataset, which contains nearly 10k sentence pairs, evenly split between
+To this end, we employ the Sentences Involving Compositional Knowledge (SICK)
+dataset, which contains nearly 10k sentence pairs, evenly split between
 training and test sets \cite{marelli:2014:semeval}. Sentence pairs were
 extracted randomly image caption datasets, and then simplified and extended to
 cover semantic issues like negation and quantifiers, and then manually
 annotated as {\em entailing} (the antecedent implies the consequent), {\em
 contradicting} (the antecedent implies the opposite of the consequent), or
-neutral (neither of the above). Two examples from the dataset are shown
-in Table~\ref{tab:sickexample}.
+neutral (neither of the above). Two examples from the dataset are shown in
+Table~\ref{tab:sickexample}.
 
 \begin{table}
   \centering
@@ -738,10 +739,10 @@ in Table~\ref{tab:sickexample}.
 \end{table}
 
 To train the lexical entailment classifier, we extract {\em lexical rules} from
-the SICK dataset using a variation on Robinson Resolution \cite{needcite}. The
+the SICK dataset using a variation on Robinson Resolution \cite{robinson:1965:jacm}. The
 full details are outside the scope of this document, but briefly, we employ
 an off-the-shelf semantic parser called Boxer, which translates sentences into
-First Order Logical formulas \cite{needcite}. We then use theorem proving
+First Order Logical formulas \cite{bos:2008:step}. We then use theorem proving
 techniques in order to extract lexical rules which {\em must} be true in the dataset.
 For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
 eliminate {\em girl} and automatically conclude that {\em talks} lexically
