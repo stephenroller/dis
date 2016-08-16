@@ -349,11 +349,13 @@ lower-rank matrices,
 where $V$ is some lower dimension representation of word vectors, and $C$
 is the corresponding lower dimension representation of the context items. These
 projections of words and contexts into the same latent space goes to the
-earliest days of distributional semantics \cite{deerwester:1990:jsis}, and
-is critical to many of the contributions of our completed work.
-Interestingly, the recent, extremely popular Skip-Gram Negative Sampling (SGNS)
-algorithm \cite{mikolov:2013:iclr} can also be viewed as a form of
-dimensionality reduction \cite{levy:2014:nips,levy:2015:tacl}.
+earliest days of distributional semantics \cite{deerwester:1990:jsis}, and is
+critical to many of the contributions of our completed work.  Interestingly,
+low dimensional VSMs have also become remarkably popular in the neural network
+literature, and the most popular algorithms for computing word embeddings, like
+Skip-Gram Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
+\cite{pennington:2014:emnlp} can be viewed explicitly as form of dimensionality
+reduction \cite{levy:2014:nips,levy:2015:tacl}.
 
 \subsection{Lexical Entailment and Relationship Detection}
 
