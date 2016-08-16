@@ -420,13 +420,13 @@ proposed measures were based on the Distributional Inclusion Hypothesis in one
 form or another \cite{clarke:2009:gems}, or a hybrid of DIH and cosine
 similarity \cite{kotlerman:2010:nle,lenci:2012:starsem}.
 
-Increasingly, as it became obvious that unsupervised measures did not work as well
-as hoped, the community began working on entailment detection as
-a supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary
-baseline of a novel dataset, training a simple baseline classifier to predict
-whether word pairs were either hypernyms or nonhypernyms. Although they
-reported scores in the high 90s, others later realized this was due to
-issues of {\em lexical memorization}, or a special kind of overfitting
+As it became obvious that unsupervised measures did not work as
+well as hoped, the community began working on entailment detection as a
+supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary baseline
+of a novel dataset, training a simple baseline classifier to predict whether
+word pairs were either hypernyms or nonhypernyms. Although they reported scores
+in the high 90s, others later realized this was due to issues of {\em lexical
+memorization}, or a special kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
 recent works have emphasized their performance when {\em individual words are
 held out entirely}, so that the same word can never appear in both training and
@@ -438,26 +438,25 @@ Section~\ref{sec:lexmem}.
 \subsection{Lexical Substitution}
 \label{sec:lexsub}
 
-Until now, we have assumed that words are mononymous, or that they have only
-one meaning. However, words like ``bright'' have multiple meanings, which
-change depending on context, as in ``bright girl'' and ``bright coat.'' This is
-called {\em polysemy}, and is a major issue in Natural Language Understanding,
-since it adds yet another layer of possible in sentence meaning.
+In our discussion of lexical relationships, we assumed that words are
+mononymous, or that they have only one meaning. However, words like ``bright''
+have multiple meanings, which change depending on context, as in ``bright
+girl'' and ``bright coat.'' This is called {\em polysemy}, and is a major issue
+in Natural Language Understanding, since it adds another layer of possible in
+meaning.
 
 One approach to dealing with this issue of polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
-happens to a word based on its used in a sentential context. Since c. 2007,
-one popular way to measure this has been the Lexical Substitution task.  In the
-Lexical Substitution task, the program is provided with a sentential
-context,\footnote{The CoInCo dataset also provides the sentences before and
-after the target word, but these are usually ignored in the literature.} and
-must provide {\em substitutes} which can replace the given target word, while
-preserving the meaning of the entire sentence
+happens to a word based on its used in a sentential context. Since 2007, one
+popular way to measure this has been the Lexical Substitution task.  In the
+Lexical Substitution task, the program is provided with a sentential context,
+and must provide {\em substitutes} which can replace the given target word,
+while preserving the meaning of the entire sentence
 \cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 
 Distributional Semantics offers a tempting solution to this problem, given its
 ability to measure the graded levels of similarity between words
-\cite{dinu:2010:emnlp}. However, the obvious issue with distributional
+\cite{erk:2008:emnlp}. However, the obvious issue with distributional
 semantics is that word meaning is typically estimated as a single, fixed point
 in space.  Therefore, distributional semantics should have issues with
 conflating word senses. Although there exist some methods for estimating word
