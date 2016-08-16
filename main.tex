@@ -168,14 +168,13 @@ information.
 \label{sec:background}
 
 In this section, we review some of the background critical to this proposal.
-We begin with a discussion of Distributional Semantics, emphasizing how it is
-typically computed in modern applications. Next, we briefly discuss the Recognizing
-Textual Entailment (RTE) task, and discuss how lexical semantics plays a key
-role in this task. Finally, we dicuss the Lexical Entailment (LexEnt) and
-Lexical Substitution (LexSub) tasks, which we view as strong proxies for the
-kinds of lexical semantics necessary for RTE. We do not argue that
-these tasks are completely sufficient, but one goal of our thesis to show that
-developments in these tasks improves practical RTE.
+We begin with a discussion of Recognizing Textual Entailment and the core
+motivation of our thesis.  We then overview Distributional Semantics, outlining
+its purpose and one common implementation of VSMs. Finally, we dicuss the
+Lexical Entailment (LexEnt) and Lexical Substitution (LexSub) tasks, which we
+view as strong proxies for the kinds of lexical semantics necessary for RTE. We
+do not argue that these tasks are completely sufficient, but one goal of our
+thesis to show that developments in these tasks improves practical RTE.
 
 \subsection{Recognizing Textual Entailment}
 \label{sec:textent}
@@ -217,9 +216,8 @@ and, since language is ever changing, inherently incomplete.
 
 Naturally, this raises the question of whether it is possible to distill
 information about lexical items in a more automatic fashion. We turn now to
-Distributional Semantics and Vector Space Models, which provide an
-automatic induction of word meaning using only large, readily available
-corpora.
+Distributional Semantics and Vector Space Models, which provide an automatic
+induction of word meaning using only large, unannotated corpora.
 
 \subsection{Distributional Semantics}
 \label{sec:dist}
@@ -228,14 +226,15 @@ Distributional Semantics is a powerful tool for automatically inducing semantic
 representations for lexical items \cite{turney:2010:jair,erk:2012:llc}.  The
 core notion is that of the {\em Distributional Hypothesis}, that if two words
 appear in similar {\em contexts}, they can be assumed to have similar meaning.
-This idea has a long history in the semantics and philosophical literature that
+This idea has a long history in the liniguistic and philosophical literature that
 can be traced back over 60 years
 \cite{wittgenstein:1953:pi,harris:1954:word,firth:1957:la}. In its modern form,
-Distributional Semantics involves finding {\em vector space} representations of
+Distributional Semantics involves finding {\em vector space representations} of
 words which are constructed by counting or modeling the contexts in which a
 particular word appears. According to the Distributional Hypothesis then, words
-with similar vectors can be assumed to have similar meanings
-\cite{turney:2010:jair}.
+with similar {\em vectors} can be assumed to have similar {\em meanings}
+\cite{turney:2010:jair}. For this reason, they are often referred to as
+Vector Space Models (VSMs) of language.
 
 \begin{figure}
 \centering
@@ -263,8 +262,8 @@ of word vectors.}
 
 In its simplest form, vectors are induced by defining a vector space where
 each dimension in the space corresponds to a particular context word. A large,
-unannotated corpus of text is then processed, finding instances of a given word,
-like {\em dog}, and incrementing a count for each of the word's {\em
+unannotated corpus of text is then processed, finding instances of atarget word,
+like {\em dog}, and incrementing a count for each of the target's {\em
 co-occurrences}, or words appearing to the left or right of the target word
 {\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
 statistical patterns begin to form. For example, the word {\em furry} is likely
