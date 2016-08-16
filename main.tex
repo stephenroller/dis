@@ -414,24 +414,24 @@ One lasting hypothesis about hypernymy detection has been the
 Distributional Inclusion Hypothesis (DIH) \cite{zhitomirsky-geffet:2005:acl},
 which states that the contexts in which a hypernym appears should be a superset
 of all its hyponyms, or subordinate words. Though this seems to be strictly
-false,\footnote{Consider {\em The \#animal barked loudly at its bowl of \#animal
-food.}} a considerable amount of work has assumed it to be at least
+false,\footnote{Consider ``\#The {\em animal} barked loudly at its bowl of {\em animal}
+food.''} a considerable amount of work has assumed it to be at least
 partially true.
 Many of the proposed measures were
 based on the Distributional Inclusion Hypothesis in one form or another
 \cite{clarke:2009:gems}, or a hybrid of DIH and cosine similarity
 \cite{kotlerman:2010:nle,lenci:2012:starsem}.
 
-Increasingly, it became obvious that unsupervised measures did not work as well
-as the community hoped, the community began working on entailment detection as
+Increasingly, as it became obvious that unsupervised measures did not work as well
+as hoped, the community began working on entailment detection as
 a supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary
 baseline of a novel dataset, training a simple baseline classifier to predict
 whether word pairs were either hypernyms or nonhypernyms. Although they
-reported accuracies in the high 90s, others later realized this was due to
+reported scores in the high 90s, others later realized this was due to
 issues of {\em lexical memorization}, or a special kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
 recent works have emphasized their performance when {\em individual words are
-held out entire}, so that the same word can never appear in both training and
+held out entirely}, so that the same word can never appear in both training and
 testing sets
 \cite{roller:2014:coling,kruszewski:2015:tacl,levy:2015:naacl,shwartz:2016:acl,roller:2016:naacl}.
 We discuss more about this issue of Lexical Memorization in
@@ -444,7 +444,7 @@ Until now, we have assumed that words are mononymous, or that they have only
 one meaning. However, words like ``bright'' have multiple meanings, which
 change depending on context, as in ``bright girl'' and ``bright coat.'' This is
 called {\em polysemy}, and is a major issue in Natural Language Understanding,
-since it adds yet another layer of possible ambiguity in sentence meaning.
+since it adds yet another layer of possible in sentence meaning.
 
 One approach to dealing with this issue of polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
