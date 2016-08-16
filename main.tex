@@ -309,8 +309,8 @@ Another important aspect of Distributional Semantics is how context is defined.
 In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of co-occurrence or even
-entire documents results in emphasizing more topical similarity, e.g. doctor
-and hospital, while smaller windows emphasize more functional similarity, e.g.
+entire documents results in emphasizing more {\em topical} similarity, e.g. doctor
+and hospital, while smaller windows emphasize more {\em functional} similarity, e.g.
 doctor and surgeon \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
 Context can be also defined as {\em syntactic neighbors} extracted from a
@@ -581,8 +581,9 @@ for 200 unambiguous, concrete nouns from 17 broad categories. Each noun is
 annotated with its co-hyponyms, meronyms, hypernym and some random words.
 Since there were four relations, we trained four one-vs-all classifiers, and
 predicted the relation with the highest score; in this way, the model
-can learns to detect three different lexical relations, though this
-was not our primary research interest at the time.
+actually learns to detect three different lexical relations, though this
+was not our primary research interest at the time. We will reexamine this in
+our proposed work.
 
 We compare our model with two baselines: the first is a random baseline,
 which just guesses randomly for the balanced LEDS dataset, and always
@@ -617,25 +618,24 @@ First we notice that both models strongly outperform the random baselines,
 indicating there is some successful learning in the models. We also see that
 the Window 2 space performs better than the Sentence space in all four
 comparisons, indicating it is likely the task depends more heavily {\em
-functional} properties of words than {\em topical} properties of words. We will
-see further evidence of this in Section~\ref{sec:hfeatures}.
+functional} properties of words than {\em topical} properties of words.
 
 Finally, we see that the Asym model outperforms the model proposed by
-\newcite{baroni:2011:gems} in all four comparisons, indicating something about
-our feature architecture is superior to mere concatenation. Interestingly,
-in unreported experiments, we found that dropping the square-difference terms
-severely hurt the performance of our model, emphasizing these features
-immense importance. We will discuss more of why these features are so
-important in Section~\ref{sec:lexmem}. Incidentally, at the same time that
+\newcite{baroni:2011:gems} in all four comparisons, indicating
+our feature architecture is superior to mere concatenation.
+Interestingly, we found that dropping the square-difference terms
+severely hurt the performance of our model, emphasizing these features immense
+importance. We will discuss more of why these features are so important in
+Section~\ref{sec:lexmem}. Incidentally, at the same time that
 \newcite{roller:2014:coling} was published, \newcite{weeds:2014:coling} and
-\newcite{fu:2014:acl} also proposed supervised hypernymy models based on
-{\em vector difference}, but neither of these employ the square-difference
-terms.
+\newcite{fu:2014:acl} also proposed supervised hypernymy models based on vector
+difference, but neither of these employ the critical square-difference terms,
+or adequately address the issue of lexical memorization.
 
 We also test our interpretation of Asym as measuring a form of {\em Selective}
 Distributional Inclusion. After training the model's parameters on the BLESS
 dataset, we compare the model's learned hyperplane to the {\em context
-vectors} obtained in the Singular Value Decomposition. We then select the 500
+vectors} obtained in the Singular Value Decomposition. We select the 500
 features most similar to the model's hyperplane, and then extract a
 distributional space limited to only these context items. If our Selective
 Distributional Inclusion Hypothesis is true, we would expect these 500
