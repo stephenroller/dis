@@ -640,14 +640,15 @@ features most similar to the model's hyperplane, and then extract a
 distributional space limited to only these context items. If our Selective
 Distributional Inclusion Hypothesis is true, we would expect these 500
 dimensions to highly compliment existing similarity measures based on the
-Distributional Inclusion Hypothesis. A careful reader should note this is
-necessary, but {\em not} sufficient to show the model obeys the SDIH, as we are
-effectively comparing unsupervised models with supervised ones.
+Distributional Inclusion Hypothesis. We note that we are directly comparing
+unsupervised measures with a supervised model, and so this should only be
+understood as an experiment about the {\em interpretation} of our model, not
+its performance.
 
 We measure every word pair's similarity using three similarity measures:
-cosine, Clarke, and invCL. Cosine similarity acts as our control, and
-should not change substantially between the
-original and selective distributional spaces, while the others, which are
+cosine, Clarke, and invCL. Cosine similarity acts as our scientific control, and
+should {\em not} change substantially between the
+original and selective spaces, while the others, which are
 based on Distributional Inclusion, should. The second similarity measure,
 {\em Clarke}, measures roughly what percentage of the hyponyms' mass is contained
 within the hypernym \cite{clarke:2009:gems}:
