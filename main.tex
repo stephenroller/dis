@@ -1375,9 +1375,11 @@ Indeed, the results shown in Table~\ref{tab:asymresults} show
 the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
 prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
 experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
-binary hypernymy-or-not classification task. We propose the H-features
-model of Section~\ref{sec:hfeatures} be extended and evaluated on its
-performance in other non-hypernymy relationships.
+binary hypernymy-or-not classification task. We propose to extend and evaluate
+the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
+relations. We believe the model's performance can be improved by
+better modeling the negative cases, and that the model will additionally
+discover H-features indicative of other relations.
 
 There are several ways that the model could be extended. The one we believe
 will be most successful is one that trains several binary H-features models:
@@ -1407,10 +1409,8 @@ and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
 prediction model can provide strong improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
-Yet, as we also saw in Section~\ref{sec:hfeatures}, the H-features
-model allows for greater modeling power and significant improvements on multiple
-lexical entailment systems. Yet we do not yet know how much the H-features
-model is able to contribute as one part of the larger RTE pipeline.
+However, we have not yet considered whether our new H-features model also
+contributes to an end-to-end RTE pipeline.
 
 We suspect, given its substantial improvements over Asym in lexical datasets,
 that it will also be able to be able to improve the full system. However, it
