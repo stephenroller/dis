@@ -969,15 +969,13 @@ In our qualitative experiment, we train a linear Concat classifier using
 syntactic distributional vectors on four separate data sets. We then analyze
 the trained models by comparing their hyperplanes to the {\em context vectors}.
 That is, we explicitly compare the $\hat H$ vector to the syntactic context
-matrix $C$ in Equation~\ref{eqn:svd}.
-
-similar to what was done in Section~\ref{sec:asym}. This is a radically
+matrix $C$ in Equation~\ref{eqn:svd}. This is a radically
 different view of than the protypicality hypothesis of
 \newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
 interpretation is that the Concat and Diff models learn to act as {\em feature
 detectors}, which identifies features (i.e. syntactic contexts), which are
-useful in identifying hypernymy.  This interpretation and following experiment
-is one of the core contributions of our work.
+useful in identifying hypernymy.  This interpretation and corresponding
+experiment is a one of our core contributions to the literature.
 
 We train the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
 were also used in the Asym experiments, and are datasets covering hypernymy and
@@ -1098,10 +1096,10 @@ $\hat p_i$ applied to $H_i$; (3) the H-feature detector $\hat p_i$ applied to $w
 (4) the difference of 2 and 3.
 \begin{align*}
   & F_i(\langle H_i, w_i\rangle, \hat p_i)\\
-  & \qquad = \langle H_i^{\top}w~,~H_i^\top\hat p_i~,~w_i^\top\hat p_i~,~H_i^\top\hat p_i - w_i^\top\hat p_i\rangle
+  & \qquad = \langle H_i^{\top}w~~;~~H_i^\top\hat p_i~~;~~w_i^\top\hat p_i~~;~~H_i^\top\hat p_i - w_i^\top\hat p_i\rangle
 \end{align*}
 These four ``meta''-features capture all the benefits of the H-feature
-detector (slots 2 and 3), while still addressing Concat's issues with
+detector (slots 2 and 3), while addressing Concat's issues with
 similarity arguments (slot 1) {\em and} distributional inclusion (slot 4).
 
 The union of all the feature vectors $F_1, \ldots, F_n$ from repeated iteration form a
@@ -1270,7 +1268,7 @@ words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
 to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
 measures whether our best substitute is contained within the gold set of
-substitutes provided by human annotators.\footnote{Excluding any words sharing
+substitutes provided by annotators.\footnote{Excluding any words sharing
 the same lemma as the target}
 
 \begin{table}
