@@ -494,8 +494,8 @@ have the unfortunate property that they are symmetric: $\text{cosine}(a, b) =
 \text{cosine}(b, a)$. While this often desirable, it
 is a fatal flaw in any application involving lexical entailment: although {\em
 girl} implies {\em child}, but the opposite does not hold. As such, attempts to
-predict lexical entailment based solely using symmetric measures will always
-fail.
+predict lexical entailment using solely symmetric measures will always fall
+short.
 
 This has been recognized widely in the
 literature for some time, and numerous asymmetric, unsupervised similarity measures have been
@@ -586,9 +586,9 @@ actually learns to detect three different lexical relations, though this
 was not our primary research interest at the time. We will reexamine this in
 our proposed work.
 
-We compare our model with two baselines: the first is a random baseline,
-which just guesses randomly for the balanced LEDS dataset, and always
-the most common class ({\em no-relation}) for BLESS. We also compare to the
+We compare our model with two baselines: the first is a degenerate baseline,
+which guesses false for the (balanced) LEDS dataset, and always
+the most common label ({\em no-relation}) for BLESS. We also compare to the
 model proposed in \newcite{baroni:2012:eacl}, which uses the {\em concatenation}
 of the $H$ and $w$ vectors and trains an off-the-shelf polynomial Support
 Vector Machine \cite{cortes:1995:ml}.
@@ -599,12 +599,12 @@ Vector Machine \cite{cortes:1995:ml}.
     \hline
     {\bf Classifier} & {\bf Space} & {\bf LEDS} & {\bf BLESS}\\
     \hline
-    Random Baseline              &   -      & .50          & .46      \\
+    Always guess false/no relation     &   -      & .50          & .46      \\
     \hline
-    \cite{baroni:2012:eacl}   & Window 2 & .81          & .76      \\
-    Asym \cite{roller:2014:coling} & Window 2 & {\bf .85}    & {\bf .84}\\
-    \cite{baroni:2012:eacl}   & Sentence & .78          & .73      \\
-    Asym \cite{roller:2014:coling} & Sentence & .82          & .80      \\
+    \cite{baroni:2012:eacl}            & Window 2 & .81          & .76      \\
+    Asym \cite{roller:2014:coling}     & Window 2 & {\bf .85}    & {\bf .84}\\
+    \cite{baroni:2012:eacl}            & Sentence & .78          & .73      \\
+    Asym \cite{roller:2014:coling}     & Sentence & .82          & .80      \\
     \hline
   \end{tabular}
   \caption{Accuracy of Baroni et al. (2012) and Roller et al. (2014) on
@@ -616,7 +616,7 @@ Vector Machine \cite{cortes:1995:ml}.
 \end{table}
 
 Table~\ref{tab:asymresults} shows the results for our initial experiment.
-First we notice that both models strongly outperform the random baselines,
+First we notice that both models strongly outperform the degenerate baseline,
 indicating there is some successful learning in the models. We also see that
 the Window 2 space performs better than the Sentence space in all four
 comparisons, indicating it is likely the task depends more heavily {\em
@@ -739,7 +739,7 @@ Table~\ref{tab:sickexample}.
   \label{tab:sickexample}
 \end{table}
 
-To train the lexical entailment classifier, we extract {\em lexical rules} from
+To train the lexical entailment classifier, we extract {\em lexical pairs} from
 the SICK dataset using a variation on Robinson Resolution \cite{robinson:1965:jacm}. The
 full details are outside the scope of this document, but briefly, we employ
 an off-the-shelf semantic parser called Boxer, which translates sentences into
@@ -751,8 +751,8 @@ entails {\em speaks}.
 
 Crucially, by knowing entailment decisions about the
 entire sentences, and by performing unification over their logical structures,
-we can use theorem proving to automatically label certain atomic rules as
-true or false. These same atomic rules, like {\em talks entails speaks}, can
+we can use theorem proving to automatically label certain {\em atomic rules} as
+entailing, contracting, or neutral. These atomic rules, like {\em talks entails speaks}, can
 be interpreted as {\em lexical entailment pairs} for use in a lexical entailment
 classifier. Most, but not all, pairs can be labeled automatically, and those
 that cannot are manually annotated by two of the authors \cite{beltagy:2016:cl}.
