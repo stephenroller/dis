@@ -1119,7 +1119,7 @@ best, though several nonlinear classifiers also perform well.
   Diff \cite{weeds:2014:coling}       &      .805   &      .440   &      .195     &      .665   \\
   Asym \cite{roller:2014:coling}      &      .865   &      .510   &      .210     &      .671   \\
   %Concat+Diff                        &      .801   &      .604   &      .224     &      .703   \\
-  Concat+Asym \cite{beltagy:2016:cl}  &      .843   &  {\bf.631}  &      .240     &      .701   \\
+  Asym + Concat \cite{beltagy:2016:cl}&      .843   &  {\bf.631}  &      .240     &      .701   \\
   \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
@@ -1138,20 +1138,20 @@ baselines from the literature. Namely, we include a baseline Cosine classifier,
 which only learns a threshold which maximizes F1 score on the training set;
 three linear models of prior work, Concat, Diff and Asym; and the RBF and Ksim
 models found to be successful in \newcite{kruszewski:2015:tacl} and
-\newcite{levy:2015:naacl} respectively. We also include two additional novel baselines,
-Concat+Asym, which was used in \newcite{beltagy:2016:cl}. We cannot include a
+\newcite{levy:2015:naacl} respectively. We also include
+Asym + Concat, which was used in \newcite{beltagy:2016:cl}. We cannot include a
 additional comparisons like Ksim+Asym, because Ksim is based on a custom SVM
 kernel which is not amenable to combinations.
 
 Table~\ref{tab:hfeatureresults} the results across all four data sets for all
-of the listed models. Our proposed model improves
+of the listed models. Our H-Feature model improves
 significantly\footnote{Bootstrap test, $p<.01$.} over Concat in the LEDS, BLESS
 and Medical data sets, indicating the benefits of combining these the aspects
 of similarity and distributional inclusion with the H-feature detectors of
-Concat.  The Concat+Asym classifier also improves over the Concat baseline,
-further emphasizing these benefits. Our model performs approximately the same
-as Ksim on the LEDS and TM14 data sets (no significant difference), while
-significantly outperforming it on BLESS and Medical data sets.
+Concat.  The Asym + Concat classifier also improves over the Concat baseline,
+further emphasizing these benefits. Our H-feature model performs approximately
+the same as Ksim on the LEDS and TM14 data sets (no significant difference),
+while significantly outperforming it on BLESS and Medical data sets.
 
 
 
@@ -1175,11 +1175,14 @@ a previously successful, simple model to estimate the appropriateness of a
 lexical substitute. As a introduction point for our measure, we review the work
 of \newcite{melamud:2015:vsm}, which introduced several unsupervised measures
 for word similarity in context: namely \balAddCos and \addCos. The main insight
-of these unsupervised measures is the use of {\em context vectors}, similar
-to the insights discussed in Section~\ref{sec:hfeatures}. Crucially, the models
+of these unsupervised measures is the use of {\em context vectors}, related
+to the insights discussed in Section~\ref{sec:lexmem}. Crucially, the models
 of \newcite{melamud:2015:vsm} depend on syntactic context vectors, which
 have been found more successful than just BoW measures in the literature
 \newcite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
+We note that these models are {\em not} the state of the art,
+\cite{melamud:2015:naacl,melamud:2016:conll} but perform competitively while
+remaining simple, extensible, and highly interpretable.
 
 In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
 using a mixture of {\em out-of-context similarity} and {\em in-context
@@ -1189,7 +1192,7 @@ the target is to the substitute, and remains fixed regardless of the sentential
 context.  For this reason, this out-of-context (OOC) similarity is also used as
 a baseline in the literature.
 
-The in-context appropriateness, on the otherhand, attempts to directly model
+The in-context appropriateness attempts to directly model
 whether a proposed substitute fits in the given sentential context. That is, if
 one replaces the target with the substitute directly, would a reader still
 consider this word grammatical, regardless of whether the semantics stay fixed.
