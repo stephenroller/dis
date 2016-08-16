@@ -426,7 +426,7 @@ As it became obvious that unsupervised measures did not work as
 well as hoped, the community began working on entailment detection as a
 supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary baseline
 of a novel dataset, training a simple baseline classifier to predict whether
-word pairs were either hypernyms or nonhypernyms. Although they reported scores
+word pairs were either hypernyms or non-hypernyms. Although they reported scores
 in the high 90s, others later realized this was due to issues of {\em lexical
 memorization}, or a special kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
@@ -944,7 +944,7 @@ experiment is a one of our core contributions to the literature.
 
 We train the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
 were also used in the Asym experiments, and are datasets covering hypernymy and
-nonhypernymy relations. Medical is a dataset of pairs of medical words and
+non-hypernymy relations. Medical is a dataset of pairs of medical words and
 entailment labels, and was farmed using Information Extraction techniques
 \cite{levy:2014:conll}. Finally, TM14 contains many varied word relations (like
 cause-effect, agent-object) which are annotated with entailment decisions by
@@ -1377,11 +1377,11 @@ prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
 experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
 binary hypernymy-or-not classification task. We propose the H-features
 model of Section~\ref{sec:hfeatures} be extended and evaluated on its
-performance in other nonhypernymy relationships.
+performance in other non-hypernymy relationships.
 
 There are several ways that the model could be extended. The one we believe
 will be most successful is one that trains several binary H-features models:
-one for hypernymy-vs-nonhypernymy, one for meronomy-vs-nonhypernymy, etc.
+one for hypernymy-vs-non-hypernymy, one for meronomy-vs-non-hypernymy, etc.
 Similar to how the PCA procedure was used only as a form of feature-extraction
 for the final prediction, each of the binary classifier iterations will be also
 used for feature extraction for a final classifier.
@@ -1450,9 +1450,9 @@ helpful, is to simply add the context-similarity features of the Lexical
 Substitution model as another feature in the Lexical Entailment classifier.
 That is, for a pair of words in the SICK dataset, measure the similarity of
 their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
-Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. This could possibly help
-with some tricky cases where two senses of a word could lead to different conclusions.
-For example, ``EXAMPLE HERE.''
+Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a significant
+issue in the SICK dataset, we believe the additional information may benefit
+the final lexical entailment classifier.
 
 It may also be necessary to use a similar trick to the cosine binning technique
 described in Section~\ref{sec:rtesubsystem}: it could be that different levels
@@ -1843,8 +1843,8 @@ words will stand in similar relations.
 The problem would also contribute even more greatly to the Lexical Substitution
 model we presented. For many examples in our dataset, our model does not have
 any context vector representation for one or more of the syntactic neighbors
-observed. In a preliminary examination, we found that some X\% of the Coinco
-dataset contain at least one context which not available in our vector space.
+observed. In a preliminary examination, we found that some 18\% of the Coinco
+dataset contain at least one context which is not available in our vector space.
 The ability to {\em generate} representations for these contexts would be
 a simple way to provide the model with more disambiguating information, which
 should help in the end task.
