@@ -1447,7 +1447,7 @@ That is, for a pair of words in the SICK dataset, measure the similarity of
 their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
 Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
 significant issue in the SICK dataset, we believe the additional information
-about context will bolster predictions in borderline cases.
+about context may bolster predictions in borderline cases.
 
 It may be necessary to find additional tricks in order to best integrate
 this information into the lexical entailment classifier; for example, we
@@ -1457,9 +1457,9 @@ tricks, like binning or separating out the components of PIC, are likely
 necessary in order to see positive contribution.
 
 Ultimately though, we suspect improvements to RTE  may be marginal, or even
-negative, as polysemy is uncommon in the SICK dataset. We may need to manually
-identify which RTE pairs exhibit polysemy the strongest, or manually construct
-a small dataset of sentences with polysemy in order to show positive results.
+negative, as polysemy is uncommon in the SICK dataset. We may need to analyze
+differences in classification prediction, and which examples are {\em most}
+affected by the LexSub features, in order to properly characterize contribution.
 
 \subsection{Long Term Proposals}
 
