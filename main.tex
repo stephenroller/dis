@@ -234,7 +234,9 @@ words which are constructed by counting or modeling the contexts in which a
 particular word appears. According to the Distributional Hypothesis then, words
 with similar {\em vectors} can be assumed to have similar {\em meanings}
 \cite{turney:2010:jair}. For this reason, they are often referred to as
-Vector Space Models (VSMs) of language.
+Vector Space Models (VSMs) of language; they have also become immensely
+popular in the neural network literature with the name {\em word embeddings}.
+
 
 \begin{figure}
 \centering
@@ -296,7 +298,7 @@ Pointwise Mutual Information (PMI) measures roughly how many times more likely d
 items co-occur more often than chance would dictate, while Positive PMI
 additionally ignores those which occur less often than chance.  Other
 transformations, like conditional probability
-\cite{hofman:1999:sigir,blei:2003:jmlr}, and Softplus
+\cite{hofman:1999:sigir,blei:2003:jmlr} and Softplus
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
 emphasize different aspects of lexical similarity.
 
@@ -316,8 +318,8 @@ dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
 {\em selectional preferences} of words, or the tendency of words to have
 particular arguments in their syntactic relations.
 \cite{pado:2007:cl,erk:2008:emnlp,baroni:2010:cl,levy:2014:acl}. For example,
-if something {\em barks}, it is likely to be a {\em dog}, while if something
-{\em meows}, it is likely to be a cat.
+the subject of {\em barks} is likely to be {\em dog}, while the subject of
+{\em purrs} is likely to be {\em cat}.
 
 \begin{figure}
   \centering
@@ -332,14 +334,14 @@ with their labeled edges.}
 One final notion in Distributional Semantics we wish to review is that of
 dimensionality reduction. As described earlier, the distributional vector
 spaces are very high-dimensional; bag-of-words spaces have many thousands of
-dimensions (or sometimes as large as the entire vocab, e.g.
-\newcite{mikolov:2013:iclr,pennington:2014:emnlp}), while syntactic spaces often
-have a millions, e.g. \newcite{baroni:2010:cl}. Efficiently dealing with these
-large, extremely sparse vectors can sometime be troublesome, so we often opt to
-use some form of {\em dimensionality reduction}, like Singular Value
-Decomposition (SVD) \cite{deerwester:1990:jsis,landauer:1997:pr} or Nonnegative
-Matrix Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality reduction,
-the co-occurrence matrix $M$ is typically assumed to be factorizable into two
+dimensions \cite{turney:2010:jair,mikolov:2013:iclr,pennington:2014:emnlp},
+while syntactic spaces usually have a millions, e.g. \newcite{baroni:2010:cl}.
+Efficiently dealing with these large, extremely sparse vectors can sometime be
+troublesome, so we often opt to use some form of {\em dimensionality
+reduction}, like Singular Value Decomposition (SVD)
+\cite{deerwester:1990:jsis,landauer:1997:pr} or Nonnegative Matrix
+Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality reduction, the
+co-occurrence matrix $M$ is typically assumed to be factorizable into two
 lower-rank matrices,
 \begin{equation*}
   M = VC^{\top}
