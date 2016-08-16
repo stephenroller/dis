@@ -773,14 +773,16 @@ to transform them into binary-valued features, after observing that
 mid-similar terms (those with a cosine of $\sim.80$, like {\em cat} and {\em
 animal}) were more likely entailments than those with high similarity
 (cosine of $\sim.95$, like {\em cat} and {\em dog}). We found this binning
-technique significantly improved the contribution of distributional similarity
+technique significantly improved the contribution distributional similarity
 in feature-engineered lexical entailment classifiers.
 
 Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
-antecedent (LHS) and consequent (RHS) vectors. For both the distributional
-simirity features, and the Asym model, we use two distributional spaces:
-one which uses a BoW window of two words, and one based on syntactic contexts.
+antecedent (LHS) and consequent (RHS) vectors, which we call Asym + Concat,
+since it uses both the Asym features and the Concat (LHS+RHS) features. For
+both the distributional simirity features, and the Asym models, we use two
+distributional spaces: one which uses a BoW window of two words, and one based
+on syntactic contexts.
 
 We evaluate all of the lexical entailment classifiers listed above on two
 variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
@@ -788,17 +790,16 @@ setup, the lexical entailment classifiers are evaluated on their performance on
 the RRR dataset in a standard 10-fold cross-validation setup. In the RTE setup,
 the classifiers are trained on items extracted from the training portion of the
 RTE dataset, and then used as the sole source of lexical knowledge in an
-end-to-end, complete RTE system developed by \newcite{beltagy:2013:starsem} to
-predict the test portion of the RTE dataset. This ensures we are actually
+end-to-end, complete RTE system \newcite{beltagy:2013:starsem,beltagy:2016:cl}
+to predict the test portion of the RTE dataset. This ensures we are actually
 testing whether Asym is able to contribute in a rich RTE pipeline.
 
 Table~\ref{tab:evallexical} shows performance of the various lexical entailment
 classifiers on each of our evaluation settings. We also report a degenerate
-baseline (always guess Neutral), and an upper baseline, which always gives Gold
-Standard lexical entailment decisions. Note that this upper baseline on the RTE
+baseline (always guess Neutral), and an upper baseline, which always gives gold
+lexical entailment decisions. Note that this upper baseline on the RTE
 task is {\em not} 100\%, due to a mixture of issues like parsing errors,
-inference errors, and other issues in the logical inference engine of
-\newcite{beltagy:2013:starsem}.
+inference errors, and other issues in the RTE inference engine.
 
 \begin{table}
 \centering
@@ -813,7 +814,7 @@ inference errors, and other issues in the logical inference engine of
     Dist. Sim. only      & 68.8 & 76.7 \\
     WordNet only         & 79.1 & 84.2 \\
     Asym only            & 76.8 & 79.2 \\
-    Asym + LHS + RHS     & 81.4 & 82.6 \\
+    Asym + Concat        & 81.4 & 82.6 \\
     \hline
     All features         & 84.6 & 83.8 \\
     \hline
@@ -828,7 +829,7 @@ that Asym is flexible and able to learn beyond just the LEDS and BLESS datasets.
 Unsurprisingly, the classifiers which use only Wordform features or only
 distributional similarity both perform much worse than the information-rich
 WordNet features, or the more sophisticated Asym classifier.
-We also notice that the classifier which combines Asym with the LHS and RHS
+We also notice that the classifier which combines Asym with the Concat
 vectors performs substantially better than Asym does by itself, indicating
 a need for further study (c.f. Section~\ref{sec:hfeatures}).
 
