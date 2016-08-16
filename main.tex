@@ -557,7 +557,11 @@ measuring absolute accuracy. In this variation of LOOCV, we selected one word
 from the vocabulary in the datasets, and considered {\em all pairs} with that
 word to be test pairs. The remainder of word pairs, which did not contain the
 held out word, are treated as training pairs. This prevent classifiers from
-memorizing that words like {\em animal} are simply more likely to be hypernyms.
+simply memorizing that words like {\em animal} are more likely to be hypernyms.
+This experimental setup is one of our core contributions to the literature, as
+we were the first to recognize this problem and propose an experimental
+setup which avoids it \cite{roller:2014:coling}. We revisit this issue in
+more detail in Section~\ref{sec:lexmem}.
 
 Since different types of distributional spaces exhibit different properties
 \cite{pado:2007:cl}, we evaluate our model on two distributional
