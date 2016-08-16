@@ -606,7 +606,7 @@ Vector Machine \cite{cortes:1995:ml}.
     Asym \cite{roller:2014:coling} & Sentence & .82          & .80      \\
     \hline
   \end{tabular}
-  \caption{Accuracy of \newcite{baroni:2012:eacl} and \newcite{roller:2014:coling} on
+  \caption{Accuracy of Baroni et al. (2012) and Roller et al. (2014) on
   {\bless} and {\entailment}
   using different spaces for feature generation. Performance is measured as
   the average accuracy across all folds of the leave-one-out cross validation
@@ -1446,7 +1446,7 @@ We suspect, given its substantial improvements over Asym in lexical datasets,
 that it will also be able to be able to improve the full system. However, it
 remamins unclear what is the best way to integrate it with additional
 hand-engineered features used in the RTE system.  One possibility would be to
-simply use the H-features's feature extraction procedure to provide
+simply use the H-feature detector procedure to provide
 additional information to the lexical entailment classifier. Yet the classifier
 used in Section~\ref{sec:rtesubsystem} was a linear classifier over the hand
 engineered features, which outperformed nonlinear versions. Unfortunately, we
@@ -1626,7 +1626,7 @@ the additional information about the ball, the model has absolutely no way
 to distinguish these two cases. How can this information be integrated into the
 model?
 
-Even beyond this simple example, it's already clear from prior work that
+Even beyond this simple example, it is already clear from prior work that
 additional context can be very useful in the task.
 \newcite{vandecruys:2011:emnlp}, for example, proposed model which combined
 a syntactic distributional space with a bag-of-words distributional space with
@@ -1710,7 +1710,7 @@ consider that a verb may have attachments may have only one attachment (intransi
 two attachments (transitive), or more (ditransitive, prepositional phrase attachments,
 adverbs, etc). Similarly, nouns can also stand in many syntactic relations
 simultaneously (compound, adjective, prepositional phrase, verb relation, and
-others). Since the number of attachments is variable, it's difficult to define
+others). Since the number of attachments is variable, it is difficult to define
 a coherent probabilistic model which does not demand at least {\em some}
 independence assumptions. Even if we were to define the model over all possible
 syntactic relations for every word, the issue would not be solved: consider
