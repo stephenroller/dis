@@ -156,6 +156,7 @@ models of distributional semantics which more efficiently use syntactic
 information.
 
 
+\pagebreak
 \section{Background and Related Work}
 \label{sec:background}
 
@@ -451,30 +452,21 @@ Lexical Substitution may act as a kind of lexical entailment {\em
 in context}: if the substitutes replace the target and preserve the meaning of
 the sentence, then it follows that the target {\em entails} the substitute.
 Although this includes basic synonymy (like ``bright'' and ``clever''), it
-also covers much more interesting or narrow cases, for example,
+also covers much more interesting or specialized cases, for example,
 \begin{quote}
-  ``Tara stood stock-still, {\bf waiting} for the first tiny gleam from the
-  scout craft to appear in the darkness of the wormhole,''
+  ``Tara stood stock-still, waiting for the first tiny gleam from the
+  scout craft to appear in the darkness of the {\bf wormhole},''
 \end{quote}
-Where human annotators considered {\em anticipating} and {\em lingering} to be
-the best possible substitutes, neither of which 
-
-
-
-\newcite{kremer:2014:eacl} found
-that only 9\% of lexical substitutes were direct synonyms in WordNet
-
-For example, \newcite{kremer:2014:eacl}
-point an interesting 
-
-Indeed, in one Lexical Substitution data set, explicit WordNet synonymy only
-captured about 9.4\% of all the substitutes in the data
-\cite{kremer:2014:eacl}. For this reason, we believe that Textual Entailment
-can benefit more from modeling Lexical Substitution as a complete task, rather
-treating this phenomenon as pure synonymy.
+Where human annotators considered {\em portal} and {\em rift} to be excellent
+substitues. These substitutes take into account the scifi context of the
+sentence, indicating the task is more complicated than simple synonymy. Indeed,
+\newcite{kremer:2014:eacl} found that only 9\% of lexical substitutes were
+direct synonyms in WordNet.  For this reason, we believe that Textual
+Entailment can benefit more from modeling Lexical Substitution as a complete
+task, rather treating this phenomenon as explicit lexical relations.
 
 Distributional Semantics offers a tempting solution to this problem of lexical
-substitution, given its ability to measure the graded levels of similarity
+substitution, given its ability to measure the {\em graded} levels of similarity
 between words \cite{erk:2008:emnlp}. Interestingly, although there have been
 both supervised \cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised
 attempts on
@@ -482,6 +474,7 @@ attempts on
 this task using distributional semantics, presently unsupervised measures hold
 a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
+\pagebreak
 \section{Completed work}
 
 In this section, we discuss our publications related to this
@@ -1335,6 +1328,7 @@ Intutively, it seems natural that unigram biases should hold a strong role in
 Lexical Substitution, and that our model should wish to exploit this
 information.
 
+\pagebreak
 \section{Proposed Work}
 
 We now describe the general proposed methods of further research. The proposed
@@ -1842,6 +1836,7 @@ Indeed, as we described above, a novel model could easily have larger
 implications in other areas of Natural Language Processing, and is therefore
 probably the most ambitious and difficult of our long term proposals.
 
+\pagebreak
 \section{Conclusion}
 
 Distributional Semantics has come a long way in its ability to contribute to
