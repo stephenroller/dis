@@ -1761,11 +1761,11 @@ linear regression could combine them:
 \begin{equation*}
   \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}
 \end{equation*}
-This is a relatively weak model, but it would still enable us to predict
-information about novel combinations of syntactic relations and words. The
-model could be even more sophisticated, being a neural network instead; however,
-neural networks are known to be easier to train for classification than
-regression \cite{needcite}.
+This is a simple, linear regression model, but it would still enable us to
+predict information about novel combinations of syntactic relations and words,
+albeit by assuming independence between the word and syntactic operation. One
+could increase the representational power by using a neural network instead,
+or adding additional terms to model the error terms.
 
 Another variation of this linear regression idea, would be to model each
 syntactic relation as a function {\em applied} to the vector. For example,
