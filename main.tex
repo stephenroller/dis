@@ -1580,41 +1580,38 @@ to distinguish these two cases. How can this information be integrated into the
 model?
 
 Even beyond this simple example, it is already clear from prior work that
-additional context can be very useful in the task. \newcite{dinu:2010:emnlp} and
-\newcite{vandecruys:2011:emnlp} consider models which combine
-a syntactic distributional space with a bag-of-words distributional space with
-a very large window by finding a shared latent representation of both spaces,
-showing modest improvements over each individual space. Furthermore,
+additional context can be very useful in the task. \newcite{dinu:2010:emnlp} considers
+a probablistic model based on a wide Bag-of-Words context, and
+\newcite{vandecruys:2011:emnlp} propose a model which combines
+syntactic distributional space with a bag-of-words distributional space,
+showing modest improvements over each individual space. Additionally,
 \newcite{kawakami:2016:iclr} obtained state-of-the-art results on Lexical
 Substitution using a neural network language model which encodes the {\em
 entire sentence} as input, though their model also depends heavily on the use
-of machine translation data as a sort of proxy for Word Sense Disambiguation
-information. It is clear that there is more useful information
-available than our own Lexical Substitution model is allotted.
+of machine translation data. It is clear that there is more useful information
+available than our own Lexical Substitution model is provided.
 
 There two distinct ways we could implement wider contexts into our Lexical
 Substitution model: using linguistic knowledge, and using neural networks.
 In the former, we could simply use existing linguistic knowledge in order to
 model additional syntactic patterns from large corpora. That is, in
-addition to modeling the direct neighbors of words which constructing our
-distributional space, we could also add pattern-based rules for modeling
+addition to modeling the direct syntactic neighbors of words,
+we could also add pattern-based rules for modeling
 indirect neighbors. For example, we could introduce an additional context
-in our distributional space for {\tt dobj+compound+\_+meat}; that is, an
-additional column for which the direct object of a verb is compounded with
-``meat'', and so on for other nouns. Indeed, since our model uses collapsed
-prepositional phrases, this is already partially implemented (e.g., we already
-model ``to the store'' as {\tt prep:to\_store} rather than just {\tt prep:to}).
+in our distributional space for {\tt dobj+compound+\_+meat}, marking that the
+direct object the verb is compounded with ``meat,'' and so on for other nouns.
+Since our model uses collapsed prepositional phrases, this is already
+partially implemented (e.g., we already model ``to the store'' as {\tt
+prep:to\_store} rather than just {\tt prep:to}).
 
 A variation of this approach was discussed in \newcite{pado:2007:cl}, the
 original proposal of syntactic distributional spaces. In their model, they also
 extracted contexts for dependency chains two and three hops away from the
 target word, rather than the only the direct neighbors. Since then, most models
-have focused mostly on direct neighbors (except for prepositional phrases), as
-this approach introduces many additional contexts, making the model
-significantly more complex and memory intensive, while also dramatically
-increasing the sparsity of the data: the vast majority of 3-hop syntactic
-patterns will occur only once in corpus. Indeed, if we use this linguistic
-approach, these issues of scaling and sparsity will plague our model as well.
+have focused mostly on direct neighbors, since longer chains substantially
+increase complexity, sparsity, and model parameters.
+If we use this linguistic
+approach, issues of scaling and sparsity will likely plague our model.
 
 The other possibility for this problem would be to employ modern neural network
 models, like the Long Short Term Memory (LSTM) model \cite{hochreiter:1997:nc}.
@@ -1641,7 +1638,7 @@ hypernymy relationship or not, acting as a modern neural-network version of
 predict the {\em last word} in the chain, performing the operation for billions
 of syntactic chains extracted from large corpora. This model would have the
 capability of capturing and remembering relevant long-distance information
-whenever it is helpful in predicting the final word. The greatest challenge
+whenever it is helpful in predicting the final word. One challenge
 in applying this model is scaling it, as LSTM models can take days or weeks
 to train when their final output is a prediction over the entire vocabulary.
 
@@ -1651,8 +1648,8 @@ Another issue with the lexical substitution model discussed in Section~\ref{sec:
 is that the model fundamentally assumes independence between each of the syntactic
 neighbors. Ultimately, the model suggests substitutes in the above examples by
 asking, ``What does a dog do? What is done to a ball? What is the intersection
-of these two sets?'' That it uses the unnormalized inner products in Equation~\ref{eqn:pic}
-means that one of these questions may be given more weight than another, but they
+of these two sets?'' Our use of unnormalized inner products in Equation~\ref{eqn:pic}
+means that one question may have more weight than another, but they
 are still considered independently: the question is never ``What does a dog do
 to a ball?''
 
