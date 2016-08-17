@@ -456,7 +456,7 @@ context
 human annotators considered {\em portal} and {\em rift} to be excellent
 substitues. These substitutes take into account the Science Fiction context of the
 sentence, indicating the task is more complicated than simple synonymy. Indeed,
-\newcite{kremer:2014:eacl} found that only 9\% of lexical substitutes were
+\newcite{kremer:2014:eacl} found that only 9\% of substitutes in their dataset were
 direct synonyms in WordNet.  For this reason, we believe that Textual
 Entailment can benefit more from modeling Lexical Substitution as a complete
 task, rather treating the phenomenon as explicit lexical relations.
@@ -518,7 +518,7 @@ behavior for the task of hypernymy and lexical relationship prediction.
 The Asym model is a simple model which uses the {\em vector difference} between
 the hypothesized hypernym-hyponym pair as input features to an off-the-shelf
 classifier. For example, given a (unit normalized) distributional vector for
-{\em animal} and a vector for {\tt cat}, we use the vector
+{\em animal} and a vector for {\em cat}, we use the vector
 {\em animal}$ - ${\em cat} as a positive example, while the
 vectors for {\em cat}$ - ${\em animal} and {\em animal}$ - ${\em sofa} are
 inputted as negative examples. Additionally, we also give the {\em element-wise
@@ -539,17 +539,17 @@ One significant advantage of this model over other works is its direct
 connection to the Distributional Inclusion Hypothesis: since our model uses the
 vector difference as input, it naturally measures whether $H_i$ is
 greater than $w_i$, effectively acting as a strict-subset measurement. The
-element-wise-squared part of the input features measures whether they have a
-large absolute difference, effectively caputring ``equal'' part of the
+difference-squared part of the input features measures whether they have a
+large absolute difference, effectively capturing ``equal'' part of the
 ``less than or equal'' relation. As such, one interpretation of the model is a
 kind of {\em Selective Distributional Inclusion Hypothesis}, which presupposes
 that the DIH holds, but only in particular, relavent dimensions.
 
 To evaluate our model, we train and measure accuracy of the Asym model on
 two datasets in a variation of leave-one-out cross validation (LOOCV) and
-measuring absolute accuracy. In this variation of LOOCV, we selected one word
-from the vocabulary in the datasets, and considered {\em all pairs} with that
-word to be test pairs. The remainder of word pairs, which did not contain the
+measuring absolute accuracy. In this variation of LOOCV, we select one word
+from the vocabulary in the datasets, and consider {\em all pairs} with that
+word to be test pairs. The remainder of word pairs, which do not contain the
 held out word, are treated as training pairs. This prevent classifiers from
 simply memorizing that words like {\em animal} are more likely to be hypernyms.
 This experimental setup is one of our core contributions to the literature, as
@@ -573,10 +573,10 @@ relations, and we train a binary classifier. The second dataset is {\bf
 BLESS} \cite{baroni:2011:gems}, which contains annotations of word relations
 for 200 unambiguous, concrete nouns from 17 broad categories. Each noun is
 annotated with its co-hyponyms, meronyms, hypernym and some random words.
-Since there were four relations, we trained four one-vs-all classifiers, and
-predicted the relation with the highest score; in this way, the model
+Since there are four relations, we train four one-vs-all classifiers, and
+predict the relation with the highest score; in this way, the model
 actually learns to detect three different lexical relations, though this
-was not our primary research interest at the time. We will reexamine this in
+was not our primary research interest at the time. We will reconsider this in
 our proposed work.
 
 We compare our model with two baselines: the first is a degenerate baseline,
@@ -756,7 +756,7 @@ entailment classifiers.
 We compare the performance of several existing lexical entailment
 classifiers which employ a variety of hand-engineered features and lexicons
 like WordNet.  Most of the hand-engineered features come from
-\newcite{lai:2014:semeval}, which contain things like Wordform features (e.g.,
+\newcite{lai:2014:semeval}, and include things like Wordform features (e.g.,
 do the words have the same lemma or Part-of-Speech?); WordNet features (e.g.,
 are the words hypernyms or co-hyponyms in WordNet?); and Distributional
 Similarity (e.g., cosine distance between two words in a distributional space).
@@ -783,8 +783,8 @@ variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
 setup, the lexical entailment classifiers are evaluated on their performance on
 the RRR dataset in a standard 10-fold cross-validation setup. In the RTE setup,
 the classifiers are trained on items extracted from the training portion of the
-RTE dataset, and then used as the sole source of lexical knowledge in an
-end-to-end, complete RTE system \newcite{beltagy:2013:starsem,beltagy:2016:cl}
+RTE dataset, and then used as the sole source of lexical knowledge in a
+complete RTE pipeline \newcite{beltagy:2013:starsem,beltagy:2016:cl}
 to predict the test portion of the RTE dataset. This ensures we are actually
 testing whether Asym is able to contribute in a rich RTE pipeline.
 
@@ -852,7 +852,7 @@ comparing models are available in \newcite{beltagy:2016:cl}.
 
 In the previous sections, we saw that the Asym classifier is able to reasonably
 learn to classify word pairs as hypernymy and non-hypernymy, and that is able
-to perform reasonably in an end-to-end RTE system. However, we also saw in our
+to contribute in an end-to-end RTE system. However, we also saw in our
 RTE experiments that Asym can be improved upon by simply concatenating the Asym
 difference vectors with vectors for the LHS and the RHS (which we call Concat).
 In this section, we discuss some of the strengths and weaknesses of the Concat
@@ -890,7 +890,7 @@ This analysis shows that, when the hyperplane $\hat p$ is evaluated on a novel
 pair, it lacks any form of direct interaction between $H$ and $w$ like the
 inner product $H^\top w$, but rather only learns to capture the notion of
 hypernymy through $\hat H$ and $\hat w$, the {\em prototypicality vectors}.
-Without having some form of this interaction, this Concat classifier has no way
+Without having some form of interaction, this Concat classifier has no way
 of estimating the relationship between the two words. Furthermore, a linear classifier
 which uses the Diff vectors as input ($H - w$) will also have this flaw,
 since the hyperplane $\hat p$ can be analyzed in this same fashion.
@@ -899,11 +899,11 @@ In their work, \newcite{levy:2015:naacl} back up this analysis with experimental
 evidence, showing that when the training/testing set is constructed to
 ensure that no lexical items are shared between the training and test sets
 (a variant of the experiments of \newcite{roller:2014:coling}), the performance
-of several classifiers, like \newcite{baroni:2011:gems} and
+of several classifiers, like \newcite{baroni:2012:eacl} and
 \newcite{weeds:2014:coling}, drop dramatically. \newcite{levy:2015:naacl} also
 propose a new model which incorporates the inner product term, which
 outperforms other models on several data sets.
-Interestingly, Asym does not suffer this fundamental flaw: although it uses the
+Interestingly, Asym does {\em not} suffer this fundamental flaw: although it uses the
 vector difference vectors as features, it also uses the {\em square-difference
 vectors} as input. Crucially, by the Law of Cosines, we can see that these
 square-difference features provide it these crucial inner product term:
@@ -1042,8 +1042,7 @@ in any data points. This new classifier will perform strictly worse than the
 original, otherwise the first classifier would have learned this hyperplane.
 Nonetheless, it will be able to learn {\em new} H-features which the
 original classifier was unable to capture. By repeating this process several
-times, we can find several Hearst pattern detectors, $\hat p_1, \ldots, \hat
-p_n$.
+times, we can find several H-feature detectors, $\hat p_1, \ldots, \hat p_n$.
 
 In each iteration $i$ of the procedure, we generate a four-valued feature vector
 $F_i$, based on the H-feature detector $\hat p_i$. Each
