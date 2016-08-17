@@ -403,8 +403,7 @@ cosine similarity tends to highlight co-hyponym pairs more than other relations
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
 \cite{zhitomirsky-geffet:2005:acl}, which states that the contexts in which a
 hypernym appears should be a superset of all its hyponyms, or subordinate
-words. Though this seems to be strictly false,\footnote{Consider ``\#The {\em
-animal} barked loudly at its bowl of {\em animal} food.''} a considerable
+words. A considerable
 amount of work has assumed it to be at least partially true.  Many of the
 proposed measures were based on the Distributional Inclusion Hypothesis in one
 form or another \cite{clarke:2009:gems}, or a hybrid of DIH and cosine
@@ -435,12 +434,12 @@ girl'' and ``bright coat.'' This is called {\em polysemy}, and is a major issue
 in Natural Language Understanding, since it adds another layer of possible in
 meaning.
 
-One approach to dealing with this issue of polysemy is to model how word
+One approach to dealing with polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
-happens to a word based on its used in a sentential context. Since 2007, one
+happens to a word based on its use in a sentential context. Since 2007, one
 popular way to measure this has been the Lexical Substitution task.  In the
-Lexical Substitution task, the program is provided with a sentential context,
-and must provide {\em substitutes} which can replace the given target word,
+Lexical Substitution task, we are provided with a sentential context,
+and must suggest {\em substitutes} which can replace the given target word,
 while preserving the meaning of the entire sentence
 \cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 
@@ -451,26 +450,27 @@ Lexical Substitution may act as a kind of lexical entailment {\em
 in context}: if the substitutes replace the target and preserve the meaning of
 the sentence, then it follows that the target {\em entails} the substitute.
 Although this includes basic synonymy (like ``bright'' and ``clever''), it
-also covers much more interesting or specialized cases, for example,
+also covers much more interesting or specialized cases. For example, with the
+context
 \begin{quote}
   ``Tara stood stock-still, waiting for the first tiny gleam from the
   scout craft to appear in the darkness of the {\bf wormhole},''
 \end{quote}
-Where human annotators considered {\em portal} and {\em rift} to be excellent
-substitues. These substitutes take into account the scifi context of the
+human annotators considered {\em portal} and {\em rift} to be excellent
+substitues. These substitutes take into account the Science Fiction context of the
 sentence, indicating the task is more complicated than simple synonymy. Indeed,
 \newcite{kremer:2014:eacl} found that only 9\% of lexical substitutes were
 direct synonyms in WordNet.  For this reason, we believe that Textual
 Entailment can benefit more from modeling Lexical Substitution as a complete
-task, rather treating this phenomenon as explicit lexical relations.
+task, rather treating the phenomenon as explicit lexical relations.
 
-Distributional Semantics offers a tempting solution to this problem of lexical
-substitution, given its ability to measure the {\em graded} levels of similarity
+Distributional Semantics offers a tempting solution to this problem of Lexical
+Substitution, given its ability to measure the {\em graded} levels of similarity
 between words \cite{erk:2008:emnlp}. Interestingly, although there have been
 both supervised \cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised
-attempts on
-\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
-this task using distributional semantics, presently unsupervised measures hold
+attempts
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}
+using distributional semantics, presently unsupervised measures hold
 a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
 \pagebreak
