@@ -1475,7 +1475,7 @@ pairs of words are made independently: the prediction of whether ``cat is an
 animal'' has no bearing on whether ``dog is an animal,'' aside from their
 distributional similarity. While this is a straightforward application of
 machine learning principles to the problem, it ignores an important fact: that
-hypernymy is just one aspect of a complete, well-structured.
+hypernymy is just one aspect of a complete, well-structured ontology.
 Yet, since we predict each word pair individually, there is no
 guarantee the output of the system over all pairs will also be
 well-structured.
@@ -1488,35 +1488,35 @@ dog'' and ``dog is an animal,'' but incorrectly predict that ``gold retriever is
 properties of hypernymy are inherent to its definition, and our models
 should be take this into account.
 
-With this in mind, is it possible to modify our models such that ontological
-consistency of the output is guaranteed, or at least more consistent? One
+With this in mind, is it possible to modify our models such that such
+ontological constraints are guaranteed or preferred? One
 possibility would be to use the {\em confidence scores} associated with the
 hypernymy predictions, and simply revise the least-confident predictions to
-be consistent in a post-processing step. For example, in our reflexive example
+conform to constraints in a post-processing step. For example, in our reflexive example
 above, the more confident of the two predictions will be assumed to be
 the correct one.
 
-This idea would likely even benefit further from our short-term proposal to
+This idea could likely benefit further from our short-term proposal to
 see how well the H-features model does at predicting relations other
 than hypernymy: for example, if we are highly confident that two words are
-co-hyponyms, then we can become more confident that they share the same
-hypernyms, and vice versa.
+co-hyponyms, then we can become more confident that they share a common
+hypernym, and vice versa.
 
 This idea of enforcing ontological constraints is not new: it was previously
 explored by \newcite{caraballo:1999:acl}, who use a clustering algorithm in
-order to find co-hyponym terms, and then predict their hypernym using entire
+order to find co-hyponym terms, and then predict hypernyms using the entire
 clusters. It was also examined some in \newcite{snow:2004:nips}, who used
 syntactic Hearst Patterns to make predictions about hypernymy, and then
-linearly interpolated the probabilities of predictions in order to better
-conform to these hard taxonomic constraints. Later, \newcite{snow:2006:acl}
-proposed a probabilistic model over {\em taxonomies}, allowing them to propose
-an algorithm for searching over entire taxonomies constrained by rules about
-the transitivity of hypernymy, and reflexivity of co-hyponymy. This taxonomy
-search is then used in order to find the single taxonomy which has maximal
+linearly interpolated the prediction confidences in order to better
+conform to these hard constraints. Later, \newcite{snow:2006:acl}
+proposed a probabilistic model over {\em ontologies}, allowing them to propose
+an algorithm for searching over entire ontologies constrained by rules about
+the transitivity of hypernymy, and reflexivity of co-hyponymy. This ontology
+search is then used in order to find the single ontology which has maximal
 probability according to the evidence provided by Hearst patterns, while also
 not violating any of the hard constraints.
 
-Although \newcite{snow:2006:acl} found their taxonomy searching algorithm
+Although \newcite{snow:2006:acl} found their ontology searching algorithm
 highly successful with the use of the lexico-syntactic patterns indicative
 of hypernymy, such an approach is yet to be tried on classifiers which make
 use of distributional information about words. Therefore, the most reasonable
