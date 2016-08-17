@@ -1331,11 +1331,11 @@ information.
 \pagebreak
 \section{Proposed Work}
 
-We now describe the general proposed methods of further research. The proposed
+We now describe the proposed methods of further research. The proposed
 future work breaks into two broad categories: short-term proposals,
 which must be completed for the final thesis, and long-term proposals, which
-are more ambitious research directions that may take much longer to successfully
-pursue.
+are more ambitious research directions that may take much longer to pursue
+successfully.
 
 The proposed short term work focuses predominantly on how the more recent
 successful research may contribute to a larger RTE system: While the completed
@@ -1354,7 +1354,7 @@ distributional model which reuses information when possible.
 In this section, we propose and discuss several additional experiments which
 should be completed for the final thesis. We break the section into experiments
 for Lexical Entailment, and experiments for Lexical Substitution. All are
-proposed primarily with integration into a final RTE subsystem in mind.
+proposed primarily with integration into a final RTE system in mind.
 
 \subsubsection{Lexical Entailment}
 
@@ -1373,23 +1373,23 @@ useful as a negative signal for entailment, and identifying meronomy is
 critical to our motivating example in the Introduction.
 Indeed, the results shown in Table~\ref{tab:asymresults} show
 the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
-prediction task: hypernymy, cohyponymy, meronomy, and random, yet the
+prediction task: hypernymy, cohyponymy, meronomy, and random, but the
 experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
 binary hypernymy-or-not classification task. We propose to extend and evaluate
 the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
 relations. We believe the model's performance can be improved by
-better modeling the negative cases, and that the model will additionally
+better modeling the non-hypernymy cases, and that the model will additionally
 discover H-features indicative of other relations.
 
 There are several ways that the model could be extended. The one we believe
 will be most successful is one that trains several binary H-features models:
-one for hypernymy-vs-non-hypernymy, one for meronomy-vs-non-hypernymy, etc.
+one for hypernymy-vs-non-hypernymy, one for meronomy-vs-non-meronomy, etc.
 Similar to how the PCA procedure was used only as a form of feature-extraction
 for the final prediction, each of the binary classifier iterations will be also
 used for feature extraction for a final classifier.
 That is, we will use the procedure described in Section~\ref{sec:hfeatures}
 to extract several iterations of features for hypernymy, then completely repeat
-the procedure for meronomy and co-hyponymy. The resulting features from each
+the procedure for meronomy and so forth. The resulting features from each
 of the classifiers will be concatenated for a final four-way classifier prediction.
 Another alternative would be to try to learn the four-way classifiers concurrently
 (e.g., a softmax instead of logistic regression), and extract the corresponding
@@ -1406,8 +1406,8 @@ and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
 \paragraph{H-features Model for RTE}
 
-The results of Section~\ref{sec:rtesubsystem} showed that the Asym hypernymy
-prediction model can provide strong improvements in a complete, end-to-end RTE
+The results of Section~\ref{sec:rtesubsystem} showed that the Asym
+model can provide strong improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
 However, we have not yet considered whether our new H-features model also
 contributes to an end-to-end RTE pipeline.
