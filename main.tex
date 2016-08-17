@@ -83,11 +83,11 @@ Much progress has been made in systems which perform these sort of
 sophisticated logical inferences in QA and RTE, especially as common benchmarks
 and datasets have become available
 \cite{dagan:2006:mlc,giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval,bowman:2015:emnlp}.
-Yet in any sophisticated, compositional model of semantics, systems must
+Yet in most sophisticated, compositional model of semantics, systems must
 ultimately consider the semantics of individual lexical items to form a
-conclusion \cite{montague:1970:theoria,kamp:2013:discourse}.  This often
-requires an understanding about the different relationships that can occur
-between lexical items. Consider the following example:
+conclusion. This often requires an understanding about the different
+relationships that can occur between lexical items. Consider the following
+example:
 \begin{quote}
   Text (Antecedent): The bright girl reads a book.\\
   Hypothesis (Consequent): A smart child looks at pages of text.
@@ -127,8 +127,8 @@ studied as an alternative or predictor of particular lexical resources
 \cite{baroni:2012:eacl,erk:2008:emnlp,turney:2010:jair}.
 
 In our work, we consider how VSMs
-can be leveraged to predict some of the lexical inferences necessary in tasks
-like RTE. Namely, we present techniques and models for predicting specific
+can be leveraged to predict some of the lexical inferences necessary in RTE.
+Namely, we present techniques and models for predicting specific
 lexical relationships, entailments, and subsitutions using Distributional
 Semantics. In Lexical Relationship Detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
@@ -172,8 +172,8 @@ thesis to show that developments in these tasks improves practical RTE.
 \label{sec:textent}
 
 In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
-task, a long standing, challenging semantic problem for Natural Language
-Understanding systems. One of the first benchmark papers
+task, a long standing, challenging semantic problem in the Artificial Intelligence
+community. One of the first benchmark papers
 describes RTE as ``recognizing, given two text fragments, whether the
 meaning of one text can be inferred (entailed) from the other''
 \cite{dagan:2006:mlc}. Since this original definition, many other datasets
@@ -181,13 +181,12 @@ meaning of one text can be inferred (entailed) from the other''
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
 for a thorough survey).
 
-RTE is a very difficult task, at least partially due to its extreme breadth.
-Entailments may require extensive common sense knowledge or highly specialized
-domain specific knowledge; it may require sophisticated logical reasoning
-about quantifiers, set membership, and implication; or it may require a more
-graded, fuzzier reasoning about related words. Ultimately though, all RTE
-systems must be able to reason about specific lexical items and lexical
-relationships, like hypernymy or synonymy.
+RTE is a very difficult task, at least partially due to its generalness.
+Entailment reasoning may require either broad common sense knowledge or highly
+specialized domain knowledge; sophisticated logical inferences
+about quantifiers and implication, or more graded, fuzzier reasoning about
+related words.  Ultimately though, all RTE systems must be able to reason about
+specific lexical items and lexical relationships, like hypernymy or synonymy.
 
 Consequently, RTE systems often employ a wide collection of lexical resources
 \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}, such as
