@@ -444,25 +444,27 @@ and must provide {\em substitutes} which can replace the given target word,
 while preserving the meaning of the entire sentence
 \cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 
-Distributional Semantics offers a tempting solution to this problem, given its
-ability to measure the graded levels of similarity between words
-\cite{erk:2008:emnlp}. Interestingly, although there have been both supervised
-\cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised attempts on
-\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
-this task using distributional semantics, presently unsupervised measures hold
-a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
-
 At first glance, the Lexical Substitution task has a less obvious connection to
-Textual Entailment than the Lexical Entailment task does. However, we believe
-it is also an important proxy to improvements on Textual Entailment. Namely, it
-is possible to view Lexical Substitution as a kind of lexical entailment {\em
+Textual Entailment than the Lexical Entailment task does. However, we argue
+it is also an important proxy to improvements on Textual Entailment, and that
+Lexical Substitution may act as a kind of lexical entailment {\em
 in context}: if the substitutes replace the target and preserve the meaning of
 the sentence, then it follows that the target {\em entails} the substitute.
+
 Indeed, in one Lexical Substitution data set, explicit WordNet synonymy only
 captured about 9.4\% of all the substitutes in the data
 \cite{kremer:2014:eacl}. For this reason, we believe that Textual Entailment
 can benefit more from modeling Lexical Substitution as a complete task, rather
 treating this phenomenon as pure synonymy.
+
+Distributional Semantics offers a tempting solution to this problem of lexical
+substitution, given its ability to measure the graded levels of similarity
+between words \cite{erk:2008:emnlp}. Interestingly, although there have been
+both supervised \cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised
+attempts on
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
+this task using distributional semantics, presently unsupervised measures hold
+a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 
 \section{Completed work}
 
