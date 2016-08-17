@@ -33,18 +33,18 @@ Doctoral Dissertation Proposal}
   progressed on ambitious semantic tasks like Recognizing Textual Entailment
   (RTE). Systems that approach these tasks may perform sophisticated
   inference between sentences, but often depend heavily on lexical resources
-  like WordNet to provide critical information about relationships between
-  lexical items and entailments. However, lexical resources are expensive to
-  create and maintain, and are never fully comprehensive.
+  like WordNet to provide critical information about relationships and
+  entailments between lexical items. However, lexical resources are expensive
+  to create and maintain, and are never fully comprehensive.
 
   Distributional Semantics has long provided a method to automatically induce
   meaning representations for lexical items from large corpora with little or
   no annotation efforts. The resulting representations are excellent
   as proxies of semantic similarity: words will have similar representations if
   their semantic meanings are similar. Yet, knowing two words are similar
-  neither tells us their relationship or whether one entails the other.
+  does not tell us their relationship or whether one entails the other.
 
-  We present several models for identifying specific relationships or
+  We present several models for identifying specific relationships and
   entailments from distributional representations of lexical semantics.
   Broadly, this work falls into two distinct but related areas: the first
   predicts specific ontology relations and entailment decisions between
@@ -81,8 +81,8 @@ these technologies could influnce a wide range of industries: from threat
 identification in defense, to fact checking in journalism, to
 synthesis of knowledge in science and medicine.
 
-Substantial progress has been made in systems which perform these sort of
-sophisticated logical inferences in QA and RTE, especially as common benchmarks
+Substantial progress has been made in systems which perform
+logical inferences in QA and RTE, especially as common benchmarks
 and datasets have become available
 \cite{dagan:2006:mlc,giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval,bowman:2015:emnlp}.
 Yet in most sophisticated, compositional model of semantics, systems must
@@ -107,7 +107,7 @@ Possibly the most famous lexical resource is WordNet \cite{miller:1995:acm},
 which organizes the lexicon into a large ontology,
 though many other resources also exist and are used
 \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
-Unfortunately, resources as thorough as WordNet are extremely expensive
+Unfortunately, resources as expansive as WordNet are extremely expensive
 to create, and as language is ever-changing, they are inevitably
 always incomplete. As such, any dependence on manually constructed resources
 represents one weak point in some Natural Language Understanding systems. Even
@@ -203,13 +203,11 @@ order to capture some of these issues in lexical semantics
 rich lexical resources, including WordNet \cite{miller:1995:acm} and PPDB
 \cite{ganitkevitch:2013:naacl}, provide an excellent
 source of common sense knowledge and word relationships which can be used as a
-background knowledge-base during logical reasoning. However, constructing
-such resources is manually intensive, expensive, and neverending.
-
-This raises the question of whether it is possible to distill
-information about lexical items more automaticly. We turn now to
-Distributional Semantics and Vector Space Models, which provide an automatic
-induction of word meaning using only large, unannotated corpora.
+background knowledge-base during logical reasoning. In our work, we consider
+whether it is possible to distill information about lexical relationships
+automatically.  We turn now to Distributional Semantics and Vector Space
+Models, which provide an automatic induction of word meaning using only large,
+unannotated corpora.
 
 \subsection{Distributional Semantics}
 \label{sec:dist}
@@ -260,7 +258,7 @@ In its simplest form, vectors are induced by defining a vector space where
 each dimension in the space corresponds to a particular context word. A large,
 unannotated corpus of text is then processed, finding instances of a target word,
 like {\em dog}, and incrementing a count for each of the target's {\em
-co-occurrences}, or words appearing to the left or right of the target word
+co-occurrences}, or words appearing around the target word
 {\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
 statistical patterns begin to form. For example, the word {\em furry} is likely
 to be used to describe both {\em cat} and {\em dog}, which is then reflected in
@@ -273,7 +271,7 @@ cosine similarity}:
   \label{eq:cos}
 \end{equation}
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
-or {\em kennel}, and cosine similarity is defined over the range of $[-1, 1]$.
+or {\em kennel}, and cosine similarity is defined over the range $[-1, 1]$.
 Words with similar vectors will have a smaller angle between them, and therefore
 a higher cosine similarity (i.e. close to 1).
 
@@ -301,8 +299,8 @@ emphasize different aspects of lexical similarity.
 Defining contexts is another important aspect of Distributional Semantics.
 In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
-alternatives. For example, using very large windows of co-occurrence or even
-entire documents results in emphasizing more {\em topical} similarity, e.g. doctor
+alternatives. For example, using very large windows of co-occurrence (or even
+entire documents) results in emphasizing more {\em topical} similarity, e.g. doctor
 and hospital, while smaller windows emphasize more {\em functional} similarity, e.g.
 doctor and surgeon \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
@@ -330,7 +328,7 @@ Dimensionality Reduction is another important aspect of Distributional Semantics
 As described earlier, distributional vector
 spaces are very high-dimensional: bag-of-words spaces have many thousands of
 dimensions \cite{turney:2010:jair,mikolov:2013:iclr,pennington:2014:emnlp},
-while syntactic spaces usually have a millions, e.g. \newcite{baroni:2010:cl}.
+while syntactic spaces usually have a millions \cite{baroni:2010:cl}.
 Efficiently dealing with these large, extremely sparse vectors can be
 troublesome, so we often opt to use some form of {\em dimensionality
 reduction}, like Singular Value Decomposition (SVD)
