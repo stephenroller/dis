@@ -67,20 +67,13 @@ Doctoral Dissertation Proposal}
 \section{Introduction}
 \label{sec:intro}
 
-As the field of Natural Language Processing (NLP) has developed, significant
-progress has been made in many areas of research, like Part-of-Speech tagging
-\cite{toutanova:2003:naacl} and Parsing \cite{chen:2014:emnlp}.  Significant
-progress has also been made even in some very difficult semantics tasks, like
-Named Entity Recognition \cite{lample:2016:naacl}, Sentiment Analysis
-\cite{socher:2013:nips} and Document Classification \cite{zhang:2016:naacl},
-and Coreference Resolution \cite{durrett:2013:emnlp}.
-
-Today, there is great deal of focus on sophisticated semantics tasks that
-require complex inference and synthesis of knowledge. These include tasks like
-Question Answering (QA), where computers must read and answer questions about
-passages \cite{hermann:2015:nips,weston:2016:iclr}, and Recognizing Textual
-Entailment (RTE), where computers must decide whether a hypothesis utterance
-logically follows (or can be inferred) from a given text
+In modern Natural Language Processing (NLP) research, there is great deal of
+focus on sophisticated semantics tasks that require complex inference and
+synthesis of knowledge. These include tasks like Question Answering (QA), where
+computers must read and answer questions about passages
+\cite{hermann:2015:nips,weston:2016:iclr}, and Recognizing Textual Entailment
+(RTE), where computers must decide whether a hypothesis utterance logically
+follows (or can be inferred) from a given text
 \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}.
 
 Much progress has been made in systems which perform these sort of
@@ -349,8 +342,6 @@ Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
 \cite{levy:2014:nips,levy:2015:tacl}.
 
 \subsection{Lexical Entailment and Relationship Detection}
-
-REWRITE
 
 It can be difficult to give an exact definition of Lexical Entailment, but in
 this document we define it as any lexical relationship where a typical,
@@ -1316,8 +1307,8 @@ allowing it to downweight rare, similar words. Indeed, a quantitative analysis
 of the $W$ and $b$ parameters finds that they additionally exaggerate this
 unigram bias \cite{roller:2016:naacl}.
 Intutively, it seems natural that unigram biases should hold a strong role in
-Lexical Substitution, and that our model should be able to easily exploit
-this information.
+Lexical Substitution, and that our model should wish to exploit this
+information.
 
 \section{Proposed Work}
 
@@ -1861,7 +1852,7 @@ Namely, we considered how Hypernymy and Relationship prediction could be
 improved by imposing simple constraints inherent to ontologies. We also
 discussed several ways in which more context could be exploited in Lexical
 Substitution, or how we could remove some of the independence assumptions made
-by our current model: we note that improvements could easily come by either
+by our current model: we note that improvements could come by either
 exploiting linguistic knowledge about how different syntactic relations
 interact, or by using very successful neural network technologies. Lastly, we
 considered how current syntactic distributional spaces make an inefficient use
