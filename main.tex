@@ -280,7 +280,7 @@ a higher cosine similarity (i.e. close to 1).
 \paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
 construction than raw co-occurrence counts.  Typically, words and contexts
-below a certain threshold are omitted from the co-occurrence matrix, as
+below a certain threshold are omitted from the co-occurrence matrix, because
 extremely rare words have few counts and therefore impoverished representations
 \cite{turney:2010:jair}. The co-occurrence matrix is also usually transformed
 using some nonlinearity; one common choice is Positive Pointwise Mutual
@@ -289,16 +289,16 @@ between a word $w$ and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
 \end{equation*}
-Pointwise Mutual Information (PMI) measures roughly how many times more likely do two
-items co-occur more often than chance would dictate, while Positive PMI
-additionally ignores those which occur less often than chance.  Other
+Pointwise Mutual Information (PMI) measures roughly how many times more likely two
+items co-occur more often than chance, while Positive PMI
+additionally ignores co-occurrences that occur less often than chance.  Other
 transformations, like conditional probability
 \cite{hofman:1999:sigir,blei:2003:jmlr} and Softplus
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
 emphasize different aspects of lexical similarity.
 
 \paragraph{Syntactic Contexts}
-Another important aspect of Distributional Semantics is how context is defined.
+Defining contexts is another important aspect of Distributional Semantics.
 In the example of Figure~\ref{fig:vsm}, we showed that context can be defined
 as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of co-occurrence or even
@@ -326,12 +326,12 @@ with their labeled edges.}
 \end{figure}
 
 \paragraph{Dimensionality Reduction}
-One final notion in Distributional Semantics we wish to review is that of
-dimensionality reduction. As described earlier, the distributional vector
-spaces are very high-dimensional; bag-of-words spaces have many thousands of
+Dimensionality Reduction is another important aspect of Distributional Semantics.
+As described earlier, distributional vector
+spaces are very high-dimensional: bag-of-words spaces have many thousands of
 dimensions \cite{turney:2010:jair,mikolov:2013:iclr,pennington:2014:emnlp},
 while syntactic spaces usually have a millions, e.g. \newcite{baroni:2010:cl}.
-Efficiently dealing with these large, extremely sparse vectors can sometime be
+Efficiently dealing with these large, extremely sparse vectors can be
 troublesome, so we often opt to use some form of {\em dimensionality
 reduction}, like Singular Value Decomposition (SVD)
 \cite{deerwester:1990:jsis,landauer:1997:pr} or Nonnegative Matrix
@@ -344,7 +344,7 @@ lower-rank matrices,
 \end{equation}
 where $V$ is some lower dimension representation of word vectors, and $C$ is
 the corresponding lower dimension representation of the context items. These
-projections of words and contexts into the same latent space goes to the
+projections of words and contexts into the same latent space traces back to the
 earliest days of distributional semantics \cite{deerwester:1990:jsis}, and is
 critical to many of the contributions of our completed work.  Interestingly,
 the most popular algorithms for computing word embeddings, like Skip-Gram
@@ -359,7 +359,7 @@ this document we define it as any lexical relationship where a typical,
 cooperative reader would logically assume a given consequent from a given
 antecedent. This includes many classical lexical relations, like hypernymy (a
 girl {\em is a} child; a dog {\em is an} animal), and meronomy (a girl {\em
-has} eyes; a dog {has a} tail), but also many nonclassical ones too. For
+has} eyes; a dog {\em has a} tail), but also many nonclassical ones. For
 example, a {\em dissertation} implies a {\em committee}, but the exact
 relationship between these items would be difficult to pigeonhole into a
 category, or generalize to other items. Regardless, as shown in our example
