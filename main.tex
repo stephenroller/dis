@@ -356,10 +356,10 @@ To paraphrase \newcite{shnarch:2008:thesis}, Lexical Entailment may be broadly
 defined as any number of semantic relations between two lexical items where the
 meaning of one is implied by the meaning of another.
 This includes many classical lexical relations, like hypernymy
-(a girl {\em is a} child; a dog {\em is an} animal), and meronomy
-(a girl {\em has} eyes; a dog {\em has a} tail), but it can also include a
+({\em a girl} is a {\em child}; {\em a dog} is an {\em animal}), and meronomy
+({\em a girl} has {\em eyes}; {\em a dog} has a {\em tail}), but it can also include a
 wide variety other inferences which are difficult to categorize,
-like ``to snore'' implies ``to sleep.''
+like {\em to snore} implies {\em to sleep}.
 
 As shown in our example
 sentence in the Introduction, understanding and predicting these lexical relationships
@@ -389,21 +389,20 @@ could be used to augment existing lexical resources like WordNet, bootstrap
 a WordNet-like resource in new languages, and help downstream tasks like RTE
 and QA.
 
-Early work in identify lexical entailments using distributional spaces was
+Early work in predicting lexical entailments using distributional spaces was
 focused mostly on attempts to find unsupervised similarity measures to identify
-specific relationships from word vectors
+hypernymy from word vectors
 \cite{weeds:2004:coling,clarke:2009:gems,kotlerman:2010:nle,lenci:2012:starsem,santus:2013:thesis}.
 The reasoning was that with the right corpus, the right
 distributional space, and the right similarity measure, hypernym pairs
 (or at least candidate pairs) could be readily identified using only word
-vectors. This view was furthered by evidence that the ubiquitious
+vectors. This view was developed in part by evidence that the ubiquitious
 cosine similarity tends to highlight co-hyponym pairs more than other relations
 \cite{weeds:2004:coling,baroni:2011:gems}.  One lasting hypothesis about
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
 \cite{zhitomirsky-geffet:2005:acl}, which states that the contexts in which a
-hypernym appears should be a superset of all its hyponyms, or subordinate
-words. A considerable
-amount of work has assumed it to be at least partially true.  Many of the
+hypernym appears should be a superset of all its hyponyms. A considerable
+amount of work assumed the DIH to be at least partially true, and many of the
 proposed measures were based on the Distributional Inclusion Hypothesis in one
 form or another \cite{clarke:2009:gems}, or a hybrid of DIH and cosine
 similarity \cite{kotlerman:2010:nle,lenci:2012:starsem}.
@@ -412,8 +411,8 @@ As it became obvious that unsupervised measures did not work as
 well as hoped, the community began working on entailment detection as a
 supervised task. \newcite{baroni:2012:eacl} proposed, as a preliminary baseline
 of a novel dataset, training a simple baseline classifier to predict whether
-word pairs were either hypernyms or non-hypernyms. Although they reported scores
-in the high 90s, others later realized this was due to issues of {\em lexical
+word pairs were either hypernyms or non-hypernyms. Although they reported strong performance,
+others later realized their model struggled with issues of {\em lexical
 memorization}, or a special kind of overfitting
 \cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. As such, more
 recent works have emphasized their performance when {\em individual words are
@@ -430,8 +429,7 @@ In our discussion of lexical relationships, we assumed that words are
 mononymous, or that they have only one meaning. However, words like ``bright''
 have multiple meanings, which change depending on context, as in ``bright
 girl'' and ``bright coat.'' This is called {\em polysemy}, and is a major issue
-in Natural Language Understanding, since it adds another layer of possible in
-meaning.
+in Natural Language Understanding, since it adds another layer of ambiguity.
 
 One approach to dealing with polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
@@ -446,10 +444,10 @@ At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we argue
 it is also an important proxy to improvements on Textual Entailment, and that
 Lexical Substitution may act as a kind of lexical entailment {\em
-in context}: if the substitutes replace the target and preserve the meaning of
+in context}: if a substitute can replace the target and preserve the meaning of
 the sentence, then it follows that the target {\em entails} the substitute.
 Although this includes basic synonymy (like ``bright'' and ``clever''), it
-also covers much more interesting or specialized cases. For example, with the
+also covers much more interesting specialized cases. For example, with the
 context
 \begin{quote}
   ``Tara stood stock-still, waiting for the first tiny gleam from the
