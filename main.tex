@@ -354,15 +354,30 @@ Negative Sampling (SGNS) \cite{mikolov:2013:iclr} and GloVe
 
 \subsection{Lexical Entailment and Relationship Detection}
 
-It can be difficult to give an exact definition of Lexical Entailment, but in
-this document we define it as any lexical relationship where a typical,
-cooperative reader would logically assume a given consequent from a given
-antecedent. This includes many classical lexical relations, like hypernymy (a
-girl {\em is a} child; a dog {\em is an} animal), and meronomy (a girl {\em
-has} eyes; a dog {\em has a} tail), but also many nonclassical ones. For
-example, a {\em dissertation} implies a {\em committee}, but the exact
-relationship between these items would be difficult to pigeonhole into a
-category, or generalize to other items. Regardless, as shown in our example
+
+%It can be difficult to give an exact definition of Lexical Entailment, but in
+%this document we define it as any lexical relationship where a cooperative
+%reader might accept 
+%
+%would logically assume a given consequent from a given
+%antecedent. This includes many classical lexical relations, like hypernymy (a
+%girl {\em is a} child; a dog {\em is an} animal), and meronomy (a girl {\em
+%has} eyes; a dog {\em has a} tail), but also many nonclassical ones. For
+%example, 
+%
+%For
+%example, a {\em dissertation} implies a {\em committee}, but the exact
+%relationship between these items would be difficult to pigeonhole into a
+%category, or generalize to other items.
+
+
+\begin{quote}
+``Lexical entailment is a semantic relation
+that holds between lexical elements when the meaning of one element can
+be inferred from the meaning of the other.'' \cite{shnarch:2008:thesis}
+\end{quote}
+
+As shown in our example
 sentence in the Introduction, understanding and predicting these relationships
 is crucial to performing certain inferences in RTE: without some basic lexical
 relationships, even the easiest textual entailment pairs would be out of
