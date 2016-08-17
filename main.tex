@@ -14,7 +14,7 @@
 
 \usepackage{aliases}
 
-\title{Identifying Lexical Relationships and Subsitutes with Distributional Semantics}
+\title{Identifying Lexical Relationships and Entailments with Distributional Semantics}
 \author{Stephen Roller\\
 The University of Texas at Austin\\
 {\tt roller@cs.utexas.edu}\\
@@ -29,12 +29,11 @@ Doctoral Dissertation Proposal}
 \begin{abstract}
   As the field of Natural Language Processing has developed, more research has
   progressed on ambitious semantic tasks like Recognizing Textual Entailment
-  (RTE).  Systems which approach these tasks may perform sophisticated
-  inference between sentences, but depend heavily on lexical resources like
-  WordNet to provide critical information like the relationships between
-  lexical items, or whether one lexical item entails another. However, lexical
-  resources are expensive to create and maintain, and are never be
-  comprehensive.
+  (RTE). Systems which approach these tasks may perform sophisticated
+  inference between sentences, but often depend heavily on lexical resources
+  like WordNet to provide critical information about relationships between
+  lexical items and entailments. However, lexical resources are expensive to
+  create and maintain, and are never fully comprehensive.
 
   Distributional Semantics has long provided a method to automatically induce
   meaning representations for lexical items from large corpora with little or
@@ -69,11 +68,10 @@ Doctoral Dissertation Proposal}
 \label{sec:intro}
 
 As the field of Natural Language Processing (NLP) has developed, significant
-progress has been made in many areas of research, especially those in ``lower''
-levels of Bernard Vauquois's famed Triangle, like Part-of-Speech tagging
-\cite{toutanova:2003:naacl} and Parsing \cite{chen:2014:emnlp}.  Significant progress
-has also been made even in some very difficult semantics tasks,
-like Named Entity Recognition \cite{lample:2016:naacl}, Sentiment Analysis
+progress has been made in many areas of research, like Part-of-Speech tagging
+\cite{toutanova:2003:naacl} and Parsing \cite{chen:2014:emnlp}.  Significant
+progress has also been made even in some very difficult semantics tasks, like
+Named Entity Recognition \cite{lample:2016:naacl}, Sentiment Analysis
 \cite{socher:2013:nips} and Document Classification \cite{zhang:2016:naacl},
 and Coreference Resolution \cite{durrett:2013:emnlp}.
 
@@ -187,30 +185,22 @@ meaning of one text can be inferred (entailed) from the other''
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
 for a thorough survey).
 
-REWRITE
-%One important theory in Philosophy of Language circles is that of
-%compositional semantics, famously described by \newcite{montague:1970:theoria},
-%but with a long history outside the scope of this document. In compositional
-%semantics, the meanings of sentences can be described {\em compositionally} and
-%modeled using formal logical systems, like First Order Logic (FOL). These
-%FOL formulae are built iteratively, usually by modeling grammatical structures
-%as lambda expressions which are iteratively applied to derive a final
-%representation of the sentence \cite{kamp:2013:discourse}. These theories
-%of language have become the motivation of several modern language understanding
-%systems \cite{maccartney:2008:coling,beltagy:2013:starsem,bjerva:2014:semeval}.
-%However, these systems face a fundamental problem: only the semantics of the
-%{\em sentence} is described logically, but the semantics of individual words
-%is left unspecified. As one old joke goes, ``What is the meaning of life?
-%{\em life}$'$.\footnote{Attributed to Barbara Partee and Terry Parsons
-%\url{http://mailman.uib.no/public/corpora/2010-January/009847.html}}
+RTE is a very difficult task, at least partially due to its extreme breadth.
+Entailments may require extensive common sense knowledge or highly specialized
+domain specific knowledge; it may require sophisticated logical reasoning
+about quantifiers, set membership, and implication; or it may require a more
+graded, fuzzier reasoning about related words. Ultimately though, all RTE
+systems must be able to reason about specific lexical items and lexical
+relationships, like hypernymy or synonymy.
 
-To compensate for this fact, systems often employ a wide collection of lexical
-resources \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl},
-such as WordNet \cite{miller:1995:acm} or PPDB \cite{ganitkevitch:2013:naacl}.
-These rich resources provide an excellent source of common sense knowledge
-and word relationships which can be used as a sort of knowledge-base during
-logical reasoning. However, these resources are often very expensive to create,
-and, since language is ever changing, inherently incomplete.
+Consequently, RTE systems often employ a wide collection of lexical resources
+\cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}, such as
+WordNet \cite{miller:1995:acm} or paraphrase databases
+\cite{ganitkevitch:2013:naacl}.  These rich resources provide an excellent
+source of common sense knowledge and word relationships which can be used as a
+background knowledge-base during logical reasoning. However, these resources
+are often very expensive to create, and, since language is ever changing,
+inherently incomplete.
 
 Naturally, this raises the question of whether it is possible to distill
 information about lexical items in a more automatic fashion. We turn now to
