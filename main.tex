@@ -45,7 +45,7 @@ Doctoral Dissertation Proposal}
   We present several models for identifying specific relationships or
   entailments from distributional representations of lexical semantics.
   Broadly, this work falls into two distinct but related areas: the first
-  predicts specific taxonomic relations and entailment decisions between
+  predicts specific ontology relations and entailment decisions between
   lexical items devoid of context; the second predicts specific lexical
   paraphrases in complete sentences. We provide insight and analysis of how and
   why these our models are able to generalize to novel lexical items and
@@ -102,7 +102,7 @@ Although significant progress has been made on the task of Recognizing Textual
 Entailment, many of these systems ultimately depend on some lexical resources
 \cite{beltagy:2014:semeval,bjerva:2014:semeval,lai:2014:semeval,marelli:2014:semeval,beltagy:2016:cl}.
 Possibly the most famous lexical resource is WordNet \cite{miller:1995:acm},
-which organizes the lexicon into a large ontology (taxonomy),
+which organizes the lexicon into a large ontology,
 though many other resources also exist and are used
 \cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
 Unfortunately, resources as thorough as WordNet are extremely resource
@@ -1345,9 +1345,9 @@ goal of Textual Entailment. We propose multiple methods to test our models
 in an end-to-end RTE system.
 
 The long term work follows from three broad directions forward: (1) encouraging
-taxonomic consistency of predictions in Lexical Entailment; (2) better integration
-of a wider context into the Lexical Substitution system; and (3) a more sophisticated
-distributional model which reuses information when possible.
+ontological consistency of predictions in Lexical Entailment; (2) better
+integration of a wider context into the Lexical Substitution system; and (3) a
+more sophisticated distributional model which reuses information when possible.
 
 \subsection{Short Term Proposals}
 
@@ -1509,7 +1509,7 @@ clusters. It was also examined some in \newcite{snow:2004:nips}, who used
 syntactic Hearst Patterns to make predictions about hypernymy, and then
 linearly interpolated the prediction confidences in order to better
 conform to these hard constraints. Later, \newcite{snow:2006:acl}
-proposed a probabilistic model over {\em ontologies}, allowing them to propose
+proposed a probabilistic model over {\em ontologies}, and
 an algorithm for searching over entire ontologies constrained by rules about
 the transitivity of hypernymy, and reflexivity of co-hyponymy. This ontology
 search is then used in order to find the single ontology which has maximal
@@ -1519,10 +1519,10 @@ not violating any of the hard constraints.
 Although \newcite{snow:2006:acl} found their ontology searching algorithm
 highly successful with the use of the lexico-syntactic patterns indicative
 of hypernymy, such an approach is yet to be tried on classifiers which make
-use of distributional information about words. Therefore, the most reasonable
+use of {\em distributional information} about words. Therefore, the most reasonable
 first course of action would to reimplement and examine whether their model
-is compatible with the distributional models of hypernymy prediction. On one
-hand, it could help tremendously; on the other hand, their model supports only
+is compatible with the distributional models of hypernymy prediction.
+However, their model supports only
 two forms of constraints (transitivity of hypernymy and reflexivity of
 co-hyponyms), leaving open questions about how other constraints should be
 imposed.
@@ -1534,7 +1534,7 @@ logical inference over sets of weighted atoms and logical rules. MLNs are given
 a set of weighted First Order Logic (FOL) rules and a database of atoms, and
 give reweighted predictions about the probabilities of atoms based on their
 consistency with the logical rules. MLNs can encode many
-different relations as rules, and perform joint updating of all lexical
+different relations as rules, and perform joint updating of {\em all} lexical
 relationship predictions.  For example, the rules for transitivity and reflexivity
 discussed in \newcite{snow:2006:acl} could be encoded as:
 \begin{align*}
@@ -1550,8 +1550,8 @@ MLNs ability to incorporate {\em weighted rules} would also give room for
 flexibility in constraint importance, and allow for {\em some} violations of
 constraints when the evidence is simply overwhelming. Therefore, we believe
 both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
-candidates for improving lexical relationship prediction by enforcing taxonomic
-consistency.
+candidates for improving lexical relationship prediction by enforcing ontology
+constraints.
 
 \subsubsection{Sophisticated Contexts for Lexical Substitution}
 
@@ -1561,9 +1561,9 @@ showed how the syntactic neighbors of a target word are useful in predicting
 what are the lexical substitutes, or in-context synonyms, of the target word.
 Although the syntactic neighbors can indeed capture some kinds of {\em long-distance
 dependencies}, there is much greater deal of context available which is
-presently not used by the model: namely, the {\em entire rest of the sentence}.
+presently not used by the model: the {\em entire rest of the sentence}.
 
-Consider, for example, if the model were able to asked to find the best verb
+Consider if our PIC model were asked to find the best verb
 to fill-in-the-blank in the following two simple sentences:
 
 \begin{center}
@@ -1571,7 +1571,7 @@ to fill-in-the-blank in the following two simple sentences:
   {\em The dog \_\_\_ the meat ball.}
 \end{center}
 
-In both cases, the model will be given the exact same context for the missing
+In both cases, PIC will be given the exact same context for the missing
 verb: its subject should be {\em dog} and its object should be {\em ball}. However,
 humans know that the dog is more likely to {\em chase} or {\em fetch} the tennis
 ball, while it is more likely to {\em eat} the meat ball. Without being provided
@@ -1580,8 +1580,8 @@ to distinguish these two cases. How can this information be integrated into the
 model?
 
 Even beyond this simple example, it is already clear from prior work that
-additional context can be very useful in the task.
-\newcite{vandecruys:2011:emnlp}, for example, proposed model which combined
+additional context can be very useful in the task. \newcite{dinu:2010:emnlp} and
+\newcite{vandecruys:2011:emnlp} consider models which combine
 a syntactic distributional space with a bag-of-words distributional space with
 a very large window by finding a shared latent representation of both spaces,
 showing modest improvements over each individual space. Furthermore,
