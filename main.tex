@@ -371,35 +371,33 @@ relationships automatically from text. We cannot possibly enumerate all the
 work on this problem, but we aim to cover some influential approaches and to
 emphasize attempts related to distributional semantics
 
-One important, early work in this task was that of Hearst patterns
+One important, early development in this task was Hearst patterns
 \cite{hearst:1992:coling}, which are specific textual patterns highly
 indicative of particular relationships. Common Hearst patterns include
-phrases like ``X such as Y,'' ``X including Y,'' which are both highly
-indicative of hypernymy; and possessives, like ``X's Y'', can be indicative
-of meronomy. In fact, the previous sentence contains several Hearst patterns
-{\em about} Hearst patterns. Later,
+exemplar phrases like ``X such as Y,'' ``X including Y,'' which are both highly
+indicative of hypernymy. Possessive phrases, like ``X's Y'', can be indicative
+of meronomy. Later,
 \newcite{snow:2004:nips} extended this Hearst pattern approach
-to use syntactic patterns rather than
-pure n-gram patterns. By using syntactic parses, some longer distance patterns
-are more easily captured, like ``X such as Y and Z'', which can be easily
-transformed to ``X such as Z'' using a syntactic parse.
+to use syntactic patterns. By using syntactic parses, some longer distance patterns
+are more easily captured, like ``X such as Y and Z'', which implies ``X such as Z.''
 
 More recently, groups have begun researching how lexical relationships may be
-mined automatically using VSMs. Since distributional
-semantics provides a way of estimating word meaning automatically from only
-large, unannotated corpora, it hoped that it can be used to identify
+mined automatically using VSMs. Since Distributional
+Semantics provides a way of estimating word meaning automatically from only
+large, unannotated corpora, they may also be able to identify
 word relationships \cite{baroni:2011:gems,baroni:2012:eacl}. Ideally, this
-could be used to augment existing lexical resources like WordNet, bootstrapping
-a WordNet-like resource in new languages, and downstream tasks like RTE and QA.
+could be used to augment existing lexical resources like WordNet, bootstrap
+a WordNet-like resource in new languages, and help downstream tasks like RTE
+and QA.
 
 Early work in identify lexical entailments using distributional spaces was
 focused mostly on attempts to find unsupervised similarity measures to identify
-specific relationships from the word vectors
+specific relationships from word vectors
 \cite{weeds:2004:coling,clarke:2009:gems,kotlerman:2010:nle,lenci:2012:starsem,santus:2013:thesis}.
-The reasoning went that, with perhaps the right corpus, the right
-distributional space, and the right similarity measure, perhaps hypernym pairs,
-or at least candidate pairs, could be readily identified using only word
-vectors. This view was further highlighted by the fact that the ubiquitious
+The reasoning was that with the right corpus, the right
+distributional space, and the right similarity measure, hypernym pairs
+(or at least candidate pairs) could be readily identified using only word
+vectors. This view was furthered by evidence that the ubiquitious
 cosine similarity tends to highlight co-hyponym pairs more than other relations
 \cite{weeds:2004:coling,baroni:2011:gems}.  One lasting hypothesis about
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
