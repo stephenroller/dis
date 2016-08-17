@@ -1661,7 +1661,7 @@ two attachments (transitive), or more (ditransitive, prepositional phrase attach
 adverbs, etc). Similarly, nouns can also stand in many syntactic relations
 simultaneously (compound, adjective, prepositional phrase, verb relation, and
 others). Since the number of attachments is variable, it is difficult to define
-a coherent probabilistic model which does not demand at least {\em some}
+a probabilistic model which does not demand at least {\em some}
 independence assumptions. Even if we were to define the model over all possible
 syntactic relations for every word, the issue would not be solved: consider
 a ``small, furry, brown mouse,'' which has three modifiers all standing
@@ -1694,8 +1694,7 @@ the ordering (simply insisting that, for example, subjects are always presented
 before objects), but it remains unclear whether this is useful. We could also
 {\em randomize} the order the attachments are presented: since there are many
 permutations, this could substantially increase the amount of training data
-available, since each sentence could then generate many training examples: one
-where subject is first, one where object is first, etc. However, preliminary
+available. However, preliminary
 experiments showed difficulty with this second approach: the $PIC$ model came
 about when our first attempts at using LSTMs were unsuccessful.
 
@@ -1717,22 +1716,20 @@ matrix factorization for the extremely large, extremely sparse word-context
 co-occurrence matrix. In syntactic spaces, the contexts are distinguished by
 the neighboring word {\em together} with its syntactic relation. That is there
 is one context for {\tt nsubj\_dog} and another for {\tt dobj\_dog}. This is a
-powerful notion, and one that gives the syntactic spaces their ability
-to model selectional preferences: without distinguishing these relations,
-the model would be much like to the bag-of-words spaces.
+powerful notion, and one that enables the syntactic spaces their ability
+to model selectional preferences.
 
 Yet, modeling each of these contexts independently also seems to be wasting
-a large amount of information: that it is the same lexical item being modified
-by two different syntactic relations. If this information is ignored, then
-we must assume we have excellent corpus statistics for how every word stands
-in every relation. Yet this rarely happens, and one of the important
+a large amount of information: that the same word is being modified
+by two different syntactic relations. When this is ignored,
+we assume we have excellent statistics for how every word stands
+in every relation, but this is unrealistic, and one of the important
 steps in constructing a syntactic distributional space is to limit modeling
-to only the top one million most frequent contexts, where the statistics are
-still plentiful enough for modeling. But in defining a cutoff at all, we
-are also ignoring a lot of information: by Zipf's law, half of the data
-is in the long tail. Do we really want to throw away all this data?
+to only the top most frequent contexts. But in defining a cutoff at all, we
+are also omitting a significant amount of data.
+Do we really want to throw away all this data?
 
-We ask then, to what degree can the {\em syntactic relations} be separated
+We ask whether the {\em syntactic relations} be separated
 from the {\em words} in syntactic distributional spaces? 
 Can these context vectors we rely heavily on in our work be {\em generatively
 modeled}? Perhaps one way to approach this would be to model it as a
@@ -1751,7 +1748,7 @@ proposal, but it could act as a baseline model:
 \end{equation*}
 
 Another possibility would be to treat the procedure as a form of post-processing
-generalization. For example, we could learn the context vectors as we do now, and
+generalization. For example, we could factorize the context vectors as we do now, and
 then attempt to learn to predict the observed context vectors from the input
 components. For example, perhaps after performing the concatenation, a simple
 linear regression could combine them:
@@ -1759,10 +1756,9 @@ linear regression could combine them:
   \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}
 \end{equation*}
 This is a simple, linear regression model, but it would still enable us to
-predict information about novel combinations of syntactic relations and words,
-albeit by assuming independence between the word and syntactic operation. One
-could increase the representational power by using a neural network instead,
-or adding additional terms to model the error terms.
+predict information about novel combinations of syntactic relations and words.
+One could increase the representational power by using a neural network model
+or additional nonlinear terms.
 
 Another variation of this linear regression idea, would be to model each
 syntactic relation as a function {\em applied} to the vector. For example,
