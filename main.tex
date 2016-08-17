@@ -164,9 +164,9 @@ We begin with a discussion of Recognizing Textual Entailment and the core
 motivation of our thesis.  We then overview Distributional Semantics, outlining
 its purpose and one common implementation of VSMs. Finally, we dicuss the
 Lexical Entailment (LexEnt) and Lexical Substitution (LexSub) tasks, which we
-view as strong proxies for the kinds of lexical semantics necessary for RTE. We
-do not argue that these tasks are completely sufficient, but one goal of our
-thesis to show that developments in these tasks improves practical RTE.
+view as two useful proxies for the kinds of lexical semantics necessary in
+RTE. We do not argue that these tasks are completely sufficient, but one goal
+of our thesis to show that developments in these tasks improves practical RTE.
 
 \subsection{Recognizing Textual Entailment}
 \label{sec:textent}
@@ -194,10 +194,11 @@ include issues like lexical relationship detection, where one must classify
 {\em how} two words are (or are not) related, and lexical paraphrasing, where
 one must suggest alternative words which have the same meaning.
 
-Consequently, RTE systems often employ a wide collection of lexical resources
-\cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}, such as
-WordNet \cite{miller:1995:acm} or paraphrase databases
-\cite{ganitkevitch:2013:naacl}.  These rich resources provide an excellent
+Presently, RTE systems often employ a wide collection of lexical resources in
+order to capture some of these issues in lexical semantics
+\cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}. These
+rich lexical resources, including WordNet \cite{miller:1995:acm} and PPDB
+\cite{ganitkevitch:2013:naacl}, provide an excellent
 source of common sense knowledge and word relationships which can be used as a
 background knowledge-base during logical reasoning. However, these resources
 are often very expensive to create, and, since language is ever changing,
@@ -450,8 +451,6 @@ ability to measure the graded levels of similarity between words
 \cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}.
 this task using distributional semantics, presently unsupervised measures hold
 a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
-
-MORE ON THIS NEXT PARAGRAPH
 
 At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we believe
