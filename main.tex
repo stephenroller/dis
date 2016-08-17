@@ -1131,8 +1131,8 @@ Substitution (LexSub) task. In the Lexical Substitution task, we are given
 a sentence and target word, and must choose possible substitutes from the
 entire vocabulary which preserve the meaning of the sentence.
 As described in Section~\ref{sec:lexsub}, we view
-LexSub as as proxy which captures a wide degree of lexical entailments {\em in
-context}, including synonymy issues of synonymy and polysemy. 
+LexSub as a proxy which captures a wide degree of lexical entailments {\em in
+context}.
 
 We propose a new measure, which extends
 a previously successful, simple model to estimate the appropriateness of a
@@ -1143,7 +1143,7 @@ of these unsupervised measures is the use of {\em context vectors}, related
 to the insights discussed in Section~\ref{sec:lexmem}. Crucially, the models
 of \newcite{melamud:2015:vsm} depend on syntactic context vectors, which
 have been found more successful than just BoW measures in the literature
-\newcite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
 We note that these models are {\em not} the state of the art,
 \cite{melamud:2015:naacl,melamud:2016:conll} but perform competitively while
 remaining simple, extensible, and highly interpretable.
@@ -1166,7 +1166,7 @@ To this end, it assumes the sentence is parsed, so that we have the full set of
 syntactic neighbors of the target, $C$. Each of the context vectors
 corresponding to elements of $C$ are then evaluated for their fit with the
 proposed substitute, as illustrated in Figure~\ref{fig:syn}. For a given target
-$t$, substitute $s$ and context $C$, the final \addCos score is given as
+$t$, substitute $s$ and context $C$, the final \addCos~score is given as
 \begin{equation}
   \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
 \end{equation}
@@ -1176,8 +1176,8 @@ the substitute (``smart'' or ``colorful'') which is {\em closer} to the
 given context. If the context is ``scientist'' as in ``bright scientist,''
 we will shift our prediction away from ``colorful'' and closer to ``smart,''
 and vice versa for ``bright coat.'' This remains one of the simplest successful
-models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also propose
-a few other variants of this measure, including {\em balCosAdd}, which equally
+models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also consider
+variants of this measure, including {\em balCosAdd}, which equally
 weights the out-of-context similarity with the in-context appropriateness:
 \begin{equation}
   \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
@@ -1221,13 +1221,13 @@ We compare our model to that of an out-of-context baseline (cosine) and the
 {\em addCos} and {\em balAddCos} models of \newcite{melamud:2015:vsm}, which
 outperformed other prior work at the time of its publication. We compare the
 models on three data sets: SE07, the original LexSub data set
-\cite{mccarthy:2007:semeval} which was explicitly developed to model polysemy;
+\cite{mccarthy:2007:semeval} which was explicitly developed to capture polysemy;
 Coinco, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
 to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
 measures whether our best proposed substitute is contained within the set of gold
-substitutes provided by annotators. In all models, We exclude any words sharing
+substitutes provided by annotators. In all models, we exclude any words sharing
 the same lemma as the target, e.g. if the target is ``barking'' we do not
 propose ``bark.''
 
@@ -1275,7 +1275,7 @@ in Mean Precision@1.}
 Table~\ref{tab:lexsub} contains results for all measures across all datasets.
 We observe that PIC outperforms all other models by a significant
 margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
-30\% improvement over balAddCos in SE07 and Coinco. The nPIC also improves
+30\% improvement over \balAddCos in SE07 and Coinco. The nPIC also improves
 substantially over the other baselines, indicating we gain benefit both from
 the new objective function and the additional parameterization.  We next
 strive to understand why both measures have a clear improvements over the
@@ -1310,7 +1310,7 @@ models perform better. We see that all four measures
 tend to pick excellent substitutes which {\em semantically} agree with the
 original target. However, the cosine and {\em balAddCos} models have a large number of
 misspelled works in their list, while the nPIC and PIC measures contain
-generally correct spellings. This is because, somewhat surprisingly, the {\em
+mostly correct spellings. This is because, somewhat surprisingly, the {\em
 length} of the distributional vectors correlates strongly with the {\em
 unigram} statistics of the word \cite{wilson:2015:arxiv}.
 Therefore, by using the unnormalized inner
@@ -1407,8 +1407,8 @@ contributes to an end-to-end RTE pipeline.
 We suspect, given its substantial improvements over Asym in lexical datasets,
 that it will also be able to be able to improve the end-to-end system.
 
-It remains unclear what is the best way to integrate it with
-additional hand-engineered features used in the RTE system. One possibility
+It remains unclear what is the best way to integrate it with the
+additional hand-engineered features used in the pipeline. One possibility
 would be to simply use the H-feature detector procedure to provide additional
 information to the lexical entailment classifier, but there are complications
 in that the H-feature detector demands nonlinear models, while the
@@ -1474,7 +1474,7 @@ guarantee the output of the system over all pairs will also be
 well-structured.
 
 For example, a hypernymy prediction model could predict that both ``animal is a
-hypernym of dog'' and that ``dog is a hypernym of animal'', even though we know
+hypernym of dog'' and that ``dog is a hypernym of animal,'' even though we know
 hypernymy is non-reflexive. Or it could predict that ``a golden retriever is a
 dog'' and ``dog is an animal,'' but incorrectly predict that ``gold retriever is
 {\em not} an animal,'' violating the transitive property of hypernymy. These
@@ -1569,7 +1569,7 @@ verb: its subject should be {\em dog} and its object should be {\em ball}. Howev
 humans know that the dog is more likely to {\em chase} or {\em fetch} the tennis
 ball, while it is more likely to {\em eat} the meat ball. Without being provided
 the additional information about the ball, the model has absolutely no way
-to distinguish these two cases. How can this information be integrated into the
+to distinguish these two cases. How can this information be integrated into our
 model?
 
 Even beyond this simple example, it is already clear from prior work that
@@ -1628,7 +1628,7 @@ that of \newcite{shwartz:2016:acl}. In their model, a syntactic chains
 connecting two target words was used to classify whether the words stand in a
 hypernymy relationship or not, acting as a modern neural-network version of
 \newcite{snow:2004:nips}. We propose using similar syntactic chains to simply
-predict the {\em last word} in the chain, performing the operation for billions
+predict the {\em last word} in the chain, training using billions
 of syntactic chains extracted from large corpora. This model would have the
 capability of capturing and remembering relevant long-distance information
 whenever it is helpful in predicting the final word. One challenge
@@ -1688,7 +1688,7 @@ before objects), but it remains unclear whether this is useful. We could also
 {\em randomize} the order the attachments are presented: since there are many
 permutations, this could substantially increase the amount of training data
 available. However, preliminary
-experiments showed difficulty with this second approach: the $PIC$ model came
+experiments showed difficulty with this second approach: the PIC model came
 about when our first attempts at using LSTMs were unsuccessful.
 
 Nonetheless, it is encouraging that the same linguistic and neural network
