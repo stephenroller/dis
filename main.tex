@@ -188,9 +188,9 @@ downstream tasks like Information Extraction or Question Answering and become
 useful in information-heavy industries like defense, journalism, and science.
 
 RTE is a very difficult task, at least partially due to its generality.
-Entailment reasoning may require either broad common sense knowledge or highly
+Entailment reasoning may require: broad common sense knowledge or highly
 specialized domain knowledge; sophisticated logical inferences
-about quantifiers and implication, or more graded, fuzzier reasoning about
+about quantifiers and implication; or more graded, fuzzier reasoning about
 related words. In our own work, we focus predominantly on some of the issues
 of {\em lexical semantics} necessary for reasoning in RTE systems. These
 include issues like lexical relationship detection, where one must classify
@@ -203,12 +203,11 @@ order to capture some of these issues in lexical semantics
 rich lexical resources, including WordNet \cite{miller:1995:acm} and PPDB
 \cite{ganitkevitch:2013:naacl}, provide an excellent
 source of common sense knowledge and word relationships which can be used as a
-background knowledge-base during logical reasoning. However, these resources
-are often very expensive to create, and, since language is ever changing,
-inherently incomplete.
+background knowledge-base during logical reasoning. However, constructing
+such resources is manually intensive, expensive, and neverending.
 
-Naturally, this raises the question of whether it is possible to distill
-information about lexical items in a more automatic fashion. We turn now to
+This raises the question of whether it is possible to distill
+information about lexical items more automaticly. We turn now to
 Distributional Semantics and Vector Space Models, which provide an automatic
 induction of word meaning using only large, unannotated corpora.
 
@@ -224,7 +223,7 @@ can be traced back over 60 years
 \cite{wittgenstein:1953:pi,harris:1954:word,firth:1957:la}. In its modern form,
 Distributional Semantics involves finding {\em vector space representations} of
 words which are constructed by counting or modeling the contexts in which a
-particular word appears. According to the Distributional Hypothesis then, words
+particular word appears. According to the Distributional Hypothesis, words
 with similar {\em vectors} can be assumed to have similar {\em meanings}
 \cite{turney:2010:jair}. For this reason, they are often referred to as
 Vector Space Models (VSMs) of language. Variations on this idea have also
@@ -259,7 +258,7 @@ of word vectors.}
 
 In its simplest form, vectors are induced by defining a vector space where
 each dimension in the space corresponds to a particular context word. A large,
-unannotated corpus of text is then processed, finding instances of atarget word,
+unannotated corpus of text is then processed, finding instances of a target word,
 like {\em dog}, and incrementing a count for each of the target's {\em
 co-occurrences}, or words appearing to the left or right of the target word
 {\em dog}, as in Figure~\ref{fig:vsm}. With a large enough corpus, coherent
@@ -276,7 +275,7 @@ cosine similarity}:
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
 or {\em kennel}, and cosine similarity is defined over the range of $[-1, 1]$.
 Words with similar vectors will have a smaller angle between them, and therefore
-a higher cosine similarity (e.g. close to 1).
+a higher cosine similarity (i.e. close to 1).
 
 \paragraph{Count Transformations}
 In practice, usually the distributional vectors are more sophisticated in their
