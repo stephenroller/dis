@@ -172,21 +172,27 @@ thesis to show that developments in these tasks improves practical RTE.
 \label{sec:textent}
 
 In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
-task, a long standing, challenging semantic problem in the Artificial Intelligence
-community. One of the first benchmark papers
-describes RTE as ``recognizing, given two text fragments, whether the
-meaning of one text can be inferred (entailed) from the other''
-\cite{dagan:2006:mlc}. Since this original definition, many other datasets
+task as a long standing, challenging semantic problem in the field of
+Natural Language Processing.  One of the first benchmark papers describes RTE
+as ``recognizing, given two text fragments, whether the meaning of one text can
+be inferred (entailed) from the other'' \cite{dagan:2006:mlc}. Since this
+original definition, many other datasets
 \cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
-for a thorough survey).
+for a thorough survey). Although RTE is not usually considered an
+end-user application by itself, successful RTE systems could influence many
+downstream tasks like Information Extraction or Question Answering, and become
+useful in information-heavy industries like Defense, Journalism, and Science.
 
 RTE is a very difficult task, at least partially due to its generalness.
 Entailment reasoning may require either broad common sense knowledge or highly
 specialized domain knowledge; sophisticated logical inferences
 about quantifiers and implication, or more graded, fuzzier reasoning about
-related words.  Ultimately though, all RTE systems must be able to reason about
-specific lexical items and lexical relationships, like hypernymy or synonymy.
+related words. In our own work, we focus predominantly on some of the issues
+of {\em lexical semantics} necessary for reasoning in RTE systems. These
+include issues like lexical relationship detection, where one must classify
+{\em how} two words are (or are not) related, and lexical paraphrasing, where
+one must suggest alternative words which have the same meaning.
 
 Consequently, RTE systems often employ a wide collection of lexical resources
 \cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}, such as
