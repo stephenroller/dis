@@ -1407,19 +1407,19 @@ and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 \paragraph{H-features Model for RTE}
 
 The results of Section~\ref{sec:rtesubsystem} showed that the Asym
-model can provide strong improvements in a complete, end-to-end RTE
+model can provide improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
 However, we have not yet considered whether our new H-features model also
 contributes to an end-to-end RTE pipeline.
 We suspect, given its substantial improvements over Asym in lexical datasets,
-that it will also be able to be able to improve the full system.
+that it will also be able to be able to improve the end-to-end system.
 
 It remains unclear what is the best way to integrate it with
 additional hand-engineered features used in the RTE system. One possibility
 would be to simply use the H-feature detector procedure to provide additional
 information to the lexical entailment classifier, but there are complications
 in that the H-feature detector demands nonlinear models, while the
-hand-engineered features prefer nonlinear classifiers. We suspect this
+hand-engineered features prefer linear classifiers. We suspect this
 may be alleviated with careful hyperparameter tuning.
 
 These proposed experiments will also need to be tightly coupled with the
@@ -1430,15 +1430,15 @@ explore the best form of combination with both kept in mind.
 
 \subsubsection{Lexical Substitution in RTE}
 
-In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is strongly
-related to the tasks of lexical and textual entailment, partially standing
+In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is
+related to textual entailment, partially standing
 as a kind of in-context entailment. We have yet to provide any results
 indicating that Lexical Substitution contributes in an
 RTE system.  We propose that the Lexical Substitution model described in
 Section~\ref{sec:pic} be used as additional features in the Lexical
-Entailment classifier described in Section~\ref{sec:rtesubsystem}. We hope that
+Entailment classifier described in Section~\ref{sec:rtesubsystem}. Although we hope that
 our Lexical Substitution model can positively contribute to the RTE pipeline,
-but suspect improvements may be marginal or negative.
+we suspect improvements may be marginal.
 
 The obvious way our Lexical Substitution model could contribute to the
 task is by simply including the context-similarity features of the Lexical
@@ -1446,15 +1446,15 @@ Substitution model as another feature in the Lexical Entailment classifier.
 That is, for a pair of words in the SICK dataset, measure the similarity of
 their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
 Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
-significant issue in the SICK dataset, we believe the additional information
-about context may bolster predictions in borderline cases.
+significant issue in the SICK dataset, we hope the additional information
+about context will bolster predictions in borderline cases.
 
 It may be necessary to find additional tricks in order to best integrate
-this information into the lexical entailment classifier; for example, we
+this information into the lexical entailment classifier. For example, we
 found the cosine binning trick described in Section~\ref{sec:rtesubsystem}
 was necessary for getting distributional similarity to contribute. Similar
-tricks, like binning or separating out the components of PIC, are likely
-necessary in order to see positive contribution.
+tricks, like binning or isolating the components of PIC, are likely
+necessary in order to see any positive contribution.
 
 Ultimately though, we suspect improvements to RTE  may be marginal, or even
 negative, as polysemy is uncommon in the SICK dataset. We may need to analyze
@@ -1468,27 +1468,27 @@ addressed in the final thesis. Success in any of these items would
 be significant contributions to the field, and are therefore more ambitious and
 risky than the short-term proposals.
 
-\subsubsection{Taxonomic Consistency in Hypernymy Prediction}
+\subsubsection{Ontology Constraints in Hypernymy Prediction}
 
 Presently in our hypernymy-prediction models, relationships between all
 pairs of words are made independently: the prediction of whether ``cat is an
-animal'' has no bearing on whether ``dog is an animal'', aside from their
+animal'' has no bearing on whether ``dog is an animal,'' aside from their
 distributional similarity. While this is a straightforward application of
-machine learning principles to the problem, it ignores one important fact: that
-hypernymy is just one aspect of a complete, well-structured ontology or
-taxonomy. Yet, since we predict each word pair individually, there is no
-guarantee the final output of the system over all pairs will also be
+machine learning principles to the problem, it ignores an important fact: that
+hypernymy is just one aspect of a complete, well-structured.
+Yet, since we predict each word pair individually, there is no
+guarantee the output of the system over all pairs will also be
 well-structured.
 
 For example, a hypernymy prediction model could predict that both ``animal is a
-hypernym of dog'' and that ``dog is a hypernym of animal'', is though we know
-hypernymy is non-reflexive; or it could predict that ``a golden retriever is a
-dog'' and ``dog is an animal'' but incorrectly predict that ``gold retriever is
+hypernym of dog'' and that ``dog is a hypernym of animal'', even though we know
+hypernymy is non-reflexive. Or it could predict that ``a golden retriever is a
+dog'' and ``dog is an animal,'' but incorrectly predict that ``gold retriever is
 {\em not} an animal,'' violating the transitive property of hypernymy. These
-properties of hypernymy are inherent to how it is defined, and our models
+properties of hypernymy are inherent to its definition, and our models
 should be take this into account.
 
-With this in mind, is it possible to modify our model such that taxonomic
+With this in mind, is it possible to modify our models such that ontological
 consistency of the output is guaranteed, or at least more consistent? One
 possibility would be to use the {\em confidence scores} associated with the
 hypernymy predictions, and simply revise the least-confident predictions to
@@ -1502,7 +1502,7 @@ than hypernymy: for example, if we are highly confident that two words are
 co-hyponyms, then we can become more confident that they share the same
 hypernyms, and vice versa.
 
-This idea of enforcing taxonomic consistency is not new: it was previously
+This idea of enforcing ontological constraints is not new: it was previously
 explored by \newcite{caraballo:1999:acl}, who use a clustering algorithm in
 order to find co-hyponym terms, and then predict their hypernym using entire
 clusters. It was also examined some in \newcite{snow:2004:nips}, who used
