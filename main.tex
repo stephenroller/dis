@@ -28,12 +28,13 @@ Doctoral Dissertation Proposal}
 
 \begin{abstract}
   As the field of Natural Language Processing has developed, more research has
-  progressed on ambitious semantic tasks like Recognizing Textual Entailment.
-  Systems which approach these tasks may perform sophisticated inference
-  between sentences, but depend heavily on lexical resources like WordNet to
-  provide critical information like the relationships between lexical items, or
-  whether one lexical item entails another. However, lexical resources are
-  expensive to create and maintain, and are never be comprehensive.
+  progressed on ambitious semantic tasks like Recognizing Textual Entailment
+  (RTE).  Systems which approach these tasks may perform sophisticated
+  inference between sentences, but depend heavily on lexical resources like
+  WordNet to provide critical information like the relationships between
+  lexical items, or whether one lexical item entails another. However, lexical
+  resources are expensive to create and maintain, and are never be
+  comprehensive.
 
   Distributional Semantics has long provided a method to automatically induce
   meaning representations for lexical items from large corpora with little or
@@ -42,27 +43,25 @@ Doctoral Dissertation Proposal}
   their semantic meanings are similar. Yet, knowing two words are similar does
   not tell us their relationship, or whether one entails the other.
 
-  We present several techniques for automatically identifying specific
-  relationships or entailments from distributional representations of lexical
-  semantics. Broadly, this work falls into two distinct but related areas: the
-  first predicts specific taxonomic relations and entailment decisions between
+  We present several models for identifying specific relationships or
+  entailments from distributional representations of lexical semantics.
+  Broadly, this work falls into two distinct but related areas: the first
+  predicts specific taxonomic relations and entailment decisions between
   lexical items devoid of context; the second predicts specific lexical
-  paraphrases in complete sentences.  We provide insight of how and why these
-  models are able to generalize to novel lexical items, and relate this to
-  prior linguistic and NLP research.
+  paraphrases in complete sentences. We provide insight and analysis of how and
+  why these our models are able to generalize to novel lexical items and
+  improve upon prior work.
 
-  (Summary of proposed items here)
-  %We propose several short- and long-term extensions to this work. In the
-  %out-of-context models, we propose applying our model to a broader group of
-  %lexical relations, and including additional useful features in
-  %classification.  In the in-context work, we propose extensions which improve
-  %handling of very rare context items, analyzing the relationships between
-  %paraphrases. In the long-term, we propose stronger models of in-context
-  %representations, and unifying the out-of-context and in-context models in
-  %one of several possible ways.
+  We propose several short- and long-term extensions to our work. In the
+  short term, we propose applying one of our hypernymy-detection models to
+  other relationships, and evaluating our more recent work in an end-to-end
+  RTE system. In the long-term, we propose adding consistency constraints to
+  our lexical relationship prediction, better integration of context into
+  our lexical paraphrase model, and new distributional models for improving
+  word representations.
 \end{abstract}
 
-%\pagebreak
+\pagebreak
 \tableofcontents
 \pagebreak
 
