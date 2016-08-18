@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+
+\usepackage{times}
+\usepackage{fullpage}
+\usepackage{latexsym}
+\usepackage{amsmath}
+%\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{aclcite}
+\usepackage{alltt}
+\usepackage{subfig}
+\usepackage{url}
+\usepackage{multirow}
+
+\usepackage{aliases}
+
+
+\title{Identifying Lexical Relationships and Entailments with Distributional Semantics}
+\author{Stephen Roller\\
+The University of Texas at Austin\\
+{\tt roller@cs.utexas.edu}\\
+\\
+Doctoral Dissertation Proposal}
+
+\date{September 7, 2016}
+
+\frenchspacing
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  As the field of Natural Language Processing has developed, research has
+  progressed on ambitious semantic tasks like Recognizing Textual Entailment
+  (RTE). Systems that approach these tasks may perform sophisticated
+  inference between sentences, but often depend heavily on lexical resources
+  like WordNet to provide critical information about relationships and
+  entailments between lexical items. However, lexical resources are expensive
+  to create and maintain, and are never fully comprehensive.
+
+  Distributional Semantics has long provided a method to automatically induce
+  meaning representations for lexical items from large corpora with little or
+  no annotation efforts. The resulting representations are excellent
+  as proxies of semantic similarity: words will have similar representations if
+  their semantic meanings are similar. Yet, knowing two words are similar
+  does not tell us their relationship or whether one entails the other.
+
+  We present several models for identifying specific relationships and
+  entailments from distributional representations of lexical semantics.
+  Broadly, this work falls into two distinct but related areas: the first
+  predicts specific ontology relations and entailment decisions between
+  lexical items devoid of context; and the second predicts specific lexical
+  paraphrases in complete sentences. We provide insight and analysis of how and
+  why our models are able to generalize to novel lexical items and
+  improve upon prior work.
+
+  We propose several short- and long-term extensions to our work. In the
+  short term, we propose applying one of our hypernymy-detection models to
+  other relationships and evaluating our more recent work in an end-to-end
+  RTE system. In the long-term, we propose adding consistency constraints to
+  our lexical relationship prediction, better integration of context into
+  our lexical paraphrase model, and new distributional models for improving
+  word representations.
+\end{abstract}
+
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\section{Introduction}
+\label{sec:intro}
+
+In modern Natural Language Processing (NLP) research, there is great deal of
+focus on sophisticated semantic tasks which require complex inference and
+synthesis of knowledge. These include tasks like Question Answering (QA), where
+computers must read and answer questions about passages
+\cite{hermann:2015:nips,weston:2016:iclr}, and Recognizing Textual Entailment
+(RTE), where computers must decide whether a hypothesis utterance logically
+follows (or can be inferred) from a given piece of text
+\cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. In the future,
+these technologies could influence a wide range of industries: from threat
+identification in defense, to fact checking in journalism, to
+synthesis of knowledge in science and medicine.
+
+Substantial progress has been made in systems which perform
+logical inferences in QA and RTE, especially as common benchmarks
+and datasets have become available
+\cite{dagan:2006:mlc,giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval,bowman:2015:emnlp}.
+Yet in most sophisticated, compositional model of semantics, systems must
+ultimately consider the semantics of individual lexical items to form a
+conclusion. This often requires an understanding about the different
+relationships that can occur between lexical items. Consider the following
+example:
+\begin{quote}
+  Text (Antecedent): The bright girl reads a book.\\
+  Hypothesis (Consequent): A smart child looks at pages of text.
+\end{quote}
+Any language processing system wishing to infer the second sentence from the
+first must know quite a bit of information about these words: it must know that
+girl is a kind of child (hypernymy), and that bright and smart have the same
+meaning in this context (synonymy); that books contain pages of text
+(meronomy), and that reading involves looking at these pages (world knowledge).
+
+Although significant progress has been made on the task of Recognizing Textual
+Entailment, many of these systems ultimately depend on some lexical resources
+\cite{beltagy:2014:semeval,bjerva:2014:semeval,lai:2014:semeval,marelli:2014:semeval,beltagy:2016:cl}.
+Possibly the most famous lexical resource is WordNet \cite{miller:1995:acm},
+which organizes the lexicon into a large ontology,
+though many other resources also exist and are used
+\cite{baker:1998:acl,baroni:2011:gems,baroni:2012:eacl,ganitkevitch:2013:naacl,jurgens:2012:semeval,levy:2014:conll,turney:2015:nle}.
+Unfortunately, resources as expansive as WordNet are extremely expensive
+to create, and as language is ever-changing, they are inevitably
+always incomplete. As such, any dependence on manually constructed resources
+represents one weak point in some Natural Language Understanding systems. Even
+recent neural network approaches, which attempt to learn entailments without
+explicitly depending on these resources, often cannot make entailment
+predictions about words which were not in the training data
+\cite{bowman:2015:emnlp,cheng:2016:arxiv}.
+
+Distributional Semantics offers one potential solution to these issues of lexical
+coverage. Distributional Semantics takes inspiration from the famous quote:
+``You shall know a word by the company it keeps'' \cite{firth:1957:la}. In
+Distributional Semantics, representations of word meaning are automatically
+induced by counting or modeling the {\em contexts} in which a word appears.
+Distributional Semantics is often called Vector Space Models (VSMs) of
+language, because words are represented as vectors a high-dimensional vector space.
+Words with similar semantics will have similar vectors in this
+space. Since VSMs do not require annotated corpora, they are used and
+studied as an alternative or predictor of particular lexical resources
+\cite{baroni:2012:eacl,erk:2008:emnlp,turney:2010:jair}.
+
+In our work, we consider how VSMs
+can be leveraged to predict some of the lexical inferences necessary in RTE.
+Namely, we present techniques and models for predicting specific
+lexical relationships, entailments, and substitutions using Distributional
+Semantics. In Lexical Relationship Detection, we must
+predict whether two words exhibit specific relationships, like hypernymy (is-a
+relationships) or meronymy (has-a relationships). This is sometimes supplanted
+by Lexical Entailment Detection, where we must predict a coarser entailment
+prediction. We present two original models which can learn to predict hypernymy
+or general entailment relations
+\cite{roller:2014:coling,beltagy:2016:cl,roller:2016:emnlp}, and evaluate their
+performance on different datasets. In these works, we also make significant
+contributions in experimental setups which prevent issue with lexical
+memorization \cite{roller:2014:coling}, and insight into how these models
+work \cite{roller:2016:emnlp}.  We also present an original model for Lexical
+Substitution, where one must predict a context-specific synonym for a given
+target word in a sentential context \cite{roller:2016:naacl}.
+
+Finally, we propose several short- and long-term extensions to our completed
+work. In the short-term, we focus mainly on how our more recent work may be
+expanded to lexical relationships other than hypernymy, and how our recent
+publications may  contribute as a component in an end-to-end RTE system, which
+would cement the connection between our work and Textual Entailment. In the
+long-term, we propose three broad directions forward: (1) providing better
+internal consistency in the predictions made by our system; (2) integration
+of larger contexts into our Lexical Substitution model; and (3) improved
+models of distributional semantics which more efficiently use syntactic
+information.
+
+
+\pagebreak
+\section{Background and Related Work}
+\label{sec:background}
+
+In this section, we review some of the background critical to this proposal.
+We begin with a discussion of Recognizing Textual Entailment and the core
+motivation of our thesis.  We then overview Distributional Semantics, outlining
+its purpose and one common implementation of VSMs. Finally, we discuss the
+Lexical Entailment (LexEnt) and Lexical Substitution (LexSub) tasks, which we
+view as two useful proxies for the kinds of lexical semantics necessary in
+RTE. We do not argue that these tasks are completely sufficient, but one goal
+of our thesis to show that developments in these tasks improves practical RTE.
+
+\subsection{Recognizing Textual Entailment}
+\label{sec:textent}
+
+In the Introduction, we introduced the Recognizing Textual Entailment (RTE)
+task as a long standing, challenging semantic problem in the field of
+Natural Language Processing.  One of the first benchmark papers describes RTE
+as ``recognizing, given two text fragments, whether the meaning of one text can
+be inferred (entailed) from the other'' \cite{dagan:2006:mlc}. Since this
+original definition, many other datasets
+\cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
+countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
+for a thorough survey). Although RTE is not usually considered an
+end-user application by itself, successful RTE systems could influence many
+downstream tasks like Information Extraction or Question Answering and become
+useful in information-heavy industries like defense, journalism, and science.
+
+RTE is a very difficult task, at least partially due to its generality.
+Entailment reasoning may require: broad common sense knowledge or highly
+specialized domain knowledge; sophisticated logical inferences
+about quantifiers and implication; or more graded, fuzzier reasoning about
+related words. In our own work, we focus predominantly on some of the issues
+of {\em lexical semantics} necessary for reasoning in RTE systems. These
+include issues like lexical relationship detection, where one must classify
+{\em how} two words are (or are not) related, and lexical paraphrasing, where
+one must suggest alternative words which have the same meaning.
+
+Presently, RTE systems often employ a wide collection of lexical resources in
+order to capture some of these issues in lexical semantics
+\cite{maccartney:2008:coling,bjerva:2014:semeval,beltagy:2016:cl}. These
+rich lexical resources, including WordNet \cite{miller:1995:acm} and PPDB
+\cite{ganitkevitch:2013:naacl}, provide an excellent
+source of common sense knowledge and word relationships which can be used as a
+background knowledge-base during logical reasoning. In our work, we consider
+whether it is possible to distill information about lexical relationships
+automatically.  We turn now to Distributional Semantics and Vector Space
+Models, which provide an automatic induction of word meaning using only large,
+unannotated corpora.
+
+\subsection{Distributional Semantics}
+\label{sec:dist}
+
+Distributional Semantics is a powerful tool for automatically inducing semantic
+representations for lexical items \cite{turney:2010:jair,erk:2012:llc}.  The
+core notion is that of the {\em Distributional Hypothesis}, that if two words
+appear in similar {\em contexts}, they can be assumed to have similar meaning.
+This idea has a long history in the linguistic and philosophical literature that
+can be traced back over 60 years
+\cite{wittgenstein:1953:pi,harris:1954:word,firth:1957:la}. In its modern form,
+Distributional Semantics involves finding {\em vector space representations} of
+words which are constructed by counting or modeling the contexts in which a
+particular word appears. According to the Distributional Hypothesis, words
+with similar {\em vectors} can be assumed to have similar {\em meanings}
+\cite{turney:2010:jair}. For this reason, they are often referred to as
+Vector Space Models (VSMs) of langu
