@@ -1698,13 +1698,13 @@ and joint modeling.
 \subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
 
 Our final long term proposal is fairly different from the other two: while
-those were ideas to directly impact performance on the two tasks we have
-since focused our attention, our last idea focuses more broadly on how
+those were ideas to directly impact performance on the Lexical Entailment and
+Lexical Substitution, our last idea focuses more broadly on how
 we can improve distributional spaces altogether.
 
 We begin with an observation about the process described in
 Section~\ref{sec:dist} when constructing a syntactic distributional space.
-When constructing a distributional space, the final step involves finding a
+During construction, the final step involves finding a
 matrix factorization for the extremely large, extremely sparse word-context
 co-occurrence matrix. In syntactic spaces, the contexts are distinguished by
 the neighboring word {\em together} with its syntactic relation. That is there
@@ -1718,44 +1718,43 @@ by two different syntactic relations. When this is ignored,
 we assume we have excellent statistics for how every word stands
 in every relation, but this is unrealistic, and one of the important
 steps in constructing a syntactic distributional space is to limit modeling
-to only the top most frequent contexts. But in defining a cutoff at all, we
+to only the most frequent contexts. But in defining a cutoff at all, we
 are also omitting a significant amount of data.
 Do we really want to throw away all this data?
 
 We ask whether the {\em syntactic relations} be separated
 from the {\em words} in syntactic distributional spaces? 
 Can these context vectors we rely heavily on in our work be {\em generatively
-modeled}? Perhaps one way to approach this would be to model it as a
+modeled}? One way to approach this would be to model it as a
 composition function:
 \begin{equation*}
-  \vec{ {\tt nsubj\_dog} } = f({\tt nsubj}, \vec{dog})
+  \vec{ {\tt nsubj\_dog} } = f({\tt nsubj}, \vec{dog}).
 \end{equation*}
-In this view, we would need to learn one function, $f$, which took in a syntactic
-relation and a dog, and produced a {\em context vector} on how dog acts in the
+In this view, we would need to learn one function, $f$, which takes in a syntactic
+relation and a word, and produces a {\em context vector} on how dog acts in the
 subject position. One possibility would be to use vector concatenation,
 treating the relation and the word as separate components, independent of each
 other. Intuitively, this does not seem to capture the the essence of our
 proposal, but it could act as a baseline model:
 \begin{equation*}
-  \vec{ {\tt nsubj\_dog} } = \langle \vec{dog} ; \vec{nsubj} \rangle
+  \vec{ {\tt nsubj\_dog} } = \langle \vec{dog} ; \vec{nsubj} \rangle.
 \end{equation*}
-
 Another possibility would be to treat the procedure as a form of post-processing
 generalization. For example, we could factorize the context vectors as we do now, and
 then attempt to learn to predict the observed context vectors from the input
 components. For example, perhaps after performing the concatenation, a simple
 linear regression could combine them:
 \begin{equation*}
-  \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}
+  \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}.
 \end{equation*}
-This is a simple, linear regression model, but it would still enable us to
+This is a basic model, but it would still enable us to
 predict information about novel combinations of syntactic relations and words.
 One could increase the representational power using a more sophisticated
 regression model, like neural networks.
 
 Another variation of this linear regression idea, would be to model each
 syntactic relation as a function {\em applied} to the vector. For example,
-we would learn a separate $W$ for {\tt nsubj}, {\tt dobj}, etc:
+we would learn a separate transformation for {\tt nsubj}, {\tt dobj}, etc:
 \begin{equation*}
   \vec{ {\tt nsubj\_dog} } = W_{{\tt nsubj}}\vec{dog}
 \end{equation*}
@@ -1769,7 +1768,7 @@ bilinear models proposed in GloVe \cite{pennington:2014:emnlp}, and the recursiv
 composition models for sentiment analysis \cite{socher:2013:emnlp}.
 
 Alternatively, we could  try to learn the distributional vectors from scratch
-using a similar model. Recall that the dimensionality reduction procedure
+using an alternative factorization. Recall that the dimensionality reduction procedure
 simply tries to predict the Pointwise Mutual Information between a word and
 a context. Rather than performing the dimensionality reduction, then regression,
 we could encode our generative principals into the dimensionality reduction.
@@ -1823,10 +1822,8 @@ words, and predict whether those models stand in a hypernymy relation.  Through
 detailed analysis, we have a clear picture of how these models work, and how
 they relate to some of the linguistic literature on Lexical Entailment, like
 the Distributional Inclusion Hypothesis and Hearst Patterns. We also saw that
-at least one of these models is able to positively contribute to an RTE Lexical
-Entailment classifier, which uses a wide variety of lexical cues and resources,
-like WordNet and distributional similarity, in order to improve performance in
-an end-to-end RTE system. We also discussed a new model of Lexical
+at least one of these models is able to positively contribute to an RTE system
+We discussed a new model of Lexical
 Substitution, which we argue is related to lexical entailment by acting as a
 form of {\em in-context synonym prediction}. Our Lexical Substitution model
 outperforms some comparable baselines, and analysis shows its improvements
@@ -1848,9 +1845,9 @@ Namely, we considered how Hypernymy and Relationship prediction could be
 improved by imposing simple constraints inherent to ontologies. We also
 discussed several ways in which more context could be exploited in Lexical
 Substitution, or how we could remove some of the independence assumptions made
-by our current model: we note that improvements could come by either
+by our current model. We note that improvements could come by either
 exploiting linguistic knowledge about how different syntactic relations
-interact, or by using very successful neural network technologies. Lastly, we
+interact, or by using recent successful neural network techniques. Lastly, we
 considered how current syntactic distributional spaces make an inefficient use
 of the available information, and discussed ways they could be extended to be
 {\em generative} over syntactic relations, instead of just artificially
