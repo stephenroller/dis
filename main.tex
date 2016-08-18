@@ -77,7 +77,7 @@ computers must read and answer questions about passages
 (RTE), where computers must decide whether a hypothesis utterance logically
 follows (or can be inferred) from a given piece of text
 \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. In the future,
-these technologies could influnce a wide range of industries: from threat
+these technologies could influence a wide range of industries: from threat
 identification in defense, to fact checking in journalism, to
 synthesis of knowledge in science and medicine.
 
@@ -131,7 +131,7 @@ studied as an alternative or predictor of particular lexical resources
 In our work, we consider how VSMs
 can be leveraged to predict some of the lexical inferences necessary in RTE.
 Namely, we present techniques and models for predicting specific
-lexical relationships, entailments, and subsitutions using Distributional
+lexical relationships, entailments, and substitutions using Distributional
 Semantics. In Lexical Relationship Detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
 relationships) or meronymy (has-a relationships). This is sometimes supplanted
@@ -165,7 +165,7 @@ information.
 In this section, we review some of the background critical to this proposal.
 We begin with a discussion of Recognizing Textual Entailment and the core
 motivation of our thesis.  We then overview Distributional Semantics, outlining
-its purpose and one common implementation of VSMs. Finally, we dicuss the
+its purpose and one common implementation of VSMs. Finally, we discuss the
 Lexical Entailment (LexEnt) and Lexical Substitution (LexSub) tasks, which we
 view as two useful proxies for the kinds of lexical semantics necessary in
 RTE. We do not argue that these tasks are completely sufficient, but one goal
@@ -216,7 +216,7 @@ Distributional Semantics is a powerful tool for automatically inducing semantic
 representations for lexical items \cite{turney:2010:jair,erk:2012:llc}.  The
 core notion is that of the {\em Distributional Hypothesis}, that if two words
 appear in similar {\em contexts}, they can be assumed to have similar meaning.
-This idea has a long history in the liniguistic and philosophical literature that
+This idea has a long history in the linguistic and philosophical literature that
 can be traced back over 60 years
 \cite{wittgenstein:1953:pi,harris:1954:word,firth:1957:la}. In its modern form,
 Distributional Semantics involves finding {\em vector space representations} of
@@ -282,7 +282,7 @@ below a certain threshold are omitted from the co-occurrence matrix, because
 extremely rare words have few counts and therefore impoverished representations
 \cite{turney:2010:jair}. The co-occurrence matrix is also usually transformed
 using some nonlinearity; one common choice is Positive Pointwise Mutual
-Information (PPMI) \cite{bullinaria:2007:brm}, where the raw co-occurence count
+Information (PPMI) \cite{bullinaria:2007:brm}, where the raw co-occurrence count
 between a word $w$ and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
@@ -396,7 +396,7 @@ hypernymy from word vectors
 The reasoning was that with the right corpus, the right
 distributional space, and the right similarity measure, hypernym pairs
 (or at least candidate pairs) could be readily identified using only word
-vectors. This view was developed in part by evidence that the ubiquitious
+vectors. This view was developed in part by evidence that the ubiquitous
 cosine similarity tends to highlight co-hyponym pairs more than other relations
 \cite{weeds:2004:coling,baroni:2011:gems}.  One lasting hypothesis about
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
@@ -454,7 +454,7 @@ context
   scout craft to appear in the darkness of the {\bf wormhole},''
 \end{quote}
 human annotators considered {\em portal} and {\em rift} to be excellent
-substitues. These substitutes take into account the Science Fiction context of the
+substitutes. These substitutes take into account the Science Fiction context of the
 sentence, indicating the task is more complicated than simple synonymy. Indeed,
 \newcite{kremer:2014:eacl} found that only 9\% of substitutes in their dataset were
 direct synonyms in WordNet.  For this reason, we believe that Textual
@@ -543,7 +543,7 @@ difference-squared part of the input features measures whether they have a
 large absolute difference, effectively capturing ``equal'' part of the
 ``less than or equal'' relation. As such, one interpretation of the model is a
 kind of {\em Selective Distributional Inclusion Hypothesis}, which presupposes
-that the DIH holds, but only in particular, relavent dimensions.
+that the DIH holds, but only in particular, relevant dimensions.
 
 To evaluate our model, we train and measure accuracy of the Asym model on
 two datasets in a variation of leave-one-out cross validation (LOOCV) and
@@ -562,7 +562,7 @@ Since different types of distributional spaces exhibit different properties
 spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
 counts content words two words to the left and right of targets as contexts,
 while the {\em Sentence BoW} space counts all content words within complete
-sentence bounadries. Both spaces are reduced to 300 dimensions using the
+sentence boundaries. Both spaces are reduced to 300 dimensions using the
 Singular Value Decomposition \cite{landauer:1997:pr}.
 
 We evaluate our model on two datasets. The first, {\bf LEDS}
@@ -724,7 +724,7 @@ Table~\ref{tab:sickexample}.
     Entailing & A: Two teams are competing in a football match\\
     & C: Two groups of people are playing football\\
     \hline
-    Contradicting & A: The brown hourse is near a red barrel at the rodeo\\
+    Contradicting & A: The brown horse is near a red barrel at the rodeo\\
     & C: The brown horse is far from a red barrel at the rodeo\\
     \hline
   \end{tabular}
@@ -774,7 +774,7 @@ Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
 antecedent (LHS) and consequent (RHS) vectors, which we call Asym + Concat,
 since it uses both the Asym features and the Concat (LHS+RHS) features. For
-both the distributional simirity features, and the Asym models, we use two
+both the distributional similarity features, and the Asym models, we use two
 distributional spaces: one which uses a BoW window of two words, and one based
 on syntactic contexts.
 
@@ -828,7 +828,7 @@ vectors performs substantially better than Asym does by itself, indicating
 a need for additional study, which we will address in
 Section~\ref{sec:hfeatures}.
 
-Unsuprisingly, we find that the WordNet classifier does a bit better than the
+Unsurprisingly, we find that the WordNet classifier does a bit better than the
 others, which is expected given that WordNet is an information-rich resource,
 and contains gold annotations about word relationships, rather than
 distributional information.  Finally, we observe a classifier which combines
@@ -927,7 +927,7 @@ syntactic distributional vectors on four separate data sets. We then analyze
 the trained models by comparing their hyperplanes to the {\em context vectors}.
 That is, we explicitly compare the $\hat H$ vector to the syntactic context
 matrix $C$ in Equation~\ref{eqn:svd}. This is a radically
-different view of than the protypicality hypothesis of
+different view of than the prototypicality hypothesis of
 \newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
 interpretation is that the Concat and Diff models learn to act as {\em feature
 detectors}, which identifies features (i.e. syntactic contexts), which are
@@ -976,7 +976,7 @@ the list for the next 30-50 items.
 
 Altogether, it is remarkable that the model identified these patterns using
 {\em only} distributional vectors and only the positive/negative example pairs.
-Since the model can be interpretted as a sort of {\em feature detector}, we
+Since the model can be interpreted as a sort of {\em feature detector}, we
 call this model the H-feature Detector Model.
 We now show how these H-features
 can be improved using an iterative procedure similar to Principal Component
@@ -1151,7 +1151,7 @@ remaining simple, extensible, and highly interpretable.
 In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
 using a mixture of {\em out-of-context similarity} and {\em in-context
 appropriateness}. The out-of-context similarity uses standard distributional
-semantics cosine similarity (Eq.~\ref{eq:cos}) in order to estimate how similar
+semantics cosine similarity (Equation~\ref{eq:cos}) in order to estimate how similar
 the target is to the substitute, and remains fixed regardless of the sentential
 context.  For this reason, this out-of-context (OOC) similarity is also used as
 a baseline in the literature.
@@ -1177,14 +1177,14 @@ given context. If the context is ``scientist'' as in ``bright scientist,''
 we will shift our prediction away from ``colorful'' and closer to ``smart,''
 and vice versa for ``bright coat.'' This remains one of the simplest successful
 models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also consider
-variants of this measure, including {\em balCosAdd}, which equally
+variants of this measure, including {\em balAddCos}, which equally
 weights the out-of-context similarity with the in-context appropriateness:
 \begin{equation}
   \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
 \end{equation}
 
 In our work, we propose a new measure, called Probability-in-Context (PIC),\footnote{PIC is not strictly a probability measure; the name is a backronym for the purpose of the paper's title.}
-which estimates the appropriateness of a substitue in a given context
+which estimates the appropriateness of a substitute in a given context
 \cite{roller:2016:naacl}.  Similar to \balAddCos, the measure has two
 equally-weighted, independent components measuring the appropriateness of the
 substitute for both the target and the context, each taking the form of a
@@ -1224,7 +1224,7 @@ models on three data sets: SE07, the original LexSub data set
 \cite{mccarthy:2007:semeval} which was explicitly developed to capture polysemy;
 Coinco, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
-to be a large collection of lexical substitues from a diverse corpus
+to be a large collection of lexical substitutes from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
 measures whether our best proposed substitute is contained within the set of gold
 substitutes provided by annotators. In all models, we exclude any words sharing
@@ -1318,7 +1318,7 @@ product, rather than cosine, our model naturally incorporates unigram priors,
 allowing it to downweight rare, similar words. Indeed, a quantitative analysis
 of the $W$ and $b$ parameters finds that they additionally exaggerate this
 unigram bias \cite{roller:2016:naacl}.
-Intutively, it seems natural that unigram biases should hold a strong role in
+Intuitively, it seems natural that unigram biases should hold a strong role in
 Lexical Substitution, and that our model should wish to exploit this
 information.
 
@@ -1366,7 +1366,7 @@ useful as a negative signal for entailment, and identifying meronomy is
 critical to our motivating example in the Introduction.
 Indeed, the results shown in Table~\ref{tab:asymresults} show
 the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
-prediction task: hypernymy, cohyponymy, meronomy, and random, but the
+prediction task: hypernymy, co-hyponymy, meronomy, and random, but the
 experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
 binary hypernymy-or-not classification task. We propose to extend and evaluate
 the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
@@ -1574,7 +1574,7 @@ model?
 
 Even beyond this simple example, it is already clear from prior work that
 additional context can be very useful in the task. \newcite{dinu:2010:emnlp} considers
-a probablistic model based on a wide Bag-of-Words context, and
+a probabilistic model based on a wide Bag-of-Words context, and
 \newcite{vandecruys:2011:emnlp} propose a model which combines
 syntactic distributional space with a bag-of-words distributional space,
 showing modest improvements over each individual space. Additionally,
@@ -1799,7 +1799,7 @@ predicts context vectors in a generative manner, then it could lead to
 substantial improvements on both tasks of Lexical Entailment {\em and} Lexical
 Substitution. For example, we saw in Table~\ref{tab:ctxsim} that certain
 syntactic relations are indicative of hypernymy. Therefore, being able to plug
-in {\em any} two words to and estimate the liklihood that they will stand in this
+in {\em any} two words to and estimate the likelihood that they will stand in this
 syntactic relation, like {\tt nmod:such\_as}.
 The problem would contribute even more greatly to the Lexical Substitution
 model we presented: in a preliminary examination, we found that some 18\% of the Coinco

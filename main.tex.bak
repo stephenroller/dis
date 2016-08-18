@@ -77,7 +77,7 @@ computers must read and answer questions about passages
 (RTE), where computers must decide whether a hypothesis utterance logically
 follows (or can be inferred) from a given piece of text
 \cite{dagan:2006:mlc,marelli:2014:semeval,bowman:2015:emnlp}. In the future,
-these technologies could influence a wide range of industries: from threat
+these technologies could influnce a wide range of industries: from threat
 identification in defense, to fact checking in journalism, to
 synthesis of knowledge in science and medicine.
 
@@ -131,7 +131,7 @@ studied as an alternative or predictor of particular lexical resources
 In our work, we consider how VSMs
 can be leveraged to predict some of the lexical inferences necessary in RTE.
 Namely, we present techniques and models for predicting specific
-lexical relationships, entailments, and substitutions using Distributional
+lexical relationships, entailments, and subsitutions using Distributional
 Semantics. In Lexical Relationship Detection, we must
 predict whether two words exhibit specific relationships, like hypernymy (is-a
 relationships) or meronymy (has-a relationships). This is sometimes supplanted
@@ -165,7 +165,7 @@ information.
 In this section, we review some of the background critical to this proposal.
 We begin with a discussion of Recognizing Textual Entailment and the core
 motivation of our thesis.  We then overview Distributional Semantics, outlining
-its purpose and one common implementation of VSMs. Finally, we discuss the
+its purpose and one common implementation of VSMs. Finally, we dicuss the
 Lexical Entailment (LexEnt) and Lexical Substitution (LexSub) tasks, which we
 view as two useful proxies for the kinds of lexical semantics necessary in
 RTE. We do not argue that these tasks are completely sufficient, but one goal
@@ -216,7 +216,7 @@ Distributional Semantics is a powerful tool for automatically inducing semantic
 representations for lexical items \cite{turney:2010:jair,erk:2012:llc}.  The
 core notion is that of the {\em Distributional Hypothesis}, that if two words
 appear in similar {\em contexts}, they can be assumed to have similar meaning.
-This idea has a long history in the linguistic and philosophical literature that
+This idea has a long history in the liniguistic and philosophical literature that
 can be traced back over 60 years
 \cite{wittgenstein:1953:pi,harris:1954:word,firth:1957:la}. In its modern form,
 Distributional Semantics involves finding {\em vector space representations} of
@@ -282,7 +282,7 @@ below a certain threshold are omitted from the co-occurrence matrix, because
 extremely rare words have few counts and therefore impoverished representations
 \cite{turney:2010:jair}. The co-occurrence matrix is also usually transformed
 using some nonlinearity; one common choice is Positive Pointwise Mutual
-Information (PPMI) \cite{bullinaria:2007:brm}, where the raw co-occurrence count
+Information (PPMI) \cite{bullinaria:2007:brm}, where the raw co-occurence count
 between a word $w$ and context $c$ is transformed,
 \begin{equation*}
   \text{PPMI}(w, c) = \max\left(0, \log\frac{P(w, c)}{P(w)P(c)}\right)
@@ -396,7 +396,7 @@ hypernymy from word vectors
 The reasoning was that with the right corpus, the right
 distributional space, and the right similarity measure, hypernym pairs
 (or at least candidate pairs) could be readily identified using only word
-vectors. This view was developed in part by evidence that the ubiquitous
+vectors. This view was developed in part by evidence that the ubiquitious
 cosine similarity tends to highlight co-hyponym pairs more than other relations
 \cite{weeds:2004:coling,baroni:2011:gems}.  One lasting hypothesis about
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
@@ -454,7 +454,7 @@ context
   scout craft to appear in the darkness of the {\bf wormhole},''
 \end{quote}
 human annotators considered {\em portal} and {\em rift} to be excellent
-substitutes. These substitutes take into account the Science Fiction context of the
+substitues. These substitutes take into account the Science Fiction context of the
 sentence, indicating the task is more complicated than simple synonymy. Indeed,
 \newcite{kremer:2014:eacl} found that only 9\% of substitutes in their dataset were
 direct synonyms in WordNet.  For this reason, we believe that Textual
@@ -543,7 +543,7 @@ difference-squared part of the input features measures whether they have a
 large absolute difference, effectively capturing ``equal'' part of the
 ``less than or equal'' relation. As such, one interpretation of the model is a
 kind of {\em Selective Distributional Inclusion Hypothesis}, which presupposes
-that the DIH holds, but only in particular, relevant dimensions.
+that the DIH holds, but only in particular, relavent dimensions.
 
 To evaluate our model, we train and measure accuracy of the Asym model on
 two datasets in a variation of leave-one-out cross validation (LOOCV) and
@@ -562,7 +562,7 @@ Since different types of distributional spaces exhibit different properties
 spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
 counts content words two words to the left and right of targets as contexts,
 while the {\em Sentence BoW} space counts all content words within complete
-sentence boundaries. Both spaces are reduced to 300 dimensions using the
+sentence bounadries. Both spaces are reduced to 300 dimensions using the
 Singular Value Decomposition \cite{landauer:1997:pr}.
 
 We evaluate our model on two datasets. The first, {\bf LEDS}
@@ -724,7 +724,7 @@ Table~\ref{tab:sickexample}.
     Entailing & A: Two teams are competing in a football match\\
     & C: Two groups of people are playing football\\
     \hline
-    Contradicting & A: The brown horse is near a red barrel at the rodeo\\
+    Contradicting & A: The brown hourse is near a red barrel at the rodeo\\
     & C: The brown horse is far from a red barrel at the rodeo\\
     \hline
   \end{tabular}
@@ -774,7 +774,7 @@ Finally, we also compare to the Asym classifier trained on our new RRR dataset,
 and on a variation of Asym which concatenates the Asym features with the
 antecedent (LHS) and consequent (RHS) vectors, which we call Asym + Concat,
 since it uses both the Asym features and the Concat (LHS+RHS) features. For
-both the distributional similarity features, and the Asym models, we use two
+both the distributional simirity features, and the Asym models, we use two
 distributional spaces: one which uses a BoW window of two words, and one based
 on syntactic contexts.
 
@@ -828,7 +828,7 @@ vectors performs substantially better than Asym does by itself, indicating
 a need for additional study, which we will address in
 Section~\ref{sec:hfeatures}.
 
-Unsurprisingly, we find that the WordNet classifier does a bit better than the
+Unsuprisingly, we find that the WordNet classifier does a bit better than the
 others, which is expected given that WordNet is an information-rich resource,
 and contains gold annotations about word relationships, rather than
 distributional information.  Finally, we observe a classifier which combines
@@ -927,7 +927,7 @@ syntactic distributional vectors on four separate data sets. We then analyze
 the trained models by comparing their hyperplanes to the {\em context vectors}.
 That is, we explicitly compare the $\hat H$ vector to the syntactic context
 matrix $C$ in Equation~\ref{eqn:svd}. This is a radically
-different view of than the prototypicality hypothesis of
+different view of than the protypicality hypothesis of
 \newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
 interpretation is that the Concat and Diff models learn to act as {\em feature
 detectors}, which identifies features (i.e. syntactic contexts), which are
@@ -976,7 +976,7 @@ the list for the next 30-50 items.
 
 Altogether, it is remarkable that the model identified these patterns using
 {\em only} distributional vectors and only the positive/negative example pairs.
-Since the model can be interpreted as a sort of {\em feature detector}, we
+Since the model can be interpretted as a sort of {\em feature detector}, we
 call this model the H-feature Detector Model.
 We now show how these H-features
 can be improved using an iterative procedure similar to Principal Component
@@ -1184,7 +1184,7 @@ weights the out-of-context similarity with the in-context appropriateness:
 \end{equation}
 
 In our work, we propose a new measure, called Probability-in-Context (PIC),\footnote{PIC is not strictly a probability measure; the name is a backronym for the purpose of the paper's title.}
-which estimates the appropriateness of a substitute in a given context
+which estimates the appropriateness of a substitue in a given context
 \cite{roller:2016:naacl}.  Similar to \balAddCos, the measure has two
 equally-weighted, independent components measuring the appropriateness of the
 substitute for both the target and the context, each taking the form of a
@@ -1224,7 +1224,7 @@ models on three data sets: SE07, the original LexSub data set
 \cite{mccarthy:2007:semeval} which was explicitly developed to capture polysemy;
 Coinco, a recent LexSub data set which contains substitutes for all content
 words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
-to be a large collection of lexical substitutes from a diverse corpus
+to be a large collection of lexical substitues from a diverse corpus
 \cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
 measures whether our best proposed substitute is contained within the set of gold
 substitutes provided by annotators. In all models, we exclude any words sharing
@@ -1318,7 +1318,7 @@ product, rather than cosine, our model naturally incorporates unigram priors,
 allowing it to downweight rare, similar words. Indeed, a quantitative analysis
 of the $W$ and $b$ parameters finds that they additionally exaggerate this
 unigram bias \cite{roller:2016:naacl}.
-Intuitively, it seems natural that unigram biases should hold a strong role in
+Intutively, it seems natural that unigram biases should hold a strong role in
 Lexical Substitution, and that our model should wish to exploit this
 information.
 
@@ -1366,7 +1366,7 @@ useful as a negative signal for entailment, and identifying meronomy is
 critical to our motivating example in the Introduction.
 Indeed, the results shown in Table~\ref{tab:asymresults} show
 the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
-prediction task: hypernymy, co-hyponymy, meronomy, and random, but the
+prediction task: hypernymy, cohyponymy, meronomy, and random, but the
 experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
 binary hypernymy-or-not classification task. We propose to extend and evaluate
 the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
@@ -1404,4 +1404,459 @@ model can provide improvements in a complete, end-to-end RTE
 system, especially when combined with traditionally hand-engineered features.
 However, we have not yet considered whether our new H-features model also
 contributes to an end-to-end RTE pipeline.
-We suspect, given its substantial im
+We suspect, given its substantial improvements over Asym in lexical datasets,
+that it will also be able to be able to improve the end-to-end system.
+
+It remains unclear what is the best way to integrate it with the
+additional hand-engineered features used in the pipeline. One possibility
+would be to simply use the H-feature detector procedure to provide additional
+information to the lexical entailment classifier, but there are complications
+in that the H-feature detector demands nonlinear models, while the
+hand-engineered features prefer linear classifiers. We suspect this
+may be alleviated with careful hyperparameter tuning.
+
+These proposed experiments will also need to be tightly coupled with the
+complete non-hypernymy detector discussed in the previous section. If H-features
+are useful useful for predicting co-hyponymy or meronomy, it also stands to
+reason that they should be useful in the final RTE subsystem. We will need to
+explore the best form of combination with both kept in mind.
+
+\subsubsection{Lexical Substitution in RTE}
+
+In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is
+related to textual entailment, partially standing
+as a kind of in-context entailment. We have yet to provide any results
+indicating that Lexical Substitution contributes in an
+RTE system.  We propose that the Lexical Substitution model described in
+Section~\ref{sec:pic} be used as additional features in the Lexical
+Entailment classifier described in Section~\ref{sec:rtesubsystem}. Although we hope that
+our Lexical Substitution model can positively contribute to the RTE pipeline,
+we suspect improvements may be marginal.
+
+The obvious way our Lexical Substitution model could contribute to the
+task is by simply including the context-similarity features of the Lexical
+Substitution model as another feature in the Lexical Entailment classifier.
+That is, for a pair of words in the SICK dataset, measure the similarity of
+their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
+Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
+significant issue in the SICK dataset, we hope the additional information
+about context will bolster predictions in borderline cases.
+
+It may be necessary to find additional tricks in order to best integrate
+this information into the lexical entailment classifier. For example, we
+found the cosine binning trick described in Section~\ref{sec:rtesubsystem}
+was necessary for getting distributional similarity to contribute. Similar
+tricks, like binning or isolating the components of PIC, are likely
+necessary in order to see any positive contribution.
+
+Ultimately though, we suspect improvements to RTE  may be marginal, or even
+negative, as polysemy is uncommon in the SICK dataset. We may need to analyze
+differences in classification prediction, and which examples are {\em most}
+affected by the LexSub features, in order to properly characterize contribution.
+
+\subsection{Long Term Proposals}
+
+We now describe some possible longer term research questions which could be
+addressed in the final thesis. Success in any of these items would
+be significant contributions to the field, and are therefore more ambitious and
+risky than the short-term proposals.
+
+\subsubsection{Ontology Constraints in Hypernymy Prediction}
+
+Presently in our hypernymy-prediction models, relationships between all
+pairs of words are made independently: the prediction of whether ``cat is an
+animal'' has no bearing on whether ``dog is an animal,'' aside from their
+distributional similarity. While this is a straightforward application of
+machine learning principles to the problem, it ignores an important fact: that
+hypernymy is just one aspect of a complete, well-structured ontology.
+Yet, since we predict each word pair individually, there is no
+guarantee the output of the system over all pairs will also be
+well-structured.
+
+For example, a hypernymy prediction model could predict that both ``animal is a
+hypernym of dog'' and that ``dog is a hypernym of animal,'' even though we know
+hypernymy is non-reflexive. Or it could predict that ``a golden retriever is a
+dog'' and ``dog is an animal,'' but incorrectly predict that ``gold retriever is
+{\em not} an animal,'' violating the transitive property of hypernymy. These
+properties of hypernymy are inherent to its definition, and our models
+should be take this into account.
+
+With this in mind, is it possible to modify our models such that such
+ontological constraints are guaranteed or preferred? One
+possibility would be to use the {\em confidence scores} associated with the
+hypernymy predictions, and simply revise the least-confident predictions to
+conform to constraints in a post-processing step. For example, in our reflexive example
+above, the more confident of the two predictions will be assumed to be
+the correct one.
+
+This idea could likely benefit further from our short-term proposal to
+see how well the H-features model does at predicting relations other
+than hypernymy: for example, if we are highly confident that two words are
+co-hyponyms, then we can become more confident that they share a common
+hypernym, and vice versa.
+
+This idea of enforcing ontological constraints is not new: it was previously
+explored by \newcite{caraballo:1999:acl}, who use a clustering algorithm in
+order to find co-hyponym terms, and then predict hypernyms using the entire
+clusters. It was also examined some in \newcite{snow:2004:nips}, who used
+syntactic Hearst Patterns to make predictions about hypernymy, and then
+linearly interpolated the prediction confidences in order to better
+conform to these hard constraints. Later, \newcite{snow:2006:acl}
+proposed a probabilistic model over {\em ontologies}, and
+an algorithm for searching over entire ontologies constrained by rules about
+the transitivity of hypernymy, and reflexivity of co-hyponymy. This ontology
+search is then used in order to find the single ontology which has maximal
+probability according to the evidence provided by Hearst patterns, while also
+not violating any of the hard constraints.
+
+Although \newcite{snow:2006:acl} found their ontology searching algorithm
+highly successful with the use of the lexico-syntactic patterns indicative
+of hypernymy, such an approach is yet to be tried on classifiers which make
+use of {\em distributional information} about words. Therefore, the most reasonable
+first course of action would to reimplement and examine whether their model
+is compatible with the distributional models of hypernymy prediction.
+However, their model supports only
+two forms of constraints (transitivity of hypernymy and reflexivity of
+co-hyponyms), leaving open questions about how other constraints should be
+imposed.
+
+Another possibility is through the use of the same technology powering the
+end-to-end RTE system of \newcite{beltagy:2016:cl}: Markov Logic Networks
+(MLNs).  Markov Logic Networks provide a framework for doing probabilistic
+logical inference over sets of weighted atoms and logical rules. MLNs are given
+a set of weighted First Order Logic (FOL) rules and a database of atoms, and
+give reweighted predictions about the probabilities of atoms based on their
+consistency with the logical rules. MLNs can encode many
+different relations as rules, and perform joint updating of {\em all} lexical
+relationship predictions.  For example, the rules for transitivity and reflexivity
+discussed in \newcite{snow:2006:acl} could be encoded as:
+\begin{align*}
+  \forall x,y,z. &~\text{hyper}(x,y) \wedge \text{hyper}(y, z) \rightarrow \text{hyper}(x, z),\\
+  \forall x,y. &~\text{cohyp}(x,y) \leftrightarrow \text{cohyp}(y,x),
+\end{align*}
+but other rules, such that co-hyponyms share a hypernym, may also be encoded:
+\begin{align*}
+  \forall x,y,z. &~\text{cohyp}(x,y) \wedge \text{hyper}(x,z) \rightarrow \text{hyper}(y,z).
+\end{align*}
+
+MLNs ability to incorporate {\em weighted rules} would also give room for
+flexibility in constraint importance, and allow for {\em some} violations of
+constraints when the evidence is simply overwhelming. Therefore, we believe
+both the model of \newcite{snow:2006:acl} and an MLN-based model to be strong
+candidates for improving lexical relationship prediction by enforcing ontology
+constraints.
+
+\subsubsection{Sophisticated Contexts for Lexical Substitution}
+
+\paragraph{Wider Contexts in Lexical Substitution}
+In the model of Lexical Substitution discussed in Section~\ref{sec:pic}, we
+showed how the syntactic neighbors of a target word are useful in predicting
+what are the lexical substitutes, or in-context synonyms, of the target word.
+Although the syntactic neighbors can indeed capture some kinds of {\em long-distance
+dependencies}, there is much greater deal of context available which is
+presently not used by the model: the {\em entire rest of the sentence}.
+
+Consider if our PIC model were asked to find the best verb
+to fill-in-the-blank in the following two simple sentences:
+
+\begin{center}
+  {\em The dog \_\_\_ the tennis ball.}\\
+  {\em The dog \_\_\_ the meat ball.}
+\end{center}
+
+In both cases, PIC will be given the exact same context for the missing
+verb: its subject should be {\em dog} and its object should be {\em ball}. However,
+humans know that the dog is more likely to {\em chase} or {\em fetch} the tennis
+ball, while it is more likely to {\em eat} the meat ball. Without being provided
+the additional information about the ball, the model has absolutely no way
+to distinguish these two cases. How can this information be integrated into our
+model?
+
+Even beyond this simple example, it is already clear from prior work that
+additional context can be very useful in the task. \newcite{dinu:2010:emnlp} considers
+a probablistic model based on a wide Bag-of-Words context, and
+\newcite{vandecruys:2011:emnlp} propose a model which combines
+syntactic distributional space with a bag-of-words distributional space,
+showing modest improvements over each individual space. Additionally,
+\newcite{kawakami:2016:iclr} obtained state-of-the-art results on Lexical
+Substitution using a neural network language model which encodes the {\em
+entire sentence} as input, though their model also depends heavily on the use
+of machine translation data. It is clear that there is more useful information
+available than our own Lexical Substitution model is provided.
+
+There two distinct ways we could implement wider contexts into our Lexical
+Substitution model: using linguistic knowledge, and using neural networks.
+In the former, we could simply use existing linguistic knowledge in order to
+model additional syntactic patterns from large corpora. That is, in
+addition to modeling the direct syntactic neighbors of words,
+we could also add pattern-based rules for modeling
+indirect neighbors. For example, we could introduce an additional context
+in our distributional space for {\tt dobj+compound+\_+meat}, marking that the
+direct object the verb is compounded with ``meat,'' and so on for other nouns.
+Since our model uses collapsed prepositional phrases, this is already
+partially implemented (e.g., we already model ``to the store'' as {\tt
+prep:to\_store} rather than just {\tt prep:to}).
+
+A variation of this approach was discussed in \newcite{pado:2007:cl}, the
+original proposal of syntactic distributional spaces. In their model, they also
+extracted contexts for dependency chains two and three hops away from the
+target word, rather than the only the direct neighbors. Since then, most models
+have focused mostly on direct neighbors, since longer chains substantially
+increase complexity, sparsity, and model parameters.
+If we use this linguistic
+approach, issues of scaling and sparsity will likely plague our model.
+
+The other possibility for this problem would be to employ modern neural network
+models, like the Long Short Term Memory (LSTM) model \cite{hochreiter:1997:nc}.
+The LSTM model has become extremely popular in the field of Natural Language
+Processing, thanks to recent advances in network initialization
+\cite{glorot:2010:aistats}, training techniques
+\cite{duchi:2011:jmlr,kingma:2014:arxiv}, and hardware like Graphics Processing
+Units (GPUs). Indeed, LSTMs are the basis for the successful model of
+\newcite{kawakami:2016:iclr} mentioned previously. LSTMs are a form of a
+Recurrent Neural Network, which takes as input a variable-length sequence of
+items (tokens), and make some prediction. They have been successfully applied
+countless areas of NLP, including language modeling
+\cite{sundermeyer:2012:interspeech,jozefowicz:2016:arxiv}, sentiment analysis
+\cite{kumar:2016:icml}, machine translation \cite{sutskever:2014:nips},
+textual entailment \cite{bowman:2015:emnlp}, question answering
+\cite{hermann:2015:nips}, and recently even lexical entailment
+\cite{shwartz:2016:acl}.
+
+More concretely, we could integrate wider syntax using an approach similar to
+that of \newcite{shwartz:2016:acl}. In their model, a syntactic chains
+connecting two target words was used to classify whether the words stand in a
+hypernymy relationship or not, acting as a modern neural-network version of
+\newcite{snow:2004:nips}. We propose using similar syntactic chains to simply
+predict the {\em last word} in the chain, training using billions
+of syntactic chains extracted from large corpora. This model would have the
+capability of capturing and remembering relevant long-distance information
+whenever it is helpful in predicting the final word. One challenge
+in applying this model is scaling it, as LSTM models can take days or weeks
+to train when their final output is a prediction over the entire vocabulary.
+
+\paragraph{Joint Models of Syntactic Neighbors}
+
+Another issue with the lexical substitution model discussed in Section~\ref{sec:pic}
+is that the model fundamentally assumes independence between each of the syntactic
+neighbors. Ultimately, the model suggests substitutes in the above examples by
+asking, ``What does a dog do? What is done to a ball? What is the intersection
+of these two sets?'' Our use of unnormalized inner products in Equation~\ref{eqn:pic}
+means that one question may have more weight than another, but they
+are still considered independently: the question is never ``What does a dog do
+to a ball?''
+
+It is worth considering whether this independence assumption can be relaxed
+in some way. Intuitively, it seems obvious that a joint model should be helpful.
+Yet, one major issue is that the number of syntactic neighbors is variable:
+consider that a verb may have attachments may have only one attachment (intransitive),
+two attachments (transitive), or more (ditransitive, prepositional phrase attachments,
+adverbs, etc). Similarly, nouns can also stand in many syntactic relations
+simultaneously (compound, adjective, prepositional phrase, verb relation, and
+others). Since the number of attachments is variable, it is difficult to define
+a probabilistic model which does not demand at least {\em some}
+independence assumptions. Even if we were to define the model over all possible
+syntactic relations for every word, the issue would not be solved: consider
+a ``small, furry, brown mouse,'' which has three modifiers all standing
+in the {\tt adjmod} relation.
+
+Even if we could define such a model, it would likely be plagued the typical
+extreme sparsity issues: for many sentences in our dataset, an {\em exact}
+combination of attachments seen is unlikely to appear anywhere, even in
+extremely large corpora. Therefore, a naive joint model is likely to estimate
+the probability as zero for most everything.
+
+As with the proposed methods for including wider contexts, we could potentially
+address these issues using either linguistic knowledge, or neural networks.  To
+address the concerns using linguistic knowledge, we could again mark certain
+rules should be modeled jointly, and assume independence between the remaining
+syntactic relations. For example, we could model transitive verbs jointly, but
+assume independence from adverbs and prepositional modifiers; or we could
+jointly model two adjective modifiers, but assume independence once we
+encounter three or more. Again, rules similar to the ones discussed in
+\newcite{pado:2007:cl} would be a good starting point, and others could be
+proposed in qualitative analysis of the data.
+
+The other possibility is to use LSTMs in order to jointly model the different
+modifiers. Since LSTMs are able to handle a variable-length sequence as input,
+they seem to be a good candidate for creating a joint model over all the
+attachments in a principled manner. Unfortunately, LSTMs also assume that the
+{\em order} of the sequence is important, which is not the case for our problem:
+there is no inherent ordering of syntactic attachments. We could canonicalize
+the ordering (simply insisting that, for example, subjects are always presented
+before objects), but it remains unclear whether this is useful. We could also
+{\em randomize} the order the attachments are presented: since there are many
+permutations, this could substantially increase the amount of training data
+available. However, preliminary
+experiments showed difficulty with this second approach: the PIC model came
+about when our first attempts at using LSTMs were unsuccessful.
+
+Nonetheless, it is encouraging that the same linguistic and neural network
+approaches could be potentially useful for both introducing wider context,
+and joint modeling.
+
+\subsubsection{Generalized Distributional Spaces for Entailment and Substitution}
+
+Our final long term proposal is fairly different from the other two: while
+those were ideas to directly impact performance on the Lexical Entailment and
+Lexical Substitution, our last idea focuses more broadly on how
+we can improve distributional spaces altogether.
+
+We begin with an observation about the process described in
+Section~\ref{sec:dist} when constructing a syntactic distributional space.
+During construction, the final step involves finding a
+matrix factorization for the extremely large, extremely sparse word-context
+co-occurrence matrix. In syntactic spaces, the contexts are distinguished by
+the neighboring word {\em together} with its syntactic relation. That is there
+is one context for {\tt nsubj\_dog} and another for {\tt dobj\_dog}. This is a
+powerful notion, and one that enables the syntactic spaces their ability
+to model selectional preferences.
+
+Yet, modeling each of these contexts independently also seems to be wasting
+a large amount of information: that the same word is being modified
+by two different syntactic relations. When this is ignored,
+we assume we have excellent statistics for how every word stands
+in every relation, but this is unrealistic, and one of the important
+steps in constructing a syntactic distributional space is to limit modeling
+to only the most frequent contexts. But in defining a cutoff at all, we
+are also omitting a significant amount of data.
+Do we really want to throw away all this data?
+
+We ask whether the {\em syntactic relations} be separated
+from the {\em words} in syntactic distributional spaces? 
+Can these context vectors we rely heavily on in our work be {\em generatively
+modeled}? One way to approach this would be to model it as a
+composition function:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = f({\tt nsubj}, \vec{dog}).
+\end{equation*}
+In this view, we would need to learn one function, $f$, which takes in a syntactic
+relation and a word, and produces a {\em context vector} on how dog acts in the
+subject position. One possibility would be to use vector concatenation,
+treating the relation and the word as separate components, independent of each
+other. Intuitively, this does not seem to capture the the essence of our
+proposal, but it could act as a baseline model:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = \langle \vec{dog} ; \vec{nsubj} \rangle.
+\end{equation*}
+Another possibility would be to treat the procedure as a form of post-processing
+generalization. For example, we could factorize the context vectors as we do now, and
+then attempt to learn to predict the observed context vectors from the input
+components. For example, perhaps after performing the concatenation, a simple
+linear regression could combine them:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = W\langle \vec{dog} ; \vec{nsubj} \rangle + \vec{b}.
+\end{equation*}
+This is a basic model, but it would still enable us to
+predict information about novel combinations of syntactic relations and words.
+One could increase the representational power using a more sophisticated
+regression model, like neural networks.
+
+Another variation of this linear regression idea, would be to model each
+syntactic relation as a function {\em applied} to the vector. For example,
+we would learn a separate transformation for {\tt nsubj}, {\tt dobj}, etc:
+\begin{equation*}
+  \vec{ {\tt nsubj\_dog} } = W_{{\tt nsubj}}\vec{dog}
+\end{equation*}
+This gives the model many more free parameters, but may present some difficulty
+for the rarest syntactic relations, where there could easily be more parameters
+in $W$ than examples, though perhaps heavy regularization of $W$, or even
+constraining it to be diagonal could be beneficial. Modeling the behavior in
+this way would draw parallels to other areas of the literature,
+like compositional distributional semantics \cite{baroni:2010:emnlp,coecke:2011:la,grefenstette:2011:emnlp,baroni:2014:li}, the
+bilinear models proposed in GloVe \cite{pennington:2014:emnlp}, and the recursive
+composition models for sentiment analysis \cite{socher:2013:emnlp}.
+
+Alternatively, we could  try to learn the distributional vectors from scratch
+using an alternative factorization. Recall that the dimensionality reduction procedure
+simply tries to predict the Pointwise Mutual Information between a word and
+a context. Rather than performing the dimensionality reduction, then regression,
+we could encode our generative principals into the dimensionality reduction.
+In this way, a successful model may look something more like {\em tensor
+factorization}. For example, we could model the PMI between a word ($v$),
+and a relation-context pair ($r, c$) as:
+\begin{equation*}
+  PMI(v, r, c) = {\bf v}^\top {\bf W}_{r} {\bf c},
+\end{equation*}
+where ${\bf W_r}$ is a matrix. This is essentially the same as the linear
+regression model proposed in the above paragraph, but performed at a different
+step. Unfortunately, tensor factorization is generally very difficult
+\cite{haastad:1990:ja,hillar:2013:jacm}. Finding the ideal
+factorization for our problem is likely a very difficult optimization problem
+without major simplifying assumptions, and beyond our own expertise.
+
+However, an excellent place to start would be in the Information Extraction
+literature, especially those focused on Statistical Relational Learning. These
+works seek to find generative representations for (subject, verb, object)
+triples, like {\tt BornIn(John, Athens)}, and there is a rich literature
+regarding approaches to this very difficult problem.
+The approach of \newcite{nickel:2011:icml} inspired the model described
+in the previous paragraph, but many other models have been proposed
+\cite{socher:2013:nips,riedel:2013:naacl,yang:2014:iclr,kuleshov:2015:aistats,trouillon:2016:icml}.
+
+Regardless, if we assume that we {\em can} find any model which successfully
+predicts context vectors in a generative manner, then it could lead to
+substantial improvements on both tasks of Lexical Entailment {\em and} Lexical
+Substitution. For example, we saw in Table~\ref{tab:ctxsim} that certain
+syntactic relations are indicative of hypernymy. Therefore, being able to plug
+in {\em any} two words to and estimate the liklihood that they will stand in this
+syntactic relation, like {\tt nmod:such\_as}.
+The problem would contribute even more greatly to the Lexical Substitution
+model we presented: in a preliminary examination, we found that some 18\% of the Coinco
+dataset contains at least one context not available in our distributional space.
+The ability to {\em generate} representations for these contexts would be
+a simple way to provide the model with more disambiguating information, which
+should help in the end task.
+
+Indeed, as we described above, a novel model could easily have larger
+implications in other areas of Natural Language Processing, and is therefore
+probably the most ambitious and difficult of our long term proposals.
+
+\section{Conclusion}
+
+Distributional Semantics has come a long way in its ability to contribute to
+difficult Natural Language Processing tasks. In this proposal, we several
+methods for distilling {\em lexical knowledge} out of distributional vectors.
+We discussed two models of hypernymy detection, which take as input pairs of
+words, and predict whether those models stand in a hypernymy relation.  Through
+detailed analysis, we have a clear picture of how these models work, and how
+they relate to some of the linguistic literature on Lexical Entailment, like
+the Distributional Inclusion Hypothesis and Hearst Patterns. We also saw that
+at least one of these models is able to positively contribute to an RTE system
+We discussed a new model of Lexical
+Substitution, which we argue is related to lexical entailment by acting as a
+form of {\em in-context synonym prediction}. Our Lexical Substitution model
+outperforms some comparable baselines, and analysis shows its improvements
+derive predominantly from exploiting simple unigram priors.
+
+We also discussed multiple directions for how our work could be extended
+in the future. In the short term, we focus on exploring how our H-features
+model could also contribute to the RTE Lexical Entailment classifier, and
+whether the H-features model is able to model relations other than hypernymy.
+We also discussed several ways in which the Lexical Substitution model could
+contribute to the RTE Lexical Entailment Classifier. Progress in these areas
+would contribute significantly to our thesis that our models extract useful
+lexical information for Recognizing Textual Entailment.
+
+Finally, we discussed different long-term directions for future research. These
+ideas are much larger, and less guaranteed than the short-term research
+proposals, but also reflect our opinion on where the field should go from here.
+Namely, we considered how Hypernymy and Relationship prediction could be
+improved by imposing simple constraints inherent to ontologies. We also
+discussed several ways in which more context could be exploited in Lexical
+Substitution, or how we could remove some of the independence assumptions made
+by our current model. We note that improvements could come by either
+exploiting linguistic knowledge about how different syntactic relations
+interact, or by using recent successful neural network techniques. Lastly, we
+considered how current syntactic distributional spaces make an inefficient use
+of the available information, and discussed ways they could be extended to be
+{\em generative} over syntactic relations, instead of just artificially
+limiting the statistics they model. Improvements in these spaces would likely
+improve performance of distributional models in many tasks, including
+Lexical Entailment and Lexical Substitution.
+
+\pagebreak
+\bibliographystyle{aclcite}
+\bibliography{refs}
+
+\end{document}
