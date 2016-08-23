@@ -1,0 +1,68 @@
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+\usepackage{enumitem}
+\setlist{itemsep=0px,parsep=0px,topsep=0.5\baselineskip,itemindent=2mm}%,leftmargin=15px}
+%\usepackage{adjustbox}
+%\usepackage{calc}
+%\usepackage{caption}
+%\usepackage{subcaption}
+%\usepackage[normalem]{ulem}
+%\usepackage{makecell}
+%\usepackage{scalefnt}
+%\usepackage{algorithm}
+%\usepackage{algorithmicx}
+%\usepackage[noend]{algpseudocode}
+%\usepackage[makeroom]{cancel}
+
+% SCR: my own imports
+\usepackage{alltt}
+\usepackage{subfig}
+\usepackage{url}
+\usepackage{multirow}
+
+% And aliases I use a lot
+\usepackage{aliases}
+
+%%%
+%%% Section styles
+%%%
+\renewcommand{\chapternumberstyle}[1]{\textmd{#1}\\}
+\renewcommand{\chapterstyle}[1]
+{\normalfont\Large\bfseries{#1}\vspace{20px}}
+\titleformat{\section}
+{\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titleformat{\subparagraph}
+{\normalfont\normalsize\bfseries}{\thesubparagraph}{1em}{}
+
+\renewcommand{\contentsname}{\quad\quad\quad Table of Contents}
+\renewcommand\bibname{References}
+
+\renewcommand{\cite}[1]{\citep{#1}}
+\newcommand{\shortcite}[1]{\citeyear{#1}}
+\renewcommand{\citename}[1]{\citeauthor{#1}}
+\newcommand{\newcite}[1]{\citet{#1}}
+
+% TOC
+% \usepackage{tocloft}
+% \renewcommand{\@pnumwidth}{17mm} 
+
+
+
+
+\newcommand{\mytitle}{Identifying Lexical Relationships and Entailments with Distributional Semantics}     %% The title of your thesis; use mixed-case.
+\newcommand{\myname}{Stephen Roller}    %% Your official UT name.
+
+

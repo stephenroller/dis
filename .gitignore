@@ -8,7 +8,9 @@
 *.fmt
 *.bbl
 *.blg
-*.pdf
+thesis.pdf
+draft.pdf
+main.pdf
 *.synctex.gz
 .DS_Store
 thumbs
