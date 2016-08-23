@@ -1,4 +1,6 @@
-all:
+all: draft
+
+thesis:
 	pdflatex main
 	pdflatex main
 	bibtex main
