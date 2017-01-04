@@ -1,0 +1,136 @@
+My notes:
+
+Make eval metrics more clear (description of graphs below)
+- Check out "matching pursuit", fischer's Linear discriminate analysis, boosting
+- Frame LexSub more positively
+- introduce: dimensionality reduction to say where context vectors come from
+- Explain p hyperplane
+- asym mention diff sq more
+- Cut overview of proposed work
+- Don't start from outline
+- Cut intro a lot
+- Explicitly say islam on Lex Ent Extr rules
+- Rte Results: say Asym + concat more
+
+
+----
+
+
+Chris:
+
+- "UT has (a) system(s) ... " why the conglomerate — does it belong to UT? mostly you and Islam, though, as far as the references go
+- Maybe examples of how/where hand-curated lexicons fall short? Citation needed?
+- Does the cat / dog / animal graph have a empirical basis? If not, use something hand-drawn instead?
+- Hypernymy vs. meronymy vs. synonymy -- focused on hypernymy, okay, why? Is there any theoretical justification for it being the major player among these?
+
+Slide 18 "Completed Work": at 9 min
+
+- Slide ~24 - replace or alias animal / cat / dog vectors with H / w1 / w2
+- #30 + Cosine baseline isn't so bad; could you start with something even stupider / lower, perhaps non-distributional (even figures reported by someone else)?
+      + Why is WordNet still best, even over ensemble, on end-2-end RTE dataset/evaluation?
+
+Slide 34: at 20 min
+
+Slide 48 "Proposed work": at 30 min in
+
+Slide 69: at 40 min
+
+------
+
+
+POSITION AT DIFFERENT TIMES:
+
+2:30: 4 (motivating RTE example)
+5:00: 6 (“distributional vectors”)
+8:00: 17 (“tasks of focus”)
+9:00: 20 (paper 1)
+12:30: 27 (paper 2)
+17:00: 33 (paper 3) 
+24:30: 42 (paper 4)
+29:30: 48 (proposed work)
+
+-------------------------------------------------------------------------
+
+3. Put definition of RTE on slide 3
+26?: what features did the baseline classifier use?
+29: didn’t get diff between “lexical” and “end-to-end” RTE. Maybe put a bit more info on slides about it?
+36: is this true of distributional spaces that aren’t based on dependency parses? Are all the systems people use for this based on dependency parses?
+
+
+IN GENERAL:
+
+- Intro is pretty slow. 
+- Consider adding color to bolded citations.
+- related to paper 4, how about, like, taking a previous method and just weighting according to term frequency?
+- on the task of ontological consistency, are you thinking ILP?
+
+
+
+The paper Katrin and I were both thinking of concerning “global structure imposed above local classifiers” is:
+
+Jonathan Berant, Ido Dagan, and Jacob Goldberger. 2011. Global learning of typed entailment rules. In Proceedings of the 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies-Volume 1, pages 610–619. Association for Computational Linguistics.
+
+-----
+
+Jesse:
+
+
+slide 26 - "fewer issues"
+slide 34/35 - maybe illustrate with an example that eventually is embedded in those on slide 36
+slide 57 - DIRT clarification (you just stumbled a bit)
+
+---
+Katrin:
+
+don't start with an overview. start with the motivation.
+
+fun fact: Ido (as a grown-up) is stressed on the 2nd syllable
+
+don't spend that much time on the introductory slides
+
+your motivating example: the colors aren't quite visible, especially the blue and green. any way you can make them stand out more?
+
+explain syntactic neighborhood
+
+In the text you still waffle on what you expect of lexsub. the intro says it should help RTE, the later text says it'll do more harm than help. why do it in that case?
+
+Asym:
+
+nice visualization for Asym
+
+talk about your contribution to designing training and test
+
+say a bit more about how Asym works
+
+good idea to have barplots with actual numbers inside the bars
+
+Asym in RTE:
+
+unclear that the derivation of lexical-only rules was not yours, as the reference is bolded
+
+H-features:
+
+Lexical memorization slide: explain in words what p is, especially as it becomes more important later
+
+Why asym doesn't have the problem: you didn't go into the distance-vector-squared in your presentation so you cannot use it as an argument
+
+explain better how you compare prototype to context vectors. This is cool stuff, so say more on this.
+
+
+Future, short-term:
+
+ you talked too much on the intro slide. cut the intro slide down, or even omit it.
+
+short-term work can be done more quickly, as relatively obvious extensions
+
+lexsub: really, figure out what you think!
+
+Future, long-term:
+
+again, omit the intro slide.
+
+ontological consistency: maybe simply formulate this as local classifiers plus global inference. Do you want to cite: Berant et al worked on the DIRT system, also cite Gogate?
+
+decompose vector for nsubj-dog into vectors for nsubj and dog: See Rooth. Also, is this decomposition going to be useful? thinking about this, I would say that general nsubj vectors may be less useful than nsubj-dog is similar to nbsubj-[something similar to dog]?
+
+
