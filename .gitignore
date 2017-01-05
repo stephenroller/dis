@@ -14,3 +14,5 @@ main.pdf
 *.synctex.gz
 .DS_Store
 thumbs
+*.fdb_latexmk
+
