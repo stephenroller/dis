@@ -1,4 +1,4 @@
-\chapter{Completed work}
+\chapter{Lexical Entailment}
 
 In this section, we discuss our publications related to this
 proposal, and emphasize our major contributions to the field. In short, we
@@ -220,160 +220,6 @@ the the Clarke and invCL measures have their co-hyponymy and meronomy
 scores weakened. Altogether, this is evidence that the Asym measure is
 indeed, conforming to our Selective Distributional Inclusion interpretation.
 
-
-\section{Subsystem in complete RTE system (Beltagy et al., 2016)}
-\label{sec:rtesubsystem}
-
-Beyond showing that Asym is better able to improve performance on lexical
-relationship datasets, we should also show that it can improve performance
-in an end-to-end Recognizing Textual Entailment (RTE) system. Specifically, we compare Asym's performance
-to a variety of lexical entailment classifiers which use a variety of
-hand-engineered features and word lexicons.  These predictions made by lexical
-entailment classifiers are used as to generate {\em logical rules}; an inference
-engine based on Markov Logic Networks (MLNs) is then used to form predictions
-about complete {\em sentential} entailment \cite{beltagy:2016:cl}.
-
-To this end, we employ the Sentences Involving Compositional Knowledge (SICK)
-dataset, which contains nearly 10k sentence pairs, evenly split between
-training and test sets \cite{marelli:2014:semeval}. Sentence pairs were
-extracted randomly image caption datasets, and then simplified and extended to
-cover semantic issues like negation and quantifiers, and then manually
-annotated as {\em entailing} (the antecedent implies the consequent), {\em
-contradicting} (the antecedent implies the opposite of the consequent), or
-neutral (neither of the above). Two examples from the dataset are shown in
-Table~\ref{tab:sickexample}.
-
-\begin{table}
-  \centering
-  \begin{tabular}{|ll|}
-    \hline
-    {\bf Label} & {\bf Antecedent/Consequent}\\
-    \hline
-    Entailing & A: Two teams are competing in a football match\\
-    & C: Two groups of people are playing football\\
-    \hline
-    Contradicting & A: The brown horse is near a red barrel at the rodeo\\
-    & C: The brown horse is far from a red barrel at the rodeo\\
-    \hline
-  \end{tabular}
-  \caption{Example entailing and contradicting sentences from the SICK dataset.}
-  \label{tab:sickexample}
-\end{table}
-
-To train the lexical entailment classifier, we extract {\em lexical pairs} from
-the SICK dataset using a variation on Robinson Resolution \cite{robinson:1965:jacm}. The
-full details are outside the scope of this document, but briefly, we employ
-an off-the-shelf semantic parser called Boxer, which translates sentences into
-First Order Logical formulas \cite{bos:2008:step}. We then use theorem proving
-techniques in order to extract lexical rules which {\em must} be true in the dataset.
-For example, given that ``The girl talks'' entails ``A girl speaks,'' we can
-eliminate {\em girl} and automatically conclude that {\em talks} lexically
-entails {\em speaks}.
-
-Crucially, by knowing entailment decisions about the
-entire sentences, and by performing unification over their logical structures,
-we can use theorem proving to automatically label certain {\em atomic rules} as
-entailing, contracting, or neutral. These atomic rules, like {\em talks entails speaks}, can
-be interpreted as {\em lexical entailment pairs} for use in a lexical entailment
-classifier. Most, but not all, pairs can be labeled automatically, and those
-that cannot are manually annotated by two of the authors \cite{beltagy:2016:cl}.
-The final result is a novel dataset of lexical entailment pairs, which we call
-RRR (Robinson Resolution Rules), which we use to train and compare lexical
-entailment classifiers.
-
-We compare the performance of several existing lexical entailment
-classifiers which employ a variety of hand-engineered features and lexicons
-like WordNet.  Most of the hand-engineered features come from
-\newcite{lai:2014:semeval}, and include things like Wordform features (e.g.,
-do the words have the same lemma or Part-of-Speech?); WordNet features (e.g.,
-are the words hypernyms or co-hyponyms in WordNet?); and Distributional
-Similarity (e.g., cosine distance between two words in a distributional space).
-
-We also present a novel extension of the real-valued distributional similarity
-features, by {\em binning} cosines into ranges (e.g. 0.0--0.1, \ldots, 0.9--1.0)
-to transform them into binary-valued features, after observing that
-mid-similar terms (those with a cosine of $\sim.80$, like {\em cat} and {\em
-animal}) were more likely entailments than those with high similarity
-(cosine of $\sim.95$, like {\em cat} and {\em dog}). We found this binning
-technique significantly improved the contribution distributional similarity
-in feature-engineered lexical entailment classifiers.
-
-Finally, we also compare to the Asym classifier trained on our new RRR dataset,
-and on a variation of Asym which concatenates the Asym features with the
-antecedent (LHS) and consequent (RHS) vectors, which we call Asym + Concat,
-since it uses both the Asym features and the Concat (LHS+RHS) features. For
-both the distributional similarity features, and the Asym models, we use two
-distributional spaces: one which uses a BoW window of two words, and one based
-on syntactic contexts.
-
-We evaluate all of the lexical entailment classifiers listed above on two
-variations of the task: Intrinsic accuracy, and RTE accuracy. In the Intrinsic
-setup, the lexical entailment classifiers are evaluated on their performance on
-the RRR dataset in a standard 10-fold cross-validation setup. In the RTE setup,
-the classifiers are trained on items extracted from the training portion of the
-RTE dataset, and then used as the sole source of lexical knowledge in a
-complete RTE pipeline \newcite{beltagy:2013:starsem,beltagy:2016:cl}
-to predict the test portion of the RTE dataset. This ensures we are actually
-testing whether Asym is able to contribute in a rich RTE pipeline.
-
-Table~\ref{tab:evallexical} shows performance of the various lexical entailment
-classifiers on each of our evaluation settings. We also report a degenerate
-baseline (always guess Neutral), and an upper baseline, which always gives gold
-lexical entailment decisions. Note that this upper baseline on the RTE
-task is {\em not} 100\%, due to a mixture of issues like parsing errors,
-inference errors, and other issues in the RTE inference engine.
-
-\begin{table}
-\centering
-\begin{tabular}{|lrr|}
-    \hline
-    {\bf Feature set} & {\bf Intrinsic} & {\bf RTE Test}\\
-    \hline
-    Always guess neutral & 56.6 & 69.3 \\
-    Gold standard annotations&100.0 & 94.6 \\
-    \hline
-    Wordform only        & 57.4 & 70.4 \\
-    Dist. Sim. only      & 68.8 & 76.7 \\
-    WordNet only         & 79.1 & 84.2 \\
-    Asym only            & 76.8 & 79.2 \\
-    Asym + Concat        & 81.4 & 82.6 \\
-    \hline
-    All features         & 84.6 & 83.8 \\
-    \hline
-\end{tabular}
-\caption{Accuracies for various Lexical Entailment classifiers on the RRR (Intrinsic) and SICK (RTE) datasets.}
-\label{tab:evallexical}
-\end{table}
-
-In general, we find that Asym performs relatively well, even compared some of
-the hand-engineered features proposed by \newcite{lai:2014:semeval}, indicating
-that Asym is flexible and able to learn beyond just the LEDS and BLESS datasets.
-Unsurprisingly, the classifiers which use only Wordform features or only
-distributional similarity both perform much worse than the information-rich
-WordNet features, or the more sophisticated Asym classifier.
-We also notice that the classifier which combines Asym with the Concat
-vectors performs substantially better than Asym does by itself, indicating
-a need for additional study, which we will address in
-Section~\ref{sec:hfeatures}.
-
-Unsurprisingly, we find that the WordNet classifier does a bit better than the
-others, which is expected given that WordNet is an information-rich resource,
-and contains gold annotations about word relationships, rather than
-distributional information.  Finally, we observe a classifier which combines
-all of these features together does the best on the Intrinsic accuracy, but not
-as strongly as WordNet on the end-to-end task; some of this can be attributed
-to a handful of systematic differences between the training and test sets of
-SICK.
-
-We also perform a qualitative analysis to compare the Distributional Similarity
-classifier with the Asym classifier. We manually inspect and compare the
-predictions and errors made by each, and find that Asym does substantially
-better at distinguishing hypernymy from co-hyponymy.  This is what we had hoped
-to find, given the findings in Section~\ref{sec:asym}, and that cosine is known
-to heavily favor co-hyponymy \cite{baroni:2011:gems}.  However, we also find
-that cosine features are better at discovering synonymy, and that Asymmetric
-frequently mistakes antonymy as an entailing. Additional qualitative analyses
-comparing models are available in \newcite{beltagy:2016:cl}.
 
 \section{H-Features for Hypernymy Classification (Roller and Erk, 2016b)}
 \label{sec:hfeatures}
@@ -644,210 +490,52 @@ while significantly outperforming it on BLESS and Medical data sets.
 
 
 
-\section{Lexical Substitution (Roller and Erk, 2016a)}
-\label{sec:pic}
+\subsection{Lexical Entailment}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{figures/substitution}
-  \caption{Caption here.}
-  \label{fig:substitution}
-\end{figure}
+\paragraph{H-features for non-Hypernymy Relations}
 
-In this last section of our work, we switch over to our efforts on the Lexical
-Substitution (LexSub) task. In the Lexical Substitution task, we are given
-a sentence and target word, and must choose possible substitutes from the
-entire vocabulary which preserve the meaning of the sentence.
-As described in Section~\ref{sec:lexsub}, we view
-LexSub as a proxy which captures a wide degree of lexical entailments {\em in
-context}.
+In Section~\ref{sec:hfeatures}, we discussed how certain distributional models
+act as {\em H-feature} detectors, which identify contexts highly indicative
+of hypernymy, and discuss our model which exploits
+multiple H-feature detectors in order to improve the
+modeling power of a hypernymy detection system, and improves results over
+comparable models.
 
-We propose a new measure, which extends
-a previously successful, simple model to estimate the appropriateness of a
-lexical substitute. As a introduction point for our measure, we review the work
-of \newcite{melamud:2015:vsm}, which introduced several unsupervised measures
-for word similarity in context: namely \balAddCos and \addCos. The main insight
-of these unsupervised measures is the use of {\em context vectors}, related
-to the insights discussed in Section~\ref{sec:lexmem}. Crucially, the models
-of \newcite{melamud:2015:vsm} depend on syntactic context vectors, which
-have been found more successful than just BoW measures in the literature
-\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
-We note that these models are {\em not} the state of the art,
-\cite{melamud:2015:naacl,melamud:2016:conll} but perform competitively while
-remaining simple, extensible, and highly interpretable.
+However, there are many relations {\em other} than hypernymy which are useful
+in considering textual entailment: for example, identifying co-hyponymy is
+useful as a negative signal for entailment, and identifying meronomy is
+critical to our motivating example in the Introduction.
+Indeed, the results shown in Table~\ref{tab:asymresults} show
+the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
+prediction task: hypernymy, co-hyponymy, meronomy, and random, but the
+experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
+binary hypernymy-or-not classification task. We propose to extend and evaluate
+the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
+relations. We believe the model's performance can be improved by
+better modeling the non-hypernymy cases, and that the model will additionally
+discover H-features indicative of other relations.
 
-In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
-using a mixture of {\em out-of-context similarity} and {\em in-context
-appropriateness}. The out-of-context similarity uses standard distributional
-semantics cosine similarity (Equation~\ref{eq:cos}) in order to estimate how similar
-the target is to the substitute, and remains fixed regardless of the sentential
-context.  For this reason, this out-of-context (OOC) similarity is also used as
-a baseline in the literature.
+There are several ways that the model could be extended. The one we believe
+will be most successful is one that trains several binary H-features models:
+one for hypernymy-vs-non-hypernymy, one for meronomy-vs-non-meronomy, etc.
+Similar to how the PCA procedure was used only as a form of feature-extraction
+for the final prediction, each of the binary classifier iterations will be also
+used for feature extraction for a final classifier.
+That is, we will use the procedure described in Section~\ref{sec:hfeatures}
+to extract several iterations of features for hypernymy, then completely repeat
+the procedure for meronomy and so forth. The resulting features from each
+of the classifiers will be concatenated for a final four-way classifier prediction.
+Another alternative would be to try to learn the four-way classifiers concurrently
+(e.g., a softmax instead of logistic regression), and extract the corresponding
+H-features at this level.
 
-The in-context appropriateness attempts to directly model
-whether a proposed substitute fits in the given sentential context. That is, if
-one replaces the target with the substitute directly, would a reader still
-consider this word {\em selectionally} agrees in the sentence. For example,
-the in-context measures will give a low score for {\em dog purrs}, since dogs
-usually do not purr.
-To this end, it assumes the sentence is parsed, so that we have the full set of
-syntactic neighbors of the target, $C$. Each of the context vectors
-corresponding to elements of $C$ are then evaluated for their fit with the
-proposed substitute, as illustrated in Figure~\ref{fig:syn}. For a given target
-$t$, substitute $s$ and context $C$, the final \addCos~score is given as
-\begin{equation}
-  \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
-\end{equation}
-The model can be intuitively understood using the diagram in
-Figure~\ref{fig:substitution}. For a given target ``bright,'' we will choose
-the substitute (``smart'' or ``colorful'') which is {\em closer} to the
-given context. If the context is ``scientist'' as in ``bright scientist,''
-we will shift our prediction away from ``colorful'' and closer to ``smart,''
-and vice versa for ``bright coat.'' This remains one of the simplest successful
-models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also consider
-variants of this measure, including {\em balAddCos}, which equally
-weights the out-of-context similarity with the in-context appropriateness:
-\begin{equation}
-  \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
-\end{equation}
-
-In our work, we propose a new measure, called Probability-in-Context (PIC),\footnote{PIC is not strictly a probability measure; the name is a backronym for the purpose of the paper's title.}
-which estimates the appropriateness of a substitute in a given context
-\cite{roller:2016:naacl}.  Similar to \balAddCos, the measure has two
-equally-weighted, independent components measuring the appropriateness of the
-substitute for both the target and the context, each taking the form of a
-softmax:
-\begin{equation}
-  \begin{aligned}
-  \mbox{PIC}(s | t, C) &\propto P(s | t) \times P(s | C)\\
-  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\
-  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\},
-  \end{aligned}
-  \label{eqn:pic}
-\end{equation}
-where the $Z_t$ and $Z_C$ are normalizing constants.
-Our model differs from {\em balAddCos} in one major way: we base our similarity
-estimates using the {\em unnormalized} inner product $s^\top t$ and $s^\top c$,
-rather than normalized cosine similarities. We also introduce two additional
-parameters, $W$ and $b$, which act as a simple linear transformation over the
-original context vectors. These parameters are learned from the original
-corpus, and serve only to tune how the fixed distributional vectors act in this
-alternative objective function.
-
-To identify the contribution of this parameterization versus the softmax
-objective, we also introduce to a non-parameterized PIC ({\em nPIC}), which
-does not contain the extra parameters:
-\begin{equation}
-  \begin{aligned}
-  \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
-  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\}
-  \end{aligned}
-  \label{eqn:npic}
-\end{equation}
-
-We compare our model to that of an out-of-context baseline (cosine) and the
-{\em addCos} and {\em balAddCos} models of \newcite{melamud:2015:vsm}, which
-outperformed other prior work at the time of its publication. We compare the
-models on three data sets: SE07, the original LexSub data set
-\cite{mccarthy:2007:semeval} which was explicitly developed to capture polysemy;
-Coinco, a recent LexSub data set which contains substitutes for all content
-words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
-to be a large collection of lexical substitutes from a diverse corpus
-\cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
-measures whether our best proposed substitute is contained within the set of gold
-substitutes provided by annotators. In all models, we exclude any words sharing
-the same lemma as the target, e.g. if the target is ``barking'' we do not
-propose ``bark.''
-
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|r|r|r|}
-  \hline
-  {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
-  \hline\hline
-  %\multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
-  %\hline
-  %\ooc               &     44.2   &     44.5  &     57.9       \\
-  %\addCos            &     51.2   &     46.3  &     62.2       \\
-  %\balAddCos         &     49.6   &     46.5  &     61.3       \\
-  %\hline
-  %\ourmeas           &     51.3   &     46.4  &     61.8       \\
-  %\ourmeasparam      & {\bf52.4}  & {\bf48.3} & {\bf62.8}      \\
-  %\hline\hline
-  %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@1)}\\
-  %\hline
-  Cosine (OOC Baseline)                    &     11.7   &    10.9   &      9.8       \\
-  addCos                                   &     12.9   &    10.5   &      7.9       \\
-  balAddCos                                &     13.4   &    11.8   &      9.8       \\
-  \hline
-  nPic                                     &     17.3   &    16.3   &     11.1       \\
-  PIC                                      & {\bf19.7}  &{\bf18.2}  & {\bf13.7}      \\
-  \hline
-  %\hline
-  %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@3)}\\
-  %\hline
-  %\ooc               &     9.7    &     8.6   &     7.0       \\
-  %\addCos            &     9.0    &     7.9   &     6.1       \\
-  %\balAddCos         &     9.8    &     9.1   &     7.4       \\
-  %\hline
-  %\ourmeas           &    13.1    &    12.1   &     7.9       \\
-  %\ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
-  %\hline
-\end{tabular}
-\end{center}
-\caption{Lexical Substitution results for the all-words prediction task, measured
-in Mean Precision@1.}
-\label{tab:lexsub}
-\end{table}
-
-Table~\ref{tab:lexsub} contains results for all measures across all datasets.
-We observe that PIC outperforms all other models by a significant
-margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
-30\% improvement over \balAddCos in SE07 and Coinco. The nPIC also improves
-substantially over the other baselines, indicating we gain benefit both from
-the new objective function and the additional parameterization.  We next
-strive to understand why both measures have a clear improvements over the
-baseline models.
-
-\begin{table*}[t]
-  \begin{center}
-  \begin{tabular}{|cccc|}
-    \hline
-    \ooc             & \balAddCos            & \ourmeas         & \ourmeasparam\\
-    \hline\hline
-    \multicolumn{4}{|c|}{You can sort of challenge them well, did you}\\
-    \multicolumn{4}{|c|}{{\bf really} know the time when you said yes?}\\
-    \hline\hline
-    {    trully              } & {    proably             } & {    realy               } & {\bf actually            } \\
-    {\bf actually            } & {    trully              } & {\bf truly               } & {\bf truly               } \\
-    {    actaully            } & {    acutally            } & {\bf actually            } & {    already             } \\
-    {    acutally            } & {    actaully            } & {    hardly              } & {    barely              } \\
-    {    proably             } & {    probaly             } & {\bf definitely          } & {    just                } \\
-    \hline
-  \end{tabular}
-  \end{center}
-  \caption{Example where the \ourmeasparam~performs strictly better than other models. The target word and correct answers
-  are bolded.}
-  \label{tab:cherry}
-\end{table*}
-
-We characterize the models using a cherry-picked example,
-given in Table~\ref{tab:cherry}. Although this example does not perfectly illustrate
-the Lexical Substitution task, it does well at giving intuition as to why our
-models perform better. We see that all four measures
-tend to pick excellent substitutes which {\em semantically} agree with the
-original target. However, the cosine and {\em balAddCos} models have a large number of
-misspelled works in their list, while the nPIC and PIC measures contain
-mostly correct spellings. This is because, somewhat surprisingly, the {\em
-length} of the distributional vectors correlates strongly with the {\em
-unigram} statistics of the word \cite{wilson:2015:arxiv}.
-Therefore, by using the unnormalized inner
-product, rather than cosine, our model naturally incorporates unigram priors,
-allowing it to downweight rare, similar words. Indeed, a quantitative analysis
-of the $W$ and $b$ parameters finds that they additionally exaggerate this
-unigram bias \cite{roller:2016:naacl}.
-Intuitively, it seems natural that unigram biases should hold a strong role in
-Lexical Substitution, and that our model should wish to exploit this
-information.
+There are interesting research questions that stem from this procedure, beyond
+just final performance scores. One is what distributional-level features will
+be learned as prototypical of meronyms, or co-hyponyms? As we saw in
+Table~\ref{tab:ctxsim}, the classifier automatically learned to pick
+out well-known Hearst patterns, indicative of hypernymy. It remains to be seen
+whether it will pick out additional Hearst patterns indicative of other
+relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
+and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
 
