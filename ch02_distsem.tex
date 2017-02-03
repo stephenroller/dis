@@ -38,38 +38,33 @@ VSMs in the NLP community \cite{baroni:2014:acl}.
 \begin{minipage}{7cm}
 \begin{scriptsize}
 \begin{alltt}
-         the furry {\color{TealBlue}{dog}} is friendly to
-and manipulate the {\color{TealBlue}{dog}} 's lips and
-       as a clever {\color{TealBlue}{dog}} ; two to
-a reputation among {\color{TealBlue}{dog}} trainers of having
-    also among the {\color{TealBlue}{dog}} breeds most likely
- the very earliest {\color{TealBlue}{dog}} shows and kennel
-        as a guard {\color{TealBlue}{dog}} and to hunt
-   the mechanic 's {\color{TealBlue}{dog}} began to howl
+         the furry {\color{Cerulean}{dog}} is friendly to    
+and manipulate the {\color{Cerulean}{dog}} 's lips and       
+       as a clever {\color{Cerulean}{dog}} ; two to          
+a reputation among {\color{Cerulean}{dog}} trainers of having
+    also among the {\color{Cerulean}{dog}} breeds most likely
+ the very earliest {\color{Cerulean}{dog}} shows and kennel  
+        as a guard {\color{Cerulean}{dog}} and to hunt       
+   the mechanic 's {\color{Cerulean}{dog}} began to howl     
 \end{alltt}
 \end{scriptsize}
 \end{minipage}
 \begin{minipage}{7cm}
-\begin{center}
+\centering
 \begin{tikzpicture}[scale=1.3]
-    % Draw axes
-    \def\r{0.5}
-    % Draw two intersecting lines
     \coordinate (origin) at (0,0);
-    \coordinate (cat) at ($(origin) + (76:1.7)$);
-    \coordinate (dog) at ($(origin) + (66:1.1)$);
-    \coordinate (ani) at ($(origin) + (12:2.1)$);
+    \coordinate (cat) at (85:1.7);
+    \coordinate (dog) at (66:1.5);
+    \coordinate (ani) at (12:2.1);
 
-    \draw [->,TealBlue] (origin) -- (dog) node[right] {\word{dog}};
-    \draw [->,Purple] (origin) -- (cat) node[right] {\word{cat}};
-    \draw [->,Green] (origin) -- (ani) node[right] {\word{animal}};
+    \draw [->,Cerulean] (origin) -- (dog) node[right] {\word{dog}};
+    \draw [->,Orange] (origin) -- (cat) node[right] {\word{cat}};
+    \draw [->,Green] (origin) -- (ani) node[above] {\word{animal}};
 
-    \draw [] (12:\r) arc (12:66:\r) node[right,pos=0.75] {$\theta$};
-    \draw [->,line width=0.3mm] (origin) -- (0,2) node (yaxis) [above,pos=0.5,rotate=90] {{ furry}};
-    \draw [->,line width=0.3mm] (origin) -- (3,0) node (xaxis) [below,pos=0.5] {{ underwater}};
-
+    \draw [] (12:0.5) arc (12:66:0.5) node[right,pos=0.75] {$\theta$};
+    \draw [<->,ultra thick](2.5,0) -- (origin)  node (yaxis) [below,pos=0.5] {{underwater}}
+      -- (0,2.0) node (xaxis) [above,pos=0.5,rotate=90] {{ furry}};
 \end{tikzpicture}
-\end{center}
 \end{minipage}
 \caption{(a) Example contexts of the word \word{dog}, and (b) cartoon drawing
 of word vectors in the \word{furry} and \word{underwater} dimensions.}
@@ -137,8 +132,17 @@ the subject of {\em barks} is likely to be {\em dog}, while the subject of
 {\em purrs} is likely to be {\em cat}.
 
 \begin{figure}
-  \centering
-  \includegraphics[width=0.75\textwidth]{figures/syn}
+\centering
+\begin{dependency}[edge vertical padding=0.5ex, edge style={black},
+                   label style={fill=black,text=white,font=\ttfamily}]
+  \begin{deptext}[column sep=0.7cm,nodes={font=\Large}]
+    the \& dog \& chased \& its \& tail.\\
+  \end{deptext}
+  \depedge{2}{1}{det}
+  \depedge{3}{2}{nsubj}
+  \depedge{3}{5}{dobj}
+  \depedge{5}{4}{poss}
+\end{dependency}
 \caption{Example of a dependency parse for ``The dog chased its tail.'' In
 a syntactic distributional space, contexts are defined as adjacent nodes
 with their labeled edges.}

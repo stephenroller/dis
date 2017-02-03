@@ -54,10 +54,23 @@ a lead \cite{melamud:2015:naacl,melamud:2016:conll}.
 \label{sec:pic}
 
 \begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{figures/substitution}
-  \caption{Caption here.}
-  \label{fig:substitution}
+\centering
+\begin{tikzpicture}[scale=1.5]
+    \fontsize{11}{11}\selectfont
+    \coordinate (origin) at (0,0);
+    \draw [->,Gray] (origin) -- (130:1.5) node[above] {\word{wearing}};
+    \draw [->,Gray] (origin) -- (230:1.3) node[left] {\word{paper}};
+    \draw [->,Cerulean] (origin) -- (310:1.8) node[right] {\word{colorful}};
+    \draw [->,Cerulean] (origin) -- (330:0.9) node[right] {\word{colorfull} (sic)};
+    \draw [->,Cerulean] (origin) -- (70:1.7) node[above] {\word{smart}};
+    \draw [->,darkgray] (origin) -- (280:1.3) node[below] {\word{adjmod\depinv:coat}};
+    \draw [->,darkgray] (origin) -- (50:1.1) node[right] {\word{adjmod\depinv:scientist}};
+    \fontsize{14}{14}\selectfont
+    \draw [->,Orange] (origin) -- (15:1.9) node[right] {\bf{bright}};
+    \fill (origin) circle (0.05);
+\end{tikzpicture}
+\caption{Cartoon illustration of how context vectors can disambiguate word senses.}
+\label{fig:substitution}
 \end{figure}
 
 In this last section of our work, we switch over to our efforts on the Lexical

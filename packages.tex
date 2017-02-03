@@ -7,22 +7,7 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{enumitem}
-\usepackage{tikz}
-\usetikzlibrary{calc}
 \setlist{itemsep=0px,parsep=0px,topsep=0.5\baselineskip,itemindent=2mm}%,leftmargin=15px}
-
-% clickable links
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  linktoc=all,
-  urlcolor=black
-}
-
-
 %\usepackage{wrapfig}
 %\usepackage{adjustbox}
 %\usepackage{calc}
@@ -42,6 +27,27 @@
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{epigraph}
+
+% clickable links
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  linktoc=all,
+  urlcolor=black
+}
+
+% my figures
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\tikzset{>=latex}
+\tikzset{every picture/.style=thick}
+% dependency trees
+\usepackage{tikz-dependency}
+
 
 % And aliases I use a lot
 \usepackage{aliases}

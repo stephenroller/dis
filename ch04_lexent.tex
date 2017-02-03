@@ -394,9 +394,28 @@ intuitively is ``leftover'' vector after the projection has been removed:
 \end{equation*}
 
 \begin{figure}
-  \begin{center}
-  \includegraphics[width=0.30\textwidth]{figures/vecproj}
-\end{center}
+\centering
+\begin{tikzpicture}[scale=1.5]
+    % Draw axes
+    \def\r{0.5}
+    % Draw two intersecting lines
+    \coordinate (origin) at (0,0);
+    \coordinate (x) at (45:3.0);
+    \coordinate (proj) at (15:2.59807621);
+    \coordinate (p) at ($(proj) + (15:1.0)$);
+
+    \coordinate (rightangle) at ($(proj) + (150:0.25)$);
+    \coordinate (toproj) at ($(proj) - (75:0.35355339059)$);
+    \coordinate (torej) at ($(proj) + (45:0.35355339059)$);
+    \coordinate (onproj) at (intersection of toproj--rightangle and origin--proj);
+    \coordinate (onrej) at (intersection of torej--rightangle and proj--x);
+    \draw [-,Gray] (onproj) -- (rightangle) -- (onrej);
+
+    \draw [->,Gray,thick] (proj) -- (p) node[below,pos=0.5] {$\hat p$};
+    \draw [->,Black,ultra thick] (origin) -- (x) node[above,pos=0.5] {$x$};
+    \draw [->,Orange,very thick] (proj) -- (x) node[right,pos=0.5] {rej$_{\hat p}x$};
+    \draw [->,Cerulean,very thick] (origin) -- (proj) node[below,pos=0.5] {proj$_{\hat p}x$};
+\end{tikzpicture}
 \caption{A vector $\hat p$ is used to break $H$ into two orthogonal components,
 its projection and the rejection over $\hat p$.}
 \label{fig:vecproj}
