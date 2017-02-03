@@ -38,22 +38,41 @@ VSMs in the NLP community \cite{baroni:2014:acl}.
 \begin{minipage}{7cm}
 \begin{scriptsize}
 \begin{alltt}
-         the furry {dog} is friendly to
-and manipulate the {dog} 's lips and
-       as a clever {dog} ; two to
-a reputation among {dog} trainers of having
-    also among the {dog} breeds most likely
- the very earliest {dog} shows and kennel
-        as a guard {dog} and to hunt
-   the mechanic 's {dog} began to howl
+         the furry {\color{TealBlue}{dog}} is friendly to
+and manipulate the {\color{TealBlue}{dog}} 's lips and
+       as a clever {\color{TealBlue}{dog}} ; two to
+a reputation among {\color{TealBlue}{dog}} trainers of having
+    also among the {\color{TealBlue}{dog}} breeds most likely
+ the very earliest {\color{TealBlue}{dog}} shows and kennel
+        as a guard {\color{TealBlue}{dog}} and to hunt
+   the mechanic 's {\color{TealBlue}{dog}} began to howl
 \end{alltt}
 \end{scriptsize}
-\end{minipage}\qquad
-\begin{minipage}{3cm}
-\includegraphics[width=3cm]{figures/vsm}
 \end{minipage}
-\caption{(a) Example contexts of the word {\em dog}, and (b) a cartoon drawing
-of word vectors.}
+\begin{minipage}{7cm}
+\begin{center}
+\begin{tikzpicture}[scale=1.3]
+    % Draw axes
+    \def\r{0.5}
+    % Draw two intersecting lines
+    \coordinate (origin) at (0,0);
+    \coordinate (cat) at ($(origin) + (76:1.7)$);
+    \coordinate (dog) at ($(origin) + (66:1.1)$);
+    \coordinate (ani) at ($(origin) + (12:2.1)$);
+
+    \draw [->,TealBlue] (origin) -- (dog) node[right] {\word{dog}};
+    \draw [->,Purple] (origin) -- (cat) node[right] {\word{cat}};
+    \draw [->,Green] (origin) -- (ani) node[right] {\word{animal}};
+
+    \draw [] (12:\r) arc (12:66:\r) node[right,pos=0.75] {$\theta$};
+    \draw [->,line width=0.3mm] (origin) -- (0,2) node (yaxis) [above,pos=0.5,rotate=90] {{ furry}};
+    \draw [->,line width=0.3mm] (origin) -- (3,0) node (xaxis) [below,pos=0.5] {{ underwater}};
+
+\end{tikzpicture}
+\end{center}
+\end{minipage}
+\caption{(a) Example contexts of the word \word{dog}, and (b) cartoon drawing
+of word vectors in the \word{furry} and \word{underwater} dimensions.}
 \label{fig:vsm}
 \end{figure}
 
