@@ -319,15 +319,23 @@ cause-effect, agent-object) which are annotated with entailment decisions by
 \begin{table}
 \begin{center}
   \begin{small}
-  \begin{tabular}{|llll|}
+  \begin{tabular}{|ll|}
     \hline
-    LEDS & BLESS & Medical & TM14\\
+    {\bf LEDS} & {\bf BLESS}\\
     \hline
-      nmod:such\_as+animal             &  nmod:such\_as+submarine          &  nmod:such\_as+patch              &  amod+desire                        \\
-      acl:relcl+identifiable           &  nmod:such\_as+ship               &  nmod:such\_as+skin               &  amod+heighten                      \\
-      nmod:of\depinv+determine         &  nmod:such\_as+seal               &  nmod:including+skin              &  nsubj\depinv+disparate             \\
-      nmod:of\depinv+categorisation    &  nmod:such\_as+plane              &  nmod:such\_as+tooth              &  nmod:such\_as+honey                \\
-      compound+many                    &  nmod:such\_as+rack               &  nmod:such\_as+feather            &  nmod:with\depinv+body              \\
+    {\ctx nmod:such\_as+animal}            &  {\ctx nmod:such\_as+submarine} \\
+    {\ctx acl:relcl+identifiable}          &  {\ctx nmod:such\_as+ship}      \\
+    {\ctx nmod:of\depinv+determine}        &  {\ctx nmod:such\_as+seal}      \\
+    {\ctx nmod:of\depinv+categorisation}   &  {\ctx nmod:such\_as+plane}     \\
+    {\ctx compound+many}                   &  {\ctx nmod:such\_as+rack}      \\
+    \hline\hline
+    {\bf Medical} & {\bf TM14}\\
+    \hline
+    {\ctx nmod:such\_as+patch}             &  {\ctx amod+desire}             \\
+    {\ctx nmod:such\_as+skin}              &  {\ctx amod+heighten}           \\
+    {\ctx nmod:including+skin}             &  {\ctx nsubj\depinv+disparate}  \\
+    {\ctx nmod:such\_as+tooth}             &  {\ctx nmod:such\_as+honey}     \\
+    {\ctx nmod:such\_as+feather}           &  {\ctx nmod:with\depinv+body}   \\
     \hline
   \end{tabular}
   \end{small}

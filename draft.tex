@@ -39,6 +39,8 @@
 \date{}
 
 \begin{document}
+\phantomsection
+\addcontentsline {toc}{chapter}{Abstract}  %% Force Acknowledgements to appear in contents
 \maketitle
 \vspace{-10mm}
 \begin{center}{DRAFT: \today}\end{center}
@@ -48,13 +50,11 @@
 \normalsize
 \input{abstract}
 \end{abstract}
-\clearpage
 
-\tableofcontents                     %% Generate table of contents.
-% \listoftables                      %% Uncomment this to generate list
-                                     %% of tables.
-% \listoffigures                     %% Uncomment this to generate list
-                                     %% of figures.
+\clearpage
+\phantomsection
+\addcontentsline {toc}{chapter}{Table of Contents}
+\tableofcontents
 
 \pagestyle{fancy}
 \input{content}

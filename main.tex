@@ -158,25 +158,31 @@
 
 \thesisdedicationpage                %% Generate the dedication page.
 
+\phantomsection
+\addcontentsline {toc}{chapter}{Acknowledgements}  %% Force Acknowledgements to appear in contents
 \begin{thesisacknowledgments}        %% Use this to write your
-The many scientists before me; society for allowing me this honor.
-
-Advising committee.
-
-Katrin, obviously.
-
-Jason, Sabine, Ray.
-
-Family, Melanie.
+  Acknowledgements go here.
+%The many scientists before me; society for allowing me this honor.
+%
+%Advising committee.
+%
+%Katrin, obviously.
+%
+%Jason, Sabine, Ray.
+%
+%Family, Melanie.
 \end{thesisacknowledgments}          %% allowed in LaTeX2e par-mode.
-%\addcontentsline {toc}{chapter}{Acknowledgements}  %% Force Acknowledgements to appear in contents
 
 
+\phantomsection
+\addcontentsline {toc}{chapter}{Abstract}
 \begin{thesisabstract}               %% Use this to write your thesis abstract; it can be anything allowed in LaTeX2e par-mode.
 \chosenspacing
 \indent\input{abstract}
 \end{thesisabstract}
 
+\phantomsection
+\addcontentsline {toc}{chapter}{Table of Contents}
 \tableofcontents                     %% Generate table of contents.
 % \listoftables                      %% Uncomment this to generate list
                                      %% of tables.

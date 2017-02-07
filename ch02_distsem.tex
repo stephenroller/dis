@@ -84,7 +84,7 @@ representations for the words {\em cat} and {\em dog}, we can then compare
 these vectors using various geometric distance metrics, most prominently {\em
 cosine similarity}:
 \begin{equation}
-  \text{cosine}(u, v) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}}
+  \text{cos}(\vu, \vv) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2 \sum_i v_i^2}} = \frac{{\vu}^\top{\vv}}{\norm{\vu} \norm{\vv}}
   \label{eq:cos}
 \end{equation}
 Here, $i$ iterates over all the different context dimensions, like {\em furry}
@@ -123,8 +123,7 @@ doctor and surgeon \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
 
 Context can be also defined as {\em syntactic neighbors} extracted from a
 dependency parse. For example, in Figure~\ref{fig:syn}, the
-contexts for the word {\em chased} would be {\em nsubj+dog} and {\em
-dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
+contexts for the word {\em chased} would be {\ctx nsubj+dog} and {\ctx dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
 {\em selectional preferences} of words, or the tendency of words to have
 particular arguments in their syntactic relations.
 \cite{pado:2007:cl,erk:2008:emnlp,baroni:2010:cl,levy:2014:acl}. For example,

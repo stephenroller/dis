@@ -28,16 +28,7 @@
 \usepackage{multirow}
 \usepackage{epigraph}
 
-% clickable links
-\usepackage{hyperref}
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  linktoc=all,
-  urlcolor=black
-}
+
 
 % my figures
 \usepackage{tikz}
@@ -51,6 +42,17 @@
 
 % And aliases I use a lot
 \usepackage{aliases}
+
+% hyperref must be loaded last
+% clickable links
+\usepackage{hyperref}
+\hypersetup{
+  hidelinks,
+  naturalnames=true
+}
+\hypersetup{linktocpage}
+
+
 
 %%%
 %%% Section styles
