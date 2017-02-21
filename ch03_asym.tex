@@ -1,0 +1,493 @@
+\chapter{Lexical Memorization and Asym}
+\label{ch:lexmem}
+
+\section{Chapter Overview}
+
+\section{A Damning Observation}
+
+\section{Learning Unseen Words}
+
+\section{Asym Model for Hypernymy Detection (Roller et al., 2014)}
+\label{sec:asym}
+
+Most baseline similarity measures in distributional semantics, like cosine,
+have the unfortunate property that they are symmetric: $\text{cosine}(a, b) =
+\text{cosine}(b, a)$. While this often desirable, it
+is a fatal flaw in any application involving lexical entailment: although {\em
+girl} implies {\em child}, but the opposite does not hold. As such, attempts to
+predict lexical entailment using solely symmetric measures will always fall
+short.
+
+This has been recognized widely in the
+literature for some time, and numerous asymmetric, unsupervised similarity measures have been
+proposed
+\cite{weeds:2003:emnlp,zhitomirsky-geffet:2005:acl,clarke:2009:gems,kotlerman:2010:nle,santus:2013:thesis},
+mostly inspired by the Distributional Inclusion Hypothesis (DIH), which
+states that the contexts of a hypernym should be a superset of its hyponyms'.
+However, their
+performance tend to be lackluster \cite{clarke:2009:gems} or brittle
+\cite{kotlerman:2010:nle}. This raises the question: are the measures just
+overly sensitive to noise in distributional vectors, or is the Distributional
+Inclusion Hypothesis fundamentally flawed? If the unsupervised are measures
+are simply too sensitive to noise, perhaps using supervised techniques can
+improve performance.  To this end, we propose Asym, a simple supervised model
+that is inherent asymmetric and interpretable under the DIH
+\cite{roller:2014:coling}. 
+
+At its core, the model is inspired by the famous result of
+\newcite{mikolov:2013:iclr}, who observed that vector subtraction can be used
+to perform some kinds of analogical reasoning in some kinds of distributional
+spaces: e.g., {\em king}$ - ${\em man}$ + ${\em woman}$ \approx ${\em queen}.
+Interestingly, this vector subtraction approach reasonably models many
+grammatical relationships (singular/plural, verb conjugations) and some limited
+semantic relationships (gender, capital/country). Asym exploits this
+behavior for the task of hypernymy and lexical relationship prediction.
+
+The Asym model is a simple model which uses the {\em vector difference} between
+the hypothesized hypernym-hyponym pair as input features to an off-the-shelf
+classifier. For example, given a (unit normalized) distributional vector for
+{\em animal} and a vector for {\em cat}, we use the vector
+{\em animal}$ - ${\em cat} as a positive example, while the
+vectors for {\em cat}$ - ${\em animal} and {\em animal}$ - ${\em sofa} are
+inputted as negative examples. Additionally, we also give the {\em element-wise
+squared difference vector} as features to the classifier. Formally, for a given
+(hypernym, hyponym) pair of words, $(H, w)$, we compute the final feature space
+defined as:
+\begin{align*}
+  A_i(H, w) & = H_i - w_i\\
+  B_i(H, w) & = (H_i - w_i)^2\\
+  \text{features}(H, w) & = \langle A; B\rangle,
+\end{align*}
+where $\langle A; B\rangle$ is the vector {\em concatenation}. This computation
+is performed for all examples in our dataset, and then the features $(H, w)$
+vector and the classification label are used to train a Logistic Regression
+classifier.
+
+One significant advantage of this model over other works is its direct
+connection to the Distributional Inclusion Hypothesis: since our model uses the
+vector difference as input, it naturally measures whether $H_i$ is
+greater than $w_i$, effectively acting as a strict-subset measurement. The
+difference-squared part of the input features measures whether they have a
+large absolute difference, effectively capturing ``equal'' part of the
+``less than or equal'' relation. As such, one interpretation of the model is a
+kind of {\em Selective Distributional Inclusion Hypothesis}, which presupposes
+that the DIH holds, but only in particular, relevant dimensions.
+
+To evaluate our model, we train and measure accuracy of the Asym model on
+two datasets in a variation of leave-one-out cross validation (LOOCV) and
+measuring absolute accuracy. In this variation of LOOCV, we select one word
+from the vocabulary in the datasets, and consider {\em all pairs} with that
+word to be test pairs. The remainder of word pairs, which do not contain the
+held out word, are treated as training pairs. This prevent classifiers from
+simply memorizing that words like {\em animal} are more likely to be hypernyms.
+This experimental setup is one of our core contributions to the literature, as
+we were the first to recognize this problem and propose an experimental
+setup which avoids it \cite{roller:2014:coling}. We revisit this issue in
+more detail in Section~\ref{sec:lexmem}.
+
+Since different types of distributional spaces exhibit different properties
+\cite{pado:2007:cl}, we evaluate our model on two distributional
+spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
+counts content words two words to the left and right of targets as contexts,
+while the {\em Sentence BoW} space counts all content words within complete
+sentence boundaries. Both spaces are reduced to 300 dimensions using the
+Singular Value Decomposition \cite{landauer:1997:pr}.
+
+We evaluate our model on two datasets. The first, {\bf LEDS}
+\cite{baroni:2012:eacl}, contains 1385 hyponym-hypernym pairs as positive
+examples and 1385 negative pairs which were generated by randomly shuffling the
+positive examples. As such the model only contains hypernymy and random
+relations, and we train a binary classifier. The second dataset is {\bf
+BLESS} \cite{baroni:2011:gems}, which contains annotations of word relations
+for 200 unambiguous, concrete nouns from 17 broad categories. Each noun is
+annotated with its co-hyponyms, meronyms, hypernym and some random words.
+Since there are four relations, we train four one-vs-all classifiers, and
+predict the relation with the highest score; in this way, the model
+actually learns to detect three different lexical relations, though this
+was not our primary research interest at the time. We will reconsider this in
+our proposed work.
+
+We compare our model with two baselines: the first is a degenerate baseline,
+which guesses false for the (balanced) LEDS dataset, and always
+the most common label ({\em no-relation}) for BLESS. We also compare to the
+model proposed in \newcite{baroni:2012:eacl}, which uses the {\em concatenation}
+of the $H$ and $w$ vectors and trains an off-the-shelf polynomial Support
+Vector Machine \cite{cortes:1995:ml}.
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{|lc|cc|}
+    \hline
+    {\bf Classifier} & {\bf Space} & {\bf LEDS} & {\bf BLESS}\\
+    \hline
+    Always guess false/no relation     &   -      & .50          & .46      \\
+    \hline
+    \cite{baroni:2012:eacl}            & Window 2 & .81          & .76      \\
+    Asym \cite{roller:2014:coling}     & Window 2 & {\bf .85}    & {\bf .84}\\
+    \cite{baroni:2012:eacl}            & Sentence & .78          & .73      \\
+    Asym \cite{roller:2014:coling}     & Sentence & .82          & .80      \\
+    \hline
+  \end{tabular}
+  \caption{Accuracy of Baroni et al. (2012) and Roller et al. (2014) on
+  {\bless} and {\entailment}
+  using different spaces for feature generation. Performance is measured as
+  the average accuracy across all folds of the leave-one-out cross validation
+  experiment.}
+  \label{tab:asymresults}
+\end{table}
+
+Table~\ref{tab:asymresults} shows the results for our initial experiment.
+First we notice that both models strongly outperform the degenerate baseline,
+indicating there is some successful learning in the models. We also see that
+the Window 2 space performs better than the Sentence space in all four
+comparisons, indicating it is likely the task depends more heavily {\em
+functional} properties of words than {\em topical} properties of words.
+
+Finally, we see that the Asym model outperforms the model proposed by
+\newcite{baroni:2012:eacl} in all four comparisons, indicating our architecture
+has better lexical generalization.
+Interestingly, we found that dropping the square-difference terms
+severely hurt the performance of our model, emphasizing these features immense
+importance. We will discuss more of why these features are so important in
+Section~\ref{sec:lexmem}. Incidentally, at the same time that
+\newcite{roller:2014:coling} was published, \newcite{weeds:2014:coling} and
+\newcite{fu:2014:acl} also proposed supervised hypernymy models based on vector
+difference, but neither of these employ the critical square-difference terms,
+or adequately address the issue of lexical memorization.
+
+We also test our interpretation of Asym as measuring a form of {\em Selective}
+Distributional Inclusion. After training the model's parameters on the BLESS
+dataset, we compare the model's learned hyperplane to the {\em context
+vectors} obtained in the Singular Value Decomposition. We select the 500
+features most similar to the model's hyperplane, and then extract a
+distributional space limited to only these context items. If our Selective
+Distributional Inclusion Hypothesis is true, we would expect these 500
+dimensions to highly compliment existing similarity measures based on the
+Distributional Inclusion Hypothesis. We note that we are directly comparing
+unsupervised measures with a supervised model, and so this should only be
+understood as an experiment about the {\em interpretation} of our model, not
+its performance.
+
+We measure every word pair's similarity using three similarity measures:
+cosine, Clarke, and invCL. Cosine similarity acts as our scientific control, and
+should {\em not} change substantially between the
+original and selective spaces, while the others, which are
+based on Distributional Inclusion, should. The second similarity measure,
+{\em Clarke}, measures roughly what percentage of the hyponyms' mass is contained
+within the hypernym \cite{clarke:2009:gems}:
+\begin{equation*}
+  \text{Clarke}(H, w) = \frac{\sum_i \min(H_i, w_i)}{\sum_i H_i};
+\end{equation*}
+The final similarity measure, {\em invCL}, extends Clarke to additionally
+measure what percentage of the hypernym's mass is {\em not} contained within
+the hyponym \cite{lenci:2012:starsem}, extending Clarke to roughly measure
+{\em strict} containment:
+\begin{equation*}
+  \text{invCL}(H, w) = \sqrt{\text{Clarke}(H, w)(1 - \text{Clarke}(w, H))}.
+\end{equation*}
+
+We compute all three similarity measures across all the word pairs in BLESS,
+and computed Mean Average Precision (MAP) across all pairs for each measure
+and distributional space. Ideally, we should see that, compared to the original
+space, the selective space has higher Clarke and invCL values
+for hypernyms, and lower Clarke and invCL values for the other relations.
+Table~\ref{tab:mapscores} shows the results of this experiment.
+
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|cc cc||cccc|}
+    \hline
+    & \multicolumn{4}{c||}{Original Space} & \multicolumn{4}{|c|}{Selective Space}\\
+    \hline\hline
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    \hline
+    cosine         &     .68     &     .20    &     .27     &     .27    &   .69      &    .20    &    .24     &    .28    \\
+    Clarke         &     .66     &     .19    &     .28     &     .28    &   .55      &    .39    &    .24     &    .29    \\
+    invCL          &     .60     &     .18    &     .31     &     .28    &   .42      &{\bf.58}   &    .24     &    .29    \\
+    \hline
+  \end{tabular}
+  \caption{Mean Average Precision for the unsupervised measures before
+  after selecting the top dimensions from the Asym model.}
+  \label{tab:mapscores}
+\end{table}
+
+As expected, all measures except for cosine assign higher MAP values to
+hypernyms than they did in the original space, though only invCL that ranks
+hypernyms significantly higher than co-hyponyms.\footnote{Wilcoxon signed-rank
+test, $p < .001$} We also see that the performance of our cosine baseline
+remains relatively unchanged by the feature selection procedure, and that
+the the Clarke and invCL measures have their co-hyponymy and meronomy
+scores weakened. Altogether, this is evidence that the Asym measure is
+indeed, conforming to our Selective Distributional Inclusion interpretation.
+
+
+\subsection{Addressing Lexical Memorization}
+\label{sec:lexmem}
+
+After the publication of several supervised distributional models of hypernymy
+\cite{baroni:2011:gems,fu:2014:acl,roller:2014:coling,weeds:2014:coling},
+another study followed questioning whether these models truly learn to predict
+relationships. \newcite{levy:2015:naacl} hypothesized that each of these models
+is learning about {\em prototypicality}, or simply what a prototypical
+hypernym looks like. For example, after learning that ``cat is an animal''
+and that ``dog is an animal,'' a prototypicality classifier may also conclude
+that ``sofa is an animal.'' That is, a prototypicality classifier will
+simply learn that {\em animal} is usually a hypernym, and will always
+predict this way.
+
+The crux of the argument is explained analytically by
+\newcite{levy:2015:naacl}, and hinges on observing that many of the models from
+the literature use {\em linear} classifiers. Thus, consider a
+classifier which takes the concatenation of the vectors $\wordpair$ learns a
+hyperplane $\hat p$ to make its prediction. Then the hyperplane $\hat p$ can
+also be viewed as a concatenation of two vectors:
+\begin{align*}
+  & \hat p^\top \langle H, w\rangle\\
+  & = \protopair^\top \wordpair\\
+  & = \hat H^\top H + \hat w^\top w
+\end{align*}
+This analysis shows that, when the hyperplane $\hat p$ is evaluated on a novel
+pair, it lacks any form of direct interaction between $H$ and $w$ like the
+inner product $H^\top w$, but rather only learns to capture the notion of
+hypernymy through $\hat H$ and $\hat w$, the {\em prototypicality vectors}.
+Without having some form of interaction, this Concat classifier has no way
+of estimating the relationship between the two words. Furthermore, a linear classifier
+which uses the Diff vectors as input ($H - w$) will also have this flaw,
+since the hyperplane $\hat p$ can be analyzed in this same fashion.
+
+In their work, \newcite{levy:2015:naacl} back up this analysis with experimental
+evidence, showing that when the training/testing set is constructed to
+ensure that no lexical items are shared between the training and test sets
+(a variant of the experiments of \newcite{roller:2014:coling}), the performance
+of several classifiers, like \newcite{baroni:2012:eacl} and
+\newcite{weeds:2014:coling}, drop dramatically. \newcite{levy:2015:naacl} also
+propose a new model which incorporates the inner product term, which
+outperforms other models on several data sets.
+Interestingly, Asym does {\em not} suffer this fundamental flaw: although it uses the
+vector difference vectors as features, it also uses the {\em square-difference
+vectors} as input. Crucially, by the Law of Cosines, we can see that these
+square-difference features provide it these crucial inner product term:
+\begin{align*}
+  & \sum_i (H_i - w_i)^2\\
+  & = \sum_i H_i^2 + w_i^2 - 2({H}_i{w}_i)\\
+  & = H^\top H + w^\top w - 2{\bf H^\top{w}}
+\end{align*}
+This explains our observation in Section~\ref{sec:asym} that, without these
+square-difference terms, performance drops substantially.
+
+\section{Unused stuff from early Asym drafts}
+
+Weeds et al.~\shortcite{weedsweirmccarthy:2004:COLING} introduce the
+notion of \emph{distributional generality}, where $w_1$ is
+distributionally more general than $w_2$ if the $w_2$ appears in a
+subset of the contexts in which $w_1$ is found, and speculate that hypernyms should be more distributionally
+general than hyponyms.
+They measure distributional generality using a
+notion of precision~\cite{WeedsWeir:2003:EMNLP}:
+\begin{align*}
+  1(x) & = \begin{cases}1 & \mbox{if } x > 0\\
+    0 & \mbox{otherwise}
+  \end{cases}\\
+  WeedsPrec(u, v) & = \frac{\sum_{i=1}^n u_i * 1(v_i)}{\sum_{i=1}^n u_i}
+\end{align*}
+
+Zhitomirsky-Geffet and
+Dagan~\shortcite{Geffet:2004uy,geffetdagan2005ACL} point out that the
+notion of semantic similarity captured by distributional similarity is
+too loose for applications like Question Answering, Information
+Extraction and Textual Entailment, and they propose the notion of \emph{lexical entailment}, a relation that holds between two
+words if there are ``contexts in which one
+of the words can be substituted by the other, such that the meaning of
+the original word can be inferred from the new one.'' This relation,
+in turn, is strictly more loose than hypernymy. Lenci and
+Benotto~\shortcite{Lenci:2012tz} characterize it as encompassing
+synonymy, hypernymy, metonymy, some cases of meronymy, and
+more. 
+Zhitomirsky-Geffet and
+Dagan~\shortcite{geffetdagan2005ACL,GeffetDagan:09} formulate the idea
+that distributional generality encodes lexical entailment as
+the \emph{Distributional Inclusion Hypothesis}. Kotlerman et
+al~\shortcite{kotlermanetal2010} introduce a dataset for lexical
+entailment and propose the {\balAPinc} measure for predicting
+it, based on the Distributional Inclusion Hypothesis. 
+
+The {\balAPinc} measure is a modification of the Average Precision (AP) measure
+from Information Retrieval. The general notion is that scores should increase
+both with the number of included features and give more weight to the highly
+ranked features of the narrower term $u$. This is captured by computing the
+number of included features at every rank $P(r)$, and weighting by the
+corresponding rank in the broader term, $rel'(f_r)$. The final measure, {\balAPinc}
+smooths using the well known {\em LIN} similarity measure \cite{lin1998information}:
+\begin{align*}
+  \mbox{APinc}(u, v) & = \frac{\sum_{r=1}^{|1(u)|}P(r)\cdot rel'(f_r))}{|1(u)|}\\
+  \mbox{balAPinc}(u, v)  & = \sqrt{\mbox{APinc}(u, v)\cdot \mbox{LIN}(u, v)}
+\end{align*}
+
+Another measure that they compare to is {\ClarkeDE} \cite{clarke:2009:GEMS}, which
+measures degree of entailment as component-wise minimum.
+\begin{equation*}
+  \mbox{CL}(u, v) = \frac{\sum_{i=1}^n \mbox{min}(u_i, v_i)}{\sum_{i=1}^n u_i}
+\end{equation*}
+
+Lenci and Benotto~\shortcite{Lenci:2012tz} focus on the hypernymy
+relation, rather than the more loosely defined relation of lexical
+entailment. They introduce the {\invCL} measure, which uses
+{\ClarkeDE} to measure both distributional inclusion and distributional {\em exclusion}, or contexts in which
+$v$ may be used, but $u$ may not. 
+\begin{equation*}
+  \mbox{invCL}(u, v) = \sqrt{\mbox{CL}(u, v) * (1 - \mbox{CL}(v, u))}
+\end{equation*}
+
+We test the Distributional Inclusion Hypothesis in this paper.
+Like Lenci and Benotto, we focus on hypernymy rather than lexical
+entailment. We believe that the different relations that make up
+lexical entailment, synonymy, hypernymy, meronymy etc., have different
+distributional indications and that for that reason, it will be easier
+to detect the relations separately than together. 
+
+
+
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc cc|}
+    \hline
+    Measure        &\small \coord     &\small \hyper    &\small \mero      &\small \randomn  \\
+    \hline\hline
+    \multicolumn{5}{|c|}{\UpWW}\\
+    \hline
+    \cosine        &     .68     &     .20    &     .27     &     .27    \\
+    \balAPinc      &     .56     &     .23    &     .31     &     .28    \\
+    \WeedsPrec     &     .52     &     .22    &     .33     &     .28    \\
+    \ClarkeDE      &     .66     &     .19    &     .28     &     .28    \\
+    \invCL         &     .60     &     .18    &     .31     &     .28    \\
+    \hline
+    \multicolumn{5}{|c|}{\UpS}\\
+    \hline
+    \cosine        &     .66     &     .18    &     .28     &     .28    \\
+    \balAPinc      &     .57     &     .18    &     .32     &     .28    \\
+    \WeedsPrec     &     .54     &     .17    &     .34     &     .28    \\
+    \ClarkeDE      &     .66     &     .15    &     .29     &     .28    \\
+    \invCL         &     .59     &     .13    &     .34     &     .29    \\
+    \hline
+    \multicolumn{5}{|c|}{\typedm}\\
+    \hline
+    \cosine        &     .78     &     .19    &     .20     &     .29    \\
+    \balAPinc      &      -      &      -     &      -      &      -     \\
+    \WeedsPrec     &     .44     &     .35    &     .28     &     .31    \\
+    \ClarkeDE      &     .45     &     .35    &     .25     &     .32    \\
+    \invCL         &     .38     &     .36    &     .27     &     .33    \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Mean Average Precision for the different asymmetric measures on the three 
+  different spaces.}
+  \label{tab:mapscores}
+\end{table}
+
+
+
+
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc|cc|}
+    \hline
+                   &  \multicolumn{2}{c|}{ \bless} & \multicolumn{2}{c|}{ \entailment}\\
+                   & { \svm} & { \logregs} & { \svm} & { \logregs} \\
+    \hline\hline
+    \baseline      &  \multicolumn{2}{c|}{.461} &  \multicolumn{2}{c|}{.500} \\
+    \hline
+    \vectors       &  {\bf.976} &      .893     & {\bf .899} &       .735    \\
+    \normvectors   &      .455  &      .882     &      .467  &       .767    \\
+    \diffvecs      &      .844  &  {\bf.922}    &      .709  &       .821    \\
+    \normdiffs     &      .455  &      .899     &      .467  &  {\bf .869}   \\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Accuracy of the different feature types for each of the machine
+  learning algorithms on both {\bless} and {\entailment}.  The {\UpWWr} vectors are
+  used for generating features. Some settings do worse than baseline as a
+  side-effect of the cross validation folds.}
+  \label{tab:crossval}
+\end{table}
+
+\section{Generalization Across Concepts and Concept Classes}
+
+Concepts in {\bless} are frequently annotated with the same relata as
+other concepts in the data set; in the 14542 annotated relationships
+in {\bless}, there are only 5673 unique relata used. In the cross-validation
+evaluations of Section~\ref{sec:supervised}, train and test sets share many
+concepts and relata, even though specific pairs are truly unseen. We wish to
+evaluate how well these classifiers are learning the {\em relationships},
+rather than just the specific concepts and relata of the data set. To this
+end, we perform a variation of the relationship prediction experiment where
+train/test splits stratified over the concept rather than random folds.
+
+We split {\bless} into 200 sections, stratifying by concept. We then evaluate
+by testing one concept at a time and training on all remaining concepts. We use
+the {\UpWWr} space for feature generation. To see how relata reuse affects
+classifier performance, we also perform two variations, one where relata are
+allowed to coexist in both training and testing sets, and one where relata from
+the test set are removed from the training set.
+
+The first setting, where relata are allowed to coexist, corresponds to the
+realistic task of predicting selecting hypernyms from a list of known
+candidates, and is related to the task of automatic taxonomy extension.
+The second setting, where both the concept and the relata are totally
+unseen, is a more difficult task, and corresponds to predicting the
+relationship between two totally unseen words.
+
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc|}
+  \multicolumn{3}{c}{Train/Test stratified by Concept}\\
+  \hline
+              &    Relata Seen   &       Relata Unseen      \\
+  \hline
+  {\svm}      &  {\bf.971}       &         .765             \\
+  {\logreg}   &      .894        &    {\bf .837}            \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{Mean accuracy on {\bless} when Train/Test splits
+  are stratified by concept, and when relata are allowed and}
+  \label{tab:concept-stratified}
+\end{table}
+
+Table~\ref{tab:concept-stratified} shows the results of concept-stratification.
+We see that in the {Relata Seen} setting, performance of both classifiers is
+roughly the same as the cross validation setting in Table~\ref{tab:bless-v-space}.
+
+However, in the {Relata Unseen} setting, both classifiers take a significant hit.
+Contrary to the {Relata Seen} settings, we seen the {\logreg} model now
+significantly outperforms the {\svm} model. This suggests the {\svm} model
+is extremely adept at modeling relationships of previously seen words, but
+has a hard time generalizing to novel relata. The {\logreg} setting, on
+the other hand, does a better job of modeling the relationships, but is not as
+good at fitting the specific intricacies of individual words.
+
+\subsection{Concept Class Generalization}
+
+\begin{table}
+  \begin{center}
+  \begin{tabular}{|l|cc|}
+  \multicolumn{3}{c}{Train/Test stratified by Concept Class}\\
+  \hline
+              &       Relata Unseen      &    Relata Seen   \\
+  \hline
+  {\svm}      &     .652                 &     .710         \\
+  {\logreg}   & {\bf.778}                & {\bf.790}        \\
+  \hline
+  \end{tabular}
+  \end{center}
+  \caption{Mean classifier accuracies on {\bless} when Train/Test splits
+  are stratified by concept class.}
+  \label{tab:conceptclass-stratified}
+\end{table}
+
+
+
+
+\section{Chapter Summary}
+
