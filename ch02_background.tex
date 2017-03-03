@@ -186,7 +186,8 @@ Pointwise Mutual Information (PMI) measures roughly how many times more likely t
 items co-occur more often than chance, while Positive PMI
 additionally ignores co-occurrences that occur less often than chance.  Other
 transformations, like conditional probability ($P(w|c)$ or $P(c|w)$)
-\cite{hofman:1999:sigir,blei:2003:jmlr} and soft-plus ($\log(1 + x)$)
+\cite{hofman:1999:sigir,blei:2003:jmlr}, Local Mutual Information (LMI)
+\cite{evert:2005:phd}, and soft-plus ($\log(1 + x)$)
 \cite{pennington:2014:emnlp}, are also sometimes seen in the literature, and
 emphasize different aspects of lexical similarity.
 
@@ -288,9 +289,9 @@ vector representation for words where words with similar meaning have
 similar vectors. It came into wide popularity after the famous observation
 that simple vector arithmetic could be used to do some analogical reasoning:
 for example, \newcite{mikolov:2013:iclr} famously observed that
-\begin{equation}
+\begin{equation*}
   \svec{\text{king}} - \svec{\text{man}} + \svec{\text{woman}} \approx \svec{\text{queen}}.
-\end{equation}
+\end{equation*}
 
 SGNS is a log-bilinear model of co-occurrence, where the model learns {\em
 input embeddings} representing words and {\em output embeddings} representing
@@ -406,7 +407,7 @@ vectors. This view was developed in part by evidence that the ubiquitous
 cosine similarity tends to highlight co-hyponym pairs more than other relations
 \cite{weeds:2004:coling,baroni:2011:gems}.  One lasting hypothesis about
 hypernymy detection has been the Distributional Inclusion Hypothesis (DIH)
-\cite{zhitomirsky-geffet:2005:acl}, which states that the contexts in which a
+\cite{zhitomirskygeffet:2005:acl}, which states that the contexts in which a
 hypernym appears should be a superset of all its hyponyms. A considerable
 amount of work assumed the DIH to be at least partially true, and many of the
 proposed measures were based on the Distributional Inclusion Hypothesis in one
@@ -453,7 +454,7 @@ different word senses, but should we distinguish the many different kinds of
 financial banks, like investment banks, deposit banks, federal banks, and so
 forth. This leads inevitably to the flip-side of the WSD: Word Sense Induction
 (WSI), where one must take a dataset of a word's unannotated usages, and then
-induct or identify all its possible sense meanings \cite{needcite}. It is clear
+induct or identify all its possible sense meanings \cite{needcite,qiu:2016:emnlp}. It is clear
 how that the WSD and WSI may be important and useful task in the search of
 lexical semantics, but other possibilities exist.
 
