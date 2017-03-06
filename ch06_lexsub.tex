@@ -1,29 +1,92 @@
 \chapter{Lexical Substitution}
 
 
-\section{Probability in Context (PiC)}
+\begin{comment}
+  Outline
+  - Chapter Summary
+  - Introduction to Lexsub
+  - Prior Work
+  - Proposed model
+  - Evaluation
+  - Analysis
+  - Chapter Summary
+\end{comment}
 
-\label{sec:pic}
+\section{Chapter Overview}
 
-\begin{figure}
-\centering
-\begin{tikzpicture}[scale=2.0]
-    \fontsize{11}{11}\selectfont
-    \coordinate (origin) at (0,0);
-    \draw [->,Gray] (origin) -- (130:1.5) node[above] {{wearing}};
-    \draw [->,Gray] (origin) -- (230:1.3) node[left] {{paper}};
-    \draw [->,Cerulean] (origin) -- (310:1.8) node[right] {{colorful}};
-    \draw [->,Cerulean] (origin) -- (330:0.9) node[right] {{colorfull} (sic)};
-    \draw [->,Cerulean] (origin) -- (70:1.7) node[above] {{smart}};
-    \draw [->,darkgray] (origin) -- (280:1.3) node[below] {{\small \ctx{adjmod\depinv:coat}}};
-    \draw [->,darkgray] (origin) -- (50:1.1) node[right] {{\small \ctx{adjmod\depinv:scientist}}};
-    \fontsize{14}{14}\selectfont
-    \draw [->,Orange] (origin) -- (15:1.9) node[right] {\bf{bright}};
-    \fill (origin) circle (0.05);
-\end{tikzpicture}
-\caption{Cartoon illustration of how context vectors can disambiguate word senses.}
-\label{fig:substitution}
-\end{figure}
+\section{Introduction to LexSub}
+
+\section{Lexical Substitution and Polysemy}
+\label{sec:lexsub}
+
+In our discussion of lexical relationships in the previous two chapters, we assumed
+that words are {\em monosemous}, or that they have only one meaning. However,
+words like \lit{bright} have multiple meanings, which change depending on
+context, as in \lit{bright girl} and \lit{bright coat}. When a word has
+multiple meanings, it is {\em polysemous}, and polysemy is one of the
+fundamental difficulties with understanding natural language (as well as a
+source of beauty in so many poems and jokes).
+
+Handling polysemy is one of the oldest problems in NLP, and probably one that
+remains fundamentally unsolved. Lexicographers often attempt to simply
+catalogue and enumerate the different senses of a word, as one sees in the
+Oxford English Dictionary, or in the different {\em synsets} in WordNet.
+This has led to the very important task of Word Sense Disambiguation (WSD),
+where one must identify which sense of a word is being used in a particular
+context or sentence \cite{needcite}.
+
+However, lexicographers may not always agree on how fine-grained to consider
+senses: obviously a \lit{river bank} and a \lit{financial bank} are very
+different word senses, but should we distinguish the many different kinds of
+financial banks, like investment banks, deposit banks, federal banks, and so
+forth. This leads inevitably to the flip-side of the WSD: Word Sense Induction
+(WSI), where one must take a dataset of a word's unannotated usages, and then
+induct or identify all its possible sense meanings \cite{needcite,qiu:2016:emnlp}. It is clear
+how that the WSD and WSI may be important and useful task in the search of
+lexical semantics, but other possibilities exist.
+
+One approach to dealing with polysemy is to model how word
+meaning {\em shifts} in a given context; that is, we can explicitly model what
+happens to a word based on its use in a given context. Since 2007, one
+way to measure this has been the Lexical Substitution task. In the
+Lexical Substitution task, we are provided with a sentential context,
+and must suggest {\em substitutes} which can replace the given target word,
+while preserving the meaning of the entire sentence
+\cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
+
+At first glance, the Lexical Substitution task has a less obvious connection to
+Textual Entailment than the Lexical Entailment task does. However, we argue
+it is also an important proxy to improvements on Textual Entailment, and that
+Lexical Substitution may act as a kind of lexical entailment {\em
+in context}: if a substitute can replace the target and preserve the meaning of
+the sentence, then it follows that the target {\em entails} the substitute.
+Although this includes basic synonymy (like \lit{bright} and \lit{clever}), it
+also covers much more interesting specialized cases. For example, with the
+context
+\begin{quote}
+  ``Tara stood stock-still, waiting for the first tiny gleam from the
+  scout craft to appear in the darkness of the {\bf wormhole},''
+\end{quote}
+human annotators considered {\em portal} and {\em rift} to be excellent
+substitutes. These substitutes take into account the Science Fiction context of the
+sentence, indicating the task is more complicated than simple synonymy. Indeed,
+\newcite{kremer:2014:eacl} found that only 9\% of substitutes in their dataset were
+direct synonyms in WordNet.  For this reason, we believe that Textual
+Entailment can benefit more from modeling Lexical Substitution as a complete
+task, rather treating the phenomenon as explicit lexical relations.
+
+Distributional Semantics offers a tempting solution to this problem of Lexical
+Substitution, given its ability to measure the {\em graded} levels of similarity
+between words \cite{erk:2008:emnlp}. Interestingly, although there have been
+both supervised \cite{biemann:2012:lrec,szarvas:2013:naacl} and unsupervised
+attempts
+\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp,kremer:2014:eacl,melamud:2015:naacl,melamud:2015:vsm,kawakami:2016:iclr,roller:2016:naacl}
+using distributional semantics, presently unsupervised measures hold
+an edge \cite{melamud:2015:naacl,melamud:2016:conll}.
+
+
+
+\hardline
 
 In this last section of our work, we switch over to our efforts on the Lexical
 Substitution (LexSub) task. In the Lexical Substitution task, we are given
@@ -33,6 +96,75 @@ As described in Section~\ref{sec:lexsub}, we view
 LexSub as a proxy which captures a wide degree of lexical entailments {\em in
 context}.
 
+\hardline
+
+
+Lexical substitution~\cite{mccarthy:2007:semeval} is a task in which word
+meaning in context is described not through dictionary senses but through
+substitutes (paraphrases) chosen by annotators.
+% Given a target word in context, the annotator generates one or more
+% substitutes for the target in the given context. As multiple annotators label
+% the same target, the result is a weighted list of substitutes, where the
+% weight indicates how many annotators chose a particular substitute. 
+For example, consider the following usage of the adjective {\em bright}:
+``The {\em bright} girl was reading a book.'' Valid lexical substitutions for
+{\em bright} include adjectives like {\em smart} and {\em intelligent}, but
+not words like {\em luminous} or {\em colorful}.
+
+Originally introduced as a SemEval task in 2007, lexical substitution has often
+been used to evaluate the ability of distributional models to handle
+polysemy~\cite{erk:2008:emnlp,thater:2010:acl,dinu:2010:emnlp,vandecruys:2011:emnlp,melamud:2015:vsm,melamud:2015:naacl,kawakami:2016:iclr}.
+%Potential applications of lexical substitution include textual entailment
+%CITE, semantic textual similarity CITE, and plagiarism detection CITE. 
+%There have been two different tasks associated with lexical substitution data:
+%Either a list of potential substitutes for a lemma is given, and the task of
+%the model is to rank them; or no candidate list is given, and the model is
+%tasked with ranking the whole vocabulary on suitability as a substitute in the
+%given context. We call the first task \emph{candidate ranking} and the second
+%task \emph{all-words ranking}. 
+%\footnote{\newcite{szarvas:2013:naacl} distinguish a \emph{ranking} task and a
+%task of \emph{generating} candidates; in their notation, candidate ranking is
+%a ranking task, while all-words ranking is similar to generation plus
+%ranking.}
+Recent models include a simple but high-performing method by Melamud et
+al.~\shortcite{melamud:2015:vsm}, which uses the Skip-gram model of Mikolov et
+al.~\cite{mikolov:2013:iclr} to compute the probability of a substitute given a
+sentence context, and integrates it with the probability of the substitute
+given the target. The current state of the art is held by another model of
+Melamud ~\cite{melamud:2015:naacl}, which uses a more complex architecture.
+%Curiously, most models for lexical substitution so far have been unsupervised,
+and the supervised de-lexicalized model of Szarvas et
+al.~\shortcite{szarvas:2013:naacl} is not superior to current unsupervised
+approaches. 
+
+In this paper we build on the simple model of Melamud et
+al.~\shortcite{melamud:2015:vsm}, as simpler methods are easier to recreate and
+integrate into larger pipelines.\footnote{Code and models available at
+\url{https://github.com/stephenroller/naacl2016}.}
+We explore a weak form of supervision that recently has proved beneficial on
+many NLP tasks: using a language modeling task on unannotated data.
+%This form of supervision is especially appropriate in this case, as the
+%prediction of a target given its context should be a good approximation of
+%predicting a substitute given the same context, as substitute and target are
+%semantically similar.
+%We use this weak substitution to fit two parameters: on the one hand a
+%parameter that can model an interaction between dimensions of context word
+%vectors, and on the other hand a bias that will prefer some substitute words
+%independently of the given context.
+
+We find a strong improvement over Melamud's simple measure, particularly on the
+all-words ranking task.  Interestingly, analysis of \ourmeasparam~shows it
+improves over baselines by incorporating frequency biases into predictions.
+%parameters that we train shows that they mainly act to introduce a bias
+% preferring more frequent words. 
+
+
+
+\section{Prior Work}
+
+\section{Probability-in-Context (PiC)}
+
+\hardline
 We propose a new measure, which extends
 a previously successful, simple model to estimate the appropriateness of a
 lexical substitute. As a introduction point for our measure, we review the work
@@ -130,189 +262,9 @@ substitutes provided by annotators. In all models, we exclude any words sharing
 the same lemma as the target, e.g. if the target is ``barking'' we do not
 propose ``bark.''
 
-\begin{table}
-\begin{center}
-\begin{tabular}{|l|r|r|r|}
-  \hline
-  {\bf Measure} & {\bf SE07} & {\bf Coinco} & {\bf TWSI2}\\
-  \hline\hline
-  %\multicolumn{4}{|c|}{Candidate Ranking (GAP)}\\
-  %\hline
-  %\ooc               &     44.2   &     44.5  &     57.9       \\
-  %\addCos            &     51.2   &     46.3  &     62.2       \\
-  %\balAddCos         &     49.6   &     46.5  &     61.3       \\
-  %\hline
-  %\ourmeas           &     51.3   &     46.4  &     61.8       \\
-  %\ourmeasparam      & {\bf52.4}  & {\bf48.3} & {\bf62.8}      \\
-  %\hline\hline
-  %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@1)}\\
-  %\hline
-  Cosine (OOC Baseline)                    &     11.7   &    10.9   &      9.8       \\
-  addCos                                   &     12.9   &    10.5   &      7.9       \\
-  balAddCos                                &     13.4   &    11.8   &      9.8       \\
-  \hline
-  nPic                                     &     17.3   &    16.3   &     11.1       \\
-  PIC                                      & {\bf19.7}  &{\bf18.2}  & {\bf13.7}      \\
-  \hline
-  %\hline
-  %\multicolumn{4}{|c|}{All-Words Ranking (Mean Precision@3)}\\
-  %\hline
-  %\ooc               &     9.7    &     8.6   &     7.0       \\
-  %\addCos            &     9.0    &     7.9   &     6.1       \\
-  %\balAddCos         &     9.8    &     9.1   &     7.4       \\
-  %\hline
-  %\ourmeas           &    13.1    &    12.1   &     7.9       \\
-  %\ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
-  %\hline
-\end{tabular}
-\end{center}
-\caption{Lexical Substitution results for the all-words prediction task, measured
-in Mean Precision@1.}
-\label{tab:lexsub}
-\end{table}
-
-Table~\ref{tab:lexsub} contains results for all measures across all datasets.
-We observe that PIC outperforms all other models by a significant
-margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
-30\% improvement over \balAddCos in SE07 and Coinco. The nPIC also improves
-substantially over the other baselines, indicating we gain benefit both from
-the new objective function and the additional parameterization.  We next
-strive to understand why both measures have a clear improvements over the
-baseline models.
-
-\begin{table*}[t]
-  \begin{center}
-  \begin{tabular}{|cccc|}
-    \hline
-    \ooc             & \balAddCos            & \ourmeas         & \ourmeasparam\\
-    \hline\hline
-    \multicolumn{4}{|c|}{You can sort of challenge them well, did you}\\
-    \multicolumn{4}{|c|}{{\bf really} know the time when you said yes?}\\
-    \hline\hline
-    {    trully              } & {    proably             } & {    realy               } & {\bf actually            } \\
-    {\bf actually            } & {    trully              } & {\bf truly               } & {\bf truly               } \\
-    {    actaully            } & {    acutally            } & {\bf actually            } & {    already             } \\
-    {    acutally            } & {    actaully            } & {    hardly              } & {    barely              } \\
-    {    proably             } & {    probaly             } & {\bf definitely          } & {    just                } \\
-    \hline
-  \end{tabular}
-  \end{center}
-  \caption{Example where the \ourmeasparam~performs strictly better than other models. The target word and correct answers
-  are bolded.}
-  \label{tab:cherry}
-\end{table*}
-
-We characterize the models using a cherry-picked example,
-given in Table~\ref{tab:cherry}. Although this example does not perfectly illustrate
-the Lexical Substitution task, it does well at giving intuition as to why our
-models perform better. We see that all four measures
-tend to pick excellent substitutes which {\em semantically} agree with the
-original target. However, the cosine and {\em balAddCos} models have a large number of
-misspelled works in their list, while the nPIC and PIC measures contain
-mostly correct spellings. This is because, somewhat surprisingly, the {\em
-length} of the distributional vectors correlates strongly with the {\em
-unigram} statistics of the word \cite{wilson:2015:arxiv}.
-Therefore, by using the unnormalized inner
-product, rather than cosine, our model naturally incorporates unigram priors,
-allowing it to downweight rare, similar words. Indeed, a quantitative analysis
-of the $W$ and $b$ parameters finds that they additionally exaggerate this
-unigram bias \cite{roller:2016:naacl}.
-Intuitively, it seems natural that unigram biases should hold a strong role in
-Lexical Substitution, and that our model should wish to exploit this
-information.
-
-\section{Proposed: Lexical Substitution in RTE}
-
-In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is
-related to textual entailment, partially standing
-as a kind of in-context entailment. We have yet to provide any results
-indicating that Lexical Substitution contributes in an
-RTE system.  We propose that the Lexical Substitution model described in
-Section~\ref{sec:pic} be used as additional features in the Lexical
-Entailment classifier described in Section~\ref{sec:rtesubsystem}. Although we hope that
-our Lexical Substitution model can positively contribute to the RTE pipeline,
-we suspect improvements may be marginal.
-
-The obvious way our Lexical Substitution model could contribute to the
-task is by simply including the context-similarity features of the Lexical
-Substitution model as another feature in the Lexical Entailment classifier.
-That is, for a pair of words in the SICK dataset, measure the similarity of
-their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
-Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
-significant issue in the SICK dataset, we hope the additional information
-about context will bolster predictions in borderline cases.
-
-It may be necessary to find additional tricks in order to best integrate
-this information into the lexical entailment classifier. For example, we
-found the cosine binning trick described in Section~\ref{sec:rtesubsystem}
-was necessary for getting distributional similarity to contribute. Similar
-tricks, like binning or isolating the components of PIC, are likely
-necessary in order to see any positive contribution.
-
-Ultimately though, we suspect improvements to RTE  may be marginal, or even
-negative, as polysemy is uncommon in the SICK dataset. We may need to analyze
-differences in classification prediction, and which examples are {\em most}
-affected by the LexSub features, in order to properly characterize contribution.
 
 \hardline
 
-\section*{Copy paste from paper}
-
-Lexical substitution~\cite{mccarthy:2007:semeval} is a task in which word meaning in context is described not through dictionary senses but through substitutes (paraphrases) chosen by annotators. % Given a target word in context, the annotator generates one or more substitutes for the target in the given context. As multiple annotators label the same target, the result is a weighted list of substitutes, where the weight indicates how many annotators chose a particular substitute. 
-For example, consider the following usage of the adjective {\em bright}:
-``The {\em bright} girl was reading a book.'' Valid lexical substitutions for
-{\em bright} include adjectives like {\em smart} and {\em intelligent}, but
-not words like {\em luminous} or {\em colorful}.
-
-Originally introduced as a SemEval task in 2007, lexical substitution has often
-been used to evaluate the ability of distributional models to handle
-polysemy~\cite{erk:2008:emnlp,thater:2010:acl,dinu:2010:emnlp,vandecruys:2011:emnlp,melamud:2015:vsm,melamud:2015:naacl,kawakami:2016:iclr}.
-%Potential applications of lexical substitution include textual entailment
-%CITE, semantic textual similarity CITE, and plagiarism detection CITE. 
-%There have been two different tasks associated with lexical substitution data:
-%Either a list of potential substitutes for a lemma is given, and the task of
-%the model is to rank them; or no candidate list is given, and the model is
-%tasked with ranking the whole vocabulary on suitability as a substitute in the
-%given context. We call the first task \emph{candidate ranking} and the second
-%task \emph{all-words ranking}. 
-%\footnote{\newcite{szarvas:2013:naacl} distinguish a \emph{ranking} task and a
-%task of \emph{generating} candidates; in their notation, candidate ranking is
-%a ranking task, while all-words ranking is similar to generation plus
-%ranking.}
-Recent models include a simple but high-performing method by Melamud et
-al.~\shortcite{melamud:2015:vsm}, which uses the Skip-gram model of Mikolov et
-al.~\cite{mikolov:2013:iclr} to compute the probability of a substitute given a
-sentence context, and integrates it with the probability of the substitute
-given the target. The current state of the art is held by another model of
-Melamud ~\cite{melamud:2015:naacl}, which uses a more complex architecture.
-%Curiously, most models for lexical substitution so far have been unsupervised,
-and the supervised de-lexicalized model of Szarvas et
-al.~\shortcite{szarvas:2013:naacl} is not superior to current unsupervised
-approaches. 
-
-In this paper we build on the simple model of Melamud et
-al.~\shortcite{melamud:2015:vsm}, as simpler methods are easier to recreate and
-integrate into larger pipelines.\footnote{Code and models available at
-\url{https://github.com/stephenroller/naacl2016}.}
-We explore a weak form of supervision that recently has proved beneficial on
-many NLP tasks: using a language modeling task on unannotated data.
-%This form of supervision is especially appropriate in this case, as the
-%prediction of a target given its context should be a good approximation of
-%predicting a substitute given the same context, as substitute and target are
-%semantically similar.
-%We use this weak substitution to fit two parameters: on the one hand a
-%parameter that can model an interaction between dimensions of context word
-%vectors, and on the other hand a bias that will prefer some substitute words
-%independently of the given context.
-
-We find a strong improvement over Melamud's simple measure, particularly on the
-all-words ranking task.  Interestingly, analysis of \ourmeasparam~shows it
-improves over baselines by incorporating frequency biases into predictions.
-%parameters that we train shows that they mainly act to introduce a bias
-preferring more frequent words. 
-
-\section{Prior Work}
-\subsection{Proposed Measure}
 We propose a new measure, called Probability-in-Context (PIC), based
 on SGNS context vectors to estimate the appropriateness
 of a lexical substitute. Similar to \balAddCos, the measure has two equally-weighted,
@@ -358,8 +310,28 @@ dot product:
 %embeddings as \balAddCos, can be implemented just as easily, but per
 %
 
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=2.0]
+    \fontsize{11}{11}\selectfont
+    \coordinate (origin) at (0,0);
+    \draw [->,Gray] (origin) -- (130:1.5) node[above] {{wearing}};
+    \draw [->,Gray] (origin) -- (230:1.3) node[left] {{paper}};
+    \draw [->,Cerulean] (origin) -- (310:1.8) node[right] {{colorful}};
+    \draw [->,Cerulean] (origin) -- (330:0.9) node[right] {{colorfull} (sic)};
+    \draw [->,Cerulean] (origin) -- (70:1.7) node[above] {{smart}};
+    \draw [->,darkgray] (origin) -- (280:1.3) node[below] {{\small \ctx{adjmod\depinv:coat}}};
+    \draw [->,darkgray] (origin) -- (50:1.1) node[right] {{\small \ctx{adjmod\depinv:scientist}}};
+    \fontsize{14}{14}\selectfont
+    \draw [->,Orange] (origin) -- (15:1.9) node[right] {\bf{bright}};
+    \fill (origin) circle (0.05);
+\end{tikzpicture}
+\caption{Cartoon illustration of how context vectors can disambiguate word senses.}
+\label{fig:substitution}
+\end{figure}
 
-\section{Experimental Setup}
+
+\section{Experiments and Results}
 We compare our proposed measures to three baselines: \ooc, the Out-of-Context
 cosine similarity between the word and target ($\mbox{cos}(s, t)$), and the \addCos~and \balAddCos~
 measures. It is important to note that existing papers on Lexical Substitution all contain subtle
@@ -485,6 +457,17 @@ ranking tasks (P@1, P@3).}
 \label{tab:precision}
 \end{table}
 
+\hardline
+Table~\ref{tab:lexsub} contains results for all measures across all datasets.
+We observe that PIC outperforms all other models by a significant
+margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
+30\% improvement over \balAddCos in SE07 and Coinco. The nPIC also improves
+substantially over the other baselines, indicating we gain benefit both from
+the new objective function and the additional parameterization.  We next
+strive to understand why both measures have a clear improvements over the
+baseline models.
+\hardline
+
 Table~\ref{tab:precision} contains results for all measures across all
 experimental settings.
 
@@ -574,6 +557,31 @@ We notice that the unusual ``sea-change'' item is prominent in the OOC and
 these and other examples, we hypothesize the model is simply guessing more
 frequent terms.
 
+\hardline
+We characterize the models using a cherry-picked example,
+given in Table~\ref{tab:cherry}. Although this example does not perfectly illustrate
+the Lexical Substitution task, it does well at giving intuition as to why our
+models perform better. We see that all four measures
+tend to pick excellent substitutes which {\em semantically} agree with the
+original target. However, the cosine and {\em balAddCos} models have a large number of
+misspelled works in their list, while the nPIC and PIC measures contain
+mostly correct spellings. This is because, somewhat surprisingly, the {\em
+length} of the distributional vectors correlates strongly with the {\em
+unigram} statistics of the word \cite{wilson:2015:arxiv}.
+Therefore, by using the unnormalized inner
+product, rather than cosine, our model naturally incorporates unigram priors,
+allowing it to downweight rare, similar words. Indeed, a quantitative analysis
+of the $W$ and $b$ parameters finds that they additionally exaggerate this
+unigram bias \cite{roller:2016:naacl}.
+Intuitively, it seems natural that unigram biases should hold a strong role in
+Lexical Substitution, and that our model should wish to exploit this
+information.
+
+
+\hardline
+
+
+
 We consider a few experiments with this hypothesis that the measures do better
 because they capture better {\em unigram} statistics than the baselines. Recent literature found that the vector
 norm of SGNS embeddings correlates strongly with word frequency
@@ -597,7 +605,7 @@ This indicates that the unigram bias is even higher for \ourmeasparam~than
 \ourmeas. To gain more insight, we manually inspect the learned parameters $W$
 and $b$. We find that the $W$ matrix is nearly diagonal, with the values along
 the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the rest
-of the matrix normally distributed roughly around 0 ($\mu$=2\times10^{-5},~$\sigma$=0.02). This
+of the matrix normally distributed roughly around 0 ($\mu=2\times10^{-5},~\sigma=0.02$). This
 is to say, the \ourmeasparam~model is approximately learning to {\em exaggerate} the
 magnitude of the dot product, $s^\top c$. This suggests one could even replace our
 parameter $W$ with a single scaling parameter, though we leave this
@@ -618,19 +626,17 @@ frequencies when attempting the lexical substitution task (as with
 many other tasks in NLP). Compared to
 cosine, the dot product in \ourmeas~stresses unigram frequency, and
 the parameters $W$ and $b$ strengthen this tendency.
-%  (as with so many
-% other tasks in NLP). Such a result may seem obvious in retrospect, but many
-% prior works in Lexical Substitution simply do not take this into account.
 
-\section{Conclusion}
-We have presented \ourmeasparam, a simple new measure for assessing the appropriateness of
-a substitute in a particular context for the Lexical Substitution
-task. The measure assesses the fit of the substitute both to the
-target word and the sentence context. It significantly outperforms
-comparable baselines from prior work, and does not require any additional
-lexical resources. An analysis indicates its
-performance improvements derive primarily from a tendency to lean more strongly
-on unigram statistics than baselines. In future work, our measure could be simplified
-by implementing the bias as a single scaling parameter.
 
+\section{Chapter Summary}
+
+We have presented \ourmeasparam, a simple new measure for assessing the
+appropriateness of a substitute in a particular context for the Lexical
+Substitution task. The measure assesses the fit of the substitute both to the
+target word and the sentence context. It significantly outperforms comparable
+baselines from prior work, and does not require any additional lexical
+resources. An analysis indicates its performance improvements derive primarily
+from a tendency to lean more strongly on unigram statistics than baselines. In
+future work, our measure could be simplified by implementing the bias as a
+single scaling parameter.
 

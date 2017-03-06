@@ -177,4 +177,37 @@ are useful useful for predicting co-hyponymy or meronomy, it also stands to
 reason that they should be useful in the final RTE subsystem. We will need to
 explore the best form of combination with both kept in mind.
 
+\section{Proposed: Lexical Substitution in RTE}
+
+In Section~\ref{sec:lexsub}, we argued that Lexical Substitution is
+related to textual entailment, partially standing
+as a kind of in-context entailment. We have yet to provide any results
+indicating that Lexical Substitution contributes in an
+RTE system.  We propose that the Lexical Substitution model described in
+Section~\ref{sec:pic} be used as additional features in the Lexical
+Entailment classifier described in Section~\ref{sec:rtesubsystem}. Although we hope that
+our Lexical Substitution model can positively contribute to the RTE pipeline,
+we suspect improvements may be marginal.
+
+The obvious way our Lexical Substitution model could contribute to the
+task is by simply including the context-similarity features of the Lexical
+Substitution model as another feature in the Lexical Entailment classifier.
+That is, for a pair of words in the SICK dataset, measure the similarity of
+their contexts using the $P(s|C)$ or $P_n(s|C)$ values proposed in
+Equations~\ref{eqn:pic}~and~\ref{eqn:npic}. Although polysemy is not a
+significant issue in the SICK dataset, we hope the additional information
+about context will bolster predictions in borderline cases.
+
+It may be necessary to find additional tricks in order to best integrate
+this information into the lexical entailment classifier. For example, we
+found the cosine binning trick described in Section~\ref{sec:rtesubsystem}
+was necessary for getting distributional similarity to contribute. Similar
+tricks, like binning or isolating the components of PIC, are likely
+necessary in order to see any positive contribution.
+
+Ultimately though, we suspect improvements to RTE  may be marginal, or even
+negative, as polysemy is uncommon in the SICK dataset. We may need to analyze
+differences in classification prediction, and which examples are {\em most}
+affected by the LexSub features, in order to properly characterize contribution.
+
 
