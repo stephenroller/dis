@@ -1,6 +1,8 @@
 \chapter{Background}
 \label{ch:background}
 
+\section{Chapter Overview}
+
 In this chapter, we review some of the background critical to this dissertation.
 We begin with a discussion of Recognizing Textual Entailment (RTE) as core
 motivation of our thesis.  We then overview Distributional Semantics, outlining
@@ -155,7 +157,7 @@ these vectors using various geometric distance metrics, most prominently {\em
 cosine similarity}:
 \begin{equation}
   \text{cos}(\vu, \vv) = \frac{\sum_i u_iv_i}{\sqrt{\sum_i u_i^2}\sqrt{\sum_i v_i^2}} = \frac{{\vu}^\top{\vv}}{\norm{\vu} \norm{\vv}}
-  \label{eq:cos}
+  \label{eqn:cos}
 \end{equation}
 Here, $i$ iterates over all the different context dimensions, like \ctx{furry}
 or \ctx{kennel}, and cosine similarity is defined over the range $[-1, 1]$ or

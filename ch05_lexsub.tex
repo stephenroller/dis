@@ -1,29 +1,21 @@
 \chapter{Lexical Substitution}
 \label{ch:lexsub}
 
-
-
-\begin{comment}
-  Outline
-  - Chapter Summary
-  - Introduction to Lexsub
-  - Prior Work
-  - Proposed model
-  - Evaluation
-  - Analysis
-  - Chapter Summary
-\end{comment}
-
-
 This chapter shows new model of lexical substitution, and related
 material. The work in this chapter has been published in
 \newcite{roller:2016:naacl}.
 
 \section{Chapter Overview}
 
-Lexical substitution~\cite{mccarthy:2007:semeval} is a task in which word
-meaning in context is described not through dictionary senses but through
-substitutes (paraphrases) chosen by annotators.
+We discuss the Lexical Substitution task, in which the word meaning in context
+is described or evaluated, not through dictionary senses, but through
+substitutes or paraphrases suggested by annotators
+\cite{mccarthy:2007:semeval}. We review various approaches to the task, and
+focus on one particularly simple, modern method which performs competitively to
+State of the Art \cite{melamud:2015:vsm}. We describe the intuitions of this
+model, and propose Probability-in-Context, a variation on this simple idea. We
+find our proposed model significantly outperforms baselines, and analyze why it
+improves over the prior work.
 
 \section{Lexical Substituion}
 
@@ -70,8 +62,8 @@ Sometimes only a small context is needed for the task, as in \lit{bright girl}
 and \lit{bright lamp}, but humans are often particularly creative when
 providing suggestions. In one data set, humans provided with the context
 \begin{quote}
-  ``Tara stood stock-still, waiting for the first tiny gleam from the
-  scout craft to appear in the darkness of the {\bf wormhole},''
+  \lit{Tara stood stock-still, waiting for the first tiny gleam from the
+  scout craft to appear in the darkness of the \target{wormhole},}
 \end{quote}
 human annotators considered {\em portal} and {\em rift} to be excellent
 substitutes. These substitutes take into account the Science Fiction context of
@@ -80,11 +72,6 @@ Indeed, in one one lexical substitution dataset, only 9\% of substitutes in
 their dataset were direct synonyms in WordNet \cite{kremer:2014:eacl}.
 
 \section{Prior Work}
-
-\begin{comment}
-Unsupervised approaches:
-
-\end{comment}
 
 In general, the Lexical Substitution task has seen a smaller research
 investment than task like identifying lexical relationships. Nonetheless, a
@@ -166,7 +153,9 @@ the particular fit of a given substitute. They considered two latent
 factorization models (LDA and NNMF) and showed that context could successfully
 modulate over varying latent senses of a particular word in a bag-of-words
 context. This insight in the power of low-rank factorizations later turns
-out to be valuable in later lines of work \cite{melamud:2015:vsm,roller:2016:naacl}.
+out to be valuable in later lines of work
+\cite{melamud:2015:vsm,roller:2016:naacl}, which we will discuss more in detail
+below.
 
 \newcite{vandecruys:2011:emnlp} observed that syntax-based distributional
 models tend to provide the strongest results, yet individual examples in
@@ -207,177 +196,44 @@ lexical substitution as a true ranking problem. This substantially outperforms
 the other ranking approaches, but the comparison is unfair due to differing
 levels of supervision.
 
-One important model in the context of our own work is the extremely simple,
-yet high-performing method by \newcite{melamud:2015:vsm}. They propose using
-the {\em context vectors} from a syntactic word2vec model \cite{levy:2014:acl}
-in to compute a score for 
+\section{Context Vectors for LexSub (Melamud et al. 2015b)}
 
+\newcite{melamud:2015:vsm} introduce a simple, but high-performing method,
+based on the Syntactic Skip-Gram Negative Sampling model of
+\newcite{levy:2014:acl}. As with many other unsupervised models, it combines a
+measure of an out-of-context substitute's suitability, with a special
+in-context appropriateness measure \cite{needcite}. Unlike the many of the
+previous unsupervised models, it does not rely on computing large second-order
+vectors, and can in fact be used with off-the-shelf syntactic word2vec vectors.
 
-Recent models include a simple but high-performing method by Melamud et
-al.~\shortcite{melamud:2015:vsm}, which uses the Skip-gram model of Mikolov et
-al.~\cite{mikolov:2013:iclr} to compute the probability of a substitute given a
-sentence context, and integrates it with the probability of the substitute
-given the target. The current state of the art is held by another model of
-Melamud ~\cite{melamud:2015:naacl}, which uses a more complex architecture.
-%Curiously, most models for lexical substitution so far have been unsupervised,
-and the supervised de-lexicalized model of Szarvas et
-al.~\shortcite{szarvas:2013:naacl} is not superior to current unsupervised
-approaches. 
+As emphasized in Chapters \ref{ch:background} and \ref{ch:hpm}, when creating
+low dimensional vectors, a co-occurrence matrix factorization $\mM$ is
+computed, or estimated in the case of word2vec \cite{levy:2014:nips},
+\begin{equation*}
+  \mM = \mV\mC\trans,
+  \tag{\ref{eqn:factorization} revisited}
+\end{equation*}
+where $\mV$ is the matrix of word vectors, and $\mC$ is the matrix of
+{\em context vectors}. The primary insight of \newcite{melamud:2015:vsm}
+was that these context vectors can be used to evaluate the suitability of a
+novel substitute in a particular given context.
 
+Suppose we have sentence like \lit{The very \target{bright} girl reads}, and we
+want to evaluate which is a better substitute: \lit{smart} or \lit{colorful}.
+If we were to extract the syntactic contexts of the target \lit{bright}, as in
+the previous chapter, we would end up with exactly two contexts:
+\ctx{advmod:very}, indicating our target is modified by \lit{very}, and
+\ctx{amod\depinv:girl}, indicating that our target modifies
+\lit{girl}. We may then use the context matrix $\mC$ to look up the
+vectors for these two contexts, and judge their similarity to the possible
+substitutes.
 
-
-\section{Probability-in-Context (PiC)}
-
-We build on the simple model of Melamud et al.~\shortcite{melamud:2015:vsm}, as
-simpler methods are easier to recreate and integrate into larger pipelines. We
-explore a weak form of supervision that recently has proved beneficial on many
-NLP tasks: using a language modeling task on unannotated data.
-
-
-We propose a new measure, which extends
-a previously successful, simple model to estimate the appropriateness of a
-lexical substitute. As a introduction point for our measure, we review the work
-of \newcite{melamud:2015:vsm}, which introduced several unsupervised measures
-for word similarity in context: namely \balAddCos and \addCos. The main insight
-of these unsupervised measures is the use of {\em context vectors}, related
-to the insights discussed in Section~\ref{sec:lexmem}. Crucially, the models
-of \newcite{melamud:2015:vsm} depend on syntactic context vectors, which
-have been found more successful than just BoW measures in the literature
-\cite{erk:2008:emnlp,dinu:2010:emnlp,thater:2010:acl,vandecruys:2011:emnlp}.
-We note that these models are {\em not} the state of the art,
-\cite{melamud:2015:naacl,melamud:2016:conll} but perform competitively while
-remaining simple, extensible, and highly interpretable.
-
-In the work of \newcite{melamud:2015:vsm} and others, substitutes are modeled
-using a mixture of {\em out-of-context similarity} and {\em in-context
-appropriateness}. The out-of-context similarity uses standard distributional
-semantics cosine similarity (Equation~\ref{eq:cos}) in order to estimate how similar
-the target is to the substitute, and remains fixed regardless of the sentential
-context.  For this reason, this out-of-context (OOC) similarity is also used as
-a baseline in the literature.
-
-The in-context appropriateness attempts to directly model
-whether a proposed substitute fits in the given sentential context. That is, if
-one replaces the target with the substitute directly, would a reader still
-consider this word {\em selectionally} agrees in the sentence. For example,
-the in-context measures will give a low score for {\em dog purrs}, since dogs
-usually do not purr.
-To this end, it assumes the sentence is parsed, so that we have the full set of
-syntactic neighbors of the target, $C$. Each of the context vectors
-corresponding to elements of $C$ are then evaluated for their fit with the
-proposed substitute, as illustrated in Figure~\ref{fig:syn}. For a given target
-$t$, substitute $s$ and context $C$, the final \addCos~score is given as
-\begin{equation}
-  \text{addCos}(s|t,C) = \text{cosine}(s, t) + \sum_{c\in C} \text{cosine}(s, c).
-\end{equation}
-The model can be intuitively understood using the diagram in
-Figure~\ref{fig:substitution}. For a given target ``bright,'' we will choose
-the substitute (``smart'' or ``colorful'') which is {\em closer} to the
-given context. If the context is ``scientist'' as in ``bright scientist,''
-we will shift our prediction away from ``colorful'' and closer to ``smart,''
-and vice versa for ``bright coat.'' This remains one of the simplest successful
-models of Lexical Substitution to date. \newcite{melamud:2015:vsm} also consider
-variants of this measure, including {\em balAddCos}, which equally
-weights the out-of-context similarity with the in-context appropriateness:
-\begin{equation}
-  \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
-\end{equation}
-
-In our work, we propose a new measure, called Probability-in-Context (PIC),\footnote{PIC is not strictly a probability measure; the name is a backronym for the purpose of the paper's title.}
-which estimates the appropriateness of a substitute in a given context
-\cite{roller:2016:naacl}.  Similar to \balAddCos, the measure has two
-equally-weighted, independent components measuring the appropriateness of the
-substitute for both the target and the context, each taking the form of a
-softmax:
-\begin{equation}
-  \begin{aligned}
-  \mbox{PIC}(s | t, C) &\propto P(s | t) \times P(s | C)\\
-  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\
-  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\},
-  \end{aligned}
-  \label{eqn:pic}
-\end{equation}
-where the $Z_t$ and $Z_C$ are normalizing constants.
-Our model differs from {\em balAddCos} in one major way: we base our similarity
-estimates using the {\em unnormalized} inner product $s^\top t$ and $s^\top c$,
-rather than normalized cosine similarities. We also introduce two additional
-parameters, $W$ and $b$, which act as a simple linear transformation over the
-original context vectors. These parameters are learned from the original
-corpus, and serve only to tune how the fixed distributional vectors act in this
-alternative objective function.
-
-To identify the contribution of this parameterization versus the softmax
-objective, we also introduce to a non-parameterized PIC ({\em nPIC}), which
-does not contain the extra parameters:
-\begin{equation}
-  \begin{aligned}
-  \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
-  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\}
-  \end{aligned}
-  \label{eqn:npic}
-\end{equation}
-
-We compare our model to that of an out-of-context baseline (cosine) and the
-{\em addCos} and {\em balAddCos} models of \newcite{melamud:2015:vsm}, which
-outperformed other prior work at the time of its publication. We compare the
-models on three data sets: SE07, the original LexSub data set
-\cite{mccarthy:2007:semeval} which was explicitly developed to capture polysemy;
-Coinco, a recent LexSub data set which contains substitutes for all content
-words in a small corpus \cite{kremer:2014:eacl}; and TWSI2, which was developed
-to be a large collection of lexical substitutes from a diverse corpus
-\cite{biemann:2012:lrec}. We measure performance in Mean Precision@1, which
-measures whether our best proposed substitute is contained within the set of gold
-substitutes provided by annotators. In all models, we exclude any words sharing
-the same lemma as the target, e.g. if the target is ``barking'' we do not
-propose ``bark.''
-
-
-\hardline
-
-We propose a new measure, called Probability-in-Context (PIC), based
-on SGNS context vectors to estimate the appropriateness
-of a lexical substitute. Similar to \balAddCos, the measure has two equally-weighted,
-independent components measuring the appropriateness of the substitute
-for both the target and the context, each taking the form of a
-softmax:\footnote{Note that $P(s|t)$ measures paradigmatic similarity
-  of $s$ and $t$, while $P(s|C)$ is syntagmatic fit to the
-  context.
-  %Both take the same shape of a dot product.
-  For $P(s|t)$,
-  Mikolov et al.~\shortcite{mikolov:2013:iclr} show that cosine
-  similarity of SGNS embeddings predicts
-  paradigmatic similarity. $P(s|C)$ can be interpreted as the PMI of
-  $s$ and $C$~\cite{levy:2014:nips}.}
-\begin{align*}
-  \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
-  P(s | t) &= \frac{1}{Z_t}\exp\left\{s^\top t\right\}\\ %{\sum_{s'}\exp\left\{s'\cdot t\right\}}
-  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}s^\top\left[Wc + b\right]\right\}
-\end{align*}
-
-The values $Z_t$ and $Z_C$ are normalizing constants to make sure each
-distribution sums to one. This measure has two free parameters, $W$ and $b$,
-which act as a linear transformation over the context vectors. These parameters
-are estimated from the {\em original corpus}, and are trained to maximize
-the prediction of a {\em target} from only its syntactic contexts (c.f. Section~\ref{sec:training}).
-Given this formulation, a natural question is why not train the embeddings to optimize the
-softmax directly? We choose to parameterize the measure rather than the
-embeddings because (i) SGNS embeddings are already popular and readily
-available and
-(ii) it ensures the quality of embeddings remains constant across experimental 
-settings.
-
-To measure the importance of parameterization, we
-also compare to a non-parameterized PIC (\ourmeas), which only uses a softmax over the
-dot product:
-\begin{align*}
-  \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
-  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}s^\top c\right\} %{\sum_{s'}\exp\left\{\sum_{c\in C}{s'\cdot c}\right\}}
-\end{align*}
-
-%\red{Need something else to close this section, Katrin?}
-%Both of these proposed measures rely on the same intuitions and context
-%embeddings as \balAddCos, can be implemented just as easily, but per
-%
+Figure~\ref{fig:substitution} provides an intuitive illustration of the idea:
+by looking at the context vector \ctx{amod\depinv:girl}, we see that it is
+closer to the substitute \lit{smart} than the substitute \lit{colorful}. The
+context \ctx{advmod:very}, on the other hand, lies somewhere about halfway
+between the two substitutes, indicating both substitutes are equally appropriate
+for this context.
 
 \begin{figure}
 \centering
@@ -389,100 +245,187 @@ dot product:
     \draw [->,Cerulean] (origin) -- (310:1.8) node[right] {{colorful}};
     \draw [->,Cerulean] (origin) -- (330:0.9) node[right] {{colorfull} (sic)};
     \draw [->,Cerulean] (origin) -- (70:1.7) node[above] {{smart}};
-    \draw [->,darkgray] (origin) -- (280:1.3) node[below] {{\small \ctx{adjmod\depinv:coat}}};
-    \draw [->,darkgray] (origin) -- (50:1.1) node[right] {{\small \ctx{adjmod\depinv:scientist}}};
+    \draw [->,darkgray] (origin) -- (5:1.9) node[right] {{\small \ctx{advmod:very}}};
+    \draw [->,darkgray] (origin) -- (280:1.3) node[below] {{\small \ctx{amod\depinv:coat}}};
+    \draw [->,darkgray] (origin) -- (50:1.1) node[right] {{\small \ctx{amod\depinv:girl}}};
     \fontsize{14}{14}\selectfont
-    \draw [->,Orange] (origin) -- (15:1.9) node[right] {\bf{bright}};
+    \draw [->,Orange] (origin) -- (15:1.9) node[right] {\target{bright}};
     \fill (origin) circle (0.05);
 \end{tikzpicture}
 \caption{Cartoon illustration of how context vectors can disambiguate word senses.}
 \label{fig:substitution}
 \end{figure}
 
+Formally, for a given target $t$, substitute $s$ and context $C$, the final
+{\addCos} score is defined as:
+\begin{equation}
+  \text{addCos}(\vs|\vt,C) = \text{cos}(\vs, \vt) + \sum_{c\in C} \text{cos}(\vs, \vc).
+\end{equation}
+Note that the equation has two components: the first measures the {\em
+out-of-context} similarity between the target $t$ and the substitute $s$ using
+basic cosine similarity. The second half of the measure encodes the {\em
+in-context} appropriateness, by considering substitute with respect to
+each of the syntatic contexts.
 
-\section{Experiments and Results}
+This formulation is considerably simpler than many of the other models
+in the prior work, which require significant overhead for space creation
+or re-weighting of terms, but performs competitively with even more recent
+models. For this reason, it acts as a particular strong and standard baseline,
+which can help calibrate work with different vocabulary or experimental
+conditions.
+
+\newcite{melamud:2015:vsm} also consider variants of this measure, including
+{\em balAddCos}, which equally weights the out-of-context similarity with the
+in-context appropriateness:
+\begin{equation}
+  \text{balAddCos}(s|t,C) = \text{cosine}(s, t) + \frac{1}{|C|}\sum_{c\in C} \text{cosine}(s, c).
+\end{equation}
+This alternative measure reweights the similarities obtained from the context
+vectors so that the out-of-context similarity and in-context appropriateness
+are given equal weight. The choice between the \addCos and \balAddCos is
+an empirical one, and performance of either could vary across datasets or
+evaluation metrics.
+
+\section{Probability-in-Context (PiC)}
+
+We propose an extension of the context vector measure of
+\newcite{melamud:2015:vsm}, called Probability-in-Context (PIC).  We note that
+our measure is {\em not} a well defined probabilty measure; rather the name was
+simply chosen for the purpose of the paper's title.
+
+Similar to \balAddCos, the measure has two equally-weighted, independent
+components measuring the appropriateness of the substitute for both the target
+and the context, each taking the form of a softmax:
+\begin{equation}
+  \begin{aligned}
+  \mbox{PIC}(s | t, C) &= P(s | t) \times P(s | C)\\
+  P(s | t) &= \frac{1}{Z_t}\exp\left\{\vs^\top \vt\right\}\\
+  P(s | C) &= \frac{1}{Z_C}\exp\left\{\sum_{c\in C}\vs^\top\left[\mW\vc + \vb\right]\right\},
+  \end{aligned}
+  \label{eqn:pic}
+\end{equation}
+where the $Z_t$ and $Z_C$ are normalizing constants.
+Our model differs from \mbox{\balAddCos} in a very important way: we base our
+similarity estimates using the {\em unnormalized} inner product $s^\top t$ and
+$s^\top c$, rather than normalized cosine similarities.
+
+Our measure also has two free parameters, $W$ and $b$, which act as a linear
+transformation over the original context vectors. These parameters are
+estimated from the {\em original corpus}, and are trained to maximize the
+prediction of a {\em target} from only its syntactic contexts. These free
+are {\em not} trained on the actual lexical substitution dataset, and
+therefore serve only to tune how the fixed distributional vectors act in this
+alternative objective function.
+
+One may ask why not train or tune the embeddings to optimize this softmax
+objective directly, rather than learning the parameterization which adjust the
+embeddings? This ultimately is an empirical question, and our initial tests
+found that training new embeddings from scratch did not result in stronger
+performance. Additionally, the SGNS embeddings are already popular and
+well-understood in relation to traditional distributional semantics.
+Furthermore, we can re-use the embeddings of \newcite{melamud:2015:vsm} to
+ensure that experimental conditions are fair to both models, and that
+the quality of embeddings remains consistent across comparisons.
+
+Nonetheless, to identify the contribution of this parameterization versus the
+softmax objective, we also introduce to a non-parameterized PIC ({\em nPIC}),
+which does not contain the extra parameters:
+\begin{equation}
+  \begin{aligned}
+  \mbox{nPIC}(s | t, C) &= P(s | t) \times P_n(s | C)\\
+  P_n(s | C) &= \frac{1}{Z_n}\exp\left\{\sum_{c\in C}\vs^\top \vc\right\}
+  \end{aligned}
+  \label{eqn:npic}
+\end{equation}
+
+
+\section{Experiments}
 We compare our proposed measures to three baselines: \ooc, the Out-of-Context
-cosine similarity between the word and target ($\mbox{cos}(s, t)$), and the \addCos~and \balAddCos~
-measures. It is important to note that existing papers on Lexical Substitution all contain subtle
-differences in experimental setup (vocabulary coverage, candidate pooling,
-etc.). We compare to our own re-implementation of the baselines, so our
-numbers differ slightly from those in the literature.
-
-\subsection{Data sets}
-
-We evaluate on three lexical substitution data sets.
-
-{\bf SE07}: The data set used in the original SemEval 2007 shared task \cite{mccarthy:2007:semeval}
-consists of 201 words manually chosen to exhibit polysemy, with 10 sentences
-per target. For a given target in a particular context, five annotators were asked to propose up
-to 3 substitutes. As all our experiments are
-unsupervised, we always evaluate over the entire data set, rather than the
-original held-out test set.
-
-{\bf Coinco}: The Concepts-in-Context data set \cite{kremer:2014:eacl} is a large
-lexical substitution corpus with proposed substitutes for nearly all content
-words in roughly 2,500 sentences from a mixture of genres (newswire, emails,
-and fiction). Crowdsourcing was used to obtain a minimum of 6
-contextually-appropriate substitutes for over 15k tokens.
-%The data set was {\em not} constructed specifically to capture polysemy, but does. 
-
-{\bf TSWI2}: The Turk bootstrap Word Sense Inventory 2.0 \cite{biemann:2012:lrec}
+cosine similarity between the word and target $\mbox{cos}(s, t)$; and the
+\mbox{\addCos} and \mbox{\balAddCos} measures.
+We evaluate on three lexical substitution data sets:
+\begin{itemize}
+\item {\bf SE}: The data set used in the original SemEval 2007 shared task
+\cite{mccarthy:2007:semeval} consists of 201 words manually chosen to exhibit
+polysemy, with 10 sentences per target. For a given target in a particular
+context, five annotators were asked to propose up to 3 substitutes. As all our
+experiments are unsupervised, we always evaluate over the entire data set,
+rather than the original held-out test set.
+\item {\bf Coinco}: The Concepts-in-Context data set \cite{kremer:2014:eacl} is a
+large lexical substitution corpus with proposed substitutes for nearly all
+content words in roughly 2,500 sentences from a mixture of genres (newswire,
+emails, and fiction). Crowdsourcing was used to obtain a minimum of 6
+contextually-appropriate substitutes for over 15k tokens. Unlike SemEval, this
+data set was not constructed specifically to capture polysemy; nonetheless,
+many substitutes vary considerably for different sentential contexts,
+indicating that polysemy is definitely present.
+\item {\bf TSWI}: The Turk bootstrap Word Sense Inventory 2.0 \cite{biemann:2012:lrec}
 is a crowdsourced lexical substitution corpus focused on about 1,000 common
 English nouns. The data set contains nearly 25,000 contextual uses of these
 nouns. Though the data set was originally constructed to induce a word-sense
 lexicon based on common substitution patterns, here we only use it as a
 lexical substitution data set.
-
-\subsection{Task Evaluation}
+\end{itemize}
 
 We compare models on two variations of the lexical substitution task: candidate
-ranking and all-words ranking. In the {\em candidate ranking} task, the model is
-given a list of candidates and must select which are most appropriate
-for the given target. We follow prior work in pooling candidates from all
+ranking and all-words ranking. In the {\em candidate ranking} task, the model
+is given a list of candidates and must select which are most appropriate for
+the given target. We follow prior work in pooling candidates from all
 substitutions for a given lemma and POS over all contexts, and measure
-performance using Generalized Average Precision (GAP).  GAP is similar to Mean
-Average Precision, but weighted by the number of times a substitute was given
-by annotators.  See \newcite{thater:2010:acl} for full details of the
-candidate ranking task.
+performance using Generalized Average Precision (GAP) \cite{kishida:2005:gap}.
+GAP is similar to Average Precision, but weighted by the number of times a
+substitute was given by annotators. Intuitively, it measures the number of
+"correct" points the model has obtained at every point, normalized by the
+maximum number of possible points obtainable at that rank.  For a particular
+substitute, suppose $h_1,\ldots,h_n$ are an ordered list of the model's scores
+assigned for the possible substitutes, so that the substitute with the best
+score comes first. Let's also assume that $g_1,\ldots,g_n$ is the sorted gold
+list of scores, and that $g(h_i)$,  gives the gold score of the
+substitute predicted at $h_i$. GAP is then defined in terms of the precision
+over all possible values of $i$:
+\begin{align*}
+  \text{GAP} & = \frac{1}{R}\sum_{k=1}^n\left[\sum_{i=1}^k\frac{g(h_i)}{i}\right]\\
+  R & = \sum_{k=1}^n\left[\frac{1}{k}\sum_{i=1}^n g_i\right]
+\end{align*}
+Although this measure is a bit too difficult to unpack completely here,
+intuitively it measures 1.0 when the model perfectly ranks the list, and 0.0
+when the model provides the reverse listing. Partial credit is awarded for
+providing items in roughly the correct order, weighted by how important the
+items are in the gold scores.
 
-The second task is the much more difficult %, but realistic 
-task of {\em all-words
-ranking}.  In this task, the model is not provided any gold list of candidates,
-but must select possible substitutes from the entire vocabulary.\footnote{All models are also hardcoded not to predict substitutes
-with the same stem as the target, e.g. for the {\em bright girl} example, models cannot predict {\em brighter} or {\em brightest}.}
-We measure performance by (micro) mean Precision@1 and P@3: that is, of a system's top
-one/three guesses, the percentage also given by human annotators.  These
-evaluation metrics are similar to the {\em best} and {\em oot} metrics
-reported in the literature, but we find P@1 and P@3 easier to interpret and
-analyze.
+Our second task is the much more difficult task of {\em all-words ranking}. In
+this task, the model is not provided any gold list of candidates, but must
+select possible substitutes from the entire vocabulary. All models are also
+hardcoded not to predict substitutes with the same stem as the target, e.g. for
+the \lit{bright girl} example, models cannot predict \lit{brighter} or
+\lit{brightest}.
+On this all-words ranking task, we evaluate performance with (micro) mean
+Precision@1 and P@3: that is, of a system's top one/three guesses, the
+percentage also given by human annotators.  These evaluation metrics are
+similar to the {\em best} and {\em oot} metrics reported in the literature, but
+we find P@1 and P@3 easier to interpret and analyze.
 
-\subsection{Word and Context Vectors}
+\subsection{Vectors and Training Procedure}
 
-We use the word and context vectors released by
-\newcite{melamud:2015:vsm},\footnote{\url{http://www.cs.biu.ac.il/nlp/resources/downloads/lexsub_embeddings}}
-which were previously shown to perform strongly in lexical substitution
-tasks. These embeddings were computed from a corpus of
-(word, relation, context) tuples extracted from ukWaC and processed using the
-dependency-based word2vec model of \newcite{levy:2014:acl}. These embeddings
-contain 600d vectors for 173k words and about 1M syntactic contexts.
-
-
-\subsection{Training Procedure}
-\label{sec:training}
+We use the word and context vectors released by \newcite{melamud:2015:vsm},
+which were previously shown to perform strongly in lexical substitution tasks.
+These embeddings were computed from a corpus of (word, relation, context)
+tuples extracted from ukWaC and processed using the dependency-based word2vec
+model of \newcite{levy:2014:acl}. These embeddings contain 600d vectors for
+173k words and about 1M syntactic contexts.
 
 To train the $W$ and $b$ parameters, we extract tokens with syntactic contexts
-using the same corpus (ukWaC), parser \cite{chen:2014:emnlp}, and extraction procedure
-used to generate the embeddings. See \cite{melamud:2015:vsm} for complete details.
-After extracting every token with its contexts, we randomly sample 10\% of the
-data to reduce computation time, leaving us with 190M tokens for training $W$ and $b$.
-We use sampled softmax to reduce training time \cite{jean:2015:acl},
-sampling 15 negative candidates uniformly from the vocabulary, optimizing
-cross-entropy over just these 16 words per sample.
-We optimize $W$ and $b$ in one epoch of stochastic gradient descent (SGD) with
-a learning rate of 0.01, momentum of 0.98, and a batch size of 2048. We found
-all of these hyperparameters worked well initially, and did not tune them.
-% This procedure took around 45 minutes using a GPU.
-
+using the same corpus (ukWaC), parser \cite{chen:2014:emnlp}, and extraction
+procedure used to generate the embeddings. See \cite{melamud:2015:vsm} for
+complete details.  After extracting every token with its contexts, we randomly
+sample 10\% of the data to reduce computation time, leaving us with 190M tokens
+for training $W$ and $b$.  We use sampled softmax to reduce training time
+\cite{jean:2015:acl}, sampling 15 negative candidates uniformly from the
+vocabulary, optimizing cross-entropy over just these 16 words per sample.  We
+optimize $W$ and $b$ in one epoch of stochastic gradient descent (SGD) with a
+learning rate of 0.01, momentum of 0.98, and a batch size of 2048. We found all
+of these hyperparameters worked well initially, and did not tune them.  This
+procedure took around 45 minutes using a GPU.
 
 \subsection{Results}
 \begin{table}
@@ -501,7 +444,7 @@ all of these hyperparameters worked well initially, and did not tune them.
 \end{tabular}
 \caption{Performance of {\ourmeas} and {\ourmeasparam} on the three Lexical
   Substitution datasets in the all candidate ranking task, measured in GAP.}
-\label{tab:precision}
+\label{tab:lexsubgap}
 \end{table}
 
 \begin{table}
@@ -539,56 +482,42 @@ all of these hyperparameters worked well initially, and did not tune them.
 \end{minipage}
 \caption{Performance of {\ourmeas} and {\ourmeasparam} on the three Lexical
   Substitution datasets in the all words ranking task, measured in
-  (a)~Precision@1 and (b)~Precision@3.}
-\label{tab:precision}
+  (a)~P@1 and (b)~P@3.}
+\label{tab:lexsubprecision}
 \end{table}
 
-\hardline
+Table~\ref{tab:lexsubgap} compares the models on the substitute ranking task
+only. The first observation we make is that the \ourmeasparam~measure performs
+best in all evaluations on all data sets by a significant margin (Wilcoxon
+signed-rank test, $p < 0.01$). In these GAP evaluations, all measures perform
+substantially better than the \ooc~baseline, and the \ourmeas~measure performs
+comparably to \balAddCos. We note that context-sensitive measures give the most
+improvement in SemEval, reflecting its greater emphasis on polysemy.
 
-Table~\ref{tab:lexsub} contains results for all measures across all datasets.
-We observe that PIC outperforms all other models by a significant
-margin,\footnote{Wilcoxon signed-rank test, $p < 0.01$} including a relative
-30\% improvement over \balAddCos in SE07 and Coinco. The nPIC also improves
-substantially over the other baselines, indicating we gain benefit both from
-the new objective function and the additional parameterization.  We next
-strive to understand why both measures have a clear improvements over the
-baseline models.
-
-\hardline
-
-Table~\ref{tab:precision} contains results for all measures across all
-experimental settings.
-
-The first observation we make is that the \ourmeasparam~measure performs best
-in all evaluations on all data sets by a significant margin.\footnote{Wilcoxon signed-rank test, $p < 0.01$}
-In the GAP evaluation, all measures
-perform substantially better than the \ooc~baseline, and the \ourmeas~measure
-performs comparably to \balAddCos. We note that context-sensitive
-measures give the most improvement in SE07, reflecting its greater emphasis on
-polysemy.
-
-As we turn to the all-words ranking evaluations, we observe that the absolute numbers are
-much lower, reflecting the increased difficulty of the task. We also see the
-that \ourmeas~and \ourmeasparam~both improve greatly over all baselines: The
+As we turn to the all-words ranking evaluations in
+Table~\ref{tab:lexsubprecision}, we observe that the absolute numbers are much
+lower, reflecting the increased difficulty of the task. We also see the that
+\ourmeas~and \ourmeasparam~both improve greatly over all baselines: The
 \ourmeas~measure is a relative 30\% improvement over \balAddCos~in SE07 and
 Coinco, and the \ourmeasparam~measure is a relative 50\% improvement over
-\balAddCos~in 5 evaluations.
+\balAddCos~in 5 evaluations. Indeed we find that \ourmeasparam significantly
+outperforms other models (Wilcoxon signed-rank test, $p < 0.01$).
 
 Since both measures have a clear improvement over the baselines, especially in
 the more difficult all-words task, we next strive to understand why.
 
-
 \subsection{Analysis}
 \label{sec:lexsubanalysis}
 \begin{table*}[t]
-  \begin{center}
+  \centering
+  \begin{minipage}{9cm}
+  \centering
+  \lit{You can sort of challenge them well, did you \target{really} know the time when you said yes?}
+  \end{minipage}\\~\\
   \begin{tabular}{|cccc|}
     \hline
     \ooc             & \balAddCos            & \ourmeas         & \ourmeasparam\\
     \hline\hline
-    \multicolumn{4}{|c|}{You can sort of challenge them well, did you}\\
-    \multicolumn{4}{|c|}{{\bf really} know the time when you said yes?}\\
-    \hline
     {    trully              } & {    proably             } & {    realy               } & {\bf actually            } \\
     {\bf actually            } & {    trully              } & {\bf truly               } & {\bf truly               } \\
     {    actaully            } & {    acutally            } & {\bf actually            } & {    already             } \\
@@ -596,20 +525,21 @@ the more difficult all-words task, we next strive to understand why.
     {    proably             } & {    probaly             } & {\bf definitely          } & {    just                } \\
     \hline
   \end{tabular}
-  \end{center}
   \caption{Example where the \ourmeasparam~performs better in the All-Words Ranking task. The target word and correct answers
   are bolded.}
   \label{tab:cherry}
 \end{table*}
 
 \begin{table*}[t]
-  \begin{center}
+  \centering
+  \begin{minipage}{12cm}
+  \centering
+  \lit{As a general rule, point of view should not \target{change} during a scene.}\\~\\
+  \end{minipage}
   \begin{tabular}{|cccc|}
     \hline
     {    OOC                 } & {    \balAddCos          } & {    \ourmeas            } & {    \ourmeasparam       } \\
     \hline\hline
-    \multicolumn{4}{|c|}{As a general rule, point of view should not {\bf change} during a scene.}\\
-    \hline
     {    sea-change          } & {\bf alter               } & {    reoccur             } & {    re-occur            } \\
     {\bf alter               } & {    sea-change          } & {    re-occur            } & {    appear              } \\
     {\bf shift               } & {\bf shift               } & {    prevail             } & {    overstate           } \\
@@ -624,108 +554,82 @@ the more difficult all-words task, we next strive to understand why.
     %{\bf disrespectful       } & {    discourteous        } & {    arrogant            } & {    inconsiderate       } \\
     %{    polite              } & {\bf disrespectful       } & {\bf impolite            } & {    arrogant            } \\
     %{    bitchy              } & {    bitchy              } & {\bf disrespectful       } & {\bf unkind              } \\
-\hline
+  \hline
   \end{tabular}
-  \end{center}
-  \caption{Example where the \ourmeasparam~performs worse the All-Words Ranking task. The target word and correct answers
-  are bolded.}
+  \caption{Example where the \ourmeasparam~performs worse the All-Words Ranking
+  task. The target word and correct answers are bolded.}
   \label{tab:lemon}
 \end{table*}
 
 We first examine cherry and lemon-picked examples to give intuitions about why
 our model performs better. Table~\ref{tab:cherry} contains the cherry example,
-where our model performs better than prior work. While OOC
-and \balAddCos~both suggest replacements with reasonable semantics, but are
-all misspelled. \ourmeas~and \ourmeasparam~only pick words with the correct spellings,
-with the exception of ``realy.''
+where our model performs better than prior work. While OOC and \balAddCos~both
+suggest replacements with reasonable semantics, but are all misspelled.
+\ourmeas~and \ourmeasparam~only pick words with the correct spellings, with the
+exception of \lit{realy}. This suggests that our model may be predicting terms
+with a higher unigram frequency.
 
-Table~\ref{tab:lemon} shows the lemon example, where our model performs worse.
-We notice that the unusual ``sea-change'' item is prominent in the OOC and
-\balAddCos~models, but has dropped from the rankings in our models. From
-these and other examples, we hypothesize the model is simply guessing more
-frequent terms.
-
-\hardline
-
-We characterize the models using a cherry-picked example,
-given in Table~\ref{tab:cherry}. Although this example does not perfectly illustrate
-the Lexical Substitution task, it does well at giving intuition as to why our
-models perform better. We see that all four measures
-tend to pick excellent substitutes which {\em semantically} agree with the
-original target. However, the cosine and {\em balAddCos} models have a large number of
-misspelled works in their list, while the nPIC and PIC measures contain
-mostly correct spellings. This is because, somewhat surprisingly, the {\em
-length} of the distributional vectors correlates strongly with the {\em
-unigram} statistics of the word \cite{wilson:2015:arxiv}.
-Therefore, by using the unnormalized inner
-product, rather than cosine, our model naturally incorporates unigram priors,
-allowing it to downweight rare, similar words. Indeed, a quantitative analysis
-of the $W$ and $b$ parameters finds that they additionally exaggerate this
-unigram bias \cite{roller:2016:naacl}.
-Intuitively, it seems natural that unigram biases should hold a strong role in
-Lexical Substitution, and that our model should wish to exploit this
-information.
-
-
-\hardline
-
-
+Table~\ref{tab:lemon} shows a lemon-picked example, where our model performs
+worse than other cases.  We notice that the unusual \lit{sea-change} item is
+prominent in the OOC and \balAddCos~models, but has dropped from the rankings
+in our models, also indicating the model may be picking more frequent terms.
 
 We consider a few experiments with this hypothesis that the measures do better
-because they capture better {\em unigram} statistics than the baselines. Recent literature found that the vector
-norm of SGNS embeddings correlates strongly with word frequency
-\cite{wilson:2015:arxiv}. We verified this for ourselves, computing the Spearman's
-rank correlation between the corpus unigram frequency and the vector length
-and found $\rho = 0.90$, indicating the two correlate very strongly. Since the
-dot product is also the unnormalized cosine, it follows that \ourmeas~and
-\ourmeasparam~should depend on unigram frequency.
+because they capture better {\em unigram} statistics than the baselines. Recent
+literature found that the vector norm of SGNS embeddings correlates strongly
+with word frequency \cite{wilson:2015:arxiv}. We verified this for ourselves,
+computing the Spearman's rank correlation between the corpus unigram frequency
+and the vector length and found $\rho = 0.90$, indicating the two correlate
+very strongly. Since the dot product is also the unnormalized cosine, it
+follows that \ourmeas~and \ourmeasparam~should depend on unigram frequency.
+One can view this intuitively in Figure~\ref{fig:substitution}: although
+\lit{colorfull} has a better cosine-similarity to the target than the correctly
+spelled \lit{colorful}, we tend to prefer the more frequently chosen term
+since its vector has a higher magnitude.
 
-To verify that the \ourmeas~and \ourmeasparam~measures are indeed preferring more frequent
-substitutes, we compare the single best predictions (P@1) of the \balAddCos~and
-\ourmeas~systems on all-words prediction on Coinco. Roughly 42\% of the predictions made
-by the systems are identical, but of the remaining items, 74\% of
-predictions made by \ourmeas~have a higher corpus frequency than \balAddCos~(where
-chance is 50\%). We find \balAddCos~and \ourmeasparam~
-make the same prediction 37\% of the time, and \ourmeasparam~predicts a
-more frequent word in 83\% of remaining items. The results for SE07 and
-TWSI2 are similar.
+To verify that the \ourmeas~and \ourmeasparam~measures are indeed preferring
+more frequent substitutes, we compare the single best predictions (P@1) of the
+\balAddCos~and \ourmeas~systems on all-words prediction on Coinco. Roughly 42\%
+of the predictions made by the systems are identical, but of the remaining
+items, 74\% of predictions made by \ourmeas~have a higher corpus frequency than
+\balAddCos~(where chance is 50\%). We find \balAddCos~and \ourmeasparam~ make
+the same prediction 37\% of the time, and \ourmeasparam~predicts a more
+frequent word in 83\% of remaining items. The results for SE07 and TWSI2 are
+similar.
 
 This indicates that the unigram bias is even higher for \ourmeasparam~than
 \ourmeas. To gain more insight, we manually inspect the learned parameters $W$
 and $b$. We find that the $W$ matrix is nearly diagonal, with the values along
-the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the rest
-of the matrix normally distributed roughly around 0 ($\mu=2\times10^{-5},~\sigma=0.02$). This
-is to say, the \ourmeasparam~model is approximately learning to {\em exaggerate} the
-magnitude of the dot product, $s^\top c$. This suggests one could even replace our
-parameter $W$ with a single scaling parameter, though we leave this
-for future work.
+the diagonal normally distributed around $\mu=1.11$ ($\sigma=0.02$) and the
+rest of the matrix normally distributed roughly around 0
+($\mu=2\times10^{-5},~\sigma=0.02$). This is to say, the \ourmeasparam~model is
+approximately learning to {\em exaggerate} the magnitude of the dot product,
+$s^\top c$. This suggests one could even replace our parameter $W$ with a
+single scaling parameter, though we leave this for future work.
 
 To inspect the bias $b$, we compute the inner product of the $b$ vector with
-the word embedding matrix, to find each word's a priori bias, and correlate it with word frequencies. We find
-$\rho=0.25$, indicating that $b$ is also capturing unigram
-statistics.
+the word embedding matrix, to find each word's a priori bias, and correlate it
+with word frequencies. We find $\rho=0.25$, indicating that $b$ is also
+capturing unigram statistics.
 
 Is it helpful in lexical substitution to prefer more frequent substitutes? To
 test this, we pool all annotator responses for all contexts in Coinco, and find
 the number of times a substitute is given correlates strongly with frequency
 ($\rho=0.54$).
 
-These results emphasize the importance of incorporating unigram
-frequencies when attempting the lexical substitution task (as with
-many other tasks in NLP). Compared to
-cosine, the dot product in \ourmeas~stresses unigram frequency, and
-the parameters $W$ and $b$ strengthen this tendency.
-
+These results emphasize the importance of incorporating unigram frequencies
+when attempting the lexical substitution task (as with many other tasks in
+NLP). Compared to cosine, the dot product in \ourmeas~stresses unigram
+frequency, and the parameters $W$ and $b$ strengthen this tendency.
 
 \section{Chapter Summary}
 
 We have presented \ourmeasparam, a simple new measure for assessing the
 appropriateness of a substitute in a particular context for the Lexical
 Substitution task. The measure assesses the fit of the substitute both to the
-target word and the sentence context. It significantly outperforms comparable
-baselines from prior work, and does not require any additional lexical
-resources. An analysis indicates its performance improvements derive primarily
-from a tendency to lean more strongly on unigram statistics than baselines. In
-future work, our measure could be simplified by implementing the bias as a
-single scaling parameter.
+target word and the sentence context using a combination of out-of-context
+similarity with in-context appropriateness. It significantly outperforms
+comparable baselines from prior work, and does not require any additional
+lexical resources. An analysis indicates its performance improvements derive
+from a tendency to lean more strongly on unigram statistics than baselines.
 
