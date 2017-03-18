@@ -30,11 +30,11 @@ of research which have led to our own work.
 One of the seminal works in automatic hypernymy discovery was that of Hearst
 patterns \cite{hearst:1992:coling}. Heast showed that certain lexico-syntactic
 idioms were very clear indicators of hypernymy relationships. Some example
-Hearst patterns are \lit{X such as Y}; \lit{X for example Y}; and 
-\lit{X including Y}. Each of these provides evidence that X is a hypernym of Y,
-especially when the pattern is repeated several times across a large corpus
-\cite{hearst:1992:coling}. With a strong set of patterns, and a large enough
-corpus, many hypernymy relationships may easily be captured. 
+Hearst patterns are \lit{animals such as cats}; \lit{animals for example cats};
+and \lit{animals including cats}. Each of these provides evidence that X is a
+hypernym of Y, especially when the pattern is repeated several times across a
+large corpus \cite{hearst:1992:coling}. With a strong set of patterns, and a
+large enough corpus, many hypernymy relationships may easily be captured. 
 
 Unfortunately, such patterns can be brittle and sensitive to minor inflections
 or variations.  These patterns above would fail to also capture the
@@ -100,7 +100,7 @@ success teach us about distributional methods?
 Much of the earlier work in applying distributional approaches to lexical
 entailment detection focused primarily on {\em unsupervised} methods, positing
 that relationships should be apparent through regular behavior across the
-dimensions of a sparse vector space. The reasoning went then, that with the
+dimensions of a sparse vector space. The reasoning went that with the
 right entailment similarity measure, one could measure the
 entailment-similarity between any two words and estimate the degree to which
 one word entailed another. This would occur in the same way that cosine
@@ -114,10 +114,10 @@ also entail the converse \mbox{(\lit{animal} $\rightarrow$ \lit{cat})}.
 
 One of the first approaches was that of \newcite{weeds:2004:coling}, who
 introduced the notion of \emph{distributional generality}, where $v$ is
-distributionally more general than $u$ if the $u$ appears in a subset of
-the contexts in which $v$ is found. They speculate that hypernyms should be
-more distributionally general than hyponym, and measure distributional
-generality using a variation of
+distributionally more general than $u$ if the $u$ appears in a subset of the
+contexts in which $v$ is found, as illustrated in Figure~\ref{fig:dih}.  They
+speculate that hypernyms should be more distributionally general than hyponym,
+and measure distributional generality using a variation of
 precision~\cite{weeds:2003:emnlp,weeds:2004:coling}:
 \begin{align}
   1(x) & = \begin{cases}1 & \mbox{if } x > 0\\
@@ -126,17 +126,22 @@ precision~\cite{weeds:2003:emnlp,weeds:2004:coling}:
   \mbox{WeedsPrec}(\vu, \vv) & = \frac{\sum_{i=1}^n u_i * 1(v_i)}{\sum_{i=1}^n u_i}
   \label{eq:weeds}
 \end{align}
+Intuitively, {\WeedsPrec} computes the number of contexts of $u$ which are also
+a part of $v$, and weights each context by its importance to $u$. Note that
+the weights of contexts in $v$ are {\em not} considered, only their absence
+or presence.
 
 \newcite{geffet:2004:coling,zhitomirskygeffet:2005:acl} point out that generic
 distributional similarity is too loose for precision-demanding applications
 like Question Answering or Textual Entailment, and that the definition should
-be changed slightly. They hypothesize that a {\em lexical entailment} relation
-hold between two words if ``contexts in which one of the words can be
-substituted by the other, such that the meaning of the original word can be
-inferred from the new one'' \cite{zhitomirskygeffet:2005:acl}, and thus
-proposing the more generic {\em Distributional Inclusion Hypothesis} (DIH).
-Figure~\ref{fig:dih} illustrates the DIH, emphasizing that the contexts in
-which \lit{cat} appears should be a subset of the contexts in which
+be changed slightly. They propose the {\em Distributional Inclusion Hypothesis}
+(DIH), which states that a {\em lexical entailment} relation holds between two
+words when ``contexts in which one of the words can be substituted by the other
+[word], such that the meaning of the original word can be inferred from the new
+one'' \cite{zhitomirskygeffet:2005:acl}. The DIH generalizes the view of
+distributional generality beyond hypernymy and provides a more rigorous
+definition.  Figure~\ref{fig:dih} illustrates the DIH, emphasizing that the
+contexts in which \lit{cat} appears should be a subset of the contexts in which
 \lit{animal} appears. Meanwhile, under this interpretation, co-hyponyms should
 have a high degree of overlapping contexts.
 
@@ -192,34 +197,37 @@ using the well known {\em LIN} similarity measure \cite{lin:1998:icml}:
 Another measure proposed in the same vein is {\Clarke} \cite{clarke:2009:gems},
 which takes inspiration from \newcite{weeds:2004:coling}, but also considers
 the {\em degree} to which a term $v$ is contained within $u$ by evaluating
-over a component-wise minimum:
+over a component-wise minimum. Intuitively, this allows us to measure
+distributional inclusion beyond mere presence or absence (as in \WeedsPrec),
+and consider the degree to which {\em important} contexts are included.
 \begin{equation}
   \mbox{CL}(\vu, \vv) = \frac{\sum_{i=1}^n \mbox{min}(u_i, v_i)}{\sum_{i=1}^n u_i}
 \end{equation}
 
-\newcite{lenci:2012:starsem} introduce the \invCL measure, which uses \Clarke to
-measure both distributional inclusion of $u$ in $v$ and distributional
-non-inclusion of $v$ in $u$. While all other measures interpret the
-Distributional Inclusion Hypothesis as the degree to which a $\subseteq$
+\newcite{lenci:2012:starsem} introduce the \mbox{\invCL} measure which uses
+{\Clarke} to measure both distributional inclusion of $u$ in $v$ and
+distributional non-inclusion of $v$ in $u$. While all other measures interpret
+the Distributional Inclusion Hypothesis as the degree to which a $\subseteq$
 relation holds, \newcite{lenci:2012:starsem} test the degree to which proper
 inclusion $\subsetneq$ holds. They consider not only the degree to which the
 contexts of the narrower terms are included in the contexts of the wider term,
 but also determine the degree to which the wider term has contexts that the
 narrower term does not have, and balance the two terms using a geometric mean:
 \begin{equation}
-  \mbox{invCL}(\vu, \vv) = \sqrt{\mbox{CL}(\vu, \vv) * (1 - \mbox{CL}(\vv, \vu))}
+    \mbox{invCL}(\vu, \vv) = \sqrt{\mbox{CL}(\vu, \vv) * (1 - \mbox{CL}(\vv, \vu))}
   \label{eq:invcl}
 \end{equation}
 
 A few other unsupervised approaches, not based on the DIH, have also been
 proposed. In particular, \newcite{santus:2014:eacl} introduce the SLQS measure,
 which computes a transformed distributional space by weighting contexts via
-their overall entropy (a la Shannon). For any given two terms $u$ and $v$,
-the final measure depends on distribution of their top-$k$ entropy values,
-reasoning that the narrower term should have less entropy in its contexts.
-Follow up studies found the SLQS measure is sensitive to hyperparameter tuning
-(namely, selection of $k$, the number of contexts to consider), but outperforms
-other measures with careful tuning \cite{shwartz:2017:eacl}.
+their overall entropy \cite{shannon:1948:bell}. For any given two terms
+$u$ and $v$, the final measure depends on distribution of their top-$k$ entropy
+values, reasoning that the narrower term should have less entropy in its
+contexts.  Follow up studies found the SLQS measure is sensitive to
+hyperparameter tuning (namely, selection of $k$, the number of contexts to
+consider), but outperforms other measures with careful tuning
+\cite{shwartz:2017:eacl}.
 
 \paragraph{Evaluating Unsupervised Measures}
 
@@ -228,7 +236,7 @@ based on the DIH (Equations~\ref{eq:weeds}--\ref{eq:invcl}) on their ability to
 separate hypernymy from three other relations: co-hyponymy, meronomy, and
 random. We also include cosine similarity as a scientific control.
 We evaluate using the BLESS dataset \cite{baroni:2011:gems},
-which contains annotations of word relations for 200 unambiguous, concrete
+which contains annotations of word relations for 200 mostly unambiguous, concrete
 nouns like \lit{van}, \lit{horse}, and \lit{chair}. These concepts are divided
 into 17 general Categeories, like \lit{vehicle}, \lit{ground mammal} and
 \lit{furniture}. Each noun is annotated with its co-hyponyms, meronyms,
@@ -278,9 +286,9 @@ the noise of distributional vectors.
 
 \section{Importance of Experimental Conditions}
 
-As we turn our attention to supervised methods (which will remain our focus for
-the majority of this thesis), we first consider how experimental setup can
-significantly impact performance and yield misleading results.
+As we turn our attention to supervised methods , we first consider how
+experimental setup can significantly impact performance and yield misleading
+results.
 
 As with all supervised machine learning methods, it is important to create
 distinct {\em training} and {\em testing} splits of the data. The training
@@ -289,7 +297,7 @@ evaluate a model's generalization by checking that the model is able to make
 predictions on {\em unseen} data. Traditional methods for creating train/test
 splits of data are simple randomization (80\% for train, 20\% for test,
 stochastically assigning each data item to one or the other). When a particular
-data set is somewhat small, it's often common to evaluate using
+data set is somewhat small, it is often common to evaluate using
 cross-validation (CV), where the data is split into $k$ equal sized {\em folds}
 and then each fold is used as the test set in $k$ separate evaluations.
 Typically the performance metric (like accuracy) is averaged across all $k$
@@ -297,11 +305,11 @@ folds.  When the $k$ in cross-validation is taken to be the full dataset size,
 then we arrive at a Leave-one-out cross-validation (LOOCV) experimental setup.
 
 As with other datasets, we can evaluate our hypernymy datasets using any of
-these setups: for example, we could randomly assign 80\% of the word pairs in
-our dataset as training, and the remaining 20\% as testing. However, due the
+these setups. For example, we could randomly assign 80\% of the word pairs in
+our dataset as training, and utilize the remaining 20\% as testing. However, due the
 construction of the different datasets, many words appear multiple times in the
 dataset: sometimes they appear on the LHS, sometimes on the RHS, and always
-annotated with several example relationships. This presents a problem: if we
+annotated with several example relationships. This means if we
 separate our training and testing data using standard random splits, then
 sometimes particular words will appear both in training and in test splits, and
 we may have issue generalizing to new pairs containing unseen words.
@@ -312,12 +320,12 @@ training and testing sets.
 To remedy this, we propose a variation of LOOCV where an individual {\em
 concept} is withheld as a particular test set, and the training set consists of
 all the remaining pairs which do not contain any lexical overlap. For example,
-if (cat, animal) appears in our test set, then the test set will consist of all
-(cat, *) pairs, and all \mbox{(*, animal)} pairs will be discarded from the training
-set. This adversarial experimental setup ensures that we can truly ensure our
-model is able to identify the lexical relationship of novel pairs, and not
-simply memorizing certain words.  Table~\ref{tab:splits}b demonstrates our
-setup.
+if \mbox{(cat,~animal)} appears in our test set, then the test set will consist
+of all \mbox{(cat,~*)} pairs, and all \mbox{(*,~animal)} pairs will be
+discarded from the training set. This adversarial experimental setup ensures
+that we can truly ensure our model is able to identify the lexical relationship
+of novel pairs, and not simply memorizing certain words.
+Table~\ref{tab:splits}b demonstrates our setup.
 
 \begin{table}
   \begin{minipage}[b]{6cm}
@@ -336,7 +344,7 @@ setup.
     \multicolumn{4}{|c|}{Training set}\\
     \hline
     dog       &  animal   &  mammal        & hyper       \\
-    dog       &  cat      &  mammal        & cohyp       \\
+    dog       &  cat      &  mammal        & co-hyp      \\
     dog       &  book     &  mammal        & rand        \\
     cat       &  desk     &  mammal        & rand        \\
     sofa      &  chair    &  furniture     & hyper       \\
@@ -367,7 +375,7 @@ setup.
     \multicolumn{4}{|c|}{Discarded}\\
     \hline
     dog       &  animal   &  mammal        & hyper       \\
-    dog       &  cat      &  mammal        & cohyp       \\
+    dog       &  cat      &  mammal        & co-hyp      \\
     \hline
   \end{tabular}\\~\\{\small (b) our split}
   \end{minipage}
@@ -391,7 +399,7 @@ overlap is disregarded, would lie at the $y = 0.0$ line. We see that the
 amount of data that must be discarded rapidly increases with the size of
 the test set due to the increased vocabulary coverage; indeed, in a basic
 ten-fold CV setting, we need to discard 83\% of the BLESS training data, and
-in three-fold CV we must discard 99\%. We therefore conclude have many small
+in three-fold CV we must discard 99\%. We conclude that using many small
 folds is better for data efficiency, though this also comes at a computational
 cost, since we must run our classifiers for many more trials.
 
@@ -426,7 +434,7 @@ example, we use the features,
 Table~\ref{tab:overlapresults} shows the accuracy of this
 classifier with these features on the four-way classification task
 of BLESS, both with lexical overlap and without lexical overlap. We did not
-evaluate a random split setting without lexical overlap at the time.
+evaluate a random split setting without lexical overlap.
 
 \begin{table}
   \centering
@@ -445,20 +453,19 @@ evaluate a random split setting without lexical overlap at the time.
   \label{tab:overlapresults}
 \end{table}
 
-One clear pattern from these results shows that there is a substantial
+One clear pattern from these results is a substantial
 decrease in performance when switching from allowing lexical overlap to
 removing lexical overlap: the concept-level stratification performance drops
 by over 20 points, and the category stratification drops by nearly 6 points.
-This substantial decrease shows one our major observations: that some
-classifiers may be prone to a substantial, special form of overfitting, where
-pairs like (\lit{cactus}, \lit{animal}) may be classified as hypernymy, simply
-because \lit{animal} nearly always a hypernymy, and \lit{cactus} is nearly
-always a hyponym (in the data), even though the {\em relationship} between
-the two is not always the case. We take this to mean the nonlinear classifier
-is simply {\em memorizing} the words used in the dataset.
+This substantial decrease shows one of our major observations: that some
+classifiers may be prone to a special form of overfitting, where random pairs
+like (\lit{cactus},~\lit{animal}) are classified as hypernymy, because the
+model simply {\em memorizes} that \lit{animal} is always a hypernym when it
+appears on the RHS, or that \lit{cactus} is always a hyponym when it appears
+on the LHS.
 
 Our second observation is that stratification by category is substantially
-more difficult than stratification by category, regardless of whether or
+more difficult than stratification by concept, regardless of whether or
 not lexical overlap is allowed. The reason for this is threefold:
 (1) Stratification by category already accounts for a large percentage over
 lexical overlap, as many of the overlapping pairs are drawn from the same
@@ -474,14 +481,25 @@ furniture, thus making the task markedly harder, as one must consider
 that the co-occurrences of \lit{cat} and \lit{stool} will likely overlap
 very little.
 
-Clearly it is important that we evaluate our supervised classifiers in
-settings with zero lexical overlap, or we otherwise cannot distinguish between
-lexical memorization and true generalization. Yet the stratification by
-category also seem overly harsh and difficult, and categories are only available
-in the BLESS data set, so we would be unable to evaluate on multiple datasets.
-Therefore, we adopt stratification by concept. In these experiments we use a
-Leave-out-one-Concept setup, but in the next chapter, we will adopt a
-20-fold Concept CV setting for computational reasons.
+Clearly, the choice of experimental setup yields vastly different pictures of
+how well a model generalizes to new data. Evaluating with zero lexical overlap
+is important if we wish to distinguish between a model which truly generalizes
+to novel words and one which simply memorizes the data. Category stratification
+is important when we are interested in generalizing models to new domains;
+unfortunately, category information is only available in one data set, making
+it difficult to test robustness of models across multiple data sets.
+
+On the other hand, \newcite{shwartz:2016:acl} argue that allowing lexical
+overlap is possibly more realistic, since lexicographers are more likely to
+want to insert words into an existing and incomplete ontology, rather than
+induce entirely new ontologies from scratch. In our own work, we hope to learn
+about what kinds of entailment signals are available in distributional
+vectors, and what these signals tell us about lexical relationships, rather
+than absolute performance on ontology completion. Therefore, we consider
+concept-level stratification with zero lexical overlap to be most appropriate
+for our own research. Since the models we consider in this chapter are
+computationally inexpensive, we employ a Leave-out-one-Concept setup for the
+remainder of this chapter.
 
 Our proposal to evaluate settings with zero lexical overlap between training
 and test has been highly influential, and has since been adopted by numerous
@@ -497,7 +515,7 @@ will briefly reconsider these alternatives in the next chapter.
 
 \section{Asym}
 
-We now introduce Asym \cite{roller:2014:coling}, our (first) model for
+We now introduce Asym \cite{roller:2014:coling}, our first model for
 predicting hypernymy using distributional vectors, and another one of the major
 contributions of this thesis. At its core, the model is
 inspired by the famous result of \newcite{mikolov:2013:iclr}, who observed that
@@ -509,8 +527,7 @@ some kinds of distributional spaces:
 Interestingly, this vector subtraction approach reasonably models many
 grammatical relationships (singular/plural, verb conjugations) and some limited
 semantic relationships (gender, capital/country). Our proposed Asym model
-exploits this behavior for the task of hypernymy and lexical relationship
-prediction.
+exploits this behavior for lexical relationship prediction.
 
 The Asym model is a simple model which uses the {\em vector difference} between
 the hypothesized hypernym-hyponym pair as input features to an off-the-shelf
@@ -557,16 +574,16 @@ accuracy. As with BLESS, we use a LOO setting across the LHS with zero lexical
 overlap.
 
 Since different types of distributional spaces exhibit different properties
-\cite{pado:2007:cl}, we first evaluate our model on two distributional
-spaces which use a simple Bag-of-Words context.  The {\em Window-2 BoW} space
-counts content words two words to the left and right of targets as contexts,
-while the {\em Sentence BoW} space counts all content words within complete
-sentence boundaries. Both spaces were computed on a same concatenation of
-Wikipedia, ukWaC and BNC corpora, transformed using PPMI, and reduced to 300
-dimensions using the SVD. We also use the precomputed TypeDM distributional
-space of \newcite{baroni:2011:gems}, though this space was computed with
-different corpora and nonlinear transformations, making it not quite comparable
-to the other spaces.
+\cite{peirsman:2008:essli,agirre:2009:naacl,baroni:2011:gems}, we first
+evaluate our model on two distributional spaces which use a simple Bag-of-Words
+context.  The {\em Window-2 BoW} space counts content words two words to the
+left and right of targets as contexts, while the {\em Sentence BoW} space
+counts all content words within complete sentence boundaries. Both spaces were
+computed on a same concatenation of Wikipedia, ukWaC and BNC corpora,
+transformed using PPMI, and reduced to 300 dimensions using the SVD. We also
+use the precomputed TypeDM distributional space of \newcite{baroni:2010:cl},
+though this space was computed with different corpora and nonlinear
+transformations, making it not quite comparable to the other spaces.
 
 We compare our model with two baselines: the first is a degenerate baseline,
 which guesses false for the (balanced) LEDS dataset, and always
@@ -604,7 +621,7 @@ Table~\ref{tab:asymspaces} shows the results for our distributional space
 experiment.  First we notice that both models strongly outperform the
 degenerate baseline, indicating there is some successful learning in the
 models, even with the lexical overlap considerations. We also see that the
-Window-2 space performs better than the Sentence space in all four comparisons,
+Window-2 space performs better than the Sentence space throughout,
 indicating it is likely the task depends more heavily {\em functional}
 properties of words than {\em topical} properties of words. However, we notice
 that the TypeDM space does worse than the Window-2 space, but we attribute this
@@ -612,7 +629,7 @@ to the choice of nonlinear transformation (LMI) based on results from the next
 chapter.
 
 We also see that the Asym model outperforms the model proposed by
-\newcite{baroni:2012:eacl} in all five direct comparisons, indicating our
+\newcite{baroni:2012:eacl} throughout, indicating our
 architecture has better generalization, and is better suited for the task
 of hypernymy detection.
 
@@ -740,17 +757,20 @@ The crux of the argument is explained analytically by
 \newcite{levy:2015:naacl}, and hinges on observing that many of the models from
 the literature use {\em linear} classifiers (including Asym, but excluding the
 SVM in the previous experiments). Thus, consider a classifier which takes the
-concatenation of the vectors $\wordpair$ learns a hyperplane $\vhatp$ to make
-its prediction. Then the hyperplane $\vhatp$ can also be viewed as a
-concatenation of two vectors, $\protopair$. Thus, the decision plane for a
-particular example $\wordpair$ can be analyzed as:
-\begin{align*}
+concatenation of the vectors $\wordpair$ as features, and learns a hyperplane
+$\vhatp$ to make its prediction. Then the hyperplane $\vhatp$ can also be
+viewed as a concatenation of two vectors, $\protopair$. Thus, the decision
+plane for a particular example $\wordpair$ can be analyzed as:
+\begin{align}
+  \begin{split}
   \vhatp^\top \wordpair & = \protopair^\top \wordpair\\
   & = \vhath^\top\vh + \vhatw^\top\vw\\
   & = \mbox{cos}(\vhath, \vh) + \mbox{cos}(\vhatw, \vw)
-\end{align*}
-Note that the last step depends on noting that the vectors have been unit
-normalized, making the inner product the same as cosine similarity.  This
+  \end{split}
+  \label{eqn:prototypicality}
+\end{align}
+Note that the last step depends unit-normalizing the vectors, making the inner
+product the same as cosine similarity.  This
 analysis by \newcite{levy:2015:naacl} shows that when the hyperplane $\vhatp$
 is evaluated on a novel pair, it lacks any form of direct interaction between
 $\vh$ and $\vw$ like the inner product $\vh\trans\vw$, but rather only learns to
@@ -766,36 +786,33 @@ also have this flaw:
 \end{align*}
 This difference-only classifier's behavior is slightly improved over the plain
 concatenation classifier, due to the fact that it also measures {\em
-dissimilarity} between the prototypical hypernym with the hyponym, and vice
-versa, but it still crucially lacks any direct inner product between $h$ and
-$w$.
+dissimilarity} between the prototypical hypernym with the hyponym, and the
+dissimilarity between the hypernym with the prototypical hyponym, but it still
+crucially lacks any direct inner product between $h$ and $w$.
 
-However, this difference-only classifier  is still not the same as Asym, since
-Asym additionally has the difference-squared features.  In the following original
-analysis, we see that these square-difference features provide it these
-crucial inner product term by invoking the Law of Cosines:
+However, this difference-only classifier is still not the same as Asym, since
+Asym additionally has the difference-squared features.  By the Law of
+Cosines, we see that the square-difference features contain the
+crucial inner product term:
 \begin{align*}
   \sum_i (h_i - w_i)^2 & = \sum_i h_i^2 + w_i^2 - 2({h}_i{w}_i)\\
   & = \sum_i h_i^2 + \sum_i w_i^2 - 2 \sum_i {h}_i{w}_i\\
   & = \vh\trans\vh + \vw\trans\vw - 2\vh\trans\vw\\
-  & = \mbox{cos}(\vh, \vh) + \mbox{cos}(\vw, \vw) - 2~\mbox{cos}(\vh, \vw)\\
-  & = 2(1 - \mbox{cos}(\vh, \vw))
+  & = \mbox{cos}(\vh, \vh) + \mbox{cos}(\vw, \vw) - \boxed{2~\mbox{cos}(\vh, \vw)}\\
 \end{align*}
 This analysis is consistent with our earlier observation that the hyperplane
-weights learned by Asym are always negative: since the difference features
-squares measure are always measuring {\em dissimilarity}, they should be
-indicative of {\em non-}hypernymy relationships. Another way to think about
-this is the difference-squared features act as a weighted euclidean distance,
+weights learned by Asym are always negative: since the difference-squared features
+measure dissimilarity, they should be
+indicative of {\em non-}hypernymy relationships. Alternatively, one may view
+the difference-squared features act as a weighted Euclidean distance,
 and the further $\vh$ and $\vw$ are from each other, the less likely they
 are exhibit a hypernymy relationship.
 
 \section{Chapter Summary}
 
-We considered the task of hypernymy detection using distributional vectors.
-We define the task as, given a pair of words and their distributional vectors,
-predict whether the first word is a hypernym of the second. We reviewed
-numerous unsupervised approaches to the problem and the prevalence of the
-Distributional Inclusion Hypothesis. After comparing these unsupervised
+We considered the task of hypernymy detection using distributional vectors. We
+reviewed numerous unsupervised approaches to the problem and the prevalence of
+the Distributional Inclusion Hypothesis. After comparing these unsupervised
 measures on a modern dataset, we find they come up short and consider the task
 as a supervised machine learning problem.
 
@@ -807,7 +824,7 @@ training and test sets to have zero lexical overlap. We then propose Asym, a
 novel supervised hypernymy classifier and show that it outperforms the prior
 supervised classifier on two datasets. We consider how choice of distributional
 space and vector preprocessing affects Asym's performance. We consider how Asym
-may be measuring a form of Selective Distributional Inclusion and provide
+may be measuring a form of Selective Distributional Inclusion, and provide
 evidence for this behavior via its effect on unsupervised Distributional
 Inclusion measures. Finally, we consider why Asym is successful in its
 predictions, and show it is immune to a critical flaw found in other linear

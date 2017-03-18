@@ -17,19 +17,20 @@ practical RTE.
 \label{sec:textent}
 
 In the previous chapter, we introduced the Recognizing Textual Entailment (RTE)
-task as a long standing, challenging semantic problem in the field of
+task as a challenging semantic problem in the field of
 Natural Language Processing.  One of the first benchmark papers describes RTE
 as ``recognizing, given two text fragments, whether the meaning of one text can
-be inferred (entailed) from the other'' \cite{dagan:2006:mlc}. Since this
-original definition, many other datasets
+be inferred (entailed) from the other'' \cite{dagan:2006:mlc}. For example,
+an RTE system could read the sentence ``A bright girl reads a book,'' and
+predict it entails ``A smart child looks at text.''
+
+Since this original definition, many other datasets
 \cite{giampiccolo:2007:pascal,bentivogli:2009:tac,marelli:2014:semeval} and
 countless approaches have been described (c.f. \newcite{dagan:2013:synthesis}
 for a thorough survey). Although RTE is not usually considered an
-end-user application by itself, successful RTE systems could influence many
+end-user application by itself, successful RTE systems may influence many
 downstream tasks like Information Extraction or Question Answering and become
 useful in information-heavy industries like defense, journalism, and science.
-In the current political environment, one can imagine RTE systems may become
-an important tool against so-called ``fake news.''
 
 RTE is a very difficult task, at least partially due to its generality.  True
 entailment reasoning may require: broad common sense knowledge (what color is
@@ -48,16 +49,19 @@ lexical relationship detection, where one must classify {\em how} two words are
 (or are not) related, and lexical paraphrasing, where one must suggest
 alternative words which have the same meaning.
 
-Presently, there exist many approaches of RTE systems. One broad class, based
-heavily on deep learning, tends to focus on learning entire representations
-from scratch
+Presently, there exist many approaches of RTE systems. Early systems for RTE
+focus heavily on detecting word overlap or alignments between the text and
+hypothesis. These systems may focus on looking for word re-use between the
+two sentences, or the presence of predictive words in either sentence, like
+\lit{not} \cite{dagan:2006:mlc}. Modern, deep learning approaches focus
+on learning word and sentence representations from large data sets
 \cite{bowman:2015:emnlp,cheng:2016:emnlp,bowman:2016:acl,mou:2016:acl,rocktaschel:2016:iclr,vendrov:2016:iclr}.
 These models attempt to learn all RTE entailments and word relationships
 implicitly through a large dataset of annotated RTE examples. While they
-perform incredibly well statistically, they can sometimes be later outperformed
-by simpler models which only focus on simple alignment
-\cite{parikh:2016:emnlp}, or fail to learn basic properties about lexical
-meaning \cite{pavlick:2016:acl}, and therefore can fail unpredictably,
+perform incredibly well statistically, recently it has been noted that these
+systems boil down to sophisticated variations of the word alignment idea
+\cite{parikh:2016:emnlp}, and sometimes fail to learn basic properties about
+lexical meaning \cite{pavlick:2016:acl}, and therefore may fail unpredictably,
 especially with unseen words.
 
 Other kinds of RTE approaches focus more heavily on doing sorts of logical,
@@ -201,7 +205,8 @@ as three words to the left and right of the target word, but there are
 alternatives. For example, using very large windows of co-occurrence (or even
 entire documents) results in emphasizing more {\em topical} similarity, e.g. doctor
 and hospital, while smaller windows emphasize more {\em functional} similarity, e.g.
-doctor and surgeon \cite{pado:2007:cl,erk:2008:emnlp,levy:2014:acl}.
+doctor and surgeon
+\cite{peirsman:2008:essli,agirre:2009:naacl}.
 
 Context can be also defined as {\em syntactic neighbors} extracted from a
 dependency parse. For example, in Figure~\ref{fig:syn}, the
@@ -209,7 +214,7 @@ contexts for the word {\em chased} would be {\ctx nsubj+dog} and {\ctx
 dobj+tail}. Distributional Spaces defined in this manner tend to emphasize the
 {\em selectional preferences} of words, or the tendency of words to have
 particular arguments in their syntactic relations.
-\cite{pado:2007:cl,erk:2008:emnlp,baroni:2010:cl,levy:2014:acl}. For example,
+\cite{pado:2007:cl,baroni:2010:cl,levy:2014:acl}. For example,
 the subject of {\em barks} is likely to be {\em dog}, while the subject of {\em
 purrs} is likely to be {\em cat}.
 
@@ -238,42 +243,36 @@ spaces are very high-dimensional: bag-of-words spaces have many thousands of
 dimensions \cite{turney:2010:jair,mikolov:2013:iclr,pennington:2014:emnlp},
 while syntactic spaces may have millions \cite{baroni:2010:cl,pado:2007:cl}.
 Efficiently dealing with these large, extremely sparse vectors can be
-troublesome, so we often opt to use some form of {\em dimensionality
-reduction}, like Singular Value Decomposition (SVD)
-\cite{deerwester:1990:jsis,landauer:1997:pr} or Non-Negative Matrix
-Factorization (NNMF) \cite{lee:2000:nips}. In dimensionality reduction, the
-co-occurrence matrix $\mM$ is assumed to be factorizable into two
-lower-rank matrices,
+troublesome, so we often opt to use some form of {\em dimensionality reduction}
+in the form of matrix factorization.  In dimensionality reduction, the
+co-occurrence matrix $\mM$ is assumed to be factorizable into two lower-rank
+matrices,
 \begin{equation}
-  {\bf M} = \mV\mC\trans
+  {\bf M} \approx \mV\mC\trans,
   \label{eqn:factorization}
 \end{equation}
-where $\mV$ is some lower dimension representation of word vectors, and $\mC$ is
-the corresponding lower dimension representation of the context items. These
+where $\mV$ is some lower-rank representation of word vectors, and $\mC$ is
+the corresponding lower-rank representation of the context items. These
 projections of words and contexts into the same latent space traces back to the
-earliest days of distributional semantics \cite{deerwester:1990:jsis}, and is
-critical to many of the contributions of this thesis.
+earliest days of distributional semantics
+\cite{landauer:1997:pr,deerwester:1990:jsis}, and is critical to many of the
+contributions of this thesis.
 
 \paragraph{Singular Value Decomposition}
 One common form of matrix factorization used in the literature is the Singular
-Value Decomposition (SVD). In this formulation, we find a factorization
+Value Decomposition. In this formulation, we find a factorization
 \begin{equation*}
   \mM = \mA{\bf \Sigma}\mB\trans,
 \end{equation*}
 where $\mA$ and $\mB$ are unitary matrices, and ${\bf \Sigma}$ is a diagonal
 matrix. These three matrices are used to derive the $\mV$ and $\mC$ matrices,
 \begin{align*}
-  \mV & = \mA{\bf \Sigma}^{\lambda},\\
-  \mC & = \mB{\bf \Sigma}^{(1 - \lambda)},
+  \mV & = \mA{\bf \Sigma},\\
+  \mC & = \mB.
 \end{align*}
-where $\lambda$ is some real number on the interval [0, 1]; traditionally,
-the value $\lambda = 1$ is used, placing all the weight of the singular values
-onto the word matrix \cite{deerwester:1990:jsis}; however, some more recent
-works have found this parameter best if it's adjusted \cite{needcite}.
-
-The SVD is particularly special, because it is uniquely defined for any
-complex-valued matrix, has a direct connection to the eigendecomposition, and
-provides us with a natural interpretation. One especially useful property is
+The SVD is particularly important because it is uniquely defined for any
+matrix, has a direct connection to the eigendecomposition, and
+has natural or domain-specific interpretations. One especially useful property is
 that the diagonal matrix ${\bf \Sigma}$ contains an {\em ordered} list of the
 {\em singular values} of the matrix. Thus, in its complete form, the ${\bf
 \Sigma}$ matrix will actually contain as many entries as the rank of the

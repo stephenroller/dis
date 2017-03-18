@@ -7,160 +7,176 @@ material. The work in this chapter has been published in
 
 \section{Chapter Overview}
 
-Chapter overview
+In the previous chapter, we considered one novel model for hypernymy detection,
+and showed how experimental setup can vastly affect one's conclusions about
+effectiveness of models on this task. Since then, most work has considered the
+importance of experimental setup and lexical overlap, and a plethora of
+supervised distributional approaches have been proposed for different variations
+of the task.
 
-\section{Paste of EMNLP paper}
+In this chapter, we review additional work on supervised relationship
+prediction using distributional semantics, and consider the strengths of
+different models in the literature. We consider how the construction of
+distributional spaces affects model performance, especially within the
+framework of prototypicality analysis discussed in the previous chapter. We
+find that hypernymy detection classifiers have a high degree of
+interpretability when considered carefully.  We propose a novel model which
+combines the advantages of prototypicality classifiers, while addressing their
+pitfalls. Our new model achieves consistently strong or state-of-the-art
+performance across numerous data sets, including data sets of hypernymy
+detection, general lexical entailment, and multi-relation classification.
 
-As the field of Natural Language Processing has developed, more ambitious
-semantic tasks are starting to be addressed, such as Question Answering (QA) and
-Recognizing Textual Entailment (RTE). These systems often depend on the use of
-lexical resources like WordNet in order to infer entailments
-for individual words, but these resources are expensive to develop,
-and always have limited coverage.
+\section{Related Work for Supervised Models}
 
-To address these issues, many works have considered on how lexical entailments can
-be derived automatically using distributional semantics. Some focus
-mostly on the use of unsupervised techniques, and study measures which emphasize
-particular word relations \cite{baroni:2011:gems}. Many are based
-on the Distributional Inclusion Hypothesis, which states that the contexts in
-which a hypernym appears are a superset of its hyponyms' contexts
-\cite{zhitomirskygeffet:2005:acl,kotlerman:2010:nle}.
-More recently, a great deal of work has pushed toward using supervised methods
-\cite{baroni:2012:eacl,roller:2014:coling,weeds:2014:coling,levy:2015:naacl,kruszewski:2015:tacl},
-varying by their experimental setup or proposed model.
+\begin{comment}
+  classification:
+    -- baroni:2012:eacl
+    -- roller:2014:coling
+    -- weeds:2014:coling
+    -- levy:2015:naacl
+    -- kruszewski:2015:tacl
+    -- shwartz:2016:acl
+    turney:2015:nle
+  multi relation:
+    vylomova:2016:acl
+    swhartz:2016:cogalex1
+    shwartz:2016:cogalex2
+  multi language
+    bordea:2016:semeval
+  regression:
+    espinosaanke:2016:emnlp
+    nayak:2015:techreport
+    fu:2014:acl
+\end{comment}
 
-Yet the literature disagrees about which models are strongest \cite{weeds:2014:coling,roller:2014:coling}, or even if they
-work at all \cite{levy:2015:naacl}.
-Indeed, \newcite{levy:2015:naacl} showed that two existing lexical entailment
-models fail to account for similarity between the antecedent and
-consequent, and conclude that such models are only learning to predict
-{\em prototypicality}: that is, they predict that {\em cat} entails {\em animal}
-because {\em animal} is usually entailed, and therefore will also predict
-that {\em sofa} entails {\em animal}. Yet it remains unclear why such models
-make for such strong baselines
-\cite{weeds:2014:coling,kruszewski:2015:tacl,levy:2015:naacl}.
+In the previous chapter, we considered many models for lexical entailment and
+hypernymy detection, especially those based on the frameworks of Hearst
+patterns and unsupervised distributional measures based on the Distributional
+Inclusion Hypothesis. Here we focus only on the {\em supervised} approaches of
+lexical entailment using distributional semantics, and attempt to highlight
+the differences and considerations of the many approaches.
 
-We present a novel qualitative analysis of one prototypicality
-classifier, giving new insight into why prototypicality classifiers perform strongly in
-the literature. We find the model overwhelmingly learns to identify hypernyms
-using Hearst patterns available in the distributional space, like ``animals such as cats'' and ``animals
-including cats.''  These patterns have long been used to identify lexical
-relations \cite{hearst:1992:coling,snow:2004:nips}.
+As discussed earlier, the earliest supervised approach was that of
+\newcite{baroni:2012:eacl}, who used an off-the-shelf polynomial SVM train on
+the {\em concatenation} of the pair $\wordpair$. Such a model obtains strong
+performance on randomized stratifications of data sets, but performs poorly
+when testing for lexical generalization. This issue was observed simultaneously
+by \newcite{roller:2014:coling} and \newcite{weeds:2014:coling}, who published
+these concerns at the same conference. The former approached the problem
+through the stratification methods described earlier, but the latter considered
+how well models perform over a random vector experiment. That is, models were
+trained both on real distributional vectors and {\em randomized} distributional
+vectors. Models which had little difference between their real and randomized
+results were assumed to be memorizing the data, while models which improved
+upon the random vectors were considered strong. This is a very different
+approach to issues of lexical memorization. We consider this experimental
+setup to be inadequate, since randomized vectors are unable to exploit the
+distributional hypothesis, and therefore systematically underestimate the
+robustness of some models. Nonetheless, they report strong results for linear
+models using either vector concatenation (Concat) or vector difference (Diff)
+input representations, but consider the Concat representation superior.
 
-We propose a novel model which exploits this behavior as a method of feature
-extraction, which we call {\em H-feature detectors}. Using an iterative procedure
-similar to Principal Component Analysis, our model is able to extract and learn
-using multiple H-feature detectors. Our model also integrates overall word
-similarity and Distributional Inclusion, bringing together strengths of several
-models in the literature. Our model matches or outperforms prior work on
-multiple data sets. The code, data sets, and model predictions are made available
-for future research.\footnote{\url{http://github.com/stephenroller/emnlp2016}}
+\newcite{levy:2015:naacl} focus particularly on the issue of lexical
+memorization, and seek to elaborate on what kinds of models are subject to
+these issues. They emphasize the importance of the inner product terms in
+generalizing to novel words, and propose the notion of {\em prototypicality},
+suggesting that some models merely look to identify words which appear like the
+most prototypical hypernym or hyponym, regardless actual relation. They
+therefore conclude that specific linear models (like Diff and Concat, but not
+Asym) are doomed to this behavior through the analysis we saw in the previous
+chapter. They also propose {\em Ksim}, a specialized nonlinear SVM kernel which
+explicitly includes the critical similarity term which Concat and Diff lack.
+Their views on prototypicality will inform and motivate our model proposed in
+this chapter.
 
-\section{Prior Work}
+\newcite{kruszewski:2015:tacl} focus more strongly on the role of the
+Distributional Inclusion Hypothesis within the framework of supervised models,
+and propose a custom neural network for lexical entailment. In particular, they
+focus on projecting the distributional space into latent boolean features where
+the Distributional Inclusion Hypothesis maximally holds. They compare their
+model with a carefully tuned SVM with an RBF kernel, and find mixed results
+regarding which is stronger. However, they find the latent subspace induced
+by their model contains highly interpretable word clusters, and provide additional
+evidence for the Distributional Inclusion Hypothesis.
 
-Research on lexical entailment using distributional semantics has now spanned
-more than a decade, and has been approached using both unsupervised
-\cite{weeds:2004:coling,kotlerman:2010:nle,lenci:2012:starsem,santus:2013:thesis}
-and supervised techniques
-\cite{baroni:2012:eacl,fu:2014:acl,roller:2014:coling,weeds:2014:coling,kruszewski:2015:tacl,levy:2015:naacl,turney:2015:nle,santus:2016:lrec}.
-Most of the work in unsupervised methods is based on the Distributional
-Inclusion Hypothesis \cite{weeds:2004:coling,zhitomirskygeffet:2005:acl}, which states that the contexts
-in which a hypernym appear should be a superset over its hyponyms' contexts.
+\newcite{shwartz:2016:acl} consider whether traditional path-based
+approaches may be improved using the lessons learned from distributional
+approaches. They propose a Recurrent Neural Network approach which trains
+an LSTM \cite{hochreiter:1997:nc} on dependency paths between $h$ and $w$.
+These recurrent paths are pooled and concatenated with distributional
+representations, showing an improvement over comparable path-only and
+distributional-only baselines.
 
-This work focuses primarily on the supervised works in the literature.
-Formally, we consider methods which treat lexical entailment as a supervised
-classification problem, which take as input the distributional vectors for a
-pair of words, $(H,~w)$, and predict on whether the antecedent $w$ entails the
-consequent $H$.\footnote{We use the notation $w$ and $H$ for {\em word} and
-{\em hypernym}. These variables refer to either the lexical items, or their
-distributional vectors, depending on context.}
+Some other works have considered whether it is possible to learn a {\em
+regression} from hyponyms to hypernyms. In particular, \newcite{fu:2014:acl}
+attempt the regression using vector differences, but find that separate
+regression models must be trained for separate regions of distributional
+space found via $k$-means clustering. \newcite{espinosaanke:2016:emnlp} find
+the clustering step better corresponds to domain-specificity, and propose
+learning separate regressions per-domain rather than per-cluster, showing
+substantial improvement.  \newcite{nayak:2015:techreport} attempts to
+circumvent the domain specificity issue entirely using deep feed-forward neural
+networks, and find moderate improvements in precision over a baseline linear
+model.
 
-One of the earliest supervised approaches was Concat \cite{baroni:2012:eacl}.
-In this work, the {\em concatenation} of the pair $\pair$ was used as input
-to an off-the-shelf SVM classifier. At the time, it was very successful, but later
-works noted that it had major problems with {\em lexical memorization}
-\cite{roller:2014:coling,weeds:2014:coling,levy:2015:naacl}. That is, when
-the training and test sets were carefully constructed to ensure they were
-completely disjoint, it performed extremely poorly. Nonetheless, Concat is
-continually used as a strong baseline in more recent work
-\cite{kruszewski:2015:tacl}.
+Other works consider whether results from hypernymy detection generalize to
+other types of lexical relationships, including other taxonomic relations
+like meronomy or co-hyponymy, but also other interesting semantic relations
+like cause-effect, agent-object or time-activity. \newcite{vylomova:2016:acl}
+finds that a linear model trained on vector differences is able to successfully
+distinguish between many lexical relations, including hypernymy, meronomy,
+gender (\lit{king/queen}), object-location (\lit{fish/aquarium}), and
+action-object (\lit{zip/coat}). They also find that additional negative
+sampling (via pair randomization) can improve performance, and that difference
+vectors are robust across several models of distributional spaces.
+Additionally, Shwartz and Dagan~(\shortcite{shwartz:2016:cogalex2,shwartz:2016:cogalex1})
+apply the hybrid path-and-distributional neural
+net \cite{shwartz:2016:acl} to multi-relation data sets and again find that
+hybrid approaches generally outperform only-path or only-distributional
+approaches, though the differences are less pronounced than in hypernymy-only
+data sets.
 
-In response to these issues of lexical memorization, alternative models
-were proposed. Of particular note are the {\em Diff}
-\cite{fu:2014:acl,weeds:2014:coling} and {\em Asym} classifiers
-\cite{roller:2014:coling}. The Diff model takes the vector difference
-$H-w$ as input, while the Asym model uses both the vector difference and
-the squared vector difference as input.
-\newcite{weeds:2014:coling} found that Concat moderately outperformed Diff,
-while \newcite{roller:2014:coling} found that Asym outperformed
-Concat. Both Diff and Asym can also be seen as a form of supervised
-Distributional Inclusion Hypothesis, with the vector difference being analogous
-to the set-inclusion measures of some unsupervised techniques \cite{roller:2014:coling}.
-All of these works focused exclusively on {\em hypernymy detection},
-rather than the more general task of lexical entailment.
+\section{Understanding Distributional Hypernymy Detectors}
 
-Recently, other works have begun to analyze Concat and Diff for their ability
-to go beyond just hypernymy detection. \newcite{vylomova:2016:acl} take an
-extensive look at Diff's ability to model a wide variety of lexical relations
-and conclude it is generally robust, and \newcite{kruszewski:2015:tacl} have
-success with a neural network model based on the Distributional Inclusion
-Hypothesis.
+In the reviewed literature above, we saw that many models have been considered
+across a large variety of experiments and setups. However, different works have
+come to different conclusions about the strengths and weaknesses of specific
+models. Namely, the Diff and Concat models have had a smattering of seemingly
+contradictory results: some papers find that vector differences better capture
+lexical relationships \cite{fu:2014:acl,roller:2014:coling,vylomova:2016:acl},
+while others suggest that simple concatenation is better
+\cite{baroni:2012:eacl,weeds:2014:coling,shwartz:2016:acl}. To make matters
+more confusing, the analysis of \newcite{levy:2015:naacl} suggest that
+{\em neither} should be able to perform well, as both measure prototypicality
+and fail to model relationships directly; yet empirically, both models do
+significantly better than chance, and successfully generalize in adversarial
+experiments with zero lexical overlap.
 
-On the other hand,
-\newcite{levy:2015:naacl} analyze both Concat and Diff in their ability to
-detect general lexical entailment on five data sets: two consisting of
-only hypernymy, and three covering a wide variety of other entailing
-word relations. They find that both Concat and
-Diff fail, and analytically show that they are learning to predict the {\em
-prototypicality} of the consequent $H$, rather than the relationship between the
-antecedent and the consequent, and consider this a form of lexical memorization.
-They propose a new model, Ksim, which addresses
-their concerns, but lacks any notion of Distributional Inclusion.
-In particular, they argue for directly including the
-cosine similarity of $w$ and $H$ as a term in a custom SVM kernel, in
-order to determine whether $w$ and $H$ are related all. Ultimately,
-\newcite{levy:2015:naacl} conclude that distributional vectors may simply be
-the wrong tool for the job.
+We aim to understand why these linear, prototypicality models are able to
+perform the task at all. To this end, we now study Concat extensively, and
+propose an alternative view of prototypicality: rather than simply modeling the
+``average'' hypernym or hyponym, Concat actually acts as a kind of feature
+extractor which detects {\em aspects} typical of hypernyms.  We study these
+properties by focusing only on binary classification experiments.
 
-\section{Data and Resources}
-
-Prior work on lexical entailment relied on a variety of
-data sets, each constructed in a different manner. We focus on
-four different data sets, each of which has been used for evaluation in
-prior work. Two data sets contain only hypernymy relations, and two consider
-general lexical entailment.
-
-Our first data set is {\bf LEDS}, the Lexical Entailment Data Set,
-originally created by \newcite{baroni:2012:eacl}.
-The data set contains 1385 hyponym-hypernym pairs extracted
-directly from WordNet, forming a set of positive examples. Negative examples
-were generated by randomly shuffling the original set of 1385 pairs. As such,
-LEDS only contains examples of hypernymy and random relations.
-
-Another major data set has been {\bf BLESS}, the \newcite{baroni:2011:gems}
-Evaluation of Semantic Spaces. The data set contains annotations of word
-relations for 200 unambiguous, concrete nouns from 17 broad
-categories. Each noun is annotated with its co-hyponyms, meronyms, hypernym
-and some random words. In this work, we treat hypernymy as positive,
-and other relations as negative.
-
-These two data sets form our hypernymy data sets, but we cannot overstate their
-important differences: LEDS is balanced, while BLESS contains
-mostly negative examples; negatives in BLESS include both random pairs {\em
-and} pairs exhibiting other strong semantic relations, while LEDS only
-contains random pairs. Furthermore, all of the negative examples in LEDS are
-the same lexical items as the positive items, which has strong implications on
-the prototypicality argument of \newcite{levy:2015:naacl}.
+We focus on four different data sets, two of which are hypernymy-only data
+sets, and the remaining two are general lexical entailment datasets. The first
+two data sets are {\bf LEDS} and {\bf BLESS}, which contain both positive and
+negative examples of hypernymy, as discussed in the previous chapter. However,
+here we explicitly binarize the BLESS dataset such that all hypernymy examples
+in BLESS are labeled as positive, while random and other relations are labeled
+as negative. LEDS only contains hypernymy and non-hypernymy examples, and so is
+already binary.
 
 The next data set we consider is {\bf Medical} \cite{levy:2014:conll}. This
-data set contains high quality annotations of subject-verb-object entailments
+data set contains noisy annotations of subject-verb-object entailments
 extracted from medical texts, and transformed into noun-noun entailments by
 argument alignments. The data contains 12,600 annotations, but only 945
 positive examples encompassing various relations like hypernymy, meronomy,
-synonymy and contextonymy.\footnote{A term for
-entailments that occur in some contexts, but do not cleanly fit in other
-categories; e.g. {\em hospital} entails {\em doctor}.} This makes it
-one of the most difficult data sets: it is both domain specific and highly
+synonymy, and some examples of ``contextonymy,'' or entailments that occur in
+{\em some} specific contexts, but do not cleanly fit in other categories (e.g.
+\lit{hospital} entails \lit{doctor}). It one of the most difficult data sets:
+it is both highly domain specific (containing mostly medical terms) and highly
 unbalanced.
 
 The final data set we consider is {\bf TM14}, a variation on the SemEval 2012
@@ -171,65 +187,88 @@ Relationships were binarized into (non-)entailing pairs by
 \newcite{turney:2015:nle}.  The data set covers 2188 pairs, 1084 of which are
 entailing.
 
-These two entailment data sets also contain important differences, especially
-in contrast to the hypernymy data sets. Neither contains any random negative
-pairs, meaning general semantic similarity measures should be less useful; And
-both exhibit a variety of non-hypernymy relations, which are less
+These two entailment data sets contain important differences, especially in
+contrast to the hypernymy data sets. Neither contains any randomly generated
+negative pairs, meaning general semantic similarity measures should be less
+useful; And both exhibit a variety of non-hypernymy relations, which are less
 strictly defined and more difficult to model.
 
 \subsection{Distributional Vectors}
 
-In all experiments, we use a standard, count-based, syntactic distributional
-vector space.  We use a corpus composed of the concatenation of Gigaword,
-Wikipedia, BNC and ukWaC. We preprocess the corpus using Stanford CoreNLP 3.5.2
-\cite{chen:2014:emnlp} for tokenization, lemmatization, POS-tagging and
-universal dependency parses. We compute a syntactic distributional space for
-the 250k most frequent lemmas by counting their dependency neighbors across the
-corpus. We use only the top 1M most frequent dependency attachments as
-contexts.  We use CoreNLP's ``collapsed dependencies'', in which prepositional
-dependencies are collapsed e.g.  ``go to the store'' emits the tuples
-(go,~prep:to+store) and (store,~prep:to\depinv+go).  After collecting counts,
-vectors are transformed using PPMI, SVD reduced to 300 dimensions, and
-normalized to unit length. The use of collapsed dependencies is very important,
-as we will see in Section~\ref{sec:motivation}, but other parameters are
-reasonably robust.
+Before we fully analyze Concat, we wish to
+describe our choice of distributional space, which will have a profound
+repercussions in the next experiment. Namely, we desire to explore whether
+syntactic spaces or bag-of-words spaces are better suited for lexical
+entailment models. We must consider this directly, as the syntactic space in
+the previous chapter was trained on different corpora, and transformed using
+Local Mutual Information \cite{evert:2005:phd} rather than PPMI.
 
-\section{Motivating Analysis}
+We construct several distributional spaces over a corpus containing the
+concatenation of Gigaword, Wikipedia, BNC and ukWaC.  We preprocess the corpus
+using Stanford CoreNLP 3.5.2 \cite{chen:2014:emnlp} for tokenization,
+lemmatization, POS-tagging and universal dependency parses. We compute
+distributional vectors for 250k most frequent lemmas (with POS tags) by
+counting either their syntactic neighbors in a collapsed dependency parse, or a
+fixed bag-of-words window. Syntactic co-occurrences are limited to the one
+million most frequent contexts, while bag-of-words were limited to the 20k most
+frequent contexts. Co-occurrence counts were transformed using PPMI, and SVD
+reduced to 300 dimensions. Finally, all vectors were normalized to unit length.
+Altogether, this careful construction makes the vectors more comparable.
 
-As discussed in Section~\ref{sec:background}, the Concat classifier is
-a classifier trained on the concatenation of the word vectors, $\pair$.
-As additional background, we first review the findings of
-\newcite{levy:2015:naacl}, who showed that Concat trained using a linear
-classifier is only able to capture
-notions of {\em prototypicality}; that is, Concat guesses that ({\em animal}, {\em sofa})
-is a positive example because {\em animal} looks like a hypernym.
+With all other factors held constant, we compare the effects chosen context
+using a baseline Concat model \cite{weeds:2014:coling} on the four datasets in
+an experimental setup comparable to the one in the previous chapter.
+Figure~\ref{fig:window} shows the results comparing the choice of window
+size across all four datasets. The scores of the syntactic spaces are listed
+as a window size of 0.
 
-Formally, a linear classifier like Logistic Regression or Linear SVM learns a
-decision hyperplane represented by a vector $\hat p$.
-Data points are compared to this plane with the
-inner product: those above the plane (positive inner product) are classified as
-entailing, and those below as non-entailing. Crucially, since the input
-features are the concatenation of the pair vectors $\pair$, the hyperplane
-$\hat p$ vector can be {\em decomposed} into separate $H$ and $w$ components.
-Namely, if we rewrite the decision
-plane $\hat p = \langle \hat H, \hat w\rangle$, we find that each pair
-$\pair$ is classified using:
-\begin{equation}\label{eq:proto}
-\begin{aligned}
-  & \hat p^{\top}\pair\\
-  &= \langle \hat H, \hat w \rangle^{\top}\pair\\
-  &= \hat H^{\top}H + \hat w^{\top}w.
-\end{aligned}
-\end{equation}
-This analysis shows that, when the hyperplane $\hat p$ is evaluated on a novel
-pair, it lacks any form of direct interaction between $H$ and $w$ like the
-inner product $H^\top w$. Without any interaction terms, the Concat classifier
-has no way of estimating the relationship {\em between} the two words, and
-instead only makes predictions based on two independent terms, $\hat H$ and
-$\hat w$, the {\em prototypicality vectors}.
-Furthermore, the Diff
-classifier can be analyzed in the same fashion and therefore has the same fatal
-property.
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\textwidth]{plots/window.pdf}
+  \caption{Comparison of different distributional window sizes for a baseline
+  classifier on several different data sets. A window size of 0 contains the
+  results for a syntactic distributional space.}
+  \label{fig:window}
+\end{figure}
+
+Across all four datasets, we see that performance generally degrades as we
+increase the size of the context window of our distributional space. Since
+syntactic distributional space substantially outperforms the BoW spaces
+in all four datasets, we use it in all remaining experiments for this chapter.
+
+
+%In all experiments, we use a standard, count-based, syntactic distributional
+%vector space.  We use a corpus composed of the concatenation of Gigaword,
+%Wikipedia, BNC and ukWaC. We compute a syntactic distributional space for
+%the 250k most frequent lemmas by counting their dependency neighbors across the
+%corpus. We use only the top 1M most frequent dependency attachments as
+%contexts.  We use CoreNLP's ``collapsed dependencies'', in which prepositional
+%dependencies are collapsed e.g.  ``go to the store'' emits the tuples
+%(go,~prep:to+store) and (store,~prep:to\depinv+go).  After collecting counts,
+%vectors are transformed using PPMI, SVD reduced to 300 dimensions, and
+%normalized to unit length. The use of collapsed, syntactic dependencies for
+%co-occurrences is very important, but other parameters are reasonably robust.
+
+\subsection{Reconsidering Prototypicality}
+
+As we saw in the previous chapter, the Concat model, which trains a linear
+classifier on the concatenation of word vectors $\pair$ has a fundamental
+flaw: that it does not explicitly model any direct interaction term between
+$h$ and $w$. Rather, the hyperplane $\vhatp$ may be interpreted as learning
+a model of {\em prototypicality}, or how similar $\vh$ is to the prototypical
+or average hypernym $\vhath$. We show the analysis here again:
+\begin{align}
+  \begin{split}
+  \vhatp^\top \wordpair & = \protopair^\top \wordpair\\
+  & = \vhath^\top\vh + \vhatw^\top\vw\\
+  & = \mbox{cos}(\vhath, \vh) + \mbox{cos}(\vhatw, \vw)
+  \end{split}
+\tag{\ref{eqn:prototypicality} revisited}
+\end{align}
+As \newcite{levy:2015:naacl} point out, this analysis shows that Concat will
+fail on many randomly paired examples, like (\lit{animal},~\lit{cactus}), as
+$\litvec{animal}$ is a rather prototypical hypernym, and $\litvec{cactus}$ is
+a rather prototypical hyponym (of plant).
 
 We agree with this prototypicality interpretation, although we believe it is incomplete:
 while it places a fundamental ceiling on the performance of these classifiers, it
@@ -245,17 +284,18 @@ only learning to memorize which words are hypernyms at all?
 We train the baseline Concat classifier using Logistic Regression on each of
 the four data sets, and extract the vocabulary words which are most similar to
 the $\hat H$ half of the learned hyperplane $\hat p$. If the classifier is only
-learning to memorize the training data, we would expect items from the data to
-dominate this list of closest vocabulary terms. Table~\ref{tab:wordsim}
-gives the five most similar words to the learned hyperplane, with bold words
-appearing directly in the data set.
+learning to memorize the training data, we would expect the most frequent
+hypernyms from the data to dominate this list of closest vocabulary terms, as
+the centroid $\hat H$ should be strongly located near them.
+Table~\ref{tab:wordsim} gives the five most similar words to the learned
+hyperplane, with bold words appearing directly in the data set.
 
 \begin{table}[t]
 \begin{center}
-  \begin{footnotesize}
+  %\begin{small}
   \begin{tabular}{|llll|}
     \hline
-    LEDS & BLESS & Medical & TM14\\
+    {\bf LEDS} & {\bf BLESS} & {\bf Medical} & {\bf TM14}\\
     \hline
      %% baroni           %% bless             %% levy               %% turney_lemma           \\
      material       &      goods             &     item           &      sensitiveness          \\
@@ -263,143 +303,142 @@ appearing directly in the data set.
      object         & {\bf item}             &     succor         &      palate                 \\
      process        & {\bf equipment}        &     team-up        &      stiffness              \\
      activity       & {\bf herbivore}        &     non-essential  &      content                \\
-%     environment    &      omnivore         %&     40px           &      ductility              \\
-%     element        & {\bf creature}        %&     crimefighter   &      musculature            \\
-%{\bf practice}      &      life-form        %&     material       &      dimensionality         \\
-%     nature         & {\bf artifact}        %&     assitance      &      quality                \\
-%     organism       & {\bf pest}            %&     nourishment    &      angulation             \\
+%     environment    &      omnivore          &     40px           &      ductility              \\
+%     element        & {\bf creature}         &     crimefighter   &      musculature            \\
+%{\bf practice}      &      life-form         &     material       &      dimensionality         \\
+%     nature         & {\bf artifact}         &     assitance      &      quality                \\
+%     organism       & {\bf pest}             &     nourishment    &      angulation             \\
     \hline
   \end{tabular}
-  \end{footnotesize}
+  %\end{footnotesize}
 \end{center}
-\caption{Most similar words to the prototype $\hat H$ learned by the Concat model. Bold items
-appear in the data set.}
+\caption{Most similar words to the prototype $\vhath$ learned by a Concat model. Bold items
+appear in the data set. Very few of the closest terms directly appear in the dataset.}
 \label{tab:wordsim}
 \end{table}
 
-Interestingly, we notice there are very few bold words at all in the list.
-In LEDS, we actually see some hypernyms of data set items that do not
-even appear in the data set, and the Medical and TM14 words do not even appear
+Interestingly, we notice there are very few bold words at all in the list.  In
+LEDS, we actually see some good hypernyms of dataset items which do {\em not}
+even appear in the data set. The Medical and TM14 words do not even appear
 related to the content of the data sets. Similar results were also found for
 Diff and Asym, and both when using Linear SVM and Logistic Regression. These
-lists cannot explain the success of the prototypicality classifiers
-in prior work. Instead, we propose an alternative interpretation of the
-hyperplane: that of a feature detector for hypernyms, or an
-{\em H-feature detector}.
+lists cannot explain the success of the prototypicality classifiers in prior
+work. Instead, we propose an alternative interpretation of the hyperplane: that
+of a feature detector for hypernyms, or an {\em H-feature detector}.
 
 \subsection{H-Feature Detectors}
 
 Recall that distributional vectors are derived from a matrix $M$ containing
 counts of how often words co-occur with the different syntactic contexts. This
 co-occurrence matrix is factorized using Singular Value Decomposition,
-producing both $W$, the ubiquitous word-embedding matrix, and $C$, the context-embedding
-matrix \cite{levy:2014:nips}:
-\begin{equation*}
+producing both $W$, the ubiquitous word-embedding matrix, and $C$, the
+context-embedding matrix:
+\begin{equation}
   M \approx WC^{\top}
-\end{equation*}
+  \tag{\ref{eqn:factorization} revisited}
+\end{equation}
 Since the word and context embeddings implicitly live in the same vector space
 \cite{melamud:2015:vsm}, we can also compare Concat's hyperplane with the
-context matrix $C$. Under this interpretation, the Concat model
-does not learn what words are hypernyms, but rather what {\em contexts} or
-{\em features} are indicative of hypernymy.
-Table~\ref{tab:ctxsim} shows the syntactic contexts with the
-highest cosine similarity to the $\hat H$ prototype for each of the different data sets.
+context matrix $C$. Under this interpretation, the Concat model does {\em not}
+learn what words are hypernyms, but rather what {\em contexts} are indicative
+of hypernymy. Table~\ref{tab:ctxsim} shows the syntactic contexts with the
+highest cosine similarity to the $\hat H$ prototype for each of the different
+data sets.
 
 \begin{table}[t]
 \centering
-\begin{small}
+%\begin{footnotesize}
 \begin{tabular}{|ll|}
   \hline
-  LEDS & BLESS\\
+  {\bf LEDS} & {\bf BLESS}\\
   \hline
-    nmod:such\_as+animal             &  nmod:such\_as+submarine           \\
-    acl:relcl+identifiable           &  nmod:such\_as+ship                \\
-    nmod:of\depinv+determine         &  nmod:such\_as+seal                \\
-    nmod:of\depinv+categorisation    &  nmod:such\_as+plane               \\
-    compound+many                    &  nmod:such\_as+rack                \\
-    nmod:such\_as+pot                &  nmod:such\_as+rope                \\
-    %nmod:such\_as+bone               &  nmod:such\_as+box                 \\
-    %nmod:of\depinv+strangeness       &  nmod:such\_as+bat                 \\
-    %amod+unassociated                &  nmod:such\_as+pot                 \\
-    %compound+similar                 &  nmod:such\_as+container           \\
+  \ctx{nmod:such\_as+animal}            & \ctx{nmod:such\_as+submarine}          \\
+  \ctx{acl:relcl+identifiable}          & \ctx{nmod:such\_as+ship}               \\
+  \ctx{nmod:of\depinv+determine}        & \ctx{nmod:such\_as+seal}               \\
+  \ctx{nmod:of\depinv+categorisation}   & \ctx{nmod:such\_as+plane}              \\
+  \ctx{compound+many}                   & \ctx{nmod:such\_as+rack}               \\
+  \ctx{nmod:such\_as+pot}               & \ctx{nmod:such\_as+rope}               \\
+ %\ctx{nmod:such\_as+bone}              & \ctx{nmod:such\_as+box}                \\
+ %\ctx{nmod:of\depinv+strangeness}      & \ctx{nmod:such\_as+bat}                \\
+ %\ctx{amod+unassociated}               & \ctx{nmod:such\_as+pot}                \\
+ %\ctx{compound+similar}                & \ctx{nmod:such\_as+container}          \\
   \hline
-  Medical & TM14\\
   \hline
-    nmod:such\_as+patch              &  amod+desire                       \\
-    nmod:such\_as+skin               &  amod+heighten                     \\
-    nmod:including+skin              &  nsubj\depinv+disparate            \\
-    nmod:such\_as+tooth              &  nmod:such\_as+honey               \\
-    nmod:such\_as+feather            &  nmod:with\depinv+body             \\
-    nmod:including+finger            &  nsubj\depinv+unconstrained        \\
-    %nmod:such\_as+ear                &  compound\depinv+gratification     \\
-    %nmod:such\_as+heart              &  compound\depinv+comfort           \\
-    %nmod:such\_as+foot               &  nsubj\depinv+composite            \\
-    %compound+similar                 &  nmod:such\_as+label               \\
+  {\bf Medical} & {\bf TM14}\\
+  \hline
+  \ctx{nmod:such\_as+patch}             & \ctx{amod+desire}                      \\
+  \ctx{nmod:such\_as+skin}              & \ctx{amod+heighten}                    \\
+  \ctx{nmod:including+skin}             & \ctx{nsubj\depinv+disparate}           \\
+  \ctx{nmod:such\_as+tooth}             & \ctx{nmod:such\_as+honey}              \\
+  \ctx{nmod:such\_as+feather}           & \ctx{nmod:with\depinv+body}            \\
+  \ctx{nmod:including+finger}           & \ctx{nsubj\depinv+unconstrained}       \\
+ %\ctx{nmod:such\_as+ear}               & \ctx{compound\depinv+gratification}    \\
+ %\ctx{nmod:such\_as+heart}             & \ctx{compound\depinv+comfort}          \\
+ %\ctx{nmod:such\_as+foot}              & \ctx{nsubj\depinv+composite}           \\
+ %\ctx{compound+similar}                & \ctx{nmod:such\_as+label}              \\
 \hline
 \end{tabular}
-\end{small}
+%\end{footnotesize}
 \caption{Most similar contexts to the prototype $\hat H$ learned by the Concat model.}
 \label{tab:ctxsim}
 \end{table}
 
-This view of Concat as an H-feature detector produces a radically different perspective on
-the classifier's hyperplane. Nearly all of the features learned take the form of
-Hearst patterns \cite{hearst:1992:coling,snow:2004:nips}.
-The most recognizable
-and common pattern learned is the ``such as'' pattern, as in ``animals such as
-cats''.  These patterns have been well known to be indicative of hypernymy
-for over two decades. Other interesting patterns are the ``including'' pattern
-(``animals including cats'') and ``many'' pattern (``many animals''). Although
-we list only the six most similar context items for the data sets, we find
-similar contexts continue to dominate the list for the next
-30-50 items. Taken together, it is remarkable that the model identified these
-patterns using only distributional vectors and only the positive/negative
-example pairs. However, the reader should note these are not true Hearst
-patterns: Hearst patterns explicitly relate a hypernym and hyponym using an
-exact pattern match of a {\em single} co-occurrence. On the other hand, these
-{\em H-features} are {\em aggregate indicators} of hypernymy across a large
-corpus.
+This view of Concat as an H-feature detector produces a radically different
+perspective on the classifier's hyperplane. Nearly all of the features learned
+take the form of Hearst patterns \cite{hearst:1992:coling,snow:2004:nips}.  The
+most recognizable and common pattern learned is the \lit{such as} pattern, as
+in \lit{animals such as cats}. These patterns have been well known to be
+indicative of hypernymy for over two decades. Other interesting patterns are
+the \lit{including} pattern (\lit{animals including cats}) and \lit{many}
+pattern (\lit{many animals}). Although we list only the six most similar
+context items for the data sets, we find similar contexts continue to dominate
+the list for the next 30-50 items.
+
+Taken together, it is remarkable that the model identified these patterns using
+only distributional vectors and only the positive/negative example pairs.
+However, the reader should note these are not true Hearst patterns: Hearst
+patterns explicitly relate a hypernym and hyponym using an exact pattern match
+of a {\em single} co-occurrence. On the other hand, these {\em H-features} are
+{\em aggregate indicators} of hypernymy across a large corpus.
 
 These learned features are much more interpretable than those found in the
 analysis of prior work like \newcite{roller:2014:coling} and
 \newcite{levy:2015:naacl}. \newcite{roller:2014:coling} found no signals of
-H-features in their analysis of one classifier, but their model was focused
-on {\em bag-of-words} distributional vectors, which perform significantly worse
-on the task.
-\newcite{levy:2015:naacl} also performed an analysis of lexical entailment
-classifiers, and found weak signals like ``such'' and ``of'' appearing as
-prominent contexts in their classifier, giving an early hint of H-feature
-detectors, but not to such an overwhelming degree as we see in this work.
-Critically, their analysis focused on a classifier trained on high-dimensional,
-{\em sparse} vectors, rather than focusing on {\em context embeddings} as we
-do.  By using these sparse vectors, their model was unable to generalize across
-similar contexts. Additionally, their model did not make use of
-{\em collapsed dependencies}, making features like ``such'' much weaker signals
-of entailment and therefore less dominant during analysis.
+H-features in their analysis of one classifier, but their model was focused on
+{\em bag-of-words} distributional vectors, which perform significantly worse on
+the task.  \newcite{levy:2015:naacl} also performed an analysis of lexical
+entailment classifiers, and found weak signals like \lit{such} and \lit{of}
+appearing as prominent contexts in their classifier, giving an early hint of
+H-feature detectors, but not to such an overwhelming degree as we see in this
+work.  Critically, their analysis focused on a classifier trained on
+high-dimensional, {\em sparse} vectors, rather than focusing on {\em context
+embeddings} as we do.  By using these sparse vectors, their model was unable
+to generalize across similar contexts. Additionally, their model did not make
+use of {\em collapsed dependencies}, making features like \lit{such} much
+weaker signals of entailment and therefore less dominant during analysis.
 
 Among these remarkable lists, the LEDS and TM14 data sets stand out for having
-much fewer ``such as'' patterns compared to BLESS and Medical. The reason
+much fewer \lit{such as} patterns compared to BLESS and Medical. The reason
 for this is explained by the construction of the data sets: since LEDS
 contains the same words used as both positive and negative examples, the
 classifier has a hard time picking out clear signal. The TM14 data set, however,
 does not contain any such negative examples.
 
-We hypothesize the TM14 data set contains too many diverse
-and mutually exclusive forms of lexical entailment, like
-instrument-goal (e.g. ``honey'' $\rightarrow$ ``sweetness'').
-To test this, we retrained the model with only hypernymy as positive examples, and
-all other relations as negative.  We find that ``such as'' type patterns become top features,
-but also some interesting data specific features, like ``retailer of [clothes]''.
-Examining the data shows it contains many consumer goods, like
-``beverage'' or ``clothes'', which explains these features.
-
+We hypothesize the TM14 data set contains too many diverse and mutually
+exclusive forms of lexical entailment, like instrument-goal (e.g. \lit{honey}
+$\rightarrow$ \lit{sweetness}).  To test this, we retrained the model with only
+hypernymy as positive examples, and all other relations as negative.  We find
+that \lit{such as} type patterns become top features, but also some interesting
+data specific features, like \lit{retailer of [clothes]}.  Examining the data
+shows it contains many consumer goods, like \lit{beverage} or \lit{clothes},
+which explains these features.
 
 
 \section{Proposed Model}
 
 As we saw in the previous section, Concat only acts as a sort of H-feature
-detector for whether $H$ is a prototypical hypernym, but does not actually
-infer the relationship between $H$ and $w$. Nonetheless, this is powerful
+detector for whether $h$ is a prototypical hypernym, but does not actually
+infer the relationship between $h$ and $w$. Nonetheless, this is powerful
 behavior which should still be used in combination with the insights of other
 models like Ksim and Asym. To this end, we propose a novel model which exploits
 Concat's H-feature detector behavior, extends its modeling power, and adds two
@@ -409,8 +448,8 @@ distributional inclusion.
 Our model works through an iterative procedure similar to Principal Component
 Analysis (PCA). Each iteration repeatedly trains a Concat classifier under the
 assumption that it acts as an H-feature detector, and then explicitly discards
-this information from the distributional vectors. By training a new
-H-feature detector on these modified distributional vectors, we can find {\em additional}
+this information from the distributional vectors. By training a new H-feature
+detector on these modified distributional vectors, we can find {\em additional}
 features indicative of entailment which were missed by the first classifier.
 The entire procedure is iteratively repeated similar to how in Principal
 Component Analysis, the second principal component is computed after the first
@@ -419,20 +458,20 @@ principal component has been removed from the data.
 The main insight is that after training some H-feature detector using Concat,
 we can {\em remove} this prototype from the distributional vectors through
 the use of {\em vector projection}.
-Formally, the vector projection of $x$ onto
-a vector $\hat p$, $\text{proj}_{\hat p}(x)$ finds the {\em component} of $x$
-which is in the direction of $\hat p$,
+Formally, the vector projection of $\vx$ onto
+a vector $\vhatp$, $\text{proj}_{\vhatp}(\vx)$ finds the {\em component} of $\vx$
+which is in the direction of $\vhatp$,
 \begin{equation*}
-  \text{proj}_{\hat p}(x) = \left(\frac{x^{\top}\hat p}{\|\hat p\|}\right)\hat p.
+  \text{proj}_{\vhatp}(\vx) = \left(\frac{\vx^{\top}\vhatp}{\|\vhatp\|}\right)\vhatp.
 \end{equation*}
 Figure~\ref{fig:vecproj} gives a geometric illustration of the vector
-projection. If $x$ forms the hypotenuse of a right
-triangle, $\text{proj}_{\hat p}(x)$ forms a leg of the triangle. This also
+projection. If $\vx$ forms the hypotenuse of a right
+triangle, $\text{proj}_{\vhatp}(\vx)$ forms a leg of the triangle. This also
 gives rise to the {\em vector rejection}, which is the vector forming the third
 leg of the triangle. The vector rejection is orthogonal to the projection, and
 intuitively, is the original vector after the projection has been removed:
 \begin{equation*}
-  \text{rej}_{\hat p}(x) = x - \text{proj}_{\hat p}(x).
+  \text{rej}_{\vhatp}(\vx) = \vx - \text{proj}_{\vhatp}(\vx).
 \end{equation*}
 
 \begin{figure}
@@ -453,10 +492,10 @@ intuitively, is the original vector after the projection has been removed:
     \coordinate (onrej) at (intersection of torej--rightangle and proj--x);
     \draw [-,Gray] (onproj) -- (rightangle) -- (onrej);
 
-    \draw [->,Gray,thick] (proj) -- (p) node[below,pos=0.5] {$\hat p$};
-    \draw [->,Black,ultra thick] (origin) -- (x) node[above,pos=0.5] {$x$};
-    \draw [->,Orange,very thick] (proj) -- (x) node[right,pos=0.5] {rej$_{\hat p}x$};
-    \draw [->,Cerulean,very thick] (origin) -- (proj) node[below,pos=0.5] {proj$_{\hat p}x$};
+    \draw [->,Gray,thick] (proj) -- (p) node[below,pos=0.5] {$\vhatp$};
+    \draw [->,Black,ultra thick] (origin) -- (x) node[above,pos=0.5] {$\vx$};
+    \draw [->,Orange,very thick] (proj) -- (x) node[right,pos=0.5] {rej$_{\vhatp}\vx$};
+    \draw [->,Cerulean,very thick] (origin) -- (proj) node[below,pos=0.5] {proj$_{\vhatp}\vx$};
 \end{tikzpicture}
 \caption{A vector $\vhatp$ is used to break $\vx$ into two orthogonal components,
 its projection and the rejection over $\vhatp$.}
@@ -465,44 +504,45 @@ its projection and the rejection over $\vhatp$.}
 
 Using the vector rejection, we take a learned H-feature detector $\hat p$,
 and discard these features from each of the word vectors. That is, for every data
-point $\langle H, w\rangle$, we replace it by its vector rejection and rescale
+point $\wordpair$, we replace it by its vector rejection and rescale
 it to unit magnitude:
 \begin{align*}
-  H_{i+1} & = \text{rej}_{\hat p}(H) / \|\text{rej}_{\hat p}(H)\|\\
-  w_{i+1} & = \text{rej}_{\hat p}(w) / \|\text{rej}_{\hat p}(w)\|
+  \vh_{i+1} & = \frac{\text{rej}_{\vhatp}(\vh)}{\|\text{rej}_{\vhatp}(\vh)\|}\\
+  \vw_{i+1} & = \frac{\text{rej}_{\vhatp}(\vw)}{\|\text{rej}_{\vhatp}(\vw)\|}
 \end{align*}
-A new classifier trained on the $\langle H_{i+1}, w_{i+1}\rangle$ data {\em must} now learn
-a different decision plane than $\hat p$, as $\hat p$ is no longer present
-in any data points. This repetition of the procedure is roughly analogous to
-learning the second principal component of the data; we wish to classify the
-pairs without using any information learned from the previous iteration.
+A new classifier trained on the $[\vh_{i+1};~\vw_{i+1}]$ data {\em must} now
+learn a different decision plane than $\vhatp$, as $\vhatp$ is no longer
+present in any data points. This repetition of the procedure is roughly
+analogous to learning the second principal component of the data; we wish to
+classify the pairs without using any information learned from the previous
+iteration.
 
 This second classifier {\em must} perform strictly worse than the original,
 otherwise the first classifier would have learned this second hyperplane.
 Nonetheless, it will be able to learn {\em new} H-feature detectors
 which the original classifier was unable to capture. By repeating this process,
-we can find several H-feature detectors, $\hat p_1, \ldots, \hat p_n$. Although
-the first, $\hat p_1$ is the best possible {\em single} H-feature detector,
+we can find several H-feature detectors, $\vhatp_1, \ldots, \vhatp_n$. Although
+the first, $\vhatp_1$ is the best possible {\em single} H-feature detector,
 each additional H-feature detector increases the model's representational power
 (albeit with diminishing returns).
 
-This procedure alone does not address the main concern of \newcite{levy:2015:naacl}:
-that these linear classifiers never actually model any connection between $H$ and $w$.
-To address this, we explicitly {\em compare} $H$ and $w$
-by extracting additional information about how $H$ and $w$ interact with respect
-to each of the H-feature detectors. This additional information is then used to
-train one final classifier which makes the final prediction.
+This procedure alone does not address the main concern of
+\newcite{levy:2015:naacl}: that these linear classifiers never actually model
+any connection between $H$ and $w$.  To address this, we explicitly {\em
+compare} $\vh$ and $\vw$ by extracting additional information about how $\vh$
+and $\vw$ interact with respect to each of the H-feature detectors. This
+additional information is then used to train one final classifier which makes
+the final prediction.
 
 Concretely, in each iteration $i$ of the procedure, we generate a four-valued
 feature vector
-$F_i$, based on the H-feature detector $\hat p_i$. Each
-feature vector contains (1) the similarity of $H_i$ and $w_i$ (before projection);
+$\vf_i$, based on the H-feature detector $\vhatp_i$. Each
+feature vector contains (1) the similarity of $\vh_i$ and $\vw_i$ (before projection);
 (2) the feature
-$\hat p_i$ applied to $H_i$; (3) the H-feature detector $\hat p_i$ applied to $w_i$; and
+$\vhatp_i$ applied to $\vh_i$; (3) the H-feature detector $\vhatp_i$ applied to $\vw_i$; and
 (4) the difference of 2 and 3.
 \begin{align*}
-  & F_i(\langle H_i, w_i\rangle, \hat p_i)\\
-  & \qquad = \langle H_i^{\top}w_i, H_i^{\top}\hat p_i, w_i^{\top}\hat p_i, (H_i - w_i)^{\top}\hat p_i\rangle
+  \vf_i(\vh_i, \vw_i, \vhatp_i) = \left[ \underbrace{\vh_i^{\top}\vw_i}_{(1)}~;~\underbrace{\vh_i^{\top}\vhatp_i}_{(2)}~;~\underbrace{\vw_i^{\top}\vhatp_i}_{(3)}~;~\underbrace{(\vh_i - \vw_i)^{\top}\vhatp_i}_{(4)} \right]
 \end{align*}
 These four ``meta''-features capture all the benefits of the
 H-feature detector (slots 2 and 3), while still addressing Concat's issues with
@@ -511,7 +551,7 @@ The final feature's relation to the DIH comes from the observation of
 \newcite{roller:2014:coling} that the vector difference intuitively captures
 whether the hypernym {\em includes} the hyponym.
 
-The union of all the feature vectors $F_1, \ldots, F_n$ from repeated iteration
+The concatenation of all the feature vectors $[\vf_1; \ldots; \vf_n]$ from repeated iteration
 form a $4n$-dimensional feature vector which we use as input to one final
 classifier which makes the ultimate decision.  This classifier is trained on
 the same training data as each of the individual H-feature detectors, so
@@ -521,42 +561,48 @@ extraction.
 For our final classifier, we use an SVM with an RBF-kernel, though decision
 trees and other nonlinear classifiers also perform reasonably well. The
 nonlinear final classifier can be understood as doing a form of logical
-reasoning about the four slots: ``animal'' is a hypernym of ``cat'' because (1)
-they are similar words where (2) animal looks like a hypernym, but (3) cat does
-not, and (4) some ``animal'' contexts are not good ``cat'' contexts.
+reasoning about the four slots: \lit{animal} is a hypernym of \lit{cat} because
+(1) they are similar words where (2) animal looks like a hypernym, but (3) cat
+does not, and (4) some \lit{animal} contexts are not good \lit{cat} contexts.
 
 
 \section{Experimental Setup and Evaluation}
 
 In our experiments, we use a variation of 20-fold cross validation which
-accounts for lexical overlap. To simplify explanation, we first explain how we
+accounts for lexical overlap. This differs from the experimental setup in the
+previous chapter, which used leave-one-out cross validation. We choose this
+setup because computing the $n$ prototype vectors considerably increases our
+computational costs, so we must reduce the number of folds to keep costs
+reasonable.
+
+To simplify explanation of our setup, we first explain how we
 generate splits for training/testing, and then afterwards introduce validation
 methodology.
 
 We first pool all the words from the antecedent (LHS)
 side of the data into a set, and split these lexical items into 20 distinct
-cross-validation folds. For each fold $F_i$, we then use all pairs $(w, H)$ where
-$w\in F_i$ as the test set pairs. That is, if ``car'' is in the test set fold,
-then ``car $\rightarrow$ vehicle'' and ``car $\nrightarrow$ truck" will appear
+cross-validation folds. For each fold $F_i$, we then use all pairs $\pair$ where
+$w\in F_i$ as the test set pairs. That is, if \lit{car} is in the test set fold,
+then \lit{car $\rightarrow$ vehicle} and \lit{car $\nrightarrow$ truck} will appear
 as test set pairs. The training set will then be {\em every pair} which does
 not contain {\em any} overlap with the test set; e.g. the training
-set will be all pairs which do not contain ``car'', ``truck'' or ``vehicle''
+set will be all pairs which do not contain \lit{car}, \lit{truck} or \lit{vehicle}
 as either the antecedent or consequent. This ensures that both (1) there
 is zero lexical overlap between training and testing and (2) every pair is
 used as an item in a test fold exactly once. One quirk of this setup is
 that all test sets are approximately the same size, but training sizes
 vary dramatically.
 
-This setup differs from those of previous works like
-\newcite{kruszewski:2015:tacl} and \newcite{levy:2015:naacl}, who both use
-single, fixed train/test/val sets without lexical overlap. We find our setup
-has several advantages over fixed sets. First, we find there can be
-considerable variance if the train/test set is regenerated with a different
-random seed, indicating that multiple trials are necessary. Second, fixed
-setups consistently discard roughly half the data as ineligible for either
-training or test, as lexical items appear in many pairs. Our CV-like setup
-allows us to evaluate performance over every item in the data set exactly once,
-making a much more efficient and representative use of the original data set.
+%This setup differs from those of previous works like
+%\newcite{kruszewski:2015:tacl} and \newcite{levy:2015:naacl}, who both use
+%single, fixed train/test/val sets without lexical overlap. We find our setup
+%has several advantages over fixed sets. First, we find there can be
+%considerable variance if the train/test set is regenerated with a different
+%random seed, indicating that multiple trials are necessary. Second, fixed
+%setups consistently discard roughly half the data as ineligible for either
+%training or test, as lexical items appear in many pairs. Our CV-like setup
+%allows us to evaluate performance over every item in the data set exactly once,
+%making a much more efficient and representative use of the original data set.
 
 Our performance metric is F1 score. This is more representative than
 accuracy, as most of the data sets are heavily unbalanced. We report the mean
@@ -573,16 +619,16 @@ $C \in \{10^{-4}, 10^{-3}, \ldots, 10^4\}$, and for our proposed model, the
 number of iterations $n \in \{1, \ldots, 6\}$. All other hyperparameters
 are left as defaults provided by Scikit-Learn \cite{pedregosa:2013:jmlr},
 except for using balanced class weights. Without balanced class weights,
-several of the baseline models learn degenerate functions (e.g. always guess non-entailing).
+several of the baseline models learn degenerate functions (e.g. always guess
+non-entailing).
 
 \section{Results}
 
 \begin{table}
 \centering
-\begin{small}
 \begin{tabular}{|l|rrrr|}
   \hline
-  Model            &      LEDS   &      BLESS  &      Medical  &      TM14   \\
+  {\bf Model}      & {\bf LEDS}  & {\bf BLESS} & {\bf Medical} & {\bf TM14}  \\
   \hline
   \hline
   \multicolumn{5}{|c|}{Linear Models}\\
@@ -601,8 +647,7 @@ several of the baseline models learn degenerate functions (e.g. always guess non
   Our model        &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
   \hline
 \end{tabular}
-\end{small}
-\caption{Mean F1 scores for each model and data set.}
+\caption{Mean F1 scores for each model and data set for binary classification.}
 \label{tab:results}
 \end{table}
 
@@ -688,24 +733,36 @@ iteration.}
 
 \begin{table*}
   \begin{center}
-  \begin{small}
-  \begin{tabular}{|llll|}
+  \begin{tabular}{|ll|}
     \hline
-    Iteration 1 & Iteration 2 & Iteration 3 & Iteration 4\\
+    {\bf Iteration 1} & {\bf Iteration 2}\\
     \hline
-nmod:such\_as+submarine        &nmod:including+animal          &amod+free-swimming             &advcl+crown                         \\
-nmod:such\_as+ship             &nmod:including+snail           &nmod:including\depinv+thing    &advcl+victorious                    \\
-nmod:such\_as+seal             &nmod:including+insect          &nsubj\depinv+scarcer           &nsubj+eaters                        \\
-nmod:such\_as+plane            &nmod:such\_as+crustacean       &nsubj\depinv+pupate            &nsubj+kaine                         \\
-nmod:such\_as+rack             &nmod:such\_as+mollusc          &nmod:such\_as+mollusc          &nmod:at+finale                      \\
-nmod:such\_as+rope             &nmod:such\_as+insect           &nmod:of\depinv+value           &nsubj+gowen                         \\
-nmod:such\_as+box              &nmod:such\_as+animal           &nmod:as\depinv+exhibit         &nsubj+pillman                       \\
-%nmod:such\_as+bat             &nmod:including+crustacean      &nmod:as\depinv+organism        &nmod:including\depinv+origin        \\
-%nmod:such\_as+pot             &nmod:including+amphibian       &nmod:of\depinv+fecundity       &nmod:in+aa                          \\
-%nmod:such\_as+container       &nmod:including+pet             &nmod:as\depinv+feed            &nmod:of\depinv+stock                \\
+    \ctx{nmod:such\_as+submarine}       &\ctx{nmod:including+animal}         \\
+    \ctx{nmod:such\_as+ship}            &\ctx{nmod:including+snail}          \\
+    \ctx{nmod:such\_as+seal}            &\ctx{nmod:including+insect}         \\
+    \ctx{nmod:such\_as+plane}           &\ctx{nmod:such\_as+crustacean}      \\
+    \ctx{nmod:such\_as+rack}            &\ctx{nmod:such\_as+mollusc}         \\
+    \ctx{nmod:such\_as+rope}            &\ctx{nmod:such\_as+insect}          \\
+    \ctx{nmod:such\_as+box}             &\ctx{nmod:such\_as+animal}          \\
+    \ctx{nmod:such\_as+bat}             &\ctx{nmod:including+crustacean}     \\
+    \ctx{nmod:such\_as+pot}             &\ctx{nmod:including+amphibian}      \\
+    \ctx{nmod:such\_as+container}       &\ctx{nmod:including+pet}            \\
+    \hline
+    \hline
+    {\bf Iteration 3} & {\bf Iteration 4}\\
+    \hline
+    \ctx{amod+free-swimming}            &\ctx{advcl+crown}                        \\
+    \ctx{nmod:including\depinv+thing}   &\ctx{advcl+victorious}                   \\
+    \ctx{nsubj\depinv+scarcer}          &\ctx{nsubj+eaters}                       \\
+    \ctx{nsubj\depinv+pupate}           &\ctx{nsubj+kaine}                        \\
+    \ctx{nmod:such\_as+mollusc}         &\ctx{nmod:at+finale}                     \\
+    \ctx{nmod:of\depinv+value}          &\ctx{nsubj+gowen}                        \\
+    \ctx{nmod:as\depinv+exhibit}        &\ctx{nsubj+pillman}                      \\
+    \ctx{nmod:as\depinv+organism}       &\ctx{nmod:including\depinv+origin}       \\
+    \ctx{nmod:of\depinv+fecundity}      &\ctx{nmod:in+aa}                         \\
+    \ctx{nmod:as\depinv+feed}           &\ctx{nmod:of\depinv+stock}               \\
     \hline
   \end{tabular}
-\end{small}
 \end{center}
 \caption{Most similar contexts to the H-feature detector for each iteration
 of the PCA-like procedure. This model was trained on all data of BLESS. The first and second
@@ -738,23 +795,72 @@ using a fixed four iterations and regularization parameter. For each iteration,
 we compare its learned H-feature detector to the context embeddings, and report
 the most similar contexts for each iteration in Table~\ref{tab:multiter}.
 
-The first iteration is
-identical to the one in Table~\ref{tab:ctxsim}, as expected. The second
-iteration includes many H-features not picked up by the first iteration,
-mostly those of the form ``X including Y''. The third iteration picks up some
-data set specific signal, like ``free-swimming [animal]'' and
-``value of [computer]'', and so on. By the fourth iteration, the features
-no longer exhibit any obvious Hearst patterns, perhaps exceeding the sweet
-spot we observed in Figure~\ref{fig:byiteration}.
-Nonetheless, we see how multiple iterations of the procedure allows our model
-to capture many more useful features than a single Concat classifier on its
-own.
+The first iteration is identical to the one in Table~\ref{tab:ctxsim}, as
+expected. The second iteration includes many H-features not picked up by the
+first iteration, mostly those of the form \lit{[animals] including [cats]}. The
+third iteration picks up some data set specific signal, like \lit{free-swimming
+[animal]} and \lit{value of [computer]}, and so on. By the fourth iteration,
+the features no longer exhibit any obvious Hearst patterns, perhaps exceeding
+the sweet spot we observed in Figure~\ref{fig:byiteration}.  Nonetheless, we
+see how multiple iterations of the procedure allows our model to capture many
+more useful features than a single Concat classifier on its own.
 
-\section{Distinguishing Multiple Relation types}
+\section{Detecting Multiple Relations}
 
 Info Goes Here.
 
-\section{Conclusion}
+\begin{table}
+\centering
+\begin{footnotesize}
+\begin{tabular}{|lr|lr|lr|lr|}
+  \hline
+  \multicolumn{2}{|c|}{{\bf EVAL}} & \multicolumn{2}{c|}{{\bf BLESS}} & \multicolumn{2}{c|}{{\bf Root9}} & \multicolumn{2}{c|}{{\bf K\&H}}\\
+  \hline
+  \hline
+  Hypernymy & 25.5\% & Hypernymy   &  5.0\% & Hypernymy   &  7.5\% & Hypernymy   & 25.0\% \\
+  Antonym   & 21.7\% & Co-hyp      & 13.4\% & Co-hyp      & 44.9\% & Co-hyp      & 25.1\% \\
+  Synonym   & 14.7\% & Meronomy    & 11.1\% & Meronomy    &  1.8\% & Random      & 49.9\% \\
+  Has A     &  7.4\% & Attribute   & 10.3\% & Random      & 45.9\% &             &        \\
+  Made Of   &  4.3\% & Event       & 14.4\% &             &        &             &        \\
+  Property  & 17.6\% & Random      & 45.8\% &             &        &             &        \\
+  Part Of   &  8.9\% &             &        &             &        &             &        \\
+  \hline
+\end{tabular}
+\end{footnotesize}
+\caption{The makeup of each of the four multi-relation datasets, by relation
+type.}
+\end{table}
+
+
+\begin{table}
+\centering
+\begin{tabular}{|l|rrrr|}
+  \hline
+  {\bf Model}      & {\bf EVAL}  & {\bf BLESS} & {\bf Root9} & {\bf K\&H}  \\
+  \hline
+  \hline
+  \multicolumn{5}{|c|}{Linear Models}\\
+  \hline
+  Concat           &      .      &      .      &      .        &      .      \\
+  Diff             &      .      &      .      &      .        &      .      \\
+  Asym             &      .      &      .      &      .        &      .      \\
+  Concat+Diff      &      .      &      .      &      .        &      .      \\
+  Concat+Asym      &      .      &      .      &      .        &      .      \\
+  \hline
+  \multicolumn{5}{|c|}{Nonlinear Models}\\
+  \hline
+  RBF              &      .      &      .      &      .        &      .      \\
+  Ksim             &      .      &      .      &      .        &  {\bf.   }  \\
+  Our model        &  {\bf.   }  &  {\bf.   }  &  {\bf.   }    &      .      \\
+  \hline
+\end{tabular}
+\caption{Mean Accuracy scores for each model and data set for multi-relation classification.}
+\label{tab:multiresults}
+\end{table}
+
+
+
+\section{Chapter Summary}
 
 We considered the task of detecting lexical entailment using distributional
 vectors of word meaning.  Motivated by the fact that the Concat classifier acts
@@ -773,282 +879,5 @@ Distributional Inclusion, in order to integrate the strengths of different
 models in prior work. Our model matches or exceeds the performance of prior
 work, both on hypernymy detection and general lexical entailment.
 
-
-\hardline
-
-\hardline
-
-\hardline
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.75\textwidth]{plots/window.pdf}
-  \caption{Comparison of different distributional window sizes for a baseline
-  classifier on several different data sets.}
-\end{figure}
-
-
-\section{H-Features for Hypernymy Classification (Roller and Erk, 2016b)}
-\label{sec:hfeatures}
-
-In the previous sections, we saw that the Asym classifier is able to reasonably
-learn to classify word pairs as hypernymy and non-hypernymy, and that is able
-to contribute in an end-to-end RTE system. However, we also saw in our
-RTE experiments that Asym can be improved upon by simply concatenating the Asym
-difference vectors with vectors for the LHS and the RHS (which we call Concat).
-In this section, we discuss some of the strengths and weaknesses of the Concat
-model, and how these relate to the Asym model. We then propose a novel
-classification model which combines and extends the strengths of all these
-models using an iterative procedure similar to Principal Component Analysis
-(PCA).
-
-Nonetheless, this raises a concern about what the difference terms $H - w$
-actually provide. We propose a qualitative experiment which explains, in
-clear terms, why these terms are valuable, and leads to another model to
-extend this behavior. For simplicity, we focus our analysis on the linear
-Concat classifier, which exhibits the same behavior as Diff, but in a
-more obvious way.
-
-In our qualitative experiment, we train a linear Concat classifier using
-syntactic distributional vectors on four separate data sets. We then analyze
-the trained models by comparing their hyperplanes to the {\em context vectors}.
-That is, we explicitly compare the $\hat H$ vector to the syntactic context
-matrix $C$ in Equation~\ref{eqn:factorization}. This is a radically
-different view of than the prototypicality hypothesis of
-\newcite{levy:2015:naacl}: rather than learning a prototype of hypernymy, our
-interpretation is that the Concat and Diff models learn to act as {\em feature
-detectors}, which identifies features (i.e. syntactic contexts), which are
-useful in identifying hypernymy.  This interpretation and corresponding
-experiment is a one of our core contributions to the literature.
-
-We train the model on four data sets: LEDS, BLESS, Medical, and TM14. LEDS and BLESS
-were also used in the Asym experiments, and are datasets covering hypernymy and
-non-hypernymy relations. Medical is a dataset of pairs of medical words and
-entailment labels, and was farmed using Information Extraction techniques
-\cite{levy:2014:conll}. Finally, TM14 contains many varied word relations (like
-cause-effect, agent-object) which are annotated with entailment decisions by
-\newcite{turney:2015:nle}.
-
-\begin{table}
-\begin{center}
-  \begin{small}
-  \begin{tabular}{|ll|}
-    \hline
-    {\bf LEDS} & {\bf BLESS}\\
-    \hline
-    \ctx{nmod:such\_as+animal}            &  \ctx{nmod:such\_as+submarine} \\
-    \ctx{acl:relcl+identifiable}          &  \ctx{nmod:such\_as+ship}      \\
-    \ctx{nmod:of\depinv+determine}        &  \ctx{nmod:such\_as+seal}      \\
-    \ctx{nmod:of\depinv+categorisation}   &  \ctx{nmod:such\_as+plane}     \\
-    \ctx{compound+many}                   &  \ctx{nmod:such\_as+rack}      \\
-    \hline\hline
-    {\bf Medical} & {\bf TM14}\\
-    \hline
-    \ctx{nmod:such\_as+patch}             &  \ctx{amod+desire}             \\
-    \ctx{nmod:such\_as+skin}              &  \ctx{amod+heighten}           \\
-    \ctx{nmod:including+skin}             &  \ctx{nsubj\depinv+disparate}  \\
-    \ctx{nmod:such\_as+tooth}             &  \ctx{nmod:such\_as+honey}     \\
-    \ctx{nmod:such\_as+feather}           &  \ctx{nmod:with\depinv+body}   \\
-    \hline
-  \end{tabular}
-  \end{small}
-\end{center}
-\caption{Most similar contexts to the $\hat H$ hyperplane learned by a Concat classifier.}
-\label{tab:ctxsim}
-\end{table}
-
-Table~\ref{tab:ctxsim} shows the five contexts most similar to the hyperplane
-learned from each of the four datasets, and immediately explains why these models
-perform strongly.  Nearly all of the contexts preferred by the model take the
-form of Hearst patterns \cite{hearst:1992:coling,snow:2004:nips}.  The most
-recognizable and common pattern learned is the ``such as'' pattern, as in
-``animals such as cats''.  These patterns have been well known to be indicative
-of hypernymy for over two decades. Other interesting patterns are the
-``including'' pattern (``animals including cats'') and ``many'' pattern (``many
-animals''). Although we list only the five most similar context items for the
-data sets, we find similar Hearst Pattern type contexts continue to dominate
-the list for the next 30-50 items.
-
-Altogether, it is remarkable that the model identified these patterns using
-{\em only} distributional vectors and only the positive/negative example pairs.
-Since the model can be interpreted as a sort of {\em feature detector}, we
-call this model the H-feature Detector Model.
-We now show how these H-features
-can be improved using an iterative procedure similar to Principal Component
-Analysis.
-
-\subsection{The H-Feature Detector Model}
-
-Knowing that the Concat classifier acts primarily as a feature detector, we ask
-whether this can be combined with similarity-based insights of models like
-Asym. To this end, we propose a novel model which exploits the H-feature
-Detector model, extends its modeling power, and also adds in features for
-general similarity and distributional inclusion.
-
-The model works through an iterative procedure similar to Principal Component
-Analysis (PCA). Each iteration repeatedly trains a Concat classifier under the
-assumption that it acts as a feature detector, and then explicitly {\em discards}
-this information from the distributional vectors. By training a new feature
-detector on these modified distributional vectors, we can find additional
-features indicative of entailment which were not captured by the first
-classifier. This is similar to how in Principal Component Analysis, the
-second principal component is computed after the first principal component
-has been accounted for.
-
-The main insight is that after training some feature detector using Concat,
-we can {\em remove} this feature from the distributional vectors through
-the use of {\em vector projection}.
-Formally, the vector projection of $x$ onto
-a vector $\hat p$, $\text{proj}_{\hat p}(x)$ finds the {\em component} of $x$
-which is in the direction of $\hat p$,
-\begin{equation*}
-  \text{proj}_{\hat p}(x) = \left(\frac{x^\top\hat p}{\|\hat p\|}\right)\hat p.
-\end{equation*}
-Figure~\ref{fig:vecproj} gives a geometric illustration of the vector
-projection. If $x$ forms the hypotenuse of a right
-triangle, $\text{proj}_{\hat p}(x)$ forms a leg of the triangle. This also
-gives rise to the {\em vector rejection}, which is the vector forming the third
-leg of the triangle. The vector rejection is orthogonal to the projection, and
-intuitively is ``leftover'' vector after the projection has been removed:
-\begin{equation*}
-  \text{rej}_{\hat p}(x) = x - \text{proj}_{\hat p}(x).
-\end{equation*}
-
-
-Using the vector rejection, we take a learned H-feature detector $\hat p$,
-and remove these features from each of the data points. That is, for every data
-point $\langle H, w\rangle$, we replace it by its vector rejection and rescale
-it to unit magnitude:
-\begin{align*}
-  H' & = \text{rej}_{\hat p}(H) / \|\text{rej}_{\hat p}(H)\|\\
-  w' & = \text{rej}_{\hat p}(w) / \|\text{rej}_{\hat p}(w)\|
-\end{align*}
-A new classifier trained on the $\langle H', w'\rangle$ data must learn
-a very different decision plane than $\hat p$, as $\hat p$ is no longer present
-in any data points. This new classifier will perform strictly worse than the
-original, otherwise the first classifier would have learned this hyperplane.
-Nonetheless, it will be able to learn {\em new} H-features which the
-original classifier was unable to capture. By repeating this process several
-times, we can find several H-feature detectors, $\hat p_1, \ldots, \hat p_n$.
-
-In each iteration $i$ of the procedure, we generate a four-valued feature vector
-$F_i$, based on the H-feature detector $\hat p_i$. Each
-feature vector contains (1) the similarity of $H_i$ and $w_i$ (before projection);
-(2) the H-feature detector
-$\hat p_i$ applied to $H_i$; (3) the H-feature detector $\hat p_i$ applied to $w_i$; and
-(4) the difference of 2 and 3.
-\begin{align*}
-  & F_i(\langle H_i, w_i\rangle, \hat p_i)\\
-  & \qquad = \langle H_i^{\top}w~~;~~H_i^\top\hat p_i~~;~~w_i^\top\hat p_i~~;~~H_i^\top\hat p_i - w_i^\top\hat p_i\rangle
-\end{align*}
-These four ``meta''-features capture all the benefits of the H-feature
-detector (slots 2 and 3), while addressing Concat's issues with
-similarity arguments (slot 1) {\em and} distributional inclusion (slot 4).
-
-The union of all the feature vectors $F_1, \ldots, F_n$ from repeated iteration form a
-$4n$-dimensional feature vector which we use as input to another classifier.
-This classifier is trained on the exact same training data as each of the
-individual Hearst Pattern detectors, so the procedure only acts as a method of
-feature extraction. We use an SVM with an RBF-kernel, as we found it to work
-best, though several nonlinear classifiers also perform well.
-
-\begin{table}
-\centering
-\begin{small}
-\begin{tabular}{|l|rrrr|}
-  \hline
-  Model            &      LEDS   &      BLESS  &      Medical  &      TM14   \\
-  \hline
-  \hline
-  \multicolumn{5}{|c|}{Linear Models}\\
-  \hline
-  Cosine only (Baseline)              &      .787   &      .208   &      .168     &      .676   \\
-  Concat                              &      .794   &      .612   &      .218     &      .693   \\
-  Diff \cite{weeds:2014:coling}       &      .805   &      .440   &      .195     &      .665   \\
-  Asym \cite{roller:2014:coling}      &      .865   &      .510   &      .210     &      .671   \\
-  %Concat+Diff                        &      .801   &      .604   &      .224     &      .703   \\
-  Asym + Concat \cite{beltagy:2016:cl}&      .843   &  {\bf.631}  &      .240     &      .701   \\
-  \hline
-  \multicolumn{5}{|c|}{Nonlinear Models}\\
-  \hline
-  RBF                                         &      .779   &      .574   &      .215     &      .705   \\
-  Ksim \cite{levy:2014:conll}                 &      .893   &      .488   &      .224     &  {\bf.707}  \\
-  H-Feature Detector \cite{roller:2016:emnlp} &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
-  \hline
-\end{tabular}
-\end{small}
-\caption{Mean F1 scores for each model and data set.}
-\label{tab:hfeatureresults}
-\end{table}
-
-We compare our H-feature detector model to several existing and alternative
-baselines from the literature. Namely, we include a baseline Cosine classifier,
-which only learns a threshold which maximizes F1 score on the training set;
-three linear models of prior work, Concat, Diff and Asym; and the RBF and Ksim
-models found to be successful in \newcite{kruszewski:2015:tacl} and
-\newcite{levy:2015:naacl} respectively. We also include
-Asym + Concat, which was used in \newcite{beltagy:2016:cl}. We cannot include a
-additional comparisons like Ksim+Asym, because Ksim is based on a custom SVM
-kernel which is not amenable to combinations.
-
-Table~\ref{tab:hfeatureresults} the results across all four data sets for all
-of the listed models. Our H-Feature model improves
-significantly\footnote{Bootstrap test, $p<.01$.} over Concat in the LEDS, BLESS
-and Medical data sets, indicating the benefits of combining these the aspects
-of similarity and distributional inclusion with the H-feature detectors of
-Concat.  The Asym + Concat classifier also improves over the Concat baseline,
-further emphasizing these benefits. Our H-feature model performs approximately
-the same as Ksim on the LEDS and TM14 data sets (no significant difference),
-while significantly outperforming it on BLESS and Medical data sets.
-
-
-
-\subsection{Lexical Entailment}
-
-\paragraph{H-features for non-Hypernymy Relations}
-
-In Section~\ref{sec:hfeatures}, we discussed how certain distributional models
-act as {\em H-feature} detectors, which identify contexts highly indicative
-of hypernymy, and discuss our model which exploits
-multiple H-feature detectors in order to improve the
-modeling power of a hypernymy detection system, and improves results over
-comparable models.
-
-However, there are many relations {\em other} than hypernymy which are useful
-in considering textual entailment: for example, identifying co-hyponymy is
-useful as a negative signal for entailment, and identifying meronomy is
-critical to our motivating example in the Introduction.
-Indeed, the results shown in Table~\ref{tab:asymresults} show
-the accuracy of the Asym and Baroni classifiers on a {\em four-way} relationship
-prediction task: hypernymy, co-hyponymy, meronomy, and random, but the
-experiments in Table~\ref{tab:hfeatureresults} only describe performance in a
-binary hypernymy-or-not classification task. We propose to extend and evaluate
-the H-features model of Section~\ref{sec:hfeatures} to handle non-hypernymy
-relations. We believe the model's performance can be improved by
-better modeling the non-hypernymy cases, and that the model will additionally
-discover H-features indicative of other relations.
-
-There are several ways that the model could be extended. The one we believe
-will be most successful is one that trains several binary H-features models:
-one for hypernymy-vs-non-hypernymy, one for meronomy-vs-non-meronomy, etc.
-Similar to how the PCA procedure was used only as a form of feature-extraction
-for the final prediction, each of the binary classifier iterations will be also
-used for feature extraction for a final classifier.
-That is, we will use the procedure described in Section~\ref{sec:hfeatures}
-to extract several iterations of features for hypernymy, then completely repeat
-the procedure for meronomy and so forth. The resulting features from each
-of the classifiers will be concatenated for a final four-way classifier prediction.
-Another alternative would be to try to learn the four-way classifiers concurrently
-(e.g., a softmax instead of logistic regression), and extract the corresponding
-H-features at this level.
-
-There are interesting research questions that stem from this procedure, beyond
-just final performance scores. One is what distributional-level features will
-be learned as prototypical of meronyms, or co-hyponyms? As we saw in
-Table~\ref{tab:ctxsim}, the classifier automatically learned to pick
-out well-known Hearst patterns, indicative of hypernymy. It remains to be seen
-whether it will pick out additional Hearst patterns indicative of other
-relations: for example, simple conjunctions for co-hyponymy (e.g., {\em cats
-and dogs}) or the possessive for meronomy (e.g., {\em cat's tail}).
 
 
