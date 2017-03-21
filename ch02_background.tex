@@ -110,7 +110,8 @@ Section~\ref{sec:word2vec}.
 
 \begin{figure}
 \centering
-\begin{minipage}{6cm}
+\begin{minipage}{7cm}
+\centering
 \begin{scriptsize}
 \begin{alltt}
          the furry {\color{Cerulean}{dog}} is friendly to    
@@ -122,9 +123,10 @@ a reputation among {\color{Cerulean}{dog}} trainers of having
         as a guard {\color{Cerulean}{dog}} and to hunt       
    the mechanic 's {\color{Cerulean}{dog}} began to howl     
 \end{alltt}
-\end{scriptsize}
+\end{scriptsize}\\
+(a) toy corpus
 \end{minipage}
-\qquad
+\quad
 \begin{minipage}{6cm}
 \centering
 \begin{tikzpicture}[scale=1.3]
@@ -140,9 +142,10 @@ a reputation among {\color{Cerulean}{dog}} trainers of having
     \draw [] (12:0.5) arc (12:66:0.5) node[right,pos=0.75] {$\theta$};
     \draw [<->,ultra thick](2.5,0) -- (origin)  node (yaxis) [below,pos=0.5] {{underwater}}
       -- (0,2.0) node (xaxis) [above,pos=0.5,rotate=90] {{ furry}};
-\end{tikzpicture}
+\end{tikzpicture}\\
+(b) cartoon vector space
 \end{minipage}
-\caption{(left) Example contexts of the word \lit{dog}, and (right) cartoon drawing
+\caption{(a) Example contexts of the word \lit{dog}, and (b) cartoon drawing
 of word vectors in the \ctx{furry} and \ctx{underwater} dimensions.}
 \label{fig:vsm}
 \end{figure}
@@ -381,12 +384,15 @@ to emphasize attempts related to distributional semantics
 One important, early development in this task was Hearst patterns
 \cite{hearst:1992:coling}, which are specific textual patterns highly
 indicative of particular relationships. Common Hearst patterns include
-exemplar phrases like ``X such as Y,'' ``X including Y,'' which are both highly
-indicative of hypernymy. Possessive phrases, like ``X's Y'', can be indicative
-of meronomy. Later,
+exemplar phrases like ``animals such as cats,'' ``animals including cats,'' which are both highly
+indicative of hypernymy. Later,
 \newcite{snow:2004:nips} extended this Hearst pattern approach
 to use syntactic patterns. By using syntactic parses, some longer distance patterns
-are more easily captured, like ``X such as Y and Z,'' which implies ``X such as Z.''
+are more easily captured, like ``animals such as cats and dogs,'' which implies
+``animals such as dogs.''
+\newcite{girju:2006:cl} proposed a variety Hearst patterns for meronomy (a
+part-whole relation), including a variety of genitive constructions like
+``baby's eyes,'' ``eyes of the baby,'' and ``bird without wings.''
 
 More recently, groups have begun researching how lexical relationships may be
 mined automatically using VSMs. Since Distributional

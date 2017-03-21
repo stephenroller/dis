@@ -342,12 +342,12 @@ Since the word and context embeddings implicitly live in the same vector space
 context matrix $C$. Under this interpretation, the Concat model does {\em not}
 learn what words are hypernyms, but rather what {\em contexts} are indicative
 of hypernymy. Table~\ref{tab:ctxsim} shows the syntactic contexts with the
-highest cosine similarity to the $\hat H$ prototype for each of the different
+highest cosine similarity to the $\vhath$ prototype for each of the different
 data sets.
 
 \begin{table}[t]
 \centering
-%\begin{footnotesize}
+\begin{small}
 \begin{tabular}{|ll|}
   \hline
   {\bf LEDS} & {\bf BLESS}\\
@@ -378,8 +378,8 @@ data sets.
  %\ctx{compound+similar}                & \ctx{nmod:such\_as+label}              \\
 \hline
 \end{tabular}
-%\end{footnotesize}
-\caption{Most similar contexts to the prototype $\hat H$ learned by the Concat model.}
+\end{small}
+\caption{Most similar contexts to the prototype $\vhath$ learned by the Concat model.}
 \label{tab:ctxsim}
 \end{table}
 
@@ -435,6 +435,7 @@ which explains these features.
 
 
 \section{Proposed Model}
+\label{sec:hfeatproposed}
 
 As we saw in the previous section, Concat only acts as a sort of H-feature
 detector for whether $h$ is a prototypical hypernym, but does not actually
@@ -566,7 +567,8 @@ reasoning about the four slots: \lit{animal} is a hypernym of \lit{cat} because
 does not, and (4) some \lit{animal} contexts are not good \lit{cat} contexts.
 
 
-\section{Experimental Setup and Evaluation}
+\subsection{Experimental Setup and Evaluation}
+\label{sec:singleexp}
 
 In our experiments, we use a variation of 20-fold cross validation which
 accounts for lexical overlap. This differs from the experimental setup in the
@@ -622,7 +624,7 @@ except for using balanced class weights. Without balanced class weights,
 several of the baseline models learn degenerate functions (e.g. always guess
 non-entailing).
 
-\section{Results}
+\subsection{Results}
 
 \begin{table}
 \centering
@@ -644,7 +646,7 @@ non-entailing).
   \hline
   RBF              &      .779   &      .574   &      .215     &      .705   \\
   Ksim             &      .893   &      .488   &      .224     &  {\bf.707}  \\
-  Our model        &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
+  H-feature Model  &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
   \hline
 \end{tabular}
 \caption{Mean F1 scores for each model and data set for binary classification.}
@@ -733,6 +735,7 @@ iteration.}
 
 \begin{table*}
   \begin{center}
+  \begin{small}
   \begin{tabular}{|ll|}
     \hline
     {\bf Iteration 1} & {\bf Iteration 2}\\
@@ -743,10 +746,10 @@ iteration.}
     \ctx{nmod:such\_as+plane}           &\ctx{nmod:such\_as+crustacean}      \\
     \ctx{nmod:such\_as+rack}            &\ctx{nmod:such\_as+mollusc}         \\
     \ctx{nmod:such\_as+rope}            &\ctx{nmod:such\_as+insect}          \\
-    \ctx{nmod:such\_as+box}             &\ctx{nmod:such\_as+animal}          \\
-    \ctx{nmod:such\_as+bat}             &\ctx{nmod:including+crustacean}     \\
-    \ctx{nmod:such\_as+pot}             &\ctx{nmod:including+amphibian}      \\
-    \ctx{nmod:such\_as+container}       &\ctx{nmod:including+pet}            \\
+   %\ctx{nmod:such\_as+box}             &\ctx{nmod:such\_as+animal}          \\
+   %\ctx{nmod:such\_as+bat}             &\ctx{nmod:including+crustacean}     \\
+   %\ctx{nmod:such\_as+pot}             &\ctx{nmod:including+amphibian}      \\
+   %\ctx{nmod:such\_as+container}       &\ctx{nmod:including+pet}            \\
     \hline
     \hline
     {\bf Iteration 3} & {\bf Iteration 4}\\
@@ -757,12 +760,13 @@ iteration.}
     \ctx{nsubj\depinv+pupate}           &\ctx{nsubj+kaine}                        \\
     \ctx{nmod:such\_as+mollusc}         &\ctx{nmod:at+finale}                     \\
     \ctx{nmod:of\depinv+value}          &\ctx{nsubj+gowen}                        \\
-    \ctx{nmod:as\depinv+exhibit}        &\ctx{nsubj+pillman}                      \\
-    \ctx{nmod:as\depinv+organism}       &\ctx{nmod:including\depinv+origin}       \\
-    \ctx{nmod:of\depinv+fecundity}      &\ctx{nmod:in+aa}                         \\
-    \ctx{nmod:as\depinv+feed}           &\ctx{nmod:of\depinv+stock}               \\
+   %\ctx{nmod:as\depinv+exhibit}        &\ctx{nsubj+pillman}                      \\
+   %\ctx{nmod:as\depinv+organism}       &\ctx{nmod:including\depinv+origin}       \\
+   %\ctx{nmod:of\depinv+fecundity}      &\ctx{nmod:in+aa}                         \\
+   %\ctx{nmod:as\depinv+feed}           &\ctx{nmod:of\depinv+stock}               \\
     \hline
   \end{tabular}
+  \end{small}
 \end{center}
 \caption{Most similar contexts to the H-feature detector for each iteration
 of the PCA-like procedure. This model was trained on all data of BLESS. The first and second
@@ -805,9 +809,211 @@ the sweet spot we observed in Figure~\ref{fig:byiteration}.  Nonetheless, we
 see how multiple iterations of the procedure allows our model to capture many
 more useful features than a single Concat classifier on its own.
 
+\section{Comparing to Path-based Entailment Detectors}
+
+We have thus far shown that our proposed model strongly outperforms other
+models for detecting hypernymy relations and lexical entailments using
+distributional semantics. However, as discussed in earlier chapters, there
+exists a wide literature in detecting lexical entailments directly using
+Hearst patterns \cite{hearst:1992:coling} or their Dependency path
+equivalents \cite{snow:2004:nips,girju:2006:cl}. These Hearst approaches are
+known to produce low recall, since words do not always appear with their
+hypernyms; yet Hearst approaches also may be complimented by distributional
+approaches.
+One recent line of work called HypeNET \cite{shwartz:2016:acl} aims to obtain
+the best of both worlds, by integrating both path-based and distributional
+based methods together using modern neural network techniques.
+
+For a given pair of words $(h, w)$, HypeNET extracts the complete set of
+dependency paths connecting $h$ and $w$ in any sentence in a large corpus.
+These paths are then encoded into vectors using Long Short Term Memory networks
+\cite{hochreiter:1997:nc}, and averaged together to obtain a final vector
+representing the potential Hearst patterns between $h$ and $w$.  This path
+vector is learned to maximize performance a set of binary
+hypernymy/non-hypernymy training pairs. The Path vector may be evaluated
+directly (``Path-based only''), or concatenated with distributional
+representations of $h$ and $w$ (``Hybrid Path and Dist.'').
+\newcite{shwartz:2016:acl} find a Hybrid approach outperforms Path-only and
+Distributional-only comparisons.
+
+We aim to directly compare with this approach by evaluating our model using
+the same data and experimental setup used by \newcite{shwartz:2016:acl}.
+They use a custom dataset of hypernymy pairs extracted from a union of several
+data sets (including BLESS and DBPedia), and use only {\em related} words
+as negative examples, preventing simple cosine baselines from doing well.
+The full dataset contains about 70k pairs, roughly 25\% of which are positively
+entailing.
+
+\newcite{shwartz:2016:acl} evaluate in both a random-split and
+zero lexical overlap settings, arguing that both are important: random-split
+measures our ability to {\em complete} an existing taxonomy, while
+zero lexical overlap measures ability to {\em induce} a taxonomy.
+They use fixed 70\% train, 5\% validation, and 25\% test folds, which they
+publish along with their paper.  Table~\ref{tab:shwartz}(a) shows the reported
+results for a linear distributional-only baseline (Concat), along with their
+novel Path-only model and state-of-the-art Hybrid model.
+
+To compare our H-feature model to theirs, we use their published data sets,
+and evaluate using the same training/test splits, and select hyperparameters
+using the same validation sets. Since not all words in the dataset appear
+in our set of distributional vectors, we assign out-of-vocabulary words
+the ${\bf 0}$ vector. We evaluate using Concat, so the only difference between
+our baseline and theirs is the choice of distributional vectors. We also
+evaluate our H-feature model. 
+
+\begin{table}
+  \centering
+  \begin{tabular}{|l|ccc|ccc|}
+  \hline
+  & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
+  & {\bf P} & {\bf R} & {\bf F1} & {\bf P} & {\bf R} & {\bf F1}\\
+  \hline
+  Concat                    &    .901 &    .637 &    .746 &    .754 &    .551 &    .637 \\
+  Path-based only           &    .811 &    .716 &    .761 &    .691 &    .632 &    .660 \\
+  Hybrid Path and Dist.     &    .913 &{\bf.890}&{\bf.901}&{\bf.809}&    .617 &    .700 \\
+  \hline
+  \multicolumn{7}{c}{}\\
+  [-0.5em]
+  \multicolumn{7}{c}{(a) Reported results from \newcite{shwartz:2016:acl}.}\\
+  \multicolumn{7}{c}{}\\
+  \hline
+  & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
+  & {\bf P} & {\bf R} & {\bf F1} & {\bf P} & {\bf R} & {\bf F1}\\
+  \hline
+  Concat                    &    .910 &    .874 &    .892 &    .746 &    .949 &{\bf.836}\\
+  H-feature model           &{\bf.926}&    .850 &    .886 &    .700 &{\bf.964}&    .811 \\
+  \hline
+  \multicolumn{7}{c}{}\\
+  [-0.5em]
+  \multicolumn{7}{c}{(b) Our results}\\
+  \end{tabular}
+  \caption{Comparing the H-feature model with Shwartz et al. (2016), a
+    state-of-the-art system which combines a path-based with a distributional
+  approach.}
+  \label{tab:shwartz}
+\end{table}
+
+Table~\ref{tab:shwartz}(a) shows the reported results from
+\newcite{shwartz:2016:acl}, and Table~\ref{tab:shwartz}(b) shows our results.
+We see that our Concat and H-feature models both have a substantially higher F1
+score than any of the models tested by \newcite{shwartz:2016:acl} in the zero
+lexical overlap setting, giving a new State-of-the-Art on this dataset. Since
+our Concat model does substantially better than any of their models, our
+improvements are likely due to the choice of distributional space.
+\newcite{shwartz:2016:acl} chose to use pretrained GloVe embeddings
+\cite{pennington:2014:emnlp}, which use a fixed bag-of-words context window of
+10.  As we saw in Figure~\ref{fig:window}, a choice of syntactic distributional
+vectors substantially outperforms a bag-of-words distributional space.
+Interestingly, the Hybrid and Path-only models should encode the syntactic
+paths entirely, but these results suggest that, when training in zero lexical
+overlap settings, collapsed dependency embeddings already capture sufficient
+statistics. 
+
+We also see that the Hybrid model of \newcite{shwartz:2016:acl} moderately
+outperforms both of our models in the Random split setting. This indicates that
+the Hybrid approach is still better for taxonomy completion settings.
+
+We also notice that our Concat model slightly outperforms the H-feature model
+in both random and zero overlap settings. We found the H-feature model chose to
+use only one iteration of feature extraction in hyperparameter validation,
+possibly explaining why the Concat model slightly outperforms the H-feature
+model. We manually inspected the H-features learned across several iterations
+and found only the first iteration contained interesting Hearst pattern type
+features (e.g., \ctx{such\_as}). We suspect that this may be an artifact of the
+dataset's construction, which included noisy examples from several data
+sources, but no random negative pairs.
+
 \section{Detecting Multiple Relations}
 
-Info Goes Here.
+In the previous sections, we focused on how H-features may be used to detect
+lexical entailments, and models were trained with a binary positive and
+negative system. Yet it is unclear whether H-features will also be useful
+for performing multi-relation classification, where labels may consist of
+several relations. On one hand, the task may appear to be harder, and Hearst
+patterns for non-hypernymy relations are much more difficult \cite{girju:2006:cl}.
+On the other hand, the negative examples in the above sections constituted
+many kinds of relationships (random, co-hyponymy, meronomy) and distingiushing
+between these may overall improve performance. Furthermore, the relations
+discussed in the previous sections were {\em only} noun-noun relations; however,
+a variety of {\em other} interesting relations exist, like
+{\em object-attribute} (noun-adjective), or {\em event-object} (verb-noun).
+
+We now consider the necessary modifications to extend our H-feature to
+multi-relation settings, or apply it to relationships which contain more
+diverse settings.
+
+\subsection{Adapting H-models for Multi-relation settings}
+
+In Section~\ref{sec:hfeatproposed}, we proposed iteratively training multiple
+H-feature extractors through the use of vector rejection. During each iteration
+of feature, we trained the linear hyperplane $\vhatp = \wordpair$ which maximized
+predictive accuracy. Since we trained a binary classifier and we wished to
+positively identify hypernyms, we always selected the $\vhath$ vector at
+each iteration, as it was the only logical hyperplane to choose.
+
+With multi-class settings, the choice of which hyperplane is muddied: for
+some relations, the choice between $\vhath$ and $\vhatw$ may not be as obvious:
+perhaps some H-features are better learned from the RHS. Additionally,
+since we are performing multi-class prediction, any linear model will
+necessarily produce many different hyperplanes. In the one-versus-rest
+training setting we opt for, we will learn $n$ hyperplanes for each of the
+$n$ possible relation labels. With these two choices combined, each iteration
+will have $2n$ possible H-feature choices.
+
+We considered several options for how to select among the hyperplanes available
+for H-features, and selected a simple heuristic which appeared to consistently
+deliver quality H-features for several iterations: at each iteration, we select
+the hyperplane with the largest vector magnitude. Intuitively, this heuristic
+selects the most {\em pronounced} H-feature detector at each setting, and
+we find this heuristic works well in practice.
+
+Covering multiple relations additionally requires that we handle some
+non-noun lexical items. Since data sets are not explicitly annotated with
+part-of-speech tags, but our word vectors are, it is not obvious when we
+see a word like \lit{show} whether we should select \lit{show/NN} or
+\lit{show/VB}. We address this by always selecting the vector corresponding
+to a word's {\em most common} POS tag. For example, since \lit{show/VB} is
+more common in our corpus than \lit{show/NN}, we always select \lit{show/VB}
+as our representation for \lit{show}.
+
+\subsection{Data and Experiments}
+
+We evaluate our multi-relation H-feature detector on several existing data
+sets covering a wide variety of relations.
+
+The first data set we use is {\bf BLESS} \cite{baroni:2011:gems}, which was also used
+in the single-class experiments; previously, we only used the Hypernymy labels
+as positive classes, and all other labels as negative. Here, we include all
+relations with their positive labels, including the {\em attribute} and
+{\em event} relations which were excluded in previous settings.
+
+The second data set we use is {\bf EVAL} \cite{santus:2015:ws}, which contains
+a wide variety of lexical relations: {\em hypernymy}, {\em antonymy}, {\em
+synonymy}, {\em has} (\lit{map} has \lit{information}), {\em property}
+(\lit{volcano} has the property \lit{hot}), and {\em material} (\lit{clothes}
+are {made of} \lit{cotton}).  The full dataset has 7,378 annotated pairs.
+Notably, EVAL lacks any random negative pairs, meaning that all pairs contain
+words semantically related in some way.
+
+The third data set we use is {\bf Root9} \cite{santus:2016:lrec} contains
+12,763 pairs consisting of {\em random}, {\em hypernymy}, and {\em co-hyponymy}
+relations. The dataset was intentionally constructed to be balance random
+relations with non-random relations, and balance the non-random relations
+equally between hypernymy and co-hyponymy.
+
+The final data set we use is {\bf K\&H+N} \cite{necsulescu:2015:starsem}, our
+largest dataset containing of 57,510 annotated pairs consisting of {\em
+hypernymy}, {\em co-hyponymy}, {\em meronomy}, and {\em random} relations and
+covering three domains (animals, plants, and vehicles). Similar to BLESS and
+LEDS, this dataset was extracted from WordNet, and was constructed to emphasize
+identifying relations between words which {\em do not co-occur} in the BNC. The
+K\&H+N name derives from the dataset introduced by \cite{kozareva:2010:emnlp},
+and extended by \newcite{necsulescu:2015:starsem} to include the co-hyponymy
+and meronomy.  The resulting dataset is extremely unbalanced, but still
+contains over 1,000 meronomy examples and 4,000 hypernymy examples.
+
+The distribution of each of the relations of each of the four datasets may
+be found in Table~\ref{tab:multimakeup}.
 
 \begin{table}
 \centering
@@ -817,20 +1023,36 @@ Info Goes Here.
   \multicolumn{2}{|c|}{{\bf EVAL}} & \multicolumn{2}{c|}{{\bf BLESS}} & \multicolumn{2}{c|}{{\bf Root9}} & \multicolumn{2}{c|}{{\bf K\&H}}\\
   \hline
   \hline
-  Hypernymy & 25.5\% & Hypernymy   &  5.0\% & Hypernymy   &  7.5\% & Hypernymy   & 25.0\% \\
-  Antonym   & 21.7\% & Co-hyp      & 13.4\% & Co-hyp      & 44.9\% & Co-hyp      & 25.1\% \\
-  Synonym   & 14.7\% & Meronomy    & 11.1\% & Meronomy    &  1.8\% & Random      & 49.9\% \\
-  Has A     &  7.4\% & Attribute   & 10.3\% & Random      & 45.9\% &             &        \\
-  Made Of   &  4.3\% & Event       & 14.4\% &             &        &             &        \\
+  Hypernymy & 25.5\% & Hypernymy   &  5.0\% & Hypernymy   & 25.0\% & Hypernymy   &  7.5\% \\
+  Antonym   & 21.7\% & Co-hyp      & 13.4\% & Co-hyp      & 25.1\% & Co-hyp      & 44.9\% \\
+  Synonym   & 14.7\% & Meronomy    & 11.1\% & Random      & 49.9\% & Meronomy    &  1.8\% \\
+  Has A     &  7.4\% & Attribute   & 10.3\% &             &        & Random      & 45.9\% \\
+  Material  &  4.3\% & Event       & 14.4\% &             &        &             &        \\
   Property  & 17.6\% & Random      & 45.8\% &             &        &             &        \\
   Part Of   &  8.9\% &             &        &             &        &             &        \\
   \hline
 \end{tabular}
 \end{footnotesize}
-\caption{The makeup of each of the four multi-relation datasets, by relation
-type.}
+\caption{The makeup of each of the four multi-relation datasets, by relation type. Not}
+\label{tab:multimakeup}
 \end{table}
 
+\subsection{Experiments}
+
+We follow the same experimental setup described in Section~\ref{sec:singleexp}.
+Datasets are divided into a 20-fold Cross Validation setting with zero lexical
+overlap, with rotating validation and testing folds. We report mean {\em
+accuracy} across all folds, as F1 is poorly suited for non-binary datasets.
+We use balanced class weights for both H-feature extraction, and training
+the final meta-classifier, and tune the regularization parameter in
+$C = \{10^{-4}, \ldots, 10^{4}\}$ and number of iterations $N = \{1, \ldots,
+10\}$ using grid search. We found it necessary to increase the maximum number
+of iterations to 10 (from 6 in the binary experiments), as the larger datasets
+and more diverse relations required additional H-features.
+
+We compare our model with the same baselines and prior work as done in our own
+binary experiments. We note that many of these baselines have never been
+applied to these datasets before.
 
 \begin{table}
 \centering
@@ -841,43 +1063,162 @@ type.}
   \hline
   \multicolumn{5}{|c|}{Linear Models}\\
   \hline
-  Concat           &      .      &      .      &      .        &      .      \\
-  Diff             &      .      &      .      &      .        &      .      \\
-  Asym             &      .      &      .      &      .        &      .      \\
-  Concat+Diff      &      .      &      .      &      .        &      .      \\
-  Concat+Asym      &      .      &      .      &      .        &      .      \\
+  Concat           &      .469   &      .665   &      .581     &      .716   \\
+  Diff             &      .442   &      .600   &      .514     &      .697   \\
+  Asym             &      .453   &      .602   &      .671     &      .718   \\
+  Concat+Diff      &      .459   &      .690   &      .596     &      .708   \\
+  Concat+Asym      &      .464   &      .688   &      .644     &      .709   \\
   \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
-  RBF              &      .      &      .      &      .        &      .      \\
-  Ksim             &      .      &      .      &      .        &  {\bf.   }  \\
-  Our model        &  {\bf.   }  &  {\bf.   }  &  {\bf.   }    &      .      \\
+  RBF              &      .455   &      .625   &      .560     &      .739   \\
+  Ksim             &      .459   &      .633   &      .657     &      .744   \\
+  H-feature Model  &  {\bf.470}  &  {\bf.713}  &  {\bf.732}    &  {\bf.755}  \\
   \hline
 \end{tabular}
 \caption{Mean Accuracy scores for each model and data set for multi-relation classification.}
 \label{tab:multiresults}
 \end{table}
 
+Table~\ref{tab:multiresults} shows the results of our experiments in
+multi-relation classification. We see that our H-feature model has the
+strongest performance in all four datasets. Our model only slightly
+(non-significantly) improves over the Concat baseline in the EVAL dataset.
+In the remaining three datasets, our H-feature model improves over the
+next-strongest model by a significant margin (McNemar test, $p < .01$).
+Clearly, the H-feature model is more adept at identifying lexical relations
+than our baselines.
 
+We may also analyze the H-features extracted by each of the iterations of the
+model. We train an H-feature model on each of the four datasets with 10
+iterations of H-feature extraction. We compared each of these 40 H-features
+with their most similar contexts, and manually filtered the list to the
+8 most interesting H-feature sets. We observed several hypernymy H-feature
+sets similar to those in Table~\ref{tab:ctxsim}, and excluded those from our
+consideration.
+Table~\ref{tab:ctxsimmulti} lists our 8 H-features, along with the dataset
+each was extracted from, which iteration it was learned in, and which relation
+it provides evidence for. In general, we found the H-features of the BLESS
+data set to be higher quality and more interesting than other data sets, but
+we report at least one H-feature from each.
+
+\begin{table}[t]
+\centering
+\begin{small}
+\begin{tabular}{|ll|}
+\hline
+{\bf BLESS: Co-hyponymy (Itr. 2)}     & {\bf BLESS: Meronomy (Itr. 3)}        \\
+\hline
+\ctx{nmod:between\depinv+cross}       & \ctx{amod+splayed}                    \\
+\ctx{nmod:like\depinv+vaguely}        & \ctx{amod+swept-back}                 \\
+\ctx{amod+trusty}                     & \ctx{amod+low-set}                    \\
+\ctx{nmod:between\depinv+hybrid}      & \ctx{dobj\depinv+protrude}            \\
+\ctx{compound+striped}                & \ctx{amod+upswept}                    \\
+\ctx{nmod:like\depinv+pull}           & \ctx{nmod:with\depinv+distinctive}    \\
+%\ctx{nmod:like\depinv+design}         & \ctx{appos+underside}                 \\
+%\ctx{amod+talk}                       & \ctx{nmod:by+alcalde}                 \\
+%\ctx{nmod:like\depinv+carry}          & \ctx{nmod:to\depinv+tinge}            \\
+%\ctx{acl+outfit}                      & \ctx{nmod:with\depinv+fuselage}       \\
+\hline
+\hline
+{\bf BLESS: Attribute (Itr. 4)}       & {\bf BLESS: Event (Itr. 6)}           \\
+\hline
+\ctx{amod\depinv+broom}               & \ctx{nmod:to\depinv+chance}           \\
+\ctx{amod\depinv+cutlass}             & \ctx{acl:relcl\depinv+fowl}           \\
+\ctx{amod\depinv+pail}                & \ctx{nsubj+weta}                      \\
+\ctx{amod\depinv+muff}                & \ctx{acl:relcl\depinv+hen}            \\
+\ctx{amod\depinv+paintbrush}          & \ctx{nmod:to\depinv+enough}           \\
+\ctx{amod\depinv+aga}                 & \ctx{nmod:to\depinv+reason}           \\
+%\ctx{amod\depinv+woody}               & \ctx{nmod:to\depinv+daring}           \\
+%\ctx{amod\depinv+bodied}              & \ctx{nmod:to\depinv+afraid}           \\
+%\ctx{advmod+unnaturally}              & \ctx{nmod:between+dusk}               \\
+%\ctx{amod\depinv+kettle}              & \ctx{acl\depinv+ready}                \\
+\hline
+\hline
+{\bf EVAL: Material (Itr. 2)}         & {\bf EVAL: Has A (Itr. 3)}         \\
+\hline
+\ctx{nmod:from\depinv+handcraft}      & \ctx{nmod:with\depinv+one}            \\
+\ctx{nmod:of\depinv+fashion}          & \ctx{nmod:below\depinv+have}          \\
+\ctx{nmod:out\_of\depinv+construct}   & \ctx{nmod:above\depinv+have}          \\
+\ctx{nmod:like\depinv+material}       & \ctx{nmod:with\depinv+long}           \\
+\ctx{nmod:out\_of\depinv+fashion}     & \ctx{nmod:with\depinv+long}           \\
+\ctx{appos+fiber}                     & \ctx{nmod:with\depinv+larger}         \\
+%\ctx{nmod:than\depinv+material}       & \ctx{nmod:with\depinv+type}           \\
+%\ctx{nmod:npmod\depinv+clad}          & \ctx{nmod:below\depinv+make}          \\
+%\ctx{nmod:such\_as\depinv+fibre}      & \ctx{nmod:with\depinv+body}           \\
+%\ctx{compound\depinv+fiber}           & \ctx{compound\depinv+downward}        \\
+\hline
+\hline
+{\bf K\&H: Meronomy (Itr. 3)}         & {\bf Root9: Co-hyponymy (Itr. 1)}     \\
+\hline
+\ctx{nmod:poss+stallion}              & \ctx{nmod:as\depinv+big}              \\
+\ctx{nmod:poss+serpent}               & \ctx{nmod:between\depinv+cross}       \\
+\ctx{nmod:with-1+beast}               & \ctx{nmod:such\_as\depinv+variety}    \\
+\ctx{nmod:poss+lion}                  & \ctx{nmod:like\depinv+pull}           \\
+\ctx{nmod:poss+hog}                   & \ctx{amod+trusty}                     \\
+\ctx{nmod:poss+lizard}                & \ctx{nmod:between\depinv+hybrid}      \\
+%\ctx{nmod:with-1+bull}                & \ctx{amod+proverbial}                 \\
+%\ctx{nmod:of+stag}                    & \ctx{compound+striped}                \\
+%\ctx{nmod:of+leviathan}               & \ctx{nmod:like\depinv+one}            \\
+%\ctx{nmod:poss+shark}                 & \ctx{xcomp\depinv+resemble}           \\
+\hline
+\end{tabular}
+\end{small}
+\caption{Feature detectors for different relations learned by our model in a
+  variety of datasets. These 8 hyperplanes were selected as most interesting
+  among 40. Each hyperplane is listed with its corresponding dataset,
+  identifying relation, and which iteration it was extracted from. Several
+  Hypernymy hyperplanes were also observed, but are not shown here.}
+\label{tab:ctxsimmulti}
+\end{table}
+
+In general, we find the H-features in the multi-relation settings are strong
+identifiers of their corresponding relations. Many are not as obvious or as
+clear cut as the original Hypernymy H-features, but all are interesting
+nonetheless. The BLESS and Root9 co-hyponymy detectors identify some
+interesting patterns from genetics, like \lit{cross between [tomato] and
+[tobacco]} and \lit{[cat] vaguely like a [dog]}. The K\&H meronomy H-features
+identifies clear possessive constructions (\lit{stallion's [tail]}) and mirror
+the meronomy patterns proposed by \newcite{girju:2006:cl}, though
+the contexts are strongly biased towards by its animal-heavy construction.
+The EVAL Material detector identifies strong material patterns
+(\lit{[bookshelves] handcrafted from [wood]}), and the EVAL Has detector
+identifies simple prepositional phrases (\lit{[garden] with one [flower]}).
+Altogether, we see some strong evidence that the H-features truly are
+indicative of the relations they are meant to identify, indicating our
+proposed model works strongly in multi-relation settings.
+
+Some of the H-features are more prototypical than the others, and their
+most similar words (rather than contexts) tend to appear directly in the data.
+For example, the BLESS Meronomy H-feature identifies many features that are
+common of animal parts, like \lit{splayed [feet]} or \lit{swept back [wings]}.
+The BLESS Attribute H-feature learned to identify color words, so its contexts
+are mostly concrete nouns which are described using these colors. The BLESS
+Event hyperplane appears only to segment verbs from the rest of the data,
+with contexts like \lit{chance to [eat]} or \lit{enough to [eat]}. This is
+unsurprising, as this was the only relation with any examples of verbs.
+Although these contexts tend toward prototypicality, it is also clear why
+they should be useful for the various relationships.
 
 \section{Chapter Summary}
 
-We considered the task of detecting lexical entailment using distributional
-vectors of word meaning.  Motivated by the fact that the Concat classifier acts
-as a strong baseline in the literature, we proposed a novel interpretation of
-the model's hyperplane. We found the Concat classifier overwhelmingly acted as
-a feature detector which automatically identifies Hearst Patterns in the
-distributional vectors.
+In this chapter, we proposed a new model for detecting lexical relationships
+using distributional vectors. We showed that the choice of bag-of-words
+or syntactic embeddings has a large impact on performance of a baseline
+Concat model. We then showed that the Concat model may be interpreted by
+comparing its hyperplane in the embedded {\em context} space. We found
+this interpretation gives direct evidence as an Hearst-like feature extractor,
+explaining Concat's high performance.
 
-We proposed a novel model that embraces these H-feature detectors fully, and
-extends their modeling power through an iterative procedure similar to
-Principal Component Analysis. In each iteration of the procedure, an H-feature
-detector is learned, and then removed from the data, allowing us to identify
-several different kinds of Hearst Patterns in the data. Our final model
-combines these H-feature detectors with measurements of general similarity and
-Distributional Inclusion, in order to integrate the strengths of different
-models in prior work. Our model matches or exceeds the performance of prior
-work, both on hypernymy detection and general lexical entailment.
-
-
+We propose our H-feature
+model, which exploits this behavior through repeated iterations of feature
+extraction in a PCA-like procedure, and learns a final classifier which obtains
+state-of-the-art performance on several datasets. We also compare our model
+to a state-of-the-art Hybrid path-and-distributional model, and found our
+model substantially outperforms the Hybrid model in an experimental setting
+with zero lexical overlap. Finally, we show the necessary extensions to our
+model in order to use it for multi-relation classification settings. We found
+our model outperforms baselines and the prior work on four datasets, and that
+the model learns interesting H-features corresponding to a variety of
+lexical relations.
 
