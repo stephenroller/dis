@@ -39,8 +39,8 @@ large enough corpus, many hypernymy relationships may easily be captured.
 Unfortunately, such patterns can be brittle and sensitive to minor inflections
 or variations.  These patterns above would fail to also capture the
 relationship between X and Z if provided \lit{X, such as Y and Z}. Some work
-has sought to address these by greatly expanding the lists of Hearst
-patterns \cite{needcite,seitner:2016:lrec}; others improve signal by using
+has sought to address these issues by expanding the lists of Hearst
+patterns and increasing coverage by using
 rough frequency estimates from web search engines (e.g. Google, Bing) rather
 than explicit counts \cite{seitner:2016:lrec}. Others generalize known patterns
 over Part-of-Speech tags \cite{sang:2007:acl} or language models
@@ -136,7 +136,7 @@ distributional similarity is too loose for precision-demanding applications
 like Question Answering or Textual Entailment, and that the definition should
 be changed slightly. They propose the {\em Distributional Inclusion Hypothesis}
 (DIH), which states that a {\em lexical entailment} relation holds between two
-words when ``contexts in which one of the words can be substituted by the other
+words when ``one of the words can be substituted by the other
 [word], such that the meaning of the original word can be inferred from the new
 one'' \cite{zhitomirskygeffet:2005:acl}. The DIH generalizes the view of
 distributional generality beyond hypernymy and provides a more rigorous

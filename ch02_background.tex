@@ -33,14 +33,11 @@ downstream tasks like Information Extraction or Question Answering and become
 useful in information-heavy industries like defense, journalism, and science.
 
 RTE is a very difficult task, at least partially due to its generality.  True
-entailment reasoning may require: broad common sense knowledge (what color is
-the sky?), factoids (what year was Nixon born?), or highly specialized domain
-knowledge (what is the half-life of cesium-137?); pragmatic or intent
-comprehension ("Do you know where the book is?" pragmatically means "Where is
-the book?"); sophisticated logical inferences about modals, quantifiers, scope,
-implication, sound deductions, and epistemological justifications (consider
-`Not all good children may make it to heaven eventually'); or more graded,
-fuzzier reasoning about word meaning. Modern RTE systems do {\em not} attempt
+entailment reasoning may require a mix of common sense and domain-specific
+knowledge; sophisticated logical inference about coreference, scope,
+quantifiers and implications; and a substantial ability to judge the importance
+and relationships between individual lexical items \cite{dagan:2006:mlc}.
+Modern RTE systems do {\em not} attempt
 to cover every possible entailment phenomenon, but do strive to make
 incremental progress on individual problems with varying approaches. In this
 thesis, we focus predominantly on some of the issues of {\em lexical semantics}
@@ -339,7 +336,7 @@ strong efficacy.
 \subsection{Problems with Distributional Representations}
 
 The Distributional Hypothesis and its computational implementations have proven
-to be extremely useful in practical applications of NLP \cite{needcite}. Indeed,
+to be extremely useful in practical applications of NLP \cite{cho:2015:arxiv,goldberg:2016:jair}. Indeed,
 one may even argue that the most important and impressive advancements of
 the past several years are fundamentally powered through the distributional
 hypothesis \cite{manning:2015:cl}. Nonetheless, distributional models do have
@@ -364,14 +361,17 @@ will address these problems in greater detail throughout the thesis.
 
 \section{Lexical Entailment and Relationship Detection}
 
-To paraphrase \newcite{shnarch:2008:thesis}, Lexical Entailment may be broadly
-defined as any number of semantic relations between two lexical items where the
-meaning of one is implied by the meaning of another.
+\newcite{zhitomirskygeffet:2005:acl} define Lexical Entailment as any instance
+where one word ``can be substitued by [another word], such that the meaning of
+the original word may be inferred from the new one.'' More generally,
+Lexical Entailment is roughly any semantic relation where
+the meaning of one word is implied by the meaning of another
+\cite{shnarch:2008:thesis}.
 This includes many classical lexical relations, like hypernymy
 (e.g. \lit{girl} is a \lit{child}; a \lit{dog} is an \lit{animal}), and meronomy
 (e.g. \lit{girl} has \lit{eyes}; a \lit{dog} has a \lit{tail}), but it can also include a
 wide variety other inferences which are difficult to categorize,
-like \lit{to snore} implies \lit{to sleep}.
+like \lit{to snore} implies \lit{to sleep}. 
 
 As shown in our Introduction example, understanding and predicting these
 lexical relationships is critical to performing certain inferences in RTE:
@@ -453,7 +453,7 @@ catalogue and enumerate the different senses of a word, as one sees in the
 Oxford English Dictionary, or in the different {\em synsets} in WordNet.
 This has led to the very important task of Word Sense Disambiguation (WSD),
 where one must identify which sense of a word is being used in a particular
-context or sentence \cite{needcite}.
+context or sentence \cite{mccarthy:2009:llc,navigli:2009:csur}.
 
 However, lexicographers may not always agree on how fine-grained to consider
 senses: obviously a \lit{river bank} and a \lit{financial bank} are very
@@ -461,18 +461,19 @@ different word senses, but should we distinguish the many different kinds of
 financial banks, like investment banks, deposit banks, federal banks, and so
 forth. This leads inevitably to the flip-side of the WSD: Word Sense Induction
 (WSI), where one must take a dataset of a word's unannotated usages, and then
-induct or identify all its possible sense meanings \cite{needcite,qiu:2016:emnlp}. It is clear
-how that the WSD and WSI may be important and useful task in the search of
-lexical semantics, but other possibilities exist.
+induct or identify all its possible sense meanings
+\cite{mccarthy:2009:llc,navigli:2009:csur}.  It is clear how that the WSD and
+WSI may be important and useful task in the search of lexical semantics, but
+other possibilities exist.
 
 One approach to dealing with polysemy is to model how word
 meaning {\em shifts} in a given context; that is, we can explicitly model what
-happens to a word based on its use in a given context. Since 2007, one
-way to measure this has been the Lexical Substitution task. In the
-Lexical Substitution task, we are provided with a sentential context,
-and must suggest {\em substitutes} which can replace the given target word,
-while preserving the meaning of the entire sentence
-\cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
+happens to a word based on its use in a given context
+\cite{erk:2008:emnlp,erk:2010:gems}. Since 2007, one way to measure this has
+been the Lexical Substitution task. In the Lexical Substitution task, we are
+provided with a sentential context, and must suggest {\em substitutes} which
+can replace the given target word, while preserving the meaning of the entire
+sentence \cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 
 At first glance, the Lexical Substitution task has a less obvious connection to
 Textual Entailment than the Lexical Entailment task does. However, we argue
