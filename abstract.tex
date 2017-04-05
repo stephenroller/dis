@@ -1,32 +1,21 @@
-As the field of Natural Language Processing has developed, research has
-progressed on ambitious semantic tasks like Recognizing Textual Entailment
-(RTE). Systems that approach these tasks may perform sophisticated
-inference between sentences, but often depend heavily on lexical resources
-like WordNet to provide critical information about relationships and
-entailments between lexical items. However, lexical resources are expensive
-to create and maintain, and are never fully comprehensive.
+Many modern efforts in Natural Language Understanding depend on rich and
+powerful semantic representations of words. Systems for sophisticated logical
+and textual reasoning often depend heavily on
+lexical resources to provide critical information about relationships
+between words, but these lexical resources are expensive to create and
+maintain, and are never fully comprehensive. Distributional Semantics has
+long offered methods for automatically inducing meaning representations from
+large corpora, with little or no annotation efforts. The resulting
+representations are valuable proxies of semantic similarity, but simply knowing
+two words are similar cannot tell us their relationship, or whether one
+entails the other.
 
-Distributional Semantics has long provided a method to automatically induce
-meaning representations for lexical items from large corpora with little or
-no annotation efforts. The resulting representations are excellent
-as proxies of semantic similarity: words will have similar representations if
-their semantic meanings are similar. Yet, knowing two words are similar
-does not tell us their relationship or whether one entails the other.
+In this thesis, we consider how methods from Distributional Semantics may be
+applied to the difficult task of lexical entailment. We approach this by
+showing contributions in areas of hypernymy detection, lexical relationship
+prediction, and lexical substitution, and textual entailment. We propose novel
+experimental setups, models, analysis, and interpretations, which ultimate
+provide us with a better understanding of both the nature of lexical entailment,
+as well as the information available within distributional representations.
 
-We present several models for identifying specific relationships and
-entailments from distributional representations of lexical semantics.
-Broadly, this work falls into two distinct but related areas: the first
-predicts specific ontology relations and entailment decisions between
-lexical items devoid of context; and the second predicts specific lexical
-paraphrases in complete sentences. We provide insight and analysis of how and
-why our models are able to generalize to novel lexical items and
-improve upon prior work.
-
-We propose several short- and long-term extensions to our work. In the
-short term, we propose applying one of our hypernymy-detection models to
-other relationships and evaluating our more recent work in an end-to-end
-RTE system. In the long-term, we propose adding consistency constraints to
-our lexical relationship prediction, better integration of context into
-our lexical paraphrase model, and new distributional models for improving
-word representations.
 
