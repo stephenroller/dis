@@ -98,13 +98,11 @@
 \renewcommand{\thesisauthor}{\myname}
 \renewcommand{\thesistitle}{\mytitle}
 
-\renewcommand{\thesisauthoraddress}{...}
+\renewcommand{\thesisauthoraddress}{me@stephenroller.com}
                                      %% Your permanent address; use "\\" for
                                      %% linebreaks.
 
-\renewcommand{\thesisdedication}{\parbox[c]{4in}{``I don't know the meaning of half those long words, and, what's more,
-    I don't believe you do either!''\begin{flushright}-- Lewis Carroll, \textit{Alice's Adventures in
-Wonderland}\end{flushright}}}
+\renewcommand{\thesisdedication}{To my sisters, Lindsey and Kacie.}
                                      %% Your dedication, if you have one; use
                                      %% "\\" for linebreaks.
 
@@ -162,19 +160,15 @@ Wonderland}\end{flushright}}}
 
 \thesisdedicationpage                %% Generate the dedication page.
 
+\renewcommand{\thesisdedication}{\parbox[c]{4in}{``I don't know the meaning of half those long words, and, what's more,
+    I don't believe you do either!''\begin{flushright}-- Lewis Carroll, \textit{Alice's Adventures in
+Wonderland}\end{flushright}}}
+\thesisdedicationpage                %% Generate the dedication page.
+
 \phantomsection
 \addcontentsline {toc}{chapter}{Acknowledgements}  %% Force Acknowledgements to appear in contents
 \begin{thesisacknowledgments}        %% Use this to write your
-  Acknowledgements go here.
-%The many scientists before me; society for allowing me this honor.
-%
-%Advising committee.
-%
-%Katrin, obviously.
-%
-%Jason, Sabine, Ray.
-%
-%Family, Melanie.
+\input{ack}
 \end{thesisacknowledgments}          %% allowed in LaTeX2e par-mode.
 
 
@@ -203,8 +197,14 @@ Wonderland}\end{flushright}}}
 \bibliographystyle{utthesis2015}
 \bibliography{refs}
 
-% \begin{thesisauthorvita}             %% Write your vita here; it can be
-% ...                                  %% anything in LaTeX2e par-mode.
-% \end{thesisauthorvita}               %%
+\begin{thesisauthorvita}
+Stephen Roller was born in the early hours of a winter's day in 1988 in
+Baltimore, Maryland. He spent his formidable years in Charlotte, North
+Carolina. He obtained a Bachelors of Science in Computer Science from
+North Carolina State University in 2010, and then entered graduate school
+at the University of Texas at Austin. He obtained a Masters of Science in
+Computer Science in 2014, and continued his doctoral studies, where he
+has been working on natural language understanding.
+\end{thesisauthorvita}
 
-\end{document}                       %% Done.
+\end{document}
