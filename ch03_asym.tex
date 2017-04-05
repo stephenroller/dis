@@ -267,7 +267,7 @@ MAP of $1.0$ in the Hyper column, and $0.0$ in other columns.
   \end{tabular}
   \end{small}
   \caption{Mean Average Precision (MAP)  for the unsupervised entailment
-    measures on the BLESS data set. An ideal measure has a MAP of $1.0$ in the
+    measures on the BLESS dataset. An ideal measure has a MAP of $1.0$ in the
     Hyper column and $0.0$ in the other columns. All measures fail to select
     hypernymy with greater precision than co-hyponymy.}
   \label{tab:mapscores1}
@@ -297,7 +297,7 @@ evaluate a model's generalization by checking that the model is able to make
 predictions on {\em unseen} data. Traditional methods for creating train/test
 splits of data are simple randomization (80\% for train, 20\% for test,
 stochastically assigning each data item to one or the other). When a particular
-data set is somewhat small, it is often common to evaluate using
+dataset is somewhat small, it is often common to evaluate using
 cross-validation (CV), where the data is split into $k$ equal sized {\em folds}
 and then each fold is used as the test set in $k$ separate evaluations.
 Typically the performance metric (like accuracy) is averaged across all $k$
@@ -393,7 +393,7 @@ Table~\ref{tab:splits}b. This will occur in any dataset where a particular word
 occurs in more than one example pair.  This can be mitigated by keeping the
 size of each test set to its smallest reasonable value to minimize the
 possibility of overlap with other pairs. Figure~\ref{fig:dataloss} shows the
-percentage of training data that must be discarded on two different data sets.
+percentage of training data that must be discarded on two different datasets.
 A traditional machine learning setup, where no pairs are discarded because
 overlap is disregarded, would lie at the $y = 0.0$ line. We see that the
 amount of data that must be discarded rapidly increases with the size of
@@ -486,8 +486,8 @@ how well a model generalizes to new data. Evaluating with zero lexical overlap
 is important if we wish to distinguish between a model which truly generalizes
 to novel words and one which simply memorizes the data. Category stratification
 is important when we are interested in generalizing models to new domains;
-unfortunately, category information is only available in one data set, making
-it difficult to test robustness of models across multiple data sets.
+unfortunately, category information is only available in one dataset, making
+it difficult to test robustness of models across multiple datasets.
 
 On the other hand, \newcite{shwartz:2016:acl} argue that allowing lexical
 overlap is possibly more realistic, since lexicographers are more likely to
@@ -612,7 +612,7 @@ section on Experimental Setup.
   \end{tabular}
   \caption{Accuracy of \newcite{baroni:2012:eacl} and Asym on BLESS and LEDS
     using different spaces for feature generation. The
-    \newcite{baroni:2012:eacl} did not converge on the BLESS data set with
+    \newcite{baroni:2012:eacl} did not converge on the BLESS dataset with
     TypeDM vectors.}
   \label{tab:asymspaces}
 \end{table}
@@ -665,12 +665,12 @@ the unnormalized vectors, and vector difference(-squared) of normalized vectors
   \label{tab:asymfeatures}
 \end{table}
 
-Table~\ref{tab:asymfeatures} shows each of these settings on both data sets
+Table~\ref{tab:asymfeatures} shows each of these settings on both datasets
 Curiously, we see that each the two factors has nearly opposite behaviors
 on the two classifiers: using difference vectors hurts the SVM classifier on
 both datasets, but helps the LogReg classifier on LEDS. We also see that
 unit-normalizing vectors substantially hurts the performance of the SVM
-classifer, while giving an improvement to LogReg on LEDS. Nonetheless, the
+classifier, while giving an improvement to LogReg on LEDS. Nonetheless, the
 the final Asym model substantially outperforms both models on both datasets.
 
 \subsection{Selective Distributional Hypothesis}

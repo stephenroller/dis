@@ -1,43 +1,190 @@
 \chapter{Conclusion}
+\label{ch:conclusion}
 
-Distributional Semantics has come a long way in its ability to contribute to
-difficult Natural Language Processing tasks. In this proposal, we several
-methods for distilling {\em lexical knowledge} out of distributional vectors.
-We discussed two models of hypernymy detection, which take as input pairs of
-words, and predict whether those models stand in a hypernymy relation.  Through
-detailed analysis, we have a clear picture of how these models work, and how
-they relate to some of the linguistic literature on Lexical Entailment, like
-the Distributional Inclusion Hypothesis and Hearst Patterns. We also saw that
-at least one of these models is able to positively contribute to an RTE system
-We discussed a new model of Lexical
-Substitution, which we argue is related to lexical entailment by acting as a
-form of {\em in-context synonym prediction}. Our Lexical Substitution model
-outperforms some comparable baselines, and analysis shows its improvements
-derive predominantly from exploiting simple unigram priors.
+Distributional Semantics has come a long way in its ability to contribute
+to difficult Natural Language Processing tasks. Distributional representations
+of word meaning has been successfully used on a wide variety of lexical semantics
+tasks, and has become the shoulder on which modern NLP methods stand
+\cite{goldberg:2016:jair}.
 
-We also discussed multiple directions for how our work could be extended
-in the future. In the short term, we focus on exploring how our H-features
-model could also contribute to the RTE Lexical Entailment classifier, and
-whether the H-features model is able to model relations other than hypernymy.
-We also discussed several ways in which the Lexical Substitution model could
-contribute to the RTE Lexical Entailment Classifier. Progress in these areas
-would contribute significantly to our thesis that our models extract useful
-lexical information for Recognizing Textual Entailment.
+In this dissertation, we considered how distributional representations of word
+meaning can be useful for identifying and exploiting {\em lexical entailment}.
+We have considered a variety of challenging tasks related to the area,
+including hypernymy detection, lexical relationship prediction, and lexical
+substitution.
 
-Finally, we discussed different long-term directions for future research. These
-ideas are much larger, and less guaranteed than the short-term research
-proposals, but also reflect our opinion on where the field should go from here.
-Namely, we considered how Hypernymy and Relationship prediction could be
-improved by imposing simple constraints inherent to ontologies. We also
-discussed several ways in which more context could be exploited in Lexical
-Substitution, or how we could remove some of the independence assumptions made
-by our current model. We note that improvements could come by either
-exploiting linguistic knowledge about how different syntactic relations
-interact, or by using recent successful neural network techniques. Lastly, we
-considered how current syntactic distributional spaces make an inefficient use
-of the available information, and discussed ways they could be extended to be
-{\em generative} over syntactic relations, instead of just artificially
-limiting the statistics they model. Improvements in these spaces would likely
-improve performance of distributional models in many tasks, including
-Lexical Entailment and Lexical Substitution.
+In hypernymy detection and lexical relationship prediction, we must predict
+whether a given pair of words exhibits a particular linguistic relationship,
+like hypernymy, co-hyponymy, meronomy, or a variety of other possibilities.
+Our work shows that the choice of experimental setup is critical to properly
+understanding how methods may or may not generalize to novel lexical items,
+and introduce the notion of lexical memorization. We propose evaluating models
+in an adversarial setup with zero lexical overlap between training and test
+sets, allowing us to measure generalization to unseen words, and our proposed
+setup has now become a standard evaluation in the literature.
+
+In addition, we have also proposed Asym, a new model of hypernymy detection and
+lexical relationship prediction: Asym. We also analyze Asym to identify
+its relationship to existing linguistic theories of hypernymy, like the
+Distributional Inclusion Hypothesis, and show that our model does not suffer
+from some of the prototypicality limitations of other models proposed in the
+literature, which only make predictions based on how similar a pair is to
+relationship prototypes, without regard for actual relationship between the
+words in a pair.
+
+Furthermore, we consider the behavior of a model known to exhibit {\em only}
+prototypicality behavior, and propose a novel analysis method to interpret the
+behavior of the model. By interpretting a model's hyperplane in terms of {\em
+context} space, we come to a clear observation that simpler models actually
+learn to identify H-features, or Hearst pattern style contexts which are most
+indicative of hypernymy. Building on this observation and the success of
+Asym, we propose a novel model which identifies and exploits multiple sets of
+H-features, through an iterative PCA-like procedure. Our model matches or
+exceeds the performance of other models in the literature on several datasets.
+We also extend our H-feature model so that it may predict several lexical
+relationships simultaneously, and outperform existing models in the literature.
+We examine the H-features learned for the non-hypernymy relationships, and
+find strong evidence for additional known Hearst patterns in the literature,
+as well as many alternative patterns highly indicative of target relationships.
+
+We also consider a novel model of lexical substitution, where one must predict
+a synonym for a polysemous word in a particular sentential context. We examine
+a small modification to a simple model existing in the literature, and show
+large performance gains over several datasets and evaluations compared to the
+baseline model. Our performance most improves on the difficult task of
+substitution generation, where a one may propose any word from the entire
+vocabulary as a substitute. Additional analysis shows that our model improves
+over prior work via a strong integration of a unigram frequency bias, allowing
+it to discard rare or mispelled substitutes from its predictions.
+
+Finally, we consider how each of the contributions from above may be integrated
+into a real, end-to-end system for Recognizing Textual Entailment. We consider
+the role of a lexical entailment classifier in an RTE system, and the
+relationship between distribuitonal similarity and the probability of lexical
+entailment. We find that each of our components, on its own, is able to
+perform competitively or outperform a number of baseline lexical entailment
+features. Furthermore, we show that the components may be combined with
+existing lexical entailment features to improve overall peformance, and can
+outperform a system which uses only a fixed, high-quality lexical resource.
+Our components are partially orthogonal, and improve further by bringing all
+together.
+
+In short, this thesis has shown that Distributional Semantics can contribute
+significantly to difficult lexical and textual entailment tasks through a
+variety of techniques and models, and that efforts on each task have yielded
+a deeper understanding about distributional word representations, and the
+information contained within them.
+
+
+\section{Future Work}
+
+
+As with all areas of research, the work in this thesis answers some questions,
+but it also raises new ones. In this section, we briefly consider some possible
+future directions of research.
+
+\paragraph{Long-distance Dependency Contexts}
+Throughout this thesis, we saw that a variety of syntactic contexts can play
+important roles in the predictive power of models. For example, in the work on
+H-features, we saw that some complex syntactic contexts, like
+\ctx{nmod:between\depinv+cross} was one context learned to be indicative of
+co-hyponymy, and \ctx{nmod:from\depinv+handcraft} was learned to be indicative
+of constructive material. These contexts were extracted due to the collapsed
+dependency structures used at the time of space creation
+\cite{marneffe:2008:techreport}. The dependencies which are collapsed are
+based on a small list of fixed, English multiword expressions. As such,
+other, more complex syntactic fragments, or fragments with multiple
+intermediary points may form additional strong signal for the applications
+explored in this thesis. Models which use {\em paths} through dependency
+parses have had success in lexical relationship prediction
+\cite{shwartz:2016:acl,shwartz:2016:cogalex2} and semantic role labeling
+\cite{roth:2016:acl}. Models of these paths are likely useful as proxies for
+wider-context information in a future distributional models.
+
+\paragraph{Multi-relation Lexicalization}
+In a similar vein, current work on distributional models treats each
+co-occurrence as an independent, isolated event in the corpus. For example, in
+our distributional spaces, we model a verb-subject co-occurrences independently
+of verb-object co-ocurrences independently of verb-preposition co-occurrences.
+In some cases, it may be better to model a word's co-occurrences jointly. For
+example, if someone ``kills two birds,'' we may have an industrious hunter, and
+if we observe someone ``killing with one stone,'' we may recall the story of
+David and Goliath. However, if we observe someone ``killing two birds with one
+stone,'' the situation is entirely different from the previous two scenarios.
+It follows that some words or specific co-occurrences may be better modeled
+if two co-occurring {\em contexts} are also modeled as a single unit, rather
+than separate, smaller contexts.
+Indeed, \newcite{chersoni:2016:emnlp} find that jointly modeling a verb using
+its subject {\em and} object gives better estimates of human similarity
+scores, but we suspect joint modeling may be valuable for several combinations
+of syntactic relationships.
+
+Sparsity will always be a fundamental challenge in such joint-modeling
+applications, but clustering methods allieve this problem by using coarser
+co-occurrences for modeling.  \newcite{melamud:2014:conll} makes a step in this
+direction by using probability estimates of a language model to estimate joint
+co-occurrence, but they ignore explicit markers of syntactic relations.
+Clustering approaches may also be helpful if used as substitutes for words
+occurring in particular relations, giving coarser groups of co-occurrences,
+but may result in the loss of idiomatic constructions, like our example, or
+cause overgeneralization from idioms, such as ``murdering two pigeons with one
+rock.''
+
+\paragraph{Joint H-feature Learning}
+
+In Chapter~\ref{ch:hpm}, we used an iterative, progressive procedure for
+extracting each multiple H-features, with the second H-feature only being
+extracted after the first is individually modeled and subtracted from the data.
+However, this greedy procedure possibly results in less idealic H-features
+being captured. In our own examples, we saw that the H-features related to
+vehicles were mixed with H-features of common tools, though finding two
+separate H-features may be more idea. One solution to this problem would be
+to learn to extract all H-features {\em simultaneously} and {\em jointly},
+rather than our iterative greedy procedure. This could be done using a
+neural network model, such that the first layer's weight matrix would
+correspond to each separate H-feature. In preliminary experiments testing this
+approach, we struggled with overfitting on specific lexical items, and suffered
+a great deal of the same lexical memorization issue as previous works. It
+may be necessary to regularize the model using orthogonal regularization
+\cite{brock:2017:iclr}, or a sparsity regularizer on hidden activations.
+
+\paragraph{Lexical Relationship Generation}
+
+In the broader context, predicting whether two words exhibit a lexical
+lexical relationship is of limited use when one or both sides of the pair
+is unconstrained, and the best possible word must be {\em generated} or
+{\em selected}. For example, applications may be actually more interested
+in asking what is the hypernym of \lit{cat}, rather than whether
+\lit{cat},~\lit{animal}) is hypernymy. At the present moment, our H-feature
+model and similar lexical relationship models could only answer the former
+question by enumerating over the vocabulary, and querying the model word by
+word. Naturally, even if we improved our predictive accuracy substantially
+beyond current state-of-the-art, the the numerous trials will naturally result
+in a large number of false positives.
+
+Furthermore, we saw in our own experiments that highly imbalanced datasets
+(like the Medical dataset) have much lower accuracies than more balanced
+datasets, indicating the problem cannot be solved via data augmentation alone.
+As such, distributional lexical relationship {\em generation} is an interesting
+area of further research with limited prior work
+\cite{fu:2014:acl,nayak:2015:techreport,espinosaanke:2016:emnlp}. We hope
+future researchers in this area will benefit from the lessons learned in this
+thesis.
+
+\paragraph{Structured Relationship Prediction}
+
+In the same vein as Lexical Relationship Generation, we should also recall that
+many interesting linguistic relationships are actually interconnected,
+structured problems. For example, co-hyponymy is a useful linguistic
+relationship with its own interesting signals and Hearst patterns (as we saw in
+Chapter~\ref{ch:hpm}), but it is also inseparably defined in terms of
+hypernymy. Yet, the models discussed in this thesis do not consider relationship
+prediction in this manner: (\lit{cat}, \lit{animal}) is classified independently
+of (\lit{dog}, \lit{animal}) and (\lit{cat}, \lit{dog}). A good system of
+lexical relationship prediction, or generation, should weigh the evidence for
+all three pairs together, and come to a conclusion as a whole. That is, models
+should also be forced to consider the natural constraints of the taxonomic
+properties, in addition to evidence between two individual pairs.
+
+
 

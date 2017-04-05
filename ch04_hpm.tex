@@ -23,7 +23,7 @@ find that hypernymy detection classifiers have a high degree of
 interpretability when considered carefully.  We propose a novel model which
 combines the advantages of prototypicality classifiers, while addressing their
 pitfalls. Our new model achieves consistently strong or state-of-the-art
-performance across numerous data sets, including data sets of hypernymy
+performance across numerous datasets, including datasets of hypernymy
 detection, general lexical entailment, and multi-relation classification.
 
 \section{Related Work for Supervised Models}
@@ -59,7 +59,7 @@ the differences and considerations of the many approaches.
 As discussed earlier, the earliest supervised approach was that of
 \newcite{baroni:2012:eacl}, who used an off-the-shelf polynomial SVM train on
 the {\em concatenation} of the pair $\wordpair$. Such a model obtains strong
-performance on randomized stratifications of data sets, but performs poorly
+performance on randomized stratifications of datasets, but performs poorly
 when testing for lexical generalization. This issue was observed simultaneously
 by \newcite{roller:2014:coling} and \newcite{weeds:2014:coling}, who published
 these concerns at the same conference. The former approached the problem
@@ -131,10 +131,10 @@ sampling (via pair randomization) can improve performance, and that difference
 vectors are robust across several models of distributional spaces.
 Additionally, Shwartz and Dagan~(\shortcite{shwartz:2016:cogalex2,shwartz:2016:cogalex1})
 apply the hybrid path-and-distributional neural
-net \cite{shwartz:2016:acl} to multi-relation data sets and again find that
+net \cite{shwartz:2016:acl} to multi-relation datasets and again find that
 hybrid approaches generally outperform only-path or only-distributional
 approaches, though the differences are less pronounced than in hypernymy-only
-data sets.
+datasets.
 
 \section{Understanding Distributional Hypernymy Detectors}
 
@@ -159,36 +159,35 @@ propose an alternative view of prototypicality: rather than simply modeling the
 extractor which detects {\em aspects} typical of hypernyms.  We study these
 properties by focusing only on binary classification experiments.
 
-We focus on four different data sets, two of which are hypernymy-only data
-sets, and the remaining two are general lexical entailment datasets. The first
-two data sets are {\bf LEDS} and {\bf BLESS}, which contain both positive and
+We focus on four different datasets, two of which are hypernymy-only datasets, and the remaining two are general lexical entailment datasets. The first
+two datasets are {\bf LEDS} and {\bf BLESS}, which contain both positive and
 negative examples of hypernymy, as discussed in the previous chapter. However,
 here we explicitly binarize the BLESS dataset such that all hypernymy examples
 in BLESS are labeled as positive, while random and other relations are labeled
 as negative. LEDS only contains hypernymy and non-hypernymy examples, and so is
 already binary.
 
-The next data set we consider is {\bf Medical} \cite{levy:2014:conll}. This
-data set contains noisy annotations of subject-verb-object entailments
+The next dataset we consider is {\bf Medical} \cite{levy:2014:conll}. This
+dataset contains noisy annotations of subject-verb-object entailments
 extracted from medical texts, and transformed into noun-noun entailments by
 argument alignments. The data contains 12,600 annotations, but only 945
 positive examples encompassing various relations like hypernymy, meronomy,
 synonymy, and some examples of ``contextonymy,'' or entailments that occur in
 {\em some} specific contexts, but do not cleanly fit in other categories (e.g.
-\lit{hospital} entails \lit{doctor}). It one of the most difficult data sets:
+\lit{hospital} entails \lit{doctor}). It one of the most difficult datasets:
 it is both highly domain specific (containing mostly medical terms) and highly
 unbalanced.
 
-The final data set we consider is {\bf TM14}, a variation on the SemEval 2012
+The final dataset we consider is {\bf TM14}, a variation on the SemEval 2012
 Shared Task of identifying the degree to which word pairs exhibit various
 relations. These relationships include a small amount of hypernymy, but also
 many more uncommon relations (agent-object, cause-effect, time-activity, etc).
 Relationships were binarized into (non-)entailing pairs by
-\newcite{turney:2015:nle}.  The data set covers 2188 pairs, 1084 of which are
+\newcite{turney:2015:nle}.  The dataset covers 2188 pairs, 1084 of which are
 entailing.
 
-These two entailment data sets contain important differences, especially in
-contrast to the hypernymy data sets. Neither contains any randomly generated
+These two entailment datasets contain important differences, especially in
+contrast to the hypernymy datasets. Neither contains any randomly generated
 negative pairs, meaning general semantic similarity measures should be less
 useful; And both exhibit a variety of non-hypernymy relations, which are less
 strictly defined and more difficult to model.
@@ -226,7 +225,7 @@ as a window size of 0.
   \centering
   \includegraphics[width=0.75\textwidth]{plots/window.pdf}
   \caption{Comparison of different distributional window sizes for a baseline
-  classifier on several different data sets. A window size of 0 contains the
+  classifier on several different datasets. A window size of 0 contains the
   results for a syntactic distributional space.}
   \label{fig:window}
 \end{figure}
@@ -282,13 +281,13 @@ choice for analysis. We first consider the most pessimistic hypothesis: is it
 only learning to memorize which words are hypernyms at all?
 
 We train the baseline Concat classifier using Logistic Regression on each of
-the four data sets, and extract the vocabulary words which are most similar to
+the four datasets, and extract the vocabulary words which are most similar to
 the $\hat H$ half of the learned hyperplane $\hat p$. If the classifier is only
 learning to memorize the training data, we would expect the most frequent
 hypernyms from the data to dominate this list of closest vocabulary terms, as
 the centroid $\hat H$ should be strongly located near them.
 Table~\ref{tab:wordsim} gives the five most similar words to the learned
-hyperplane, with bold words appearing directly in the data set.
+hyperplane, with bold words appearing directly in the dataset.
 
 \begin{table}[t]
 \begin{center}
@@ -313,14 +312,14 @@ hyperplane, with bold words appearing directly in the data set.
   %\end{footnotesize}
 \end{center}
 \caption{Most similar words to the prototype $\vhath$ learned by a Concat model. Bold items
-appear in the data set. Very few of the closest terms directly appear in the dataset.}
+appear in the dataset. Very few of the closest terms directly appear in the dataset.}
 \label{tab:wordsim}
 \end{table}
 
 Interestingly, we notice there are very few bold words at all in the list.  In
 LEDS, we actually see some good hypernyms of dataset items which do {\em not}
-even appear in the data set. The Medical and TM14 words do not even appear
-related to the content of the data sets. Similar results were also found for
+even appear in the dataset. The Medical and TM14 words do not even appear
+related to the content of the datasets. Similar results were also found for
 Diff and Asym, and both when using Linear SVM and Logistic Regression. These
 lists cannot explain the success of the prototypicality classifiers in prior
 work. Instead, we propose an alternative interpretation of the hyperplane: that
@@ -343,7 +342,7 @@ context matrix $C$. Under this interpretation, the Concat model does {\em not}
 learn what words are hypernyms, but rather what {\em contexts} are indicative
 of hypernymy. Table~\ref{tab:ctxsim} shows the syntactic contexts with the
 highest cosine similarity to the $\vhath$ prototype for each of the different
-data sets.
+datasets.
 
 \begin{table}[t]
 \centering
@@ -391,7 +390,7 @@ in \lit{animals such as cats}. These patterns have been well known to be
 indicative of hypernymy for over two decades. Other interesting patterns are
 the \lit{including} pattern (\lit{animals including cats}) and \lit{many}
 pattern (\lit{many animals}). Although we list only the six most similar
-context items for the data sets, we find similar contexts continue to dominate
+context items for the datasets, we find similar contexts continue to dominate
 the list for the next 30-50 items.
 
 Taken together, it is remarkable that the model identified these patterns using
@@ -417,14 +416,14 @@ to generalize across similar contexts. Additionally, their model did not make
 use of {\em collapsed dependencies}, making features like \lit{such} much
 weaker signals of entailment and therefore less dominant during analysis.
 
-Among these remarkable lists, the LEDS and TM14 data sets stand out for having
+Among these remarkable lists, the LEDS and TM14 datasets stand out for having
 much fewer \lit{such as} patterns compared to BLESS and Medical. The reason
-for this is explained by the construction of the data sets: since LEDS
+for this is explained by the construction of the datasets: since LEDS
 contains the same words used as both positive and negative examples, the
-classifier has a hard time picking out clear signal. The TM14 data set, however,
+classifier has a hard time picking out clear signal. The TM14 dataset, however,
 does not contain any such negative examples.
 
-We hypothesize the TM14 data set contains too many diverse and mutually
+We hypothesize the TM14 dataset contains too many diverse and mutually
 exclusive forms of lexical entailment, like instrument-goal (e.g. \lit{honey}
 $\rightarrow$ \lit{sweetness}).  To test this, we retrained the model with only
 hypernymy as positive examples, and all other relations as negative.  We find
@@ -603,11 +602,11 @@ vary dramatically.
 %random seed, indicating that multiple trials are necessary. Second, fixed
 %setups consistently discard roughly half the data as ineligible for either
 %training or test, as lexical items appear in many pairs. Our CV-like setup
-%allows us to evaluate performance over every item in the data set exactly once,
-%making a much more efficient and representative use of the original data set.
+%allows us to evaluate performance over every item in the dataset exactly once,
+%making a much more efficient and representative use of the original dataset.
 
 Our performance metric is F1 score. This is more representative than
-accuracy, as most of the data sets are heavily unbalanced. We report the mean
+accuracy, as most of the datasets are heavily unbalanced. We report the mean
 F1 scores across all cross validation folds.
 
 \subsection{Hyperparameter Optimization}
@@ -649,7 +648,7 @@ non-entailing).
   H-feature Model  &  {\bf.901}  &  {\bf.631}  &  {\bf.260}    &      .697   \\
   \hline
 \end{tabular}
-\caption{Mean F1 scores for each model and data set for binary classification.}
+\caption{Mean F1 scores for each model and dataset for binary classification.}
 \label{tab:results}
 \end{table}
 
@@ -664,14 +663,14 @@ Distributional Inclusion into the Concat baseline, but are still linear models.
 We cannot include baselines like Ksim+Asym, because Ksim is based on a custom
 SVM kernel which is not amenable to combinations.
 
-Table~\ref{tab:results} the results across all four data sets for all of the
+Table~\ref{tab:results} the results across all four datasets for all of the
 listed models. Our proposed model improves significantly\footnote{Bootstrap test, $p<.01$.} over Concat in the LEDS,
-BLESS and Medical data sets, indicating the benefits of combining these aspects of
+BLESS and Medical datasets, indicating the benefits of combining these aspects of
 similarity and distributional inclusion with the H-feature detectors of Concat.
 The Concat+Asym classifier also improves over the Concat baseline, further
 emphasizing these benefits. Our model performs approximately the same as Ksim
-on the LEDS and TM14 data sets (no significant difference),
-while significantly outperforming it on BLESS and Medical data sets.
+on the LEDS and TM14 datasets (no significant difference),
+while significantly outperforming it on BLESS and Medical datasets.
 
 \subsection{Ablation Experiments}
 \begin{table}
@@ -705,18 +704,18 @@ between the full and ablated models on the development sets, so higher numbers i
 feature importance.
 
 We find the similarity feature is extremely important in the LEDS, BLESS and
-Medical data sets, therefore reinforcing the findings of
+Medical datasets, therefore reinforcing the findings of
 \newcite{levy:2015:naacl}. The similarity feature is especially important in
-the LEDS and BLESS data sets, where negative examples include many random
-pairs. The detector features are moderately important for the Medical and TM14 data sets,
+the LEDS and BLESS datasets, where negative examples include many random
+pairs. The detector features are moderately important for the Medical and TM14 datasets,
 and critically important on BLESS, where we found the strongest evidence
 of Hearst patterns in the H-feature detectors.
 Surprisingly, the detector features are moderately {\em detrimental} on the
-LEDS data set, though this can also be understood in the data set's construction:
+LEDS dataset, though this can also be understood in the dataset's construction:
 since the negative examples are randomly shuffled positive examples, the
 {\em same} detector signal will appear in both positive and negative examples.
 Finally, we find the model performs somewhat robustly without the inclusion
-feature, but still is moderately impactful on three of the four data sets,
+feature, but still is moderately impactful on three of the four datasets,
 lending further evidence to the Distributional Inclusion Hypothesis.
 In general, we find all three components are valuable sources of information
 for identifying hypernymy and lexical entailment.
@@ -780,21 +779,21 @@ performance, we fix the regularization parameter at $C = 1$, and train our
 model fixing the number of iterations to $n = \{1, \ldots, 6\}$.
 We then measure the mean F1 score across the development folds and compare to a
 baseline which uses only one iteration. Figure~\ref{fig:byiteration} shows
-these results across all four data sets, with the 0 line set at performance of
+these results across all four datasets, with the 0 line set at performance of
 the $n = 1$ baseline. Models above 0 benefit from the additional
 iterations, while models below do not.
 
 In the figure, we see that the iterative procedure moderately improves
 performance LEDS, while greatly improving the scores of BLESS and TM14, but
-on the medical data set, additional iterations actually hurt performance.
+on the medical dataset, additional iterations actually hurt performance.
 The differing curves indicate that the optimal number of iterations is very
-data set specific, and provides differing amounts of improvement, and therefore
+dataset specific, and provides differing amounts of improvement, and therefore
 should be tuned carefully. The LEDS and BLESS curves indicate a sort of
 ``sweet spot'' behavior, where further iterations degrade performance.
 
 To gain some additional insight into what is captured by the various iterations
 of the feature extraction procedure, we repeat the procedure from
-Section~\ref{sec:motivation}: we train our model on the entire BLESS data set
+Section~\ref{sec:motivation}: we train our model on the entire BLESS dataset
 using a fixed four iterations and regularization parameter. For each iteration,
 we compare its learned H-feature detector to the context embeddings, and report
 the most similar contexts for each iteration in Table~\ref{tab:multiter}.
@@ -802,7 +801,7 @@ the most similar contexts for each iteration in Table~\ref{tab:multiter}.
 The first iteration is identical to the one in Table~\ref{tab:ctxsim}, as
 expected. The second iteration includes many H-features not picked up by the
 first iteration, mostly those of the form \lit{[animals] including [cats]}. The
-third iteration picks up some data set specific signal, like \lit{free-swimming
+third iteration picks up some dataset specific signal, like \lit{free-swimming
 [animal]} and \lit{value of [computer]}, and so on. By the fourth iteration,
 the features no longer exhibit any obvious Hearst patterns, perhaps exceeding
 the sweet spot we observed in Figure~\ref{fig:byiteration}.  Nonetheless, we
@@ -839,7 +838,7 @@ Distributional-only comparisons.
 We aim to directly compare with this approach by evaluating our model using
 the same data and experimental setup used by \newcite{shwartz:2016:acl}.
 They use a custom dataset of hypernymy pairs extracted from a union of several
-data sets (including BLESS and DBPedia), and use only {\em related} words
+datasets (including BLESS and DBPedia), and use only {\em related} words
 as negative examples, preventing simple cosine baselines from doing well.
 The full dataset contains about 70k pairs, roughly 25\% of which are positively
 entailing.
@@ -853,7 +852,7 @@ publish along with their paper.  Table~\ref{tab:shwartz}(a) shows the reported
 results for a linear distributional-only baseline (Concat), along with their
 novel Path-only model and state-of-the-art Hybrid model.
 
-To compare our H-feature model to theirs, we use their published data sets,
+To compare our H-feature model to theirs, we use their published datasets,
 and evaluate using the same training/test splits, and select hyperparameters
 using the same validation sets. Since not all words in the dataset appear
 in our set of distributional vectors, we assign out-of-vocabulary words
@@ -968,7 +967,7 @@ selects the most {\em pronounced} H-feature detector at each setting, and
 we find this heuristic works well in practice.
 
 Covering multiple relations additionally requires that we handle some
-non-noun lexical items. Since data sets are not explicitly annotated with
+non-noun lexical items. Since datasets are not explicitly annotated with
 part-of-speech tags, but our word vectors are, it is not obvious when we
 see a word like \lit{show} whether we should select \lit{show/NN} or
 \lit{show/VB}. We address this by always selecting the vector corresponding
@@ -978,16 +977,15 @@ as our representation for \lit{show}.
 
 \subsection{Data and Experiments}
 
-We evaluate our multi-relation H-feature detector on several existing data
-sets covering a wide variety of relations.
+We evaluate our multi-relation H-feature detector on several existing datasets covering a wide variety of relations.
 
-The first data set we use is {\bf BLESS} \cite{baroni:2011:gems}, which was also used
+The first dataset we use is {\bf BLESS} \cite{baroni:2011:gems}, which was also used
 in the single-class experiments; previously, we only used the Hypernymy labels
 as positive classes, and all other labels as negative. Here, we include all
 relations with their positive labels, including the {\em attribute} and
 {\em event} relations which were excluded in previous settings.
 
-The second data set we use is {\bf EVAL} \cite{santus:2015:ws}, which contains
+The second dataset we use is {\bf EVAL} \cite{santus:2015:ws}, which contains
 a wide variety of lexical relations: {\em hypernymy}, {\em antonymy}, {\em
 synonymy}, {\em has} (\lit{map} has \lit{information}), {\em property}
 (\lit{volcano} has the property \lit{hot}), and {\em material} (\lit{clothes}
@@ -995,13 +993,13 @@ are {made of} \lit{cotton}).  The full dataset has 7,378 annotated pairs.
 Notably, EVAL lacks any random negative pairs, meaning that all pairs contain
 words semantically related in some way.
 
-The third data set we use is {\bf Root9} \cite{santus:2016:lrec} contains
+The third dataset we use is {\bf Root9} \cite{santus:2016:lrec} contains
 12,763 pairs consisting of {\em random}, {\em hypernymy}, and {\em co-hyponymy}
 relations. The dataset was intentionally constructed to be balance random
 relations with non-random relations, and balance the non-random relations
 equally between hypernymy and co-hyponymy.
 
-The final data set we use is {\bf K\&H+N} \cite{necsulescu:2015:starsem}, our
+The final dataset we use is {\bf K\&H+N} \cite{necsulescu:2015:starsem}, our
 largest dataset containing of 57,510 annotated pairs consisting of {\em
 hypernymy}, {\em co-hyponymy}, {\em meronomy}, and {\em random} relations and
 covering three domains (animals, plants, and vehicles). Similar to BLESS and
@@ -1076,7 +1074,7 @@ applied to these datasets before.
   H-feature Model  &  {\bf.470}  &  {\bf.713}  &  {\bf.732}    &  {\bf.755}  \\
   \hline
 \end{tabular}
-\caption{Mean Accuracy scores for each model and data set for multi-relation classification.}
+\caption{Mean Accuracy scores for each model and dataset for multi-relation classification.}
 \label{tab:multiresults}
 \end{table}
 
@@ -1099,7 +1097,7 @@ consideration.
 Table~\ref{tab:ctxsimmulti} lists our 8 H-features, along with the dataset
 each was extracted from, which iteration it was learned in, and which relation
 it provides evidence for. In general, we found the H-features of the BLESS
-data set to be higher quality and more interesting than other data sets, but
+dataset to be higher quality and more interesting than other datasets, but
 we report at least one H-feature from each.
 
 \begin{table}[t]

@@ -1,5 +1,5 @@
 \chapter{Introduction}
-\label{sec:intro}
+\label{ch:intro}
 
 In modern Natural Language Processing (NLP) research, there is great deal of
 focus on sophisticated semantic tasks which require complex inference and
@@ -31,7 +31,7 @@ Any language processing system wishing to infer the second sentence from the
 first must know quite a bit of information about these words: it must know that
 girl is a kind of child (hypernymy), and that bright and smart have the same
 meaning in this context (synonymy); that books contain pages of text
-(meronomy), and that reading involves looking at these pages (world knowledge).
+(meronomy), and that reading involves looking at pages of text (world knowledge).
 
 Although significant progress has been made on the task of Recognizing Textual
 Entailment, many of these systems ultimately depend on some lexical resources
@@ -61,37 +61,155 @@ space. Since VSMs do not require annotated corpora, they are used and
 studied as an alternative or predictor of particular lexical resources
 \cite{baroni:2012:eacl,erk:2008:emnlp,turney:2010:jair}.
 
-In our work, we consider how VSMs
-can be leveraged to predict some of the lexical inferences necessary in RTE.
-Namely, we present techniques and models for predicting specific
-lexical relationships, entailments, and substitutions using Distributional
-Semantics. In Lexical Relationship Detection, we must
-predict whether two words exhibit specific relationships, like hypernymy (is-a
-relationships) or meronymy (has-a relationships). This is sometimes supplanted
-by Lexical Entailment Detection, where we must predict a coarser entailment
-prediction. We present two original models which can learn to predict hypernymy
-or general entailment relations
-\cite{roller:2014:coling,beltagy:2016:cl,roller:2016:emnlp}, and evaluate their
-performance on different datasets. In these works, we also make significant
-contributions in experimental setups which prevent issue with lexical
-memorization \cite{roller:2014:coling}, and insight into how these models
-work \cite{roller:2016:emnlp}.  We also present an original model for Lexical
-Substitution, where one must predict a context-specific synonym for a given
-target word in a sentential context \cite{roller:2016:naacl}.
+In this thesis, we consider how VSMs can be leveraged to predict some of the
+difficult lexical inferences necessary in RTE.  Namely, we present techniques
+and models for predicting specific lexical relationships, entailments, and
+substitutions using Distributional Semantics. In Lexical Relationship
+detection, we must predict whether two words exhibit specific, fine-grained
+linguistic relationships, like hypernymy (is-a relationships; e.g. \lit{cat}
+and \lit{animal}) or meronymy (part-whole relationships; e.g. \lit{cat} and
+\lit{tail}). In Lexical Entailment detection, we must predict a coarser
+entailment label, such as simply entailing or non-entailing, without
+fine-grained labels of linguistic relationship. In Lexical Substitution, we
+must propose a context-specific synonym for a word in a given sentential
+context, such that must consider a word's multiple meanings. 
 
-Finally, we propose several short- and long-term extensions to our completed
-work. In the short-term, we focus mainly on how our more recent work may be
-expanded to lexical relationships other than hypernymy, and how our recent
-publications may  contribute as a component in an end-to-end RTE system, which
-would cement the connection between our work and Textual Entailment. In the
-long-term, we propose three broad directions forward: (1) providing better
-internal consistency in the predictions made by our system; (2) integration
-of larger contexts into our Lexical Substitution model; and (3) improved
-models of distributional semantics which more efficiently use syntactic
-information.
+We consider each of these tasks, in turn, and present novel models based on
+distributional approaches of word meaning. Furthermore, we further demonstrate
+the value of our efforts by integrating our techniques into a larger framework
+of sentential semantics, and show improvements on a real, end-to-end RTE task,
+especially compared to a model which uses only a fixed lexical resource.
 
-\section{Thesis Contributions}
+While each of these tasks is approached and tested for empirical contributions,
+we also aim to understand the improvements and benefits offered by each of our
+models across the various tasks. To this end, each empirical contribution is
+additionally complimented by an analysis of {\em why} the contribution is
+attained. In this way, we hope we can show not just how distributional
+semantics can give to lexical entailment, but what lexical entailment can teach
+us about distributional methods and the information available within them.
+
+
 
 \section{Thesis Outline}
+
+The remainder of this thesis is structured as follows:
+
+In Chapter~\ref{ch:background}, we discuss the necessary background
+information in order to understand this thesis, including a brief discussion
+of Distributional Vector Space models and their construction. We also
+briefly introduce each of the relevant task considered in this thesis,
+including hypernymy detection, lexical relationship prediction, lexical
+substitution, and Recognizing Textual Entailment.
+
+In Chapter~\ref{ch:lexmem}, we consider the importance of experimental setup in
+hypernymy detection, and propose an experimental setup which better measures
+how models generalize to novel lexical items. We propose Asym, a Supervised
+Distributional model for hypernymy detection, and show it outperforms prior
+work in our experimental setup. Finally, we examine Asym analytically and show
+it does not exhibit prototypicality behavior observed by other models in
+the literature.
+
+In Chapter~\ref{ch:hpm}, we dive deeper into a hypernymy detection model which
+is known to exhibit strong prototypicality behavior. We propose a novel
+analysis of this model by interpreting the model within the framework of
+{\em context vectors}, and show it learns to identify distributional contexts
+related to Hearst patterns. We propose a novel model based on this behavior,
+which extends a prototypicality classifier using an iterative procedure
+similar to Principal Component Analysis (PCA). We evaluate our model in
+hypernymy detection, general lexical entailment detection, and lexical
+relationship prediction, and show our model matches or outperforms several
+existing models in the literature.
+
+In Chapter~\ref{ch:lexsub}, we propose two novel, unsupervised models for
+the Lexical Substitution task. We show our models quantitatively outperform
+a similar model across three datasets of Lexical Substitution, especially
+when models must propose Lexical Substitutes from the entire vocabulary.
+An analysis of our models show they prefer to predict high-frequency words
+as substitutes, enabling them to prefer correct substitutes over
+misspelled alternatives.
+
+In Chapter~\ref{ch:rte}, we integrate the findings of the previous chapters
+into a real, end-to-end RTE system, showing that our contributions in lexical
+semantics are useful in a complex task requiring sentence-level reasoning.
+An error analysis of RTE shows the different components succeed and fail
+in ways consistent with the findings of other chapters.
+
+We conclude our thesis in Chapter~\ref{ch:conclusion}, summarizing our
+contributions and findings, and proposing some directions for further
+investigation.
+
+
+\section{List of Thesis Contributions}
+
+\noindent In this thesis, we make the following contributions:
+
+\begin{itemize}
+  \item We observe the importance of experimental setup in lexical relationship
+    classification and hypernymy detection, noting that traditional train/test
+    splits can lead to {\em lexical memorization} and overestimation of the
+    lexical generalization.
+  \item We propose an alternative experimental setup for lexical relationship
+    classification, where there is zero lexical overlap between the training
+    and test sets. We find this experimental setup is considerably more
+    difficult, and better measures the ability of models to generalize to
+    novel lexical items.
+  \item We propose Asym, a supervised distributional model for hypernymy
+    detection. We connect Asym to the Distributional Inclusion Hypothesis, which
+    has motivated a large number of unsupervised models of hypernymy detection.
+    We show the Asym model performs strongly in zero lexical overlap settings,
+  \item We analyze Asym within the context of the prototypicality framework
+    proposed in prior work, and find it does not simply learn prototypicality
+    behavior.
+  \item We analyze a lexical relationship classifier which is known to exhibit
+    strong prototypicality behavior, wherein a model predicts \lit{sofa
+    $\rightarrow$ animal}, simply because \lit{animal} is a prototypical
+    hypernym. We consider its performance with respect to different
+    distributional spaces, and use a novel technique to interpret the model
+    with respect to distributional contexts. We observe that it predicts
+    relationships using distributional contexts based on well-known Hearst
+    patterns. We argue that this prototypicality behavior is interesting and
+    valuable for the task of relationship prediction.
+  \item We propose a novel lexical relationship classifier called H-features,
+    which exploits prototypicality behavior, and extends modeling power
+    using an iterative PCA-like procedure for feature extraction. This new
+    H-feature model obtains strong or state-of-the-art performance across
+    nine datasets constituting a variety of linguistic relationships.
+    We show that the model remains interpretable across this
+    array of linguistic relationships, and learns to look for interesting
+    distributional contexts beyond Hearst patterns.
+  \item We propose {\em nPIC}, a novel unsupervised model for Lexical
+    Substitution, where one must propose a synonym of a target word in a given
+    sentential context, which preserves the meaning of the sentence. Our model
+    builds off of another simple model of Lexical Substitution, by replacing
+    simple cosine similarity with an unnormalized dot product. Our Lexical
+    Substitution model outperforms a comparable Lexical Substitution mode on
+    three datasets. Our improvements are most pronounced in a difficult
+    evaluation task, where a model must propose substitutes from the entire
+    vocabulary.
+  \item We also propose {\em PIC}, which includes additional parameters
+    learned in a self-supervised manner. We find the additional parameters
+    provide significant gains in objective performance on Lexical Substitution
+    across all three datasets.
+  \item We analyze our models of Lexical Substituion, and show our model
+    prefers substitutions  with higher unigram frequencies, enabling it to
+    disregard mispelled substitutes like \lit{colorfull (sic)} in favor of
+    their correct counterparts. We also find that the additional parameters
+    of the PIC model further exaggerate this unigram bias.
+  \item We evaluate lexical entailment classifiers within the framework of
+    a complete end-to-end RTE system, and observe that strong performance
+    in lexical entailment is a critical component for a successful RTE system.
+  \item We observe that the probability of a word pair entailing in RTE is
+    non-monotonic in the cosine similarity between the words: the pair is
+    more likely entailing the higher its cosine similarity, until the
+    highest levels of cosine similarity, at which point words are more likely
+    to be co-hyponyms and therefore non-entailing. We integrate this observation
+    into the RTE system and show improvements at both the lexical level and
+    RTE level.
+  \item Finally, we integrate the contributions from our chapters on
+    Asym, H-features, and Lexical Substitution into the end-to-end RTE system.
+    We find that many of the improvements observed in earlier chapters contribute
+    to a higher score in the end-to-end RTE system, providing additional
+    validation for the contributions of this thesis.
+\end{itemize}
 
 

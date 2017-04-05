@@ -60,7 +60,7 @@ preserving the meaning of the entire sentence
 \cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
 Sometimes only a small context is needed for the task, as in \lit{bright girl}
 and \lit{bright lamp}, but humans are often particularly creative when
-providing suggestions. In one data set, humans provided with the context
+providing suggestions. In one dataset, humans provided with the context
 \begin{quote}
   \lit{Tara stood stock-still, waiting for the first tiny gleam from the
   scout craft to appear in the darkness of the \target{wormhole},}
@@ -142,7 +142,7 @@ tensor to produce a unique vector for each word in context.
 the previous models by proposing to re-weight a word's syntactic co-occurrences
 based on their similarity to the present context.
 This unsupervised, method remained one of strongest performing systems even when
-applied to new data sets \cite{kremer:2014:eacl} and compared to some
+applied to new datasets \cite{kremer:2014:eacl} and compared to some
 supervised systems. Along a similar path, \newcite{melamud:2015:naacl} proposed
 an alternative second order model based on using Google's web corpus of
 5-grams.
@@ -343,28 +343,28 @@ which does not contain the extra parameters:
 We compare our proposed measures to three baselines: \ooc, the Out-of-Context
 cosine similarity between the word and target $\mbox{cos}(s, t)$; and the
 \mbox{\addCos} and \mbox{\balAddCos} measures.
-We evaluate on three lexical substitution data sets:
+We evaluate on three lexical substitution datasets:
 \begin{itemize}
-\item {\bf SE}: The data set used in the original SemEval 2007 shared task
+\item {\bf SE}: The dataset used in the original SemEval 2007 shared task
 \cite{mccarthy:2007:semeval} consists of 201 words manually chosen to exhibit
 polysemy, with 10 sentences per target. For a given target in a particular
 context, five annotators were asked to propose up to 3 substitutes. As all our
-experiments are unsupervised, we always evaluate over the entire data set,
+experiments are unsupervised, we always evaluate over the entire dataset,
 rather than the original held-out test set.
-\item {\bf Coinco}: The Concepts-in-Context data set \cite{kremer:2014:eacl} is a
+\item {\bf Coinco}: The Concepts-in-Context dataset \cite{kremer:2014:eacl} is a
 large lexical substitution corpus with proposed substitutes for nearly all
 content words in roughly 2,500 sentences from a mixture of genres (newswire,
 emails, and fiction). Crowdsourcing was used to obtain a minimum of 6
 contextually-appropriate substitutes for over 15k tokens. Unlike SemEval, this
-data set was not constructed specifically to capture polysemy; nonetheless,
+dataset was not constructed specifically to capture polysemy; nonetheless,
 many substitutes vary considerably for different sentential contexts,
 indicating that polysemy is definitely present.
 \item {\bf TSWI}: The Turk bootstrap Word Sense Inventory 2.0 \cite{biemann:2012:lrec}
 is a crowdsourced lexical substitution corpus focused on about 1,000 common
-English nouns. The data set contains nearly 25,000 contextual uses of these
-nouns. Though the data set was originally constructed to induce a word-sense
+English nouns. The dataset contains nearly 25,000 contextual uses of these
+nouns. Though the dataset was originally constructed to induce a word-sense
 lexicon based on common substitution patterns, here we only use it as a
-lexical substitution data set.
+lexical substitution dataset.
 \end{itemize}
 
 We compare models on two variations of the lexical substitution task: candidate
@@ -488,7 +488,7 @@ procedure took around 45 minutes using a GPU.
 
 Table~\ref{tab:lexsubgap} compares the models on the substitute ranking task
 only. The first observation we make is that the \ourmeasparam~measure performs
-best in all evaluations on all data sets by a significant margin (Wilcoxon
+best in all evaluations on all datasets by a significant margin (Wilcoxon
 signed-rank test, $p < 0.01$). In these GAP evaluations, all measures perform
 substantially better than the \ooc~baseline, and the \ourmeas~measure performs
 comparably to \balAddCos. We note that context-sensitive measures give the most
