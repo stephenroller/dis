@@ -5,19 +5,19 @@ This chapter shows new model of lexical substitution, and related
 material. The work in this chapter has been published in
 \newcite{roller:2016:naacl}.
 
-\section{Chapter Overview}
+\section{Chapter Introduction}
 
-We discuss the Lexical Substitution task, in which the word meaning in context
-is described or evaluated, not through dictionary senses, but through
-substitutes or paraphrases suggested by annotators
-\cite{mccarthy:2007:semeval}. We review various approaches to the task, and
-focus on one particularly simple, modern method which performs competitively to
-State of the Art \cite{melamud:2015:vsm}. We describe the intuitions of this
-model, and propose Probability-in-Context, a variation on this simple idea. We
-find our proposed model significantly outperforms baselines, and analyze why it
-improves over the prior work.
-
-\section{Lexical Substituion}
+%We discuss the Lexical Substitution task, in which the word meaning in context
+%is described or evaluated, not through dictionary senses, but through
+%substitutes or paraphrases suggested by annotators
+%\cite{mccarthy:2007:semeval}. We review various approaches to the task, and
+%focus on one particularly simple, modern method which performs competitively to
+%State of the Art \cite{melamud:2015:vsm}. We describe the intuitions of this
+%model, and propose Probability-in-Context, a variation on this simple idea. We
+%find our proposed model significantly outperforms baselines, and analyze why it
+%improves over the prior work.
+%
+%\section{Lexical Substituion}
 
 In our discussion of lexical relationships in the previous two chapters, we
 assumed that words are {\em monosemous}, or that they have only one meaning.
@@ -26,8 +26,8 @@ on context, as in \lit{bright girl} and \lit{bright coat}. When a word has
 multiple meanings, it is {\em polysemous}, and polysemy is yet another source
 of ambiguity in natural language.
 
-One issue with polysemy is what representation should even be chosen to
-represent a polysemous word?  One option is the use of a lexicon, like the
+It is still unclear what representation should even be chosen
+to represent polysemous words. One option is the use of a lexicon, like the
 dictionary.  Lexicographers are responsible for cataloguing and defining word
 senses; one may see this in the multiple definitions provided by the Oxford
 English Dictionary or Merriam Webster, but even professional lexicographers
@@ -39,28 +39,39 @@ noun senses for \lit{bank}).
 
 Even after one fixes the inventory of word senses, labeling a particular
 instance of a word with its sense is fraught with its own difficulties:
-non-experts have very low inner annotator agreements \cite{yong:1999:siglex},
+non-experts have very low inter annotator agreements \cite{yong:1999:siglex},
 and even lexicographers will disagree often \cite{kilgarriff:2000:ch}.
 Results in computational approaches to Word Sense Induction (WSI) and Word
 Sense Disambiguation (WSD) reflect this task difficulty \cite{needcite}.
 
 Distributional Semantics offers an alluring alternative path, given its ability
 to measure the {\em graded} levels of similarity between words
-\cite{erk:2008:emnlp}.  One possibility is the use of multiple vectors per word
-or word sense \cite{reisinger:2010:naacl,huang:2012:acl}, and then using using
-these prototypes appropriately for downstream tasks. If one takes this idea to
+\cite{erk:2008:emnlp}.  One possibility to represent each of a word's senses
+using a separate vector, resulting in multiple vectors per word
+\cite{reisinger:2010:naacl,huang:2012:acl}, and then use
+these prototypes appropriately in downstream tasks. If one takes this idea to
 its absolute extreme, one can imagine a new vector for every instantiation of a
 word. In this extreme, one may choose not to create a unique vector for every
-word, but instead model how meaning {\em shifts} in a particular given context.
+word, but instead model how meaning {\em shifts} in a particular given context
+\cite{erk:2008:emnlp,erk:2010:gems}.
 
 One way to measure this has been the Lexical Substitution task. In
 the Lexical Substitution task, we are provided with a sentential context, and
 must suggest {\em substitutes} which can replace the given target word, while
 preserving the meaning of the entire sentence
-\cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}.
-Sometimes only a small context is needed for the task, as in \lit{bright girl}
-and \lit{bright lamp}, but humans are often particularly creative when
-providing suggestions. In one dataset, humans provided with the context
+\cite{mccarthy:2007:semeval,biemann:2012:lrec,kremer:2014:eacl}. For
+example, when provided the sentence
+\begin{quote}
+  \lit{The \target{bright} scientist reads the paper,}
+\end{quote}
+annotators will readily offer substitutes like the \lit{clever scientist} or
+\lit{smart scientist}. Similarly, when provided the sentence
+\begin{quote}
+  \lit{The girl put on her \target{bright} coat,}
+\end{quote}
+humans will suggest the \lit{colorful coat} instead. However, annotators
+may also choose creative or nonstandard suggestions, especially when provided
+excerpts from fiction. In one dataset, humans provided with the context
 \begin{quote}
   \lit{Tara stood stock-still, waiting for the first tiny gleam from the
   scout craft to appear in the darkness of the \target{wormhole},}
@@ -72,11 +83,6 @@ Indeed, in one one lexical substitution dataset, only 9\% of substitutes in
 their dataset were direct synonyms in WordNet \cite{kremer:2014:eacl}.
 
 \section{Prior Work}
-
-In general, the Lexical Substitution task has seen a smaller research
-investment than task like identifying lexical relationships. Nonetheless, a
-wide variety of approaches have been taken, especially using distributional
-vectors.
 
 The original SemEval shared task released a moderately sized dataset and
 defined the task \cite{mccarthy:2007:semeval}. The experimental setup was
@@ -103,15 +109,12 @@ provide a list of possible substitutions, and then filtered or ranked that list
 using their own research methods. Several used a mixture of co-occurrences or
 $n$-grams to find good matches, and several used distributional methods to rank
 the substitutes, almost no systems used existing WSD datasets
-\cite{mccarthy:2007:semeval}. The best performing system differed for the two
-metrics, with the strongest team on the {\em best} metric used a
-supervised approach where substitutes were ranked with a supervised model
-using features like $n$-gram likelihood \cite{yuret:2007:semeval}. The strongest
-performing system in {\em oot} beat the competition by a large margin, but
-performed nearly last in the {\em best} metric.  Unfortunately, it turned out
-this system accidentally exploited a flaw in the evaluation metric by
-predicting the same substitute multiple times without penalty
-\cite{giuliano:2007:semeval}. Perhaps as a result of this accident, the
+\cite{mccarthy:2007:semeval}. The strongest team on the {\em best} metric used a
+supervised approach where substitutes were ranked
+using features like $n$-gram likelihood \cite{yuret:2007:semeval}, while
+the strongest performing system in the {\em oot} metric accidentally exploited
+a flaw in the evaluation by proposing the same substitute many times
+\cite{giuliano:2007:semeval}. The
 literature has since varied substantially on experimental setup and evaluation
 metrics. Nonetheless, the task provided an interesting test bed for a
 variety approaches, including distributional approaches, language modeling
@@ -121,17 +124,18 @@ approaches, and some supervised approaches \cite{szarvas:2013:naacl}.
 
 One major insight from the competition was the importance of syntagmatic fit in
 lexical substitution with the success of $n$-gram based models.
-\newcite{erk:2008:emnlp} proposed using a model of "inverse" selectional
-preferences to compute a word vector {\em in context}, and applied this model
-to the task of lexical substitution. Their key insight was to model a word in
-context by averaging over other possible fillers for the same syntactic
-contexts. For example, in \lit{the fielder {\em catches}}, they would consider
-verbs which take \lit{fielder} in the subject position, and so on for other
-syntactic roles. Their work also took evaluation of lexical substitution in a
-different direction: rather than evaluate their system on the task of both
-suggestion and ranking of substitutes as in SemEval, they separated these tasks
-and proposed evaluating on only the task of predicting which substitutes are
-best for a particular instance.
+\newcite{erk:2008:emnlp} proposed a model for offering each unique word
+occurrence its own individualized word vector, allowing polysemy to be modeled
+without explicit word senses, and applied these sense-free representations
+to the task of lexical substitution. Their representations modified the
+out-of-context word vectors by averaging it with other possible fillers for
+the same contexts.
+For example, in \lit{the fielder {\em catches}}, they would consider
+verbs which take \lit{fielder} in the subject position. Since their
+work focused more on innovations in representations of polysemy, they
+evaluated their system on its ability to identify correct substitutes from
+a candidate list, and did not consider its ability to {\em generate} substitues
+from the entire vocabulary.
 
 \newcite{thater:2009:ati,thater:2010:acl} expanded on the this idea of inverse
 selection preferences by proposing a {\em second-order} distributional space,
@@ -141,7 +145,7 @@ tensor to produce a unique vector for each word in context.
 \newcite{thater:2011:ijcnlp} refine and simplify on this second-order view of
 the previous models by proposing to re-weight a word's syntactic co-occurrences
 based on their similarity to the present context.
-This unsupervised, method remained one of strongest performing systems even when
+This unsupervised method remained one of strongest performing systems even when
 applied to new datasets \cite{kremer:2014:eacl} and compared to some
 supervised systems. Along a similar path, \newcite{melamud:2015:naacl} proposed
 an alternative second order model based on using Google's web corpus of
@@ -154,8 +158,8 @@ factorization models (LDA and NNMF) and showed that context could successfully
 modulate over varying latent senses of a particular word in a bag-of-words
 context. This insight in the power of low-rank factorizations later turns
 out to be valuable in later lines of work
-\cite{melamud:2015:vsm,roller:2016:naacl}, which we will discuss more in detail
-below.
+\cite{melamud:2015:vsm,roller:2016:naacl}. We defer discussion of these works
+until Section~\ref{sec:melamud}, due to their central role in this chapter.
 
 \newcite{vandecruys:2011:emnlp} observed that syntax-based distributional
 models tend to provide the strongest results, yet individual examples in
@@ -166,7 +170,7 @@ co-occurrences with the functional, syntactic context. Although this line of
 work has not seen a large degree of follow up, the author of this dissertation
 hopes future research will reconsider this path.
 
-More recently, some models have wielded the deep learning hammer for the task
+More recently, some research has used neural language models for the task
 of lexical substitution. \newcite{kawakami:2016:iclr} propose using word
 alignments from translation tasks in order to identify the different senses of
 a word in the hidden state of a bidirectional RNN. The intuition is that two
@@ -175,10 +179,9 @@ sense, while two tokens which translate into different foreign tokens must
 represent a polysemous term, an idea has a long history in the literature
 \cite{resnik:1999:nle,diab:2003:phd,bannard:2005:acl}. Since their model
 requires substantial aligned translation corpora, it is not directly comparable
-to the other models exploring the task. Therefore \newcite{melamud:2016:conll}
-applied the same neural architecture, trained on an English-only language
-modeling task, to lexical substitution, but found it still did not outperform
-other models.
+to the other models exploring the task. \newcite{melamud:2016:conll}
+applied the same neural architecture, trained in an English-only language
+modeling task, but found it did not achieve state-of-the-art performance.
 
 \subsection{Supervised approaches}
 
@@ -197,18 +200,22 @@ the other ranking approaches, but the comparison is unfair due to differing
 levels of supervision.
 
 \section{Context Vectors for LexSub (Melamud et al. 2015b)}
+\label{sec:melamud}
 
+We now consider the unsupervised models of \newcite{melamud:2015:vsm}, which
+are centeral to the contributions of our own work.
 \newcite{melamud:2015:vsm} introduce a simple, but high-performing method,
 based on the Syntactic Skip-Gram Negative Sampling model of
-\newcite{levy:2014:acl}. As with many other unsupervised models, it combines a
+\newcite{levy:2014:acl}. As with other unsupervised models, it combines a
 measure of an out-of-context substitute's suitability, with a special
-in-context appropriateness measure \cite{needcite}. Unlike the many of the
-previous unsupervised models, it does not rely on computing large second-order
-vectors, and can in fact be used with off-the-shelf syntactic word2vec vectors.
+in-context appropriateness measure \cite{erk:2008:emnlp}. Unlike the many of
+the previous unsupervised models, it does not rely on computing large
+second-order vectors, and can in fact be used with off-the-shelf syntactic
+word2vec vectors.
 
 As emphasized in Chapters \ref{ch:background} and \ref{ch:hpm}, when creating
-low dimensional vectors, a co-occurrence matrix factorization $\mM$ is
-computed, or estimated in the case of word2vec \cite{levy:2014:nips},
+low dimensional vectors, a high-dimensional co-occurrence matrix $\mM$ is
+factorized or approximated with two lower-rank matrices \cite{levy:2014:nips}:
 \begin{equation*}
   \mM = \mV\mC\trans,
   \tag{\ref{eqn:factorization} revisited}
@@ -304,28 +311,18 @@ and the context, each taking the form of a softmax:
   \end{aligned}
   \label{eqn:pic}
 \end{equation}
-where the $Z_t$ and $Z_C$ are normalizing constants.
-Our model differs from \mbox{\balAddCos} in a very important way: we base our
-similarity estimates using the {\em unnormalized} inner product $s^\top t$ and
-$s^\top c$, rather than normalized cosine similarities.
-
-Our measure also has two free parameters, $W$ and $b$, which act as a linear
+where the $t$ is the target word, $s$ is a proposed substitute, $C$ is the set
+of syntactic contexts, and $Z_t$ and $Z_C$ are normalizing constants. Our
+model differs from \mbox{\balAddCos} in two important ways. First, our
+similarity measure uses{\em unnormalized} inner products $s^\top t$
+and $s^\top c$, rather than {\em normalized} cosine similarities; and
+second, we introduce two  free parameters, $W$ and $b$, which act as a linear
 transformation over the original context vectors. These parameters are
 estimated from the {\em original corpus}, and are trained to maximize the
-prediction of a {\em target} from only its syntactic contexts. These free
-are {\em not} trained on the actual lexical substitution dataset, and
+prediction of a {\em target} from only its syntactic contexts. These parameters
+are {\em not} trained on the lexical substitution dataset, and
 therefore serve only to tune how the fixed distributional vectors act in this
 alternative objective function.
-
-One may ask why not train or tune the embeddings to optimize this softmax
-objective directly, rather than learning the parameterization which adjust the
-embeddings? This ultimately is an empirical question, and our initial tests
-found that training new embeddings from scratch did not result in stronger
-performance. Additionally, the SGNS embeddings are already popular and
-well-understood in relation to traditional distributional semantics.
-Furthermore, we can re-use the embeddings of \newcite{melamud:2015:vsm} to
-ensure that experimental conditions are fair to both models, and that
-the quality of embeddings remains consistent across comparisons.
 
 Nonetheless, to identify the contribution of this parameterization versus the
 softmax objective, we also introduce to a non-parameterized PIC ({\em nPIC}),
@@ -337,6 +334,16 @@ which does not contain the extra parameters:
   \end{aligned}
   \label{eqn:npic}
 \end{equation}
+
+One may ask why not train or tune the embeddings to optimize this softmax
+objective directly, rather than learning the parameterization which adjust the
+embeddings? This ultimately is an empirical question, and our initial tests
+found that training new embeddings from scratch did not result in stronger
+performance. Additionally, the SGNS embeddings are already popular and
+well-understood in relation to traditional distributional semantics.
+Furthermore, we can re-use the embeddings of \newcite{melamud:2015:vsm} to
+ensure that experimental conditions are fair to both models, and that
+the quality of embeddings remains consistent across comparisons.
 
 
 \section{Experiments}
@@ -377,10 +384,10 @@ GAP is similar to Average Precision, but weighted by the number of times a
 substitute was given by annotators. Intuitively, it measures the number of
 "correct" points the model has obtained at every point, normalized by the
 maximum number of possible points obtainable at that rank.  For a particular
-substitute, suppose $h_1,\ldots,h_n$ are an ordered list of the model's scores
+target, suppose $h_1,\ldots,h_n$ are an ordered list of the model's scores
 assigned for the possible substitutes, so that the substitute with the best
 score comes first. Let's also assume that $g_1,\ldots,g_n$ is the sorted gold
-list of scores, and that $g(h_i)$,  gives the gold score of the
+list of scores, and that $g(h_i)$  gives the gold score of the
 substitute predicted at $h_i$. GAP is then defined in terms of the precision
 over all possible values of $i$:
 \begin{align*}
@@ -408,7 +415,8 @@ we find P@1 and P@3 easier to interpret and analyze.
 \subsection{Vectors and Training Procedure}
 
 We use the word and context vectors released by \newcite{melamud:2015:vsm},
-which were previously shown to perform strongly in lexical substitution tasks.
+which were previously shown to perform strongly in lexical substitution tasks,
+and to ensure our model is directly comparable with theirs.
 These embeddings were computed from a corpus of (word, relation, context)
 tuples extracted from ukWaC and processed using the dependency-based word2vec
 model of \newcite{levy:2014:acl}. These embeddings contain 600d vectors for
@@ -416,7 +424,7 @@ model of \newcite{levy:2014:acl}. These embeddings contain 600d vectors for
 
 To train the $W$ and $b$ parameters, we extract tokens with syntactic contexts
 using the same corpus (ukWaC), parser \cite{chen:2014:emnlp}, and extraction
-procedure used to generate the embeddings. See \cite{melamud:2015:vsm} for
+procedure used to generate the embeddings. See \newcite{melamud:2015:vsm} for
 complete details.  After extracting every token with its contexts, we randomly
 sample 10\% of the data to reduce computation time, leaving us with 190M tokens
 for training $W$ and $b$.  We use sampled softmax to reduce training time
@@ -500,7 +508,7 @@ lower, reflecting the increased difficulty of the task. We also see the that
 \ourmeas~and \ourmeasparam~both improve greatly over all baselines: The
 \ourmeas~measure is a relative 30\% improvement over \balAddCos~in SE07 and
 Coinco, and the \ourmeasparam~measure is a relative 50\% improvement over
-\balAddCos~in 5 evaluations. Indeed we find that \ourmeasparam significantly
+\balAddCos~in 5 evaluations. Indeed we find that \ourmeasparam~significantly
 outperforms other models (Wilcoxon signed-rank test, $p < 0.01$).
 
 Since both measures have a clear improvement over the baselines, especially in
@@ -561,18 +569,19 @@ the more difficult all-words task, we next strive to understand why.
   \label{tab:lemon}
 \end{table*}
 
-We first examine cherry and lemon-picked examples to give intuitions about why
-our model performs better. Table~\ref{tab:cherry} contains the cherry example,
-where our model performs better than prior work. While OOC and \balAddCos~both
-suggest replacements with reasonable semantics, but are all misspelled.
-\ourmeas~and \ourmeasparam~only pick words with the correct spellings, with the
-exception of \lit{realy}. This suggests that our model may be predicting terms
-with a higher unigram frequency.
+We first examine two hand-selected examples to provide intuitions about the
+strengths and weaknesses of our model.  Table~\ref{tab:cherry} contains a
+cherry-picked example where both our measures outperform the prior work.
+While OOC and \balAddCos~both suggest replacements with reasonable semantics,
+but are all misspelled.  \ourmeas~and \ourmeasparam~only pick words with the
+correct spellings, with the exception of \lit{realy}. This suggests that our
+model may be predicting terms with a higher unigram frequency.
 
-Table~\ref{tab:lemon} shows a lemon-picked example, where our model performs
-worse than other cases.  We notice that the unusual \lit{sea-change} item is
-prominent in the OOC and \balAddCos~models, but has dropped from the rankings
-in our models, also indicating the model may be picking more frequent terms.
+Table~\ref{tab:lemon} shows a lemon-picked example where our models perform
+strictly worse than the baseline models.  We notice that the unusual
+\lit{sea-change} item is prominent in the OOC and \balAddCos~models, but has
+dropped from the rankings in our models, also indicating the model may be
+picking more frequent terms.
 
 We consider a few experiments with this hypothesis that the measures do better
 because they capture better {\em unigram} statistics than the baselines. Recent
