@@ -1,10 +1,9 @@
 \chapter{Lexical Entailment in RTE}
 \label{ch:rte}
 
-This chapter how the work of the previous three chapters may be combined into
-an end-to-end RTE system, and related material. Some of the results in this
-chapter have been published in \newcite{beltagy:2016:cl}. Contributions
-of the dissertation author are layed out in this text.
+This chapter shows how the work of the previous three chapters may be combined
+into an end-to-end RTE system. Some of the contributions in this chapter are
+published in \newcite{beltagy:2016:cl}.
 
 \section{Chapter Overview}
 
@@ -16,14 +15,14 @@ sight of the bigger picture. We turn our attention now to the Recognizing
 Textual Entailment task (RTE), which we introduced in the beginning of
 Chapters~\ref{ch:intro}~and~\ref{ch:background}.
 
-In the RTE, a system is provided two sentences, a text (antecdent) and
-hypothesis (consequent), and must decide whether the text logically
-entails the hypothesis.
-A particular RTE pair may involve different logical conclusions, but
+In Recognizing Textual Entailment, a system is provided two sentences, a text (antecdent) and
+hypothesis (consequent), and must decide whether a human would say the
+hypothesis follows from the text.
+A particular RTE pair may involve different phenomena, but
 \newcite{dagan:2006:mlc} observed that lexical entailments are often critical
-to reaching the proper conclusion. In our original example, we saw a mix of
-several aspects of lexical entailment examined in this thesis, including
-hypernymy, polysemy, and event understanding:
+to reaching the proper conclusion. The following RTE example
+involves a several kinds of lexical entailment explored in this thesis,
+including hypernymy, polysemy, and event understanding:
 \begin{quote}
   \label{ex:rte}
   Text: The bright girl reads a book.\\
@@ -47,54 +46,31 @@ systems for RTE, as most approaches were outlined in
 Section~\ref{sec:textent}, and their differences are not the focus of this
 document.
 
-The RTE system of \newcite{beltagy:2016:cl} works on a principal of textual
-entailment using {\em probabilistic} logical deduction. In principal, it
+The system of \newcite{beltagy:2016:cl} performs textual
+entailment using {\em probabilistic} logical deduction. It
 computes a First Order Logical (FOL) representation of each sentence, and
-then attempts to compute the probability that the second sentence is entailed
+then estimates the probability that the second sentence is entailed
 using a probabilistic logic formalism called
 Markov Logic Networks (MLNs) \cite{richardson:2006:ml}. MLNs take as input a
-knowledge base of facts about the world in the form FOL formulas (including
-atomic formulas), and compute the probability of a given formula using a
-graphical model. The probability of a formula being true is exponential the
-number of facts it is consistent with. This powerful formulation is outside
+knowledge base of facts about the world in the form of weighted FOL formulas (including
+atomic formulas), and produces a graphical model which estimates the probability
+of formulas based on their consistency with the knowledge base.
+This powerful formulation is outside
 the scope of this document, but with careful consideration, MLNs are able
 to model a large variety of natural language phenomena, including
 quantifiers and negation \cite{beltagy:2016:phd}.
 
-However, in order to perform correct logical reasoning, the system must reduce
-the text and hypothesis into logical formulas, and consider a database of
+In order to perform correct logical reasoning, the system must reduce
+the text and hypothesis into weighted logical formulas, and consider a database of
 relevant facts. To obtain a logical representation of the sentences, the
-RTE system employs Boxer \cite{bos:2008:step}, which converts syntactic parse
-trees into neo-Davidsonian logical formulas \cite{parsons:1990:events}. In our
-original example from the Overview, Boxer would produce roughly:
-\begin{align*}
-  \mbox{Text:}~\exists g,r,b.[ & girl(g) \wedge bright(g) \wedge read(r) \\
-                               & \qquad \wedge agent(r, g) \wedge patient(r, b) \wedge book(b)]\\
-  \mbox{Hypothesis:}~\exists c,l,x.[ & child(c) \wedge smart(c) \wedge look\_at(l) \\
-                               & \qquad \wedge agent(l, c) \wedge patient(l, x) \wedge book(x)]
-\end{align*}
+RTE system employs Boxer \cite{bos:2008:step}, a wide coverage semantic analysis system, which converts syntactic parse
+trees into logical formulas.
 
-The RTE system then performs a form of Robinson Resolution or Unification on
-the two sentences, in order to obtain a list of {\em possible} lexical
-entailments. In the simple running example, we would observe that \lit{book}
-appears in both sentences, and assume that it is coreferent across both
-sentences. Although coreference may not be strictly assumed in true logical
-entailment, it is frequently assumed by annotators of natural language
-entailments \cite{marelli:2014:semeval,bowman:2015:emnlp,beltagy:2016:cl}.
-This allows the $book(b)$ and $book(x)$ subexpressions to be unified, and
-these subexpressions can then be removed, and the logical forms may
-be simplified: 
-\begin{align*}
-  \mbox{Text:}~\exists g,r,b.[ & girl(g) \wedge bright(g) \wedge read(r) \wedge agent(r, g)]\\
-  \mbox{Hypothesis:}~\exists c,l,x.[ & child(c) \wedge smart(c) \wedge look\_at(l) \wedge agent(l, c)]
-\end{align*}
-
-Similarly, event variables are also assumed to be coreferent
-\cite{bowman:2015:emnlp,beltagy:2016:cl}, so we assume that the \lit{read}
-event and the \lit{look at} events are aligned, though we do {\em not} assume
-they are necessarily entailed. By process of elimination, the $g$ and $c$ variables
-must be also aligned, and so this RTE problem has been reduced to two
-lexical entailments:
+The RTE system then aligns the representations of the text and hypothesis to find words and
+short phrases for which it needs lexical entailment judgements. This alignment
+procedure is done using a variant of Robinson Resolution, which identifies
+common predicates and performs unification across text and hypothesis.
+In our example, the system will produce two separate rules:
 \begin{align*}
   \mbox{bright girl} & \rightarrow \mbox{smart child}\\
   \mbox{read} & \rightarrow \mbox{look at}
@@ -103,15 +79,15 @@ The RTE system then queries a lexical entailment system to predict whether
 these lexical items are entailed, neutral, or contradictory. These lexical
 entailment predictions are finally encoded as facts about the world, and
 complete probabilistic logical reasoning is performed about the full sentences
-(including quantification and negation), and a final decision about sentence
-entailment is decided.
+(including quantification and negation) to come to a final prediction about
+sentential entailment.
 
 \section{RTE Data and Lexical Entailment Annotations}
 
 We evaluate using the Sentences Involving Compositional Knowledge (SICK)
 dataset, which contains nearly 10k sentence pairs, evenly split between
 training and test sets \cite{marelli:2014:semeval}. Sentence pairs were
-extracted randomly image caption datasets, and then simplified and extended to
+extracted randomly from image caption datasets, and then simplified and extended to
 cover semantic issues like negation, quantification, compositional language,
 and a variety of lexical entailment relationships like hypernymy and polysemy.
 Finally, sentences were manually annotated as {\em entailing} (the antecedent
@@ -139,13 +115,12 @@ dataset are shown in Table~\ref{tab:sickexample}.
 \end{table}
 
 We saw above that we may break some sentences down into
-individual lexical entailments of small or short phrases. These lexical
+individual lexical entailments of short phrases. These lexical
 entailments may be either entailing, neutral, or contradicting. This differs
-from work in previous chapters, where we focused only on lexical substitution,
-identifying what relationship a pair of words exhibits, or treating entailment
-as a binary decision. Here, we must provide lexical entailments which are
-tailored directly for the RTE task at hand, and so we must build a lexical
-entailment dataset.
+from work in previous chapters, which never attempted to identify contraditions
+or reason about phrases. Additionally, lexical entailments in this chapter must
+be tailored specifically for the RTE task, and therefore require we build
+our own lexical entailment dataset.
 
 To do this, we used the Robinson Resolution approach described above to extract
 all the lexical entailments possible in the system. Many of these lexical
@@ -153,29 +128,31 @@ entailments could be automatically annotated from the RTE sentences themselves:
 if the sentence is entailing and contains no negation, it follows that the
 individual lexical entailments must also entail. This allows us to build a list
 of certainly true lexical entailments. Sentences that are contradicting and
-contain only a single lexical entailment rule, can similarly have their lexical
+contain only a single lexical entailment rule can similarly have their lexical
 entailments automatically labeled as contradicting. Sentences which are neutral
 or contain certain logical phenomena may {\em not} be automatically annotated.
-For these sentences, two authors of \newcite{beltagy:2016:cl} (including this
-dissertation's author) manually annotated ambiguous lexical entailment pairs
-derived from the dataset. We only annotated lexical entailment pairs derived
+Two authors of \newcite{beltagy:2016:cl} (including this
+dissertation's author) manually annotated lexical entailment pairs which
+could not be automatically annotated.
+We only annotated lexical entailment pairs derived
 from the training set, as we did not want pairs from the test set to possibly
 influence our decisions, and any lexical annotations derived from the test set
 would be considered cheating. The final lexical entailment dataset contains
-10,213 annotated rules extracted from the SICK training set.
+10,213 annotated rules extracted from the SICK training set, and is made available
+for future research \cite{beltagy:2016:cl}.
 
 \section{Lexical Entailment Classifier}
 
 We now turn our focus to the actual lexical entailment classifier used by the
-RTE system. This lexical entailment classifier employes a variety of techniques
-used in prior work, as well as novel contributions. As a starting point for
-the classifier, we employ a wide variety of hand-engineered features
+RTE system. This lexical entailment classifier uses a variety of techniques
+from prior work, as well as several novel contributions. As a starting point for
+the classifier, we employ a number of hand-engineered features
 shown by \newcite{lai:2014:semeval} to be useful in the SICK dataset. These
 features are given to a basic SVM classifier with an RBF kernel, which
 decides which of the three lexical entailment decisions to make. We also
 employ a greedy alignment procedure which allows the lexical entailment
 classifier to classify short phrases as opposed to single words.
-Finally, describe additional features for the lexical entailment classifier
+Finally, we describe additional features for the lexical entailment classifier
 based on our findings about supervised distributional lexical entailment
 classifiers, and lexical substitution.
 
@@ -189,12 +166,15 @@ hypernyms in WordNet), and distributional features (e.g. cosine similarity).
 A full list of these features may be found in Table~\ref{tab:lexentfeat},
 along with their types and counts.
 
-The Wordform features include simple features like are the words of the same
-part-of-speech, same lemma, which are singular/plural, and so forth. On their
-own, they can only capture the most simple entailments and slight prior
-information. Similarly, the basic alignment features contain only information
-like length of the LHS and RHS, and that difference, and which is generally
-semantically void, but does inform entailment priors.
+The Wordform features include simple features which indicate whether both
+words have the same part-of-speech, lemma, and plurality.
+On their
+own, these features only capture the most simple entailments and slight prior
+information. The basic alignment features capture simple properties for
+the phrasal entailments, like the lengths of the LHS and RHS. These
+properties are generally semantically void, but do inform some entailment
+priors: for example, a single word is unlikely to entail a long phrase with
+modifiers or a prepositional attachment.
 
 The Distributional features contain simple cosine similarities for the LHS and
 RHS using one syntactic distributional space and one bag-of-words
@@ -310,7 +290,7 @@ in the Experiments section.
 \begin{figure}
   \centering
   \includegraphics[width=0.90\textwidth]{plots/valley.pdf}
-  \caption{Distribution of entailment relations on lexical items by cosine.
+  \caption{Stacked histogram showing the distribution of entailment relations on lexical pairs by cosine.
     Highly similar pairs (0.90--0.99) are less likely entailing than moderately
     similar pairs (0.70--0.89).}
   \label{fig:valley}
@@ -430,9 +410,11 @@ knowledge. These results are also measured in accuracy.
 We emphasize that we do {\em not} test any of these models
 in a zero lexical overlap setting. In the experiments of previous chapters, our
 goal was to test generalization to new lexical items; in these experiments, our
-goal is to generalize to new RTE examples. Therefore, all of the sentence pairs
+goal is to generalize to new RTE examples. Therefore, all of the {\em sentence} pairs
 will be unique, but will involve many non-unique lexical entailments: for
-example, the pair (man, woman) appears frequently in both training and test.
+example, the lexical item \lit{boy $\rightarrow$ child} appears frequently in
+both training and test, as both \lit{boy} and \lit{child} appear across many
+sentential pairs.
 
 \subsection{Individual Components}
 
@@ -535,8 +517,8 @@ is important , which found that the conditional
 probability for entailment differs across different similarity levels.
 
 Finally, we see that the Context features based on Lexical Substitution
-also outperforms many of the individual baseline features, including
-the distributional features (without binning). This emphasizes that integrating
+also outperform many of the individual baseline features, including
+the distributional features without binning. This emphasizes that integrating
 a wider context is important in lexical entailment, and that lexical
 entailment should not be considered in a vacuum.
 
@@ -547,7 +529,7 @@ as well as the strengths and weaknesses of our components.
 \subsection{Combining Components}
 
 Each of our contributing components discussed above are roughly orthogonal
-in purpose: binning should capture different entailment liklihoods for
+in purpose: binning should capture different entailment likelihoods for
 different distributional similarities; Context features should capture
 polysemy or changes in larger context; and Supervised Distributional features
 should improve generalization to new lexical pairs. Each component should
@@ -623,7 +605,7 @@ in RTE evaluation. Interestingly, an analysis of the results shows that the
 H-features seem to overwhelm some simpler wordform features: for example,
 the H-features model incorrectly predicts that \lit{egg $\rightarrow$ two eggs},
 indicating the model has ``forgot'' how to handle plurality. In other cases,
-the H-features model makes an argubaly correct lexical entailment, with
+the H-features model makes an arguably correct lexical entailment, with
 a resulting incorrect RTE evaluation: for example, the H-feature model and Asym
 model differ in predictions about \lit{young woman $\rightarrow$ girl}, with the
 H-feature model believing this is a nonentailment. We suspect different
