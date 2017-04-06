@@ -1,7 +1,7 @@
 \chapter{Lexical Entailment Detection with H-features}
 \label{ch:hpm}
 
-This chapter shows new model of lexical relationship predictions, and related
+This chapter shows a new model of lexical relationship predictions, and related
 material. The work in this chapter has been published in
 \newcite{roller:2016:emnlp}.
 
@@ -195,12 +195,14 @@ strictly defined and more difficult to model.
 \subsection{Distributional Vectors}
 
 Before we fully analyze Concat, we wish to
-describe our choice of distributional space, which will have a profound
+describe our choice of distributional space, which will have profound
 repercussions in the next experiment. Namely, we desire to explore whether
 syntactic spaces or bag-of-words spaces are better suited for lexical
-entailment models. We must consider this directly, as the syntactic space in
-the previous chapter was trained on different corpora, and transformed using
-Local Mutual Information \cite{evert:2005:phd} rather than PPMI.
+entailment models. In the previous section, we considered one syntactic space,
+but did not control for the corpus, vocabulary, or co-occurrence weighting
+when comparing the syntactic space to the bag-of-words spaces. We now
+briefly consider an experiments with all parameters of space construction
+controlled for, and only vary the choice of context.
 
 We construct several distributional spaces over a corpus containing the
 concatenation of Gigaword, Wikipedia, BNC and ukWaC.  We preprocess the corpus
@@ -230,23 +232,14 @@ as a window size of 0.
   \label{fig:window}
 \end{figure}
 
-Across all four datasets, we see that performance generally degrades as we
-increase the size of the context window of our distributional space. Since
-syntactic distributional space substantially outperforms the BoW spaces
-in all four datasets, we use it in all remaining experiments for this chapter.
-
-
-%In all experiments, we use a standard, count-based, syntactic distributional
-%vector space.  We use a corpus composed of the concatenation of Gigaword,
-%Wikipedia, BNC and ukWaC. We compute a syntactic distributional space for
-%the 250k most frequent lemmas by counting their dependency neighbors across the
-%corpus. We use only the top 1M most frequent dependency attachments as
-%contexts.  We use CoreNLP's ``collapsed dependencies'', in which prepositional
-%dependencies are collapsed e.g.  ``go to the store'' emits the tuples
-%(go,~prep:to+store) and (store,~prep:to\depinv+go).  After collecting counts,
-%vectors are transformed using PPMI, SVD reduced to 300 dimensions, and
-%normalized to unit length. The use of collapsed, syntactic dependencies for
-%co-occurrences is very important, but other parameters are reasonably robust.
+Across all four datasets, we see that performance generally improves as
+we narrow the context window size, and improves dramatically with the
+selection of a syntactic distributional space. This indicates a strong
+preference for a kind of function similarity, as opposed to a topical
+similarity. Since the syntactic space outperforms all bag-of-words spaces,
+we use this space for all experiments and models in the remainder of this
+chapter. Later, we will perform an analysis which explains the strong
+preference for syntactic spaces in all four datasets.
 
 \subsection{Reconsidering Prototypicality}
 
@@ -276,18 +269,19 @@ baselines
 \cite{weeds:2014:coling,roller:2014:coling,kruszewski:2015:tacl,vylomova:2016:acl}.
 To approach this question, we consider a baseline Concat classifier trained
 using a linear model. This classifier should most strongly exhibit the prototypicality
-behavior according to Equation~\ref{eq:proto}, making it the best
+behavior according to Equation~\ref{eqn:prototypicality}, making it the best
 choice for analysis. We first consider the most pessimistic hypothesis: is it
 only learning to memorize which words are hypernyms at all?
 
 We train the baseline Concat classifier using Logistic Regression on each of
 the four datasets, and extract the vocabulary words which are most similar to
-the $\hat H$ half of the learned hyperplane $\hat p$. If the classifier is only
+the $\vhath$ half of the learned hyperplane $\vhatp$. If the classifier is only
 learning to memorize the training data, we would expect the most frequent
 hypernyms from the data to dominate this list of closest vocabulary terms, as
-the centroid $\hat H$ should be strongly located near them.
-Table~\ref{tab:wordsim} gives the five most similar words to the learned
-hyperplane, with bold words appearing directly in the dataset.
+the centroid $\vhath$ should be strongly located near them.
+Table~\ref{tab:wordsim} gives the five words from the entire vocabulary, which
+are most similar to the learned hyperplane. Bold words appear directly in
+the dataset.
 
 \begin{table}[t]
 \begin{center}
@@ -320,12 +314,14 @@ Interestingly, we notice there are very few bold words at all in the list.  In
 LEDS, we actually see some good hypernyms of dataset items which do {\em not}
 even appear in the dataset. The Medical and TM14 words do not even appear
 related to the content of the datasets. Similar results were also found for
-Diff and Asym, and both when using Linear SVM and Logistic Regression. These
-lists cannot explain the success of the prototypicality classifiers in prior
-work. Instead, we propose an alternative interpretation of the hyperplane: that
-of a feature detector for hypernyms, or an {\em H-feature detector}.
+Diff and Asym, and both when using Linear SVM and Logistic Regression. Lexical
+Memorization of frequent items cannot explain the success of the prototypicality
+classifiers in prior work. Instead, we propose an alternative interpretation of
+the hyperplane: that of a feature detector for hypernyms, or an {\em H-feature
+detector}.
 
 \subsection{H-Feature Detectors}
+\label{sec:ctxsim}
 
 Recall that distributional vectors are derived from a matrix $M$ containing
 counts of how often words co-occur with the different syntactic contexts. This
@@ -405,27 +401,28 @@ analysis of prior work like \newcite{roller:2014:coling} and
 \newcite{levy:2015:naacl}. \newcite{roller:2014:coling} found no signals of
 H-features in their analysis of one classifier, but their model was focused on
 {\em bag-of-words} distributional vectors, which perform significantly worse on
-the task.  \newcite{levy:2015:naacl} also performed an analysis of lexical
+the task. \newcite{levy:2015:naacl} also performed an analysis of lexical
 entailment classifiers, and found weak signals like \lit{such} and \lit{of}
 appearing as prominent contexts in their classifier, giving an early hint of
 H-feature detectors, but not to such an overwhelming degree as we see in this
 work.  Critically, their analysis focused on a classifier trained on
 high-dimensional, {\em sparse} vectors, rather than focusing on {\em context
-embeddings} as we do.  By using these sparse vectors, their model was unable
+embeddings} as we do. By using sparse vectors, their model was unable
 to generalize across similar contexts. Additionally, their model did not make
 use of {\em collapsed dependencies}, making features like \lit{such} much
 weaker signals of entailment and therefore less dominant during analysis.
 
 Among these remarkable lists, the LEDS and TM14 datasets stand out for having
-much fewer \lit{such as} patterns compared to BLESS and Medical. The reason
-for this is explained by the construction of the datasets: since LEDS
+much fewer \lit{such as} patterns compared to BLESS and Medical.
+This is explained by the construction of the datasets: since LEDS
 contains the same words used as both positive and negative examples, the
 classifier has a hard time picking out clear signal. The TM14 dataset, however,
 does not contain any such negative examples.
 
-We hypothesize the TM14 dataset contains too many diverse and mutually
-exclusive forms of lexical entailment, like instrument-goal (e.g. \lit{honey}
-$\rightarrow$ \lit{sweetness}).  To test this, we retrained the model with only
+We hypothesize the model cannot generalize because the TM14 dataset contains
+too many diverse and unrelated examples of lexical entailment, like
+instrument-goal (e.g. \lit{honey} $\rightarrow$ \lit{sweetness}).
+To test this, we retrained the model with only
 hypernymy as positive examples, and all other relations as negative.  We find
 that \lit{such as} type patterns become top features, but also some interesting
 data specific features, like \lit{retailer of [clothes]}.  Examining the data
@@ -436,7 +433,7 @@ which explains these features.
 \section{Proposed Model}
 \label{sec:hfeatproposed}
 
-As we saw in the previous section, Concat only acts as a sort of H-feature
+As we saw in the previous section, Concat acts as a sort of H-feature
 detector for whether $h$ is a prototypical hypernym, but does not actually
 infer the relationship between $h$ and $w$. Nonetheless, this is powerful
 behavior which should still be used in combination with the insights of other
@@ -502,7 +499,7 @@ its projection and the rejection over $\vhatp$.}
 \label{fig:vecproj}
 \end{figure}
 
-Using the vector rejection, we take a learned H-feature detector $\hat p$,
+Using the vector rejection, we take a learned H-feature detector $\vhatp$,
 and discard these features from each of the word vectors. That is, for every data
 point $\wordpair$, we replace it by its vector rejection and rescale
 it to unit magnitude:
@@ -528,7 +525,7 @@ each additional H-feature detector increases the model's representational power
 
 This procedure alone does not address the main concern of
 \newcite{levy:2015:naacl}: that these linear classifiers never actually model
-any connection between $H$ and $w$.  To address this, we explicitly {\em
+any connection between $\vh$ and $\vw$.  To address this, we explicitly {\em
 compare} $\vh$ and $\vw$ by extracting additional information about how $\vh$
 and $\vw$ interact with respect to each of the H-feature detectors. This
 additional information is then used to train one final classifier which makes
@@ -562,8 +559,10 @@ For our final classifier, we use an SVM with an RBF-kernel, though decision
 trees and other nonlinear classifiers also perform reasonably well. The
 nonlinear final classifier can be understood as doing a form of logical
 reasoning about the four slots: \lit{animal} is a hypernym of \lit{cat} because
-(1) they are similar words where (2) animal looks like a hypernym, but (3) cat
-does not, and (4) some \lit{animal} contexts are not good \lit{cat} contexts.
+(1) they are similar words where (2) \lit{animal} looks like a hypernym, but
+(3) \lit{cat} does not, and (4) some \lit{animal} contexts are not good
+\lit{cat} contexts. Additional iterations act as roughly like an ``or'' gate,
+so that separate H-features and inclusion patterns may be matched instead.
 
 
 \subsection{Experimental Setup and Evaluation}
@@ -582,8 +581,8 @@ methodology.
 
 We first pool all the words from the antecedent (LHS)
 side of the data into a set, and split these lexical items into 20 distinct
-cross-validation folds. For each fold $F_i$, we then use all pairs $\pair$ where
-$w\in F_i$ as the test set pairs. That is, if \lit{car} is in the test set fold,
+cross-validation folds, $D_1,\ldots,D_{20}$. For each fold $D_i$, we then use all pairs $\pair$ where
+$w\in D_i$ as the test set pairs. That is, if \lit{car} is in the test set fold,
 then \lit{car $\rightarrow$ vehicle} and \lit{car $\nrightarrow$ truck} will appear
 as test set pairs. The training set will then be {\em every pair} which does
 not contain {\em any} overlap with the test set; e.g. the training
@@ -693,7 +692,7 @@ importance.}
 \label{tab:ablation}
 \end{table}
 
-In order to evaluate how important each of the various $F$ features are to the
+In order to evaluate how important each of the various $f$ features are to the
 model, we also performed an ablation experiment where the classifier is {\em
 not} given the similarity (slot 1), prototype H-feature detectors (slots 2 and
 3) or the inclusion features (slot 4). To evaluate the importance of these
@@ -715,7 +714,7 @@ LEDS dataset, though this can also be understood in the dataset's construction:
 since the negative examples are randomly shuffled positive examples, the
 {\em same} detector signal will appear in both positive and negative examples.
 Finally, we find the model performs somewhat robustly without the inclusion
-feature, but still is moderately impactful on three of the four datasets,
+feature, but inclusion is still moderately impactful on three of the four datasets,
 lending further evidence to the Distributional Inclusion Hypothesis.
 In general, we find all three components are valuable sources of information
 for identifying hypernymy and lexical entailment.
@@ -793,7 +792,7 @@ should be tuned carefully. The LEDS and BLESS curves indicate a sort of
 
 To gain some additional insight into what is captured by the various iterations
 of the feature extraction procedure, we repeat the procedure from
-Section~\ref{sec:motivation}: we train our model on the entire BLESS dataset
+Section~\ref{sec:ctxsim}: we train our model on the entire BLESS dataset
 using a fixed four iterations and regularization parameter. For each iteration,
 we compare its learned H-feature detector to the context embeddings, and report
 the most similar contexts for each iteration in Table~\ref{tab:multiter}.
@@ -817,7 +816,7 @@ exists a wide literature in detecting lexical entailments directly using
 Hearst patterns \cite{hearst:1992:coling} or their Dependency path
 equivalents \cite{snow:2004:nips,girju:2006:cl}. These Hearst approaches are
 known to produce low recall, since words do not always appear with their
-hypernyms; yet Hearst approaches also may be complimented by distributional
+hypernyms; yet Hearst approaches also may be complemented by distributional
 approaches.
 One recent line of work called HypeNET \cite{shwartz:2016:acl} aims to obtain
 the best of both worlds, by integrating both path-based and distributional
@@ -848,9 +847,11 @@ zero lexical overlap settings, arguing that both are important: random-split
 measures our ability to {\em complete} an existing taxonomy, while
 zero lexical overlap measures ability to {\em induce} a taxonomy.
 They use fixed 70\% train, 5\% validation, and 25\% test folds, which they
-publish along with their paper.  Table~\ref{tab:shwartz}(a) shows the reported
+publish along with their paper.  Table~\ref{tab:shwartz}(a) shows
 results for a linear distributional-only baseline (Concat), along with their
-novel Path-only model and state-of-the-art Hybrid model.
+novel Path-only model and state-of-the-art Hybrid model. We emphasize these
+numbers are reprinted directly from \newcite{shwartz:2016:acl}, and not
+produced by any of our own experiments.
 
 To compare our H-feature model to theirs, we use their published datasets,
 and evaluate using the same training/test splits, and select hyperparameters
@@ -873,7 +874,7 @@ evaluate our H-feature model.
   \hline
   \multicolumn{7}{c}{}\\
   [-0.5em]
-  \multicolumn{7}{c}{(a) Reported results from \newcite{shwartz:2016:acl}.}\\
+  \multicolumn{7}{c}{(a) Results from \newcite{shwartz:2016:acl}, reprinted here.}\\
   \multicolumn{7}{c}{}\\
   \hline
   & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
@@ -926,10 +927,10 @@ sources, but no random negative pairs.
 
 In the previous sections, we focused on how H-features may be used to detect
 lexical entailments, and models were trained with a binary positive and
-negative system. Yet it is unclear whether H-features will also be useful
+negative system. It is an interesting question whether H-features will also be useful
 for performing multi-relation classification, where labels may consist of
-several relations. On one hand, the task may appear to be harder, and Hearst
-patterns for non-hypernymy relations are much more difficult \cite{girju:2006:cl}.
+several relations. On the one hand, the task may appear to be harder and Hearst
+patterns for non-hypernymy relations are much more difficult to identify \cite{girju:2006:cl}.
 On the other hand, the negative examples in the above sections constituted
 many kinds of relationships (random, co-hyponymy, meronomy) and distingiushing
 between these may overall improve performance. Furthermore, the relations
@@ -945,10 +946,11 @@ diverse settings.
 
 In Section~\ref{sec:hfeatproposed}, we proposed iteratively training multiple
 H-feature extractors through the use of vector rejection. During each iteration
-of feature, we trained the linear hyperplane $\vhatp = \wordpair$ which maximized
-predictive accuracy. Since we trained a binary classifier and we wished to
-positively identify hypernyms, we always selected the $\vhath$ vector at
-each iteration, as it was the only logical hyperplane to choose.
+of feature, we learned a single H-feature detector $\vhatp$ which maximized
+predictive accuracy. However, each classifier has two parts, $\vhath$ and
+$\vhatw$, both of which are viable candidates as H-features. Since we wished to
+positively identify hypernyms, we always selected $\vhath$ as our
+H-feature detector.
 
 With multi-class settings, the choice of which hyperplane is muddied: for
 some relations, the choice between $\vhath$ and $\vhatw$ may not be as obvious:
@@ -981,9 +983,16 @@ We evaluate our multi-relation H-feature detector on several existing datasets c
 
 The first dataset we use is {\bf BLESS} \cite{baroni:2011:gems}, which was also used
 in the single-class experiments; previously, we only used the Hypernymy labels
-as positive classes, and all other labels as negative. Here, we include all
-relations with their positive labels, including the {\em attribute} and
-{\em event} relations which were excluded in previous settings.
+as positive classes, and all other labels as negative, and limited the dataset
+to only its noun-noun pairs. Here, we include all relations with their positive
+labels, including the {\em attribute} and {\em event} relations which were
+excluded in previous settings. The attribute relation includes nouns with their
+basic adjectives or attributes, e.g. \lit{fast} is an attribute of
+\lit{train}. The event relation includes nouns with action verbs they participate
+as either the subject or object in, e.g. \lit{grenade destroys} or \lit{cook
+broccoli}. The inclusion of these relations results in a dataset which includes
+nouns, adjectives, and verbs, but adjectives and verbs each appear only in one
+relation type.
 
 The second dataset we use is {\bf EVAL} \cite{santus:2015:ws}, which contains
 a wide variety of lexical relations: {\em hypernymy}, {\em antonymy}, {\em
@@ -993,9 +1002,9 @@ are {made of} \lit{cotton}).  The full dataset has 7,378 annotated pairs.
 Notably, EVAL lacks any random negative pairs, meaning that all pairs contain
 words semantically related in some way.
 
-The third dataset we use is {\bf Root9} \cite{santus:2016:lrec} contains
+The third dataset we use is {\bf Root9} \cite{santus:2016:lrec}, which contains
 12,763 pairs consisting of {\em random}, {\em hypernymy}, and {\em co-hyponymy}
-relations. The dataset was intentionally constructed to be balance random
+relations. The dataset was intentionally constructed to balance random
 relations with non-random relations, and balance the non-random relations
 equally between hypernymy and co-hyponymy.
 
@@ -1005,10 +1014,10 @@ hypernymy}, {\em co-hyponymy}, {\em meronomy}, and {\em random} relations and
 covering three domains (animals, plants, and vehicles). Similar to BLESS and
 LEDS, this dataset was extracted from WordNet, and was constructed to emphasize
 identifying relations between words which {\em do not co-occur} in the BNC. The
-K\&H+N name derives from the dataset introduced by \cite{kozareva:2010:emnlp},
-and extended by \newcite{necsulescu:2015:starsem} to include the co-hyponymy
-and meronomy.  The resulting dataset is extremely unbalanced, but still
-contains over 1,000 meronomy examples and 4,000 hypernymy examples.
+K\&H+N name derives from the dataset introduced by \newcite{kozareva:2010:emnlp},
+and extended by \newcite{necsulescu:2015:starsem} to include co-hyponymy
+and meronomy.  The resulting dataset is 90\% either random or co-hyponymy, but
+still contains over 1,000 meronomy examples and 4,000 hypernymy examples.
 
 The distribution of each of the relations of each of the four datasets may
 be found in Table~\ref{tab:multimakeup}.
@@ -1031,7 +1040,7 @@ be found in Table~\ref{tab:multimakeup}.
   \hline
 \end{tabular}
 \end{footnotesize}
-\caption{The makeup of each of the four multi-relation datasets, by relation type. Not}
+\caption{The makeup of each of the four multi-relation datasets, by relation type.}
 \label{tab:multimakeup}
 \end{table}
 
@@ -1190,8 +1199,10 @@ Some of the H-features are more prototypical than the others, and their
 most similar words (rather than contexts) tend to appear directly in the data.
 For example, the BLESS Meronomy H-feature identifies many features that are
 common of animal parts, like \lit{splayed [feet]} or \lit{swept back [wings]}.
-The BLESS Attribute H-feature learned to identify color words, so its contexts
-are mostly concrete nouns which are described using these colors. The BLESS
+The BLESS Attribute H-feature learned to simply memorize color adjectives, which
+were some of the most common attributes; as such, its prototypical contexts are
+mostly concrete nouns appearing explicitly with color modifiers
+The BLESS
 Event hyperplane appears only to segment verbs from the rest of the data,
 with contexts like \lit{chance to [eat]} or \lit{enough to [eat]}. This is
 unsurprising, as this was the only relation with any examples of verbs.
