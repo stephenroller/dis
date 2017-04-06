@@ -13,61 +13,61 @@ We have considered a variety of challenging tasks related to the area,
 including hypernymy detection, lexical relationship prediction, and lexical
 substitution.
 
-In hypernymy detection and lexical relationship prediction, we must predict
+In hypernymy detection and lexical relationship prediction, one must predict
 whether a given pair of words exhibits a particular linguistic relationship,
 like hypernymy, co-hyponymy, meronomy, or a variety of other possibilities.
-Our work shows that the choice of experimental setup is critical to properly
+Our work has shown that the choice of experimental setup is critical to properly
 understanding how methods may or may not generalize to novel lexical items,
-and introduce the notion of lexical memorization. We propose evaluating models
+and introduce the notion of lexical memorization. We proposed evaluating models
 in an adversarial setup with zero lexical overlap between training and test
 sets, allowing us to measure generalization to unseen words, and our proposed
 setup has now become a standard evaluation in the literature.
 
-In addition, we have also proposed Asym, a new model of hypernymy detection and
-lexical relationship prediction: Asym. We also analyze Asym to identify
+We also proposed Asym, a new model of hypernymy detection and
+lexical relationship prediction: Asym. We analyzed Asym to identify
 its relationship to existing linguistic theories of hypernymy, like the
-Distributional Inclusion Hypothesis, and show that our model does not suffer
+Distributional Inclusion Hypothesis. We showed that our model does not suffer
 from some of the prototypicality limitations of other models proposed in the
 literature, which only make predictions based on how similar a pair is to
 relationship prototypes, without regard for actual relationship between the
 words in a pair.
 
-Furthermore, we consider the behavior of a model known to exhibit {\em only}
-prototypicality behavior, and propose a novel analysis method to interpret the
+We considered the behavior of a model known to exhibit {\em only}
+prototypicality behavior, and proposde a novel analysis method to interpret the
 behavior of the model. By interpretting a model's hyperplane in terms of {\em
-context} space, we come to a clear observation that simpler models actually
-learn to identify H-features, or Hearst pattern style contexts which are most
+context} space, we observed that simpler models actually
+learn to identify H-features, or Hearst pattern like contexts which are most
 indicative of hypernymy. Building on this observation and the success of
-Asym, we propose a novel model which identifies and exploits multiple sets of
-H-features, through an iterative PCA-like procedure. Our model matches or
+Asym, we proposed a novel model which identifies and exploits multiple sets of
+H-features through an iterative PCA-like procedure. Our model matches or
 exceeds the performance of other models in the literature on several datasets.
-We also extend our H-feature model so that it may predict several lexical
-relationships simultaneously, and outperform existing models in the literature.
-We examine the H-features learned for the non-hypernymy relationships, and
-find strong evidence for additional known Hearst patterns in the literature,
+We also extended our H-feature model so that it may predict several lexical
+relationships simultaneously, and outperformed existing models in the literature.
+We examined the H-features learned for the non-hypernymy relationships, and
+found strong evidence for additional known Hearst patterns in the literature,
 as well as many alternative patterns highly indicative of target relationships.
 
-We also consider a novel model of lexical substitution, where one must predict
-a synonym for a polysemous word in a particular sentential context. We examine
-a small modification to a simple model existing in the literature, and show
+We considered a novel model of lexical substitution, where one must predict
+a synonym for a polysemous word in a particular sentential context. We introduced
+a modification to a simple model from he literature, and showed
 large performance gains over several datasets and evaluations compared to the
-baseline model. Our performance most improves on the difficult task of
+baseline model. Our performance most improved on the difficult task of
 substitution generation, where a one may propose any word from the entire
-vocabulary as a substitute. Additional analysis shows that our model improves
-over prior work via a strong integration of a unigram frequency bias, allowing
+vocabulary as a substitute. Additional analysis showed that our model improved
+over prior work via integration of a unigram frequency bias, allowing
 it to discard rare or mispelled substitutes from its predictions.
 
-Finally, we consider how each of the contributions from above may be integrated
-into a real, end-to-end system for Recognizing Textual Entailment. We consider
+Finally, we considered how each of the contributions above could be integrated
+into a real, end-to-end system for Recognizing Textual Entailment. We considered
 the role of a lexical entailment classifier in an RTE system, and the
 relationship between distribuitonal similarity and the probability of lexical
-entailment. We find that each of our components, on its own, is able to
+entailment. We found that each of our components, on its own, was able to
 perform competitively or outperform a number of baseline lexical entailment
-features. Furthermore, we show that the components may be combined with
-existing lexical entailment features to improve overall peformance, and can
-outperform a system which uses only a fixed, high-quality lexical resource.
-Our components are partially orthogonal, and improve further by bringing all
-together.
+features. Furthermore, we showed that the components may be combined with
+existing lexical entailment features to improve overall peformance,
+significantly outperforming a system which uses only a fixed, high-quality
+lexical resource. Our contributing components are orthogonal, and improve
+further by bringing all together.
 
 In short, this thesis has shown that Distributional Semantics can contribute
 significantly to difficult lexical and textual entailment tasks through a
@@ -77,7 +77,6 @@ information contained within them.
 
 
 \section{Future Work}
-
 
 As with all areas of research, the work in this thesis answers some questions,
 but it also raises new ones. In this section, we briefly consider some possible
@@ -144,22 +143,23 @@ rather than our iterative greedy procedure. This could be done using a
 neural network model, such that the first layer's weight matrix would
 correspond to each separate H-feature. In preliminary experiments testing this
 approach, we struggled with overfitting on specific lexical items, and suffered
-a great deal of the same lexical memorization issue as previous works. It
-may be necessary to regularize the model using orthogonal regularization
-\cite{brock:2017:iclr}, or a sparsity regularizer on hidden activations.
+a great deal of the same lexical memorization issue of early models in the
+area. It may be necessary to regularize the model using orthogonal
+regularization \cite{brock:2017:iclr}, or a sparsity regularizer on hidden
+activations.
 
 \paragraph{Lexical Relationship Generation}
 
 In the broader context, predicting whether two words exhibit a lexical
-lexical relationship is of limited use when one or both sides of the pair
+relationship is of limited use when one or both sides of the pair
 is unconstrained, and the best possible word must be {\em generated} or
-{\em selected}. For example, applications may be actually more interested
-in asking what is the hypernym of \lit{cat}, rather than whether
-\lit{cat},~\lit{animal}) is hypernymy. At the present moment, our H-feature
-model and similar lexical relationship models could only answer the former
-question by enumerating over the vocabulary, and querying the model word by
-word. Naturally, even if we improved our predictive accuracy substantially
-beyond current state-of-the-art, the the numerous trials will naturally result
+{\em selected} from the vocabulary. For example, some applications may be
+actually more interested in asking ``what is the hypernym of \lit{cat}?'' rather
+than ``is \lit{cat},~\lit{animal}) hypernymy?'' At the present moment, our
+H-feature model and similar lexical relationship models could only answer the
+former question by enumerating over the vocabulary, and querying the model word
+by word. Naturally, even if we improved our predictive accuracy substantially
+beyond current state-of-the-art, the the numerous trials will result
 in a large number of false positives.
 
 Furthermore, we saw in our own experiments that highly imbalanced datasets
@@ -188,4 +188,14 @@ properties, in addition to evidence between two individual pairs.
 
 \paragraph{Soft Alignments in Lexical Entailment}
 
+In our Lexical Entailment classifier of Chapter~\ref{ch:rte}, we used a
+hard alignment procedure in order to model entailment aspects of the
+non-head words in phrases \newcite{lai:2014:semeval}. Although this
+successfully models some entailing and nonentailing phrases, the greedy
+alignment procedure may sometimes cause words to wrongly become aligned, and
+prevents any many-to-one alignments. Future models may benefit from using
+a soft alignment model, similar to the attention mechanisms of neural methods
+in RTE \cite{bowman:2015:emnlp,parikh:2016:emnlp}. This could be accomplished
+by integrating soft alignments into our lexical entailment classifier, or
+by integrating our features into attention-based neural networks for RTE.
 
