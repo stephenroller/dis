@@ -47,8 +47,8 @@ We examined the H-features learned for the non-hypernymy relationships and
 found strong evidence for additional known Hearst patterns in the literature,
 as well as many alternative patterns highly indicative of target relationships.
 
-We considered a novel model of lexical substitution, where one must predict
-a synonym for a polysemous word in a particular sentential context. We introduced
+We considered a novel model of lexical substitution, the task of predicting
+a paraphrase for a polysemous word in a particular sentential context. We introduced
 a modification to a simple model from he literature, and showed
 large performance gains over several datasets and evaluations compared to the
 baseline model. Our performance most improved on the difficult task of
@@ -103,7 +103,7 @@ wider-context information in a future distributional models.
 \paragraph{Multi-relation Lexicalization}
 In a similar vein, current work on distributional models treats each
 co-occurrence as an independent, isolated event in the corpus. For example, in
-our distributional spaces, we model a verb-subject co-occurrences independently
+our distributional spaces, we model verb-subject co-occurrences independently
 of verb-object co-ocurrences independently of verb-preposition co-occurrences.
 In some cases, it may be better to model a word's co-occurrences jointly. For
 example, if someone ``kills two birds,'' we may have an industrious hunter, and
@@ -119,7 +119,7 @@ scores, but we suspect joint modeling may be valuable for several combinations
 of syntactic relationships.
 
 Sparsity will always be a fundamental challenge in such joint-modeling
-applications, but clustering methods alieve this problem by using coarser
+applications, but clustering methods alleviate this problem by using coarser
 co-occurrences for modeling.  \newcite{melamud:2014:conll} makes a step in this
 direction by using probability estimates of a language model to estimate joint
 co-occurrence, but they ignore explicit markers of syntactic relations.
