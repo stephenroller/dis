@@ -33,7 +33,7 @@ exhaustively. Nonetheless, we here try to sketch out some of the main branches
 of research which have led to our own work.
 
 One of the seminal works in automatic hypernymy discovery was that of Hearst
-patterns \cite{hearst:1992:coling}. Heast showed that certain lexico-syntactic
+patterns \cite{hearst:1992:coling}. Hearst showed that certain lexico-syntactic
 idioms were very clear indicators of hypernymy relationships. Some example
 Hearst patterns are \lit{animals such as cats}; \lit{animals for example cats};
 and \lit{animals including cats}. Each of these provides evidence that \lit{animal} is a
@@ -243,7 +243,7 @@ random. We also include cosine similarity as a scientific control.
 We evaluate using the BLESS dataset \cite{baroni:2011:gems},
 which contains annotations of word relations for 200 mostly unambiguous, concrete
 nouns like \lit{van}, \lit{horse}, and \lit{chair}. These concepts are divided
-into 17 general Categeories, like \lit{vehicle}, \lit{ground mammal} and
+into 17 general Categories, like \lit{vehicle}, \lit{ground mammal} and
 \lit{furniture}. Each noun is annotated with its co-hyponyms, meronyms,
 hypernyms and some random pairs. The original dataset additionally contains
 some additional verb relations, but we use only the noun-noun relationships,
@@ -475,8 +475,8 @@ deal with the issue in separate ways. The former controlled for memorization
 using the concept-level stratification we describe above, while the latter
 controlled for by comparing models with a randomized control variant, which
 used {\em random} vectors to represent each word. Models which had little
-difference between their real and drandomized results were assumed to be
-memorizing the data, while models which improved over random vetors were
+difference between their real and randomized results were assumed to be
+memorizing the data, while models which improved over random vectors were
 considered strong. This is a very different approach to controlling for
 lexical memorization. We consider this setup to be inadequate, since
 randomized vectors are unable to exploit the distributional hypothesis, and

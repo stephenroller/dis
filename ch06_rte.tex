@@ -15,7 +15,7 @@ sight of the bigger picture. We turn our attention now to the Recognizing
 Textual Entailment task (RTE), which we introduced in the beginning of
 Chapters~\ref{ch:intro}~and~\ref{ch:background}.
 
-In Recognizing Textual Entailment, a system is provided two sentences, a text (antecdent) and
+In Recognizing Textual Entailment, a system is provided two sentences, a text (antecedent) and
 hypothesis (consequent), and must decide whether a human would say the
 hypothesis follows from the text.
 A particular RTE pair may involve different phenomena, but
@@ -66,7 +66,7 @@ RTE system employs Boxer \cite{bos:2008:step}, a wide coverage semantic analysis
 trees into logical formulas.
 
 The RTE system then aligns the representations of the text and hypothesis to find words and
-short phrases for which it needs lexical entailment judgements. This alignment
+short phrases for which it needs lexical entailment judgments. This alignment
 procedure is done using a variant of Robinson Resolution, which identifies
 common predicates and performs unification across text and hypothesis.
 In our example, the system will produce two separate rules:
@@ -116,7 +116,7 @@ dataset are shown in Table~\ref{tab:sickexample}.
 We saw above that we may break some sentences down into
 individual lexical entailments of short phrases. These lexical
 entailments may be either entailing, neutral, or contradicting. This differs
-from work in previous chapters, which never attempted to identify contraditions
+from work in previous chapters, which never attempted to identify contradictions
 or reason about phrases. Additionally, lexical entailments in this chapter must
 be tailored specifically for the RTE task, and therefore require we build
 our own lexical entailment dataset.
@@ -345,7 +345,7 @@ distributional space. We then measure five similarities arising
 from the possible combinations contexts and words:
 (1) context of LHS with RHS head, (2) context of RHS with LHS head,
 (3) context of LHS with LHS head, (4) context of RHS with RHS head, and
-(5) context of LHs with context of RHS.
+(5) context of LHS with context of RHS.
 
 The first feature is the cosine similarity between the syntactic contexts of
 the LHS agree with the RHS. This measures how well the RHS's selection
@@ -543,7 +543,7 @@ Next, we extend the feature set of the baseline model by adding each component
 one-by-one: first binning, then Contexts, and finally Supervised Distributional
 models. For the Supervised Distributional models, we consider Concat, Asym,
 and H-features separately, since they constitute different models. We evaluate
-each of the experimental conditions using Leixcal and RTE accuracies with the
+each of the experimental conditions using Lexical and RTE accuracies with the
 same setup as the previous section.
 
 \begin{table}
@@ -653,7 +653,7 @@ Finally, we integrate in the Concat, Asym and H-feature models discussed in
 previous chapters. We find that the integration of H-features into the model
 substantially improves performance at the lexical level, but results in
 slightly lower performance at the full RTE level. Systematic differences
-between the training and test set may account for some of this discrepency.
+between the training and test set may account for some of this discrepancy.
 Furthermore, we find that the addition of the Asym features substantially
 improves RTE accuracy, and gives the strongest performance of any of our
 considered models. In general, we find that Supervised Distributional models

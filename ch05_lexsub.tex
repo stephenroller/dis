@@ -27,7 +27,7 @@ measure for estimating a paraphrase's appropriateness for a given target and
 context. We show our measure outperforms baseline measures, especially in an
 experimental setup where paraphrases are considered from the entire vocabulary.
 
-\section{Lexical Substituion}
+\section{Lexical Substitution}
 
 In our discussion of lexical relationships in the previous two chapters, we
 assumed that words are {\em monosemous}, or that they have only one meaning.
@@ -38,7 +38,7 @@ of ambiguity in natural language.
 
 It is still unclear what representation should even be chosen
 to represent polysemous words. One option is the use of a lexicon, like the
-dictionary.  Lexicographers are responsible for cataloguing and defining word
+dictionary.  Lexicographers are responsible for cataloging and defining word
 senses; one may see this in the multiple definitions provided by the Oxford
 English Dictionary or Merriam Webster, but even professional lexicographers
 often disagree on how many senses a word has. For example, \lit{bank} has
@@ -144,7 +144,7 @@ For example, in \lit{the fielder {\em catches}}, they would consider
 verbs which take \lit{fielder} in the subject position. Since their
 work focused more on innovations in representations of polysemy, they
 evaluated their system on its ability to identify correct substitutes from
-a candidate list, and did not consider its ability to {\em generate} substitues
+a candidate list, and did not consider its ability to {\em generate} substitutes
 from the entire vocabulary.
 
 \newcite{thater:2009:ati,thater:2010:acl} expanded on the this idea of inverse
@@ -213,7 +213,7 @@ levels of supervision.
 \label{sec:melamud}
 
 We now consider the unsupervised models of \newcite{melamud:2015:vsm}, which
-are centeral to the contributions of our own work.
+are central to the contributions of our own work.
 \newcite{melamud:2015:vsm} introduce a simple, but high-performing method,
 based on the Syntactic Skip-Gram Negative Sampling model of
 \newcite{levy:2014:acl}. As with other unsupervised models, it combines a
@@ -282,7 +282,7 @@ Note that the equation has two components: the first measures the {\em
 out-of-context} similarity between the target $t$ and the substitute $s$ using
 basic cosine similarity. The second half of the measure encodes the {\em
 in-context} appropriateness, by considering substitute with respect to
-each of the syntatic contexts.
+each of the syntactic contexts.
 
 This formulation is considerably simpler than many of the other models
 in the prior work, which require significant overhead for space creation
@@ -303,11 +303,11 @@ are given equal weight. The choice between the \addCos and \balAddCos is
 an empirical one, and performance of either could vary across datasets or
 evaluation metrics.
 
-\section{Probability-in-Context (PiC)}
+\section{Probability-in-Context (PIC)}
 
 We propose an extension of the context vector measure of
 \newcite{melamud:2015:vsm}, called Probability-in-Context (PIC).  We note that
-our measure is {\em not} a well defined probabilty measure; rather the name was
+our measure is {\em not} a well defined probability measure; rather the name was
 simply chosen for the purpose of the paper's title.
 
 Similar to \balAddCos, the measure has two equally-weighted, independent
@@ -450,7 +450,7 @@ procedure took around 45 minutes using a GPU.
 \centering
 \begin{tabular}{|lccc|}
   \hline
-  {\bf Measure} & {\bf SE} & {\bf CiCo} & {\bf TWSI}\\
+  {\bf Measure} & {\bf SE} & {\bf CoInCo} & {\bf TWSI}\\
   \hline\hline
   \ooc               &     44.2   &     44.5  &     57.9       \\
   \addCos            &     51.2   &     46.3  &     62.2       \\
@@ -471,7 +471,7 @@ procedure took around 45 minutes using a GPU.
 \centering
 \begin{tabular}{|lccc|}
   \hline
-  {\bf Measure} & {\bf SE} & {\bf CiC} & {\bf TWSI}\\
+  {\bf Measure} & {\bf SE} & {\bf CoInCo} & {\bf TWSI}\\
   \hline\hline
   \ooc               &     11.7   &    10.9   &      9.8       \\
   \addCos            &     12.9   &    10.5   &      7.9       \\
@@ -487,7 +487,7 @@ procedure took around 45 minutes using a GPU.
 \centering
 \begin{tabular}{|lccc|}
   \hline
-  {\bf Measure} & {\bf SE} & {\bf CiC} & {\bf TWSI}\\
+  {\bf Measure} & {\bf SE} & {\bf CoInCo} & {\bf TWSI}\\
   \hline\hline
   \ooc               &     9.7    &     8.6   &     7.0       \\
   \addCos            &     9.0    &     7.9   &     6.1       \\
@@ -556,7 +556,7 @@ the more difficult all-words task, we next strive to understand why.
   \end{minipage}
   \begin{tabular}{|cccc|}
     \hline
-    {    OOC                 } & {    \balAddCos          } & {    \ourmeas            } & {    \ourmeasparam       } \\
+    {    \ooc                } & {    \balAddCos          } & {    \ourmeas            } & {    \ourmeasparam       } \\
     \hline\hline
     {    sea-change          } & {\bf alter               } & {    reoccur             } & {    re-occur            } \\
     {\bf alter               } & {    sea-change          } & {    re-occur            } & {    appear              } \\

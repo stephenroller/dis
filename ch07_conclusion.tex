@@ -34,7 +34,7 @@ words in a pair.
 
 We considered the behavior of a model known to exhibit {\em only}
 prototypicality behavior, and proposed a novel analysis method to interpret the
-behavior of the model. By interpretting a model's hyperplane in terms of {\em
+behavior of the model. By interpreting a model's hyperplane in terms of {\em
 context} space, we observed that simpler models actually
 learn to identify H-features, or Hearst pattern like contexts which are most
 indicative of hypernymy. Building on this observation and the success of
@@ -55,16 +55,16 @@ baseline model. Our performance most improved on the difficult task of
 substitution generation, where a one may propose any word from the entire
 vocabulary as a substitute. Additional analysis showed that our model improved
 over prior work via integration of a unigram frequency bias, allowing
-it to discard rare or mispelled substitutes from its predictions.
+it to discard rare or misspelled substitutes from its predictions.
 
 Finally, we considered how each of the contributions above could be integrated
 into a real, end-to-end system for Recognizing Textual Entailment. We considered
 the role of a lexical entailment classifier in an RTE system, and the
-relationship between distribuitonal similarity and the probability of lexical
+relationship between distributional similarity and the probability of lexical
 entailment. We found that each of our components, on its own, was able to
 perform competitively or outperform a number of baseline lexical entailment
 features. Furthermore, we showed that the components may be combined with
-existing lexical entailment features to improve overall peformance,
+existing lexical entailment features to improve overall performance,
 significantly outperforming a system which used only a fixed, high-quality
 lexical resource. Our contributing components also combine together to produce
 a model which outperforms any component on its own.
@@ -104,7 +104,7 @@ wider-context information in a future distributional models.
 In a similar vein, current work on distributional models treats each
 co-occurrence as an independent, isolated event in the corpus. For example, in
 our distributional spaces, we model verb-subject co-occurrences independently
-of verb-object co-ocurrences independently of verb-preposition co-occurrences.
+of verb-object co-occurrences independently of verb-preposition co-occurrences.
 In some cases, it may be better to model a word's co-occurrences jointly. For
 example, if someone ``kills two birds,'' we may have an industrious hunter, and
 if we observe someone ``killing with one stone,'' we may recall the story of
