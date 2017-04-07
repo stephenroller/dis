@@ -12,148 +12,86 @@ and showed how experimental setup can vastly affect one's conclusions about
 effectiveness of models on this task. Since then, most work has considered the
 importance of experimental setup and lexical overlap, and a plethora of
 supervised distributional approaches have been proposed for different variations
-of the task.
+of the task. Yet, much of the literature differs on which model is best
+\cite{weeds:2014:coling,roller:2014:coling}, or whether models are sufficiently
+powerful to learn beyond prototypicality judgements \cite{levy:2015:naacl}.
+In this chapter, we examine {\em why} prototypicality models are
+successful at all, and consider alternative explanations beyond simple lexical
+memorization. Our observations cumulate in a new model of hypernymy detection
+that is both highly interpetable, and outperforms other models in the literature
+on multiple datasets. Additionally, our model can be generalized to model
+other non-hypernymy relationships.
 
-In this chapter, we review additional work on supervised relationship
-prediction using distributional semantics, and consider the strengths of
-different models in the literature. We consider how the construction of
-distributional spaces affects model performance, especially within the
-framework of prototypicality analysis discussed in the previous chapter. We
-find that hypernymy detection classifiers have a high degree of
-interpretability when considered carefully.  We propose a novel model which
-combines the advantages of prototypicality classifiers, while addressing their
-pitfalls. Our new model achieves consistently strong or state-of-the-art
-performance across numerous datasets, including datasets of hypernymy
-detection, general lexical entailment, and multi-relation classification.
-
-\section{Related Work for Supervised Models}
-
-\begin{comment}
-  classification:
-    -- baroni:2012:eacl
-    -- roller:2014:coling
-    -- weeds:2014:coling
-    -- levy:2015:naacl
-    -- kruszewski:2015:tacl
-    -- shwartz:2016:acl
-    turney:2015:nle
-  multi relation:
-    vylomova:2016:acl
-    swhartz:2016:cogalex1
-    shwartz:2016:cogalex2
-  multi language
-    bordea:2016:semeval
-  regression:
-    espinosaanke:2016:emnlp
-    nayak:2015:techreport
-    fu:2014:acl
-\end{comment}
-
-In the previous chapter, we considered many models for lexical entailment and
-hypernymy detection, especially those based on the frameworks of Hearst
-patterns and unsupervised distributional measures based on the Distributional
-Inclusion Hypothesis. Here we focus only on the {\em supervised} approaches of
-lexical entailment using distributional semantics, and attempt to highlight
-the differences and considerations of the many approaches.
+\section{Supervised Distributional Models and Prototypicality}
 
 As discussed earlier, the earliest supervised approach was that of
 \newcite{baroni:2012:eacl}, who used an off-the-shelf polynomial SVM train on
-the {\em concatenation} of the pair $\wordpair$. Such a model obtains strong
+the {\em concatenation} of the word pair. Such a model obtains strong
 performance on randomized stratifications of datasets, but performs poorly
 when testing for lexical generalization. This issue was observed simultaneously
 by \newcite{roller:2014:coling} and \newcite{weeds:2014:coling}, who published
-these concerns at the same conference. The former approached the problem
-through the stratification methods described earlier, but the latter considered
-how well models perform over a random vector experiment. That is, models were
-trained both on real distributional vectors and {\em randomized} distributional
-vectors. Models which had little difference between their real and randomized
-results were assumed to be memorizing the data, while models which improved
-upon the random vectors were considered strong. This is a very different
-approach to issues of lexical memorization. We consider this experimental
-setup to be inadequate, since randomized vectors are unable to exploit the
-distributional hypothesis, and therefore systematically underestimate the
-robustness of some models. Nonetheless, they report strong results for linear
-models using either vector concatenation (Concat) or vector difference (Diff)
-input representations, but consider the Concat representation superior.
+these concerns at the same conference, and proposed different experimental
+methods for controlling for lexical memorization. Both papers also proposed
+variations of supervised models which use the vector difference as a basis
+for features inputted to a classifier: \newcite{weeds:2014:coling} proposed
+Diff, which uses {\em only} the vector difference, while
+\newcite{roller:2014:coling} noted the importance of the additional
+difference-squared terms, as discussed in the previous chapter.
 
-\newcite{levy:2015:naacl} focus particularly on the issue of lexical
-memorization, and seek to elaborate on what kinds of models are subject to
-these issues. They emphasize the importance of the inner product terms in
-generalizing to novel words, and propose the notion of {\em prototypicality},
-suggesting that some models merely look to identify words which appear like the
-most prototypical hypernym or hyponym, regardless actual relation. They
-therefore conclude that specific linear models (like Diff and Concat, but not
-Asym) are doomed to this behavior through the analysis we saw in the previous
-chapter. They also propose {\em Ksim}, a specialized nonlinear SVM kernel which
-explicitly includes the critical similarity term which Concat and Diff lack.
-Their views on prototypicality will inform and motivate our model proposed in
-this chapter.
+Interestingly, the two works arrive at differing conclusions about the best
+model for the task of supervised hypernymy detection. While
+\newcite{roller:2014:coling} find vector differences to be useful and outperform
+a concatenation based model (Concat), \newcite{weeds:2014:coling} find the opposite:
+a simple, linear model based on vector concatenation outperforms the vector
+difference model in their experiments. Later,
+\newcite{vylomova:2016:acl} examined the models further and found that vector
+differences is robust at predicting a variety of
+lexical relationships, both with and without lexical overlap, but
+\newcite{shwartz:2016:acl} report better results using simple concatenation.
 
-\newcite{kruszewski:2015:tacl} focus more strongly on the role of the
-Distributional Inclusion Hypothesis within the framework of supervised models,
-and propose a custom neural network for lexical entailment. In particular, they
-focus on projecting the distributional space into latent boolean features where
-the Distributional Inclusion Hypothesis maximally holds. They compare their
-model with a carefully tuned SVM with an RBF kernel, and find mixed results
-regarding which is stronger. However, they find the latent subspace induced
-by their model contains highly interpretable word clusters, and provide additional
-evidence for the Distributional Inclusion Hypothesis.
+\newcite{levy:2015:naacl} focus on the issue of lexical
+memorization, and propose that both the Diff and Concat models act as
+{\em prototypicality} models, which merely look to identify words that appear
+most like prototypical hypernyms or hyponyms. They point out that such
+prototypicality models lack explicit terms relating the hypernym and hyponym,
+and therefore will predict that pairs like (\lit{animal}, \lit{cactus}) will
+be predicted as hypernymy, because \lit{animal} looks like a typical hypernym,
+and \lit{cactus} looks like a typical hyponym.
+This analysis suggests that simple linear models, like Concat or Diff,
+should be unable to learn the relationships between words, and therefore
+will predict a large number of false positives.
 
-\newcite{shwartz:2016:acl} consider whether traditional path-based
-approaches may be improved using the lessons learned from distributional
-approaches. They propose a Recurrent Neural Network approach which trains
-an LSTM \cite{hochreiter:1997:nc} on dependency paths between $h$ and $w$.
-These recurrent paths are pooled and concatenated with distributional
-representations, showing an improvement over comparable path-only and
-distributional-only baselines.
+Some works have proposed nonlinear models which can address these
+prototypicality concerns. \newcite{levy:2015:naacl} proposed a custom SVM
+kernel {\em Ksim}, which explicitly includes the critical inner product
+missing in linear models. \newcite{kruszewski:2015:tacl} focus more on the
+role of the Distributional Inclusion Hypothesis within the framework of
+supervised models, and propose a custom neural network for hypernymy
+detection, which projects the distributional space into latent Boolean
+features. Both \newcite{levy:2015:naacl} and \newcite{kruszewski:2015:tacl}
+compare their proposed models with a carefully tuned SVM with an RBF, and find
+mixed results. These nonlinear models address the prototypicality concerns
+of \newcite{levy:2015:naacl}, as they contain analytical terms necessary for
+similarity reasoning.
 
-Some other works have considered whether it is possible to learn a {\em
-regression} from hyponyms to hypernyms. In particular, \newcite{fu:2014:acl}
-attempt the regression using vector differences, but find that separate
-regression models must be trained for separate regions of distributional
-space found via $k$-means clustering. \newcite{espinosaanke:2016:emnlp} find
-the clustering step better corresponds to domain-specificity, and propose
-learning separate regressions per-domain rather than per-cluster, showing
-substantial improvement.  \newcite{nayak:2015:techreport} attempts to
-circumvent the domain specificity issue entirely using deep feed-forward neural
-networks, and find moderate improvements in precision over a baseline linear
-model.
+Thus, the literature generally disagrees about whether concatenation or
+vector differences are better representations for classification. Furthermore,
+despite analysis which suggests linear models should fail at the task entirely,
+several works find they actually perform robustly, both in traditional and
+adversarial experimental setups
+\cite{roller:2014:coling,weeds:2014:coling,fu:2014:acl,shwartz:2016:acl,vylomova:2016:acl}.
+In the next section, we aim to resolve this conflict. We will consider what
+aspects of lexical meaning prototypicality models are capturing, and why
+this information allows prototypicality models to perform hypernymy detection
+so well.
 
-Other works consider whether results from hypernymy detection generalize to
-other types of lexical relationships, including other taxonomic relations
-like meronomy or co-hyponymy, but also other interesting semantic relations
-like cause-effect, agent-object or time-activity. \newcite{vylomova:2016:acl}
-finds that a linear model trained on vector differences is able to successfully
-distinguish between many lexical relations, including hypernymy, meronomy,
-gender (\lit{king/queen}), object-location (\lit{fish/aquarium}), and
-action-object (\lit{zip/coat}). They also find that additional negative
-sampling (via pair randomization) can improve performance, and that difference
-vectors are robust across several models of distributional spaces.
-Additionally, Shwartz and Dagan~(\shortcite{shwartz:2016:cogalex2,shwartz:2016:cogalex1})
-apply the hybrid path-and-distributional neural
-net \cite{shwartz:2016:acl} to multi-relation datasets and again find that
-hybrid approaches generally outperform only-path or only-distributional
-approaches, though the differences are less pronounced than in hypernymy-only
-datasets.
+
 
 \section{Understanding Distributional Hypernymy Detectors}
 
-In the reviewed literature above, we saw that many models have been considered
-across a large variety of experiments and setups. However, different works have
-come to different conclusions about the strengths and weaknesses of specific
-models. Namely, the Diff and Concat models have had a smattering of seemingly
-contradictory results: some papers find that vector differences better capture
-lexical relationships \cite{fu:2014:acl,roller:2014:coling,vylomova:2016:acl},
-while others suggest that simple concatenation is better
-\cite{baroni:2012:eacl,weeds:2014:coling,shwartz:2016:acl}. To make matters
-more confusing, the analysis of \newcite{levy:2015:naacl} suggest that
-{\em neither} should be able to perform well, as both measure prototypicality
-and fail to model relationships directly; yet empirically, both models do
-significantly better than chance, and successfully generalize in adversarial
-experiments with zero lexical overlap.
-
-We aim to understand why these linear, prototypicality models are able to
-perform the task at all. To this end, we now study Concat extensively, and
+We turn our attention to understanding the mechanics of prototypicality models
+and the aspects of lexical meaning they learn.
+To this end, we study Concat extensively, and
 propose an alternative view of prototypicality: rather than simply modeling the
 ``average'' hypernym or hyponym, Concat actually acts as a kind of feature
 extractor which detects {\em aspects} typical of hypernyms.  We study these
@@ -818,9 +756,9 @@ equivalents \cite{snow:2004:nips,girju:2006:cl}. These Hearst approaches are
 known to produce low recall, since words do not always appear with their
 hypernyms; yet Hearst approaches also may be complemented by distributional
 approaches.
-One recent line of work called HypeNET \cite{shwartz:2016:acl} aims to obtain
-the best of both worlds, by integrating both path-based and distributional
-based methods together using modern neural network techniques.
+Ohe recent line of work, called HypeNET, aims to obtain the best of both
+worlds by integrating both path-based and distributional-based methods together
+using modern neural network techniques.
 
 For a given pair of words $(h, w)$, HypeNET extracts the complete set of
 dependency paths connecting $h$ and $w$ in any sentence in a large corpus.
@@ -938,11 +876,26 @@ discussed in the previous sections were {\em only} noun-noun relations; however,
 a variety of {\em other} interesting relations exist, like
 {\em object-attribute} (noun-adjective), or {\em event-object} (verb-noun).
 
+Indeed, some other works have already found some evidence that generalizing to
+non-hypernymy relations is possible with existing models from the literature.
+\newcite{vylomova:2016:acl} finds that a Diff model \cite{weeds:2004:coling}
+is able to successfully distinguish between many lexical relations,
+including hypernymy, meronomy, gender (\lit{king/queen}), object-location
+(\lit{fish/aquarium}), and action-object (\lit{zip/coat}). They also find that
+additional negative sampling (via pair randomization) can improve performance,
+and that difference vectors are robust across several models of distributional
+spaces.  Additionally, Shwartz and
+Dagan~(\shortcite{shwartz:2016:cogalex2,shwartz:2016:cogalex1}) apply the
+hybrid path-and-distributional neural net \cite{shwartz:2016:acl} to
+multi-relation datasets and find that hybrid approaches generally outperform
+only-path or only-distributional approaches, but that the improvements are less
+pronounced than in hypernymy-only datasets.
+
+\subsection{Adapting H-models for Multi-relation settings}
+
 We now consider the necessary modifications to extend our H-feature to
 multi-relation settings, or apply it to relationships which contain more
 diverse settings.
-
-\subsection{Adapting H-models for Multi-relation settings}
 
 In Section~\ref{sec:hfeatproposed}, we proposed iteratively training multiple
 H-feature extractors through the use of vector rejection. During each iteration
@@ -1208,6 +1161,28 @@ with contexts like \lit{chance to [eat]} or \lit{enough to [eat]}. This is
 unsurprising, as this was the only relation with any examples of verbs.
 Although these contexts tend toward prototypicality, it is also clear why
 they should be useful for the various relationships.
+
+\section{Other Works in Distributional Relationship Detection}
+
+As a final aside, we briefly describe a few other works in distributional
+relationship detection which are outside the scope of this chapter's narrative,
+but which should also be mentioned.
+
+In this chapter, we focused predominantly on works which treat hypernymy detection as a binary
+or multi-class prediction problem, where the system is provided a pair of
+words and must predict the relationship between the two words.
+Other works have considered whether it is possible to learn a {\em
+regression} from hyponyms to hypernyms. In particular, \newcite{fu:2014:acl}
+attempt the regression using vector differences, but find that separate
+regression models must be trained for separate regions of distributional
+space found via $k$-means clustering. \newcite{espinosaanke:2016:emnlp} find
+the clustering step better corresponds to domain-specificity, and propose
+learning separate regressions per-domain rather than per-cluster, showing
+substantial improvement.  \newcite{nayak:2015:techreport} attempts to
+circumvent the domain specificity issue entirely using deep feed-forward neural
+networks, and find moderate improvements in precision over a baseline linear
+model.
+
 
 \section{Chapter Summary}
 

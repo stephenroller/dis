@@ -469,6 +469,19 @@ model simply {\em memorizes} that \lit{animal} is always a hypernym when it
 appears on the RHS, or that \lit{cactus} is always a hyponym when it appears
 on the LHS.
 
+This discovery of memorization was simultaneously published by both
+\newcite{roller:2014:coling} and \newcite{weeds:2014:coling}, but each chose to
+deal with the issue in separate ways. The former controlled for memorization
+using the concept-level stratification we describe above, while the latter
+controlled for by comparing models with a randomized control variant, which
+used {\em random} vectors to represent each word. Models which had little
+difference between their real and drandomized results were assumed to be
+memorizing the data, while models which improved over random vetors were
+considered strong. This is a very different approach to controlling for
+lexical memorization. We consider this setup to be inadequate, since
+randomized vectors are unable to exploit the distributional hypothesis, and
+therefore systematically underestimate the robustness of some models.
+
 Our second observation is that stratification by category is substantially
 more difficult than stratification by concept, regardless of whether or
 not lexical overlap is allowed. The reason for this is threefold:
