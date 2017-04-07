@@ -109,7 +109,7 @@ The next dataset we consider is {\bf Medical} \cite{levy:2014:conll}. This
 dataset contains noisy annotations of subject-verb-object entailments
 extracted from medical texts, and transformed into noun-noun entailments by
 argument alignments. The data contains 12,600 annotations, but only 945
-positive examples encompassing various relations like hypernymy, meronomy,
+positive examples encompassing various relations like hypernymy, meronymy,
 synonymy, and some examples of ``contextonymy,'' or entailments that occur in
 {\em some} specific contexts, but do not cleanly fit in other categories (e.g.
 \lit{hospital} entails \lit{doctor}). It one of the most difficult datasets:
@@ -870,7 +870,7 @@ for performing multi-relation classification, where labels may consist of
 several relations. On the one hand, the task may appear to be harder and Hearst
 patterns for non-hypernymy relations are much more difficult to identify \cite{girju:2006:cl}.
 On the other hand, the negative examples in the above sections constituted
-many kinds of relationships (random, co-hyponymy, meronomy) and distingiushing
+many kinds of relationships (random, co-hyponymy, meronymy) and distingiushing
 between these may overall improve performance. Furthermore, the relations
 discussed in the previous sections were {\em only} noun-noun relations; however,
 a variety of {\em other} interesting relations exist, like
@@ -880,7 +880,7 @@ Indeed, some other works have already found some evidence that generalizing to
 non-hypernymy relations is possible with existing models from the literature.
 \newcite{vylomova:2016:acl} finds that a Diff model \cite{weeds:2004:coling}
 is able to successfully distinguish between many lexical relations,
-including hypernymy, meronomy, gender (\lit{king/queen}), object-location
+including hypernymy, meronymy, gender (\lit{king/queen}), object-location
 (\lit{fish/aquarium}), and action-object (\lit{zip/coat}). They also find that
 additional negative sampling (via pair randomization) can improve performance,
 and that difference vectors are robust across several models of distributional
@@ -963,14 +963,14 @@ equally between hypernymy and co-hyponymy.
 
 The final dataset we use is {\bf K\&H+N} \cite{necsulescu:2015:starsem}, our
 largest dataset containing of 57,510 annotated pairs consisting of {\em
-hypernymy}, {\em co-hyponymy}, {\em meronomy}, and {\em random} relations and
+hypernymy}, {\em co-hyponymy}, {\em meronymy}, and {\em random} relations and
 covering three domains (animals, plants, and vehicles). Similar to BLESS and
 LEDS, this dataset was extracted from WordNet, and was constructed to emphasize
 identifying relations between words which {\em do not co-occur} in the BNC. The
 K\&H+N name derives from the dataset introduced by \newcite{kozareva:2010:emnlp},
 and extended by \newcite{necsulescu:2015:starsem} to include co-hyponymy
-and meronomy.  The resulting dataset is 90\% either random or co-hyponymy, but
-still contains over 1,000 meronomy examples and 4,000 hypernymy examples.
+and meronymy.  The resulting dataset is 90\% either random or co-hyponymy, but
+still contains over 1,000 meronymy examples and 4,000 hypernymy examples.
 
 The distribution of each of the relations of each of the four datasets may
 be found in Table~\ref{tab:multimakeup}.
@@ -985,7 +985,7 @@ be found in Table~\ref{tab:multimakeup}.
   \hline
   Hypernymy & 25.5\% & Hypernymy   &  5.0\% & Hypernymy   & 25.0\% & Hypernymy   &  7.5\% \\
   Antonym   & 21.7\% & Co-hyp      & 13.4\% & Co-hyp      & 25.1\% & Co-hyp      & 44.9\% \\
-  Synonym   & 14.7\% & Meronomy    & 11.1\% & Random      & 49.9\% & Meronomy    &  1.8\% \\
+  Synonym   & 14.7\% & Meronymy    & 11.1\% & Random      & 49.9\% & Meronymy    &  1.8\% \\
   Has A     &  7.4\% & Attribute   & 10.3\% &             &        & Random      & 45.9\% \\
   Material  &  4.3\% & Event       & 14.4\% &             &        &             &        \\
   Property  & 17.6\% & Random      & 45.8\% &             &        &             &        \\
@@ -1067,7 +1067,7 @@ we report at least one H-feature from each.
 \begin{small}
 \begin{tabular}{|ll|}
 \hline
-{\bf BLESS: Co-hyponymy (Itr. 2)}     & {\bf BLESS: Meronomy (Itr. 3)}        \\
+{\bf BLESS: Co-hyponymy (Itr. 2)}     & {\bf BLESS: Meronymy (Itr. 3)}        \\
 \hline
 \ctx{nmod:between\depinv+cross}       & \ctx{amod+splayed}                    \\
 \ctx{nmod:like\depinv+vaguely}        & \ctx{amod+swept-back}                 \\
@@ -1109,7 +1109,7 @@ we report at least one H-feature from each.
 %\ctx{compound\depinv+fiber}           & \ctx{compound\depinv+downward}        \\
 \hline
 \hline
-{\bf K\&H: Meronomy (Itr. 3)}         & {\bf Root9: Co-hyponymy (Itr. 1)}     \\
+{\bf K\&H: Meronymy (Itr. 3)}         & {\bf Root9: Co-hyponymy (Itr. 1)}     \\
 \hline
 \ctx{nmod:poss+stallion}              & \ctx{nmod:as\depinv+big}              \\
 \ctx{nmod:poss+serpent}               & \ctx{nmod:between\depinv+cross}       \\
@@ -1137,9 +1137,9 @@ identifiers of their corresponding relations. Many are not as obvious or as
 clear cut as the original Hypernymy H-features, but all are interesting
 nonetheless. The BLESS and Root9 co-hyponymy detectors identify some
 interesting patterns from genetics, like \lit{cross between [tomato] and
-[tobacco]} and \lit{[cat] vaguely like a [dog]}. The K\&H meronomy H-features
+[tobacco]} and \lit{[cat] vaguely like a [dog]}. The K\&H meronymy H-features
 identifies clear possessive constructions (\lit{stallion's [tail]}) and mirror
-the meronomy patterns proposed by \newcite{girju:2006:cl}, though
+the meronymy patterns proposed by \newcite{girju:2006:cl}, though
 the contexts are strongly biased towards by its animal-heavy construction.
 The EVAL Material detector identifies strong material patterns
 (\lit{[bookshelves] handcrafted from [wood]}), and the EVAL Has detector
@@ -1150,7 +1150,7 @@ proposed model works strongly in multi-relation settings.
 
 Some of the H-features are more prototypical than the others, and their
 most similar words (rather than contexts) tend to appear directly in the data.
-For example, the BLESS Meronomy H-feature identifies many features that are
+For example, the BLESS Meronymy H-feature identifies many features that are
 common of animal parts, like \lit{splayed [feet]} or \lit{swept back [wings]}.
 The BLESS Attribute H-feature learned to simply memorize color adjectives, which
 were some of the most common attributes; as such, its prototypical contexts are
