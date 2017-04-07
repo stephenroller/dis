@@ -1,24 +1,29 @@
-\chapter{Hypernymy Detection and Asym}
-\label{ch:lexmem}
+\chapter{Hypernymy Detection and Asym}\label{ch:lexmem}
 
 This chapter introduces the Asym model and related material. The work
 in this chapter has been published in \newcite{roller:2014:coling}.
 
 \section{Chapter Overview}
 
-We consider the task of hypernymy detection using distributional semantics.
-We overview some prior work on the task, and especially consider a number
-of unsupervised distributional measures based on the Distributional Inclusion
-Hypothesis. We directly compare these and appeal to the need for supervised
-models.
+Automatically identifying lexical relationships is a long standing task
+in NLP \cite{hearst:1992:coling,snow:2004:nips,girju:2006:cl}, which has
+implications for textual entailment, question answering, information
+retrieval, and more. Hypernymy, or an is-a relationship like \lit{cat} is an
+animal, is of particular interest for many applications. Most approaches tend
+to focus on identifying specific lexico-syntactic patterns which are indicative
+of particular relations, but require that direct observation of words in
+those patterns. The use of distributional vectors holds promise of increasing
+recall over lexico-syntactic patterns, but the literature has focused mostly
+on unsupervised measures with limited success.
 
-We consider how experimental setup may affect our understanding of model
-performance, and propose a difficult experimental setup which enforces
-there should be zero lexical overlap between training and test. This
-experimental setup since been adopted widely in following work.
-We also propose a novel model for supervised hypernymy detection, and find
-that it outperforms prior work. Finally, we offer an interpretation of the
-model's success, and highlight its strengths.
+We propose Asym, a novel {\em supervised} model for automatically identifying
+hypernymy using distributional vectors. Our measure draws inspiration from
+the Distributional Inclusion Hypothesis \cite{zhitomirskygeffet:2005:acl},
+which states that the contexts in which \lit{animal} may appear should be a
+superset of the contexts in which \lit{cat} may appear. We propose a novel
+experimental setup to measure how well models generalize to unseen lexical
+items, and show that our model performs well in these adversarial experimental
+conditions.
 
 \section{Prior Work}
 
@@ -31,14 +36,14 @@ One of the seminal works in automatic hypernymy discovery was that of Hearst
 patterns \cite{hearst:1992:coling}. Heast showed that certain lexico-syntactic
 idioms were very clear indicators of hypernymy relationships. Some example
 Hearst patterns are \lit{animals such as cats}; \lit{animals for example cats};
-and \lit{animals including cats}. Each of these provides evidence that X is a
-hypernym of Y, especially when the pattern is repeated several times across a
+and \lit{animals including cats}. Each of these provides evidence that \lit{animal} is a
+hypernym of \lit{cat}, especially when the pattern is repeated several times across a
 large corpus \cite{hearst:1992:coling}. With a strong set of patterns, and a
-large enough corpus, many hypernymy relationships may easily be captured. 
+large enough corpus, many hypernymy relationships may easily be captured.
 
 Unfortunately, such patterns can be brittle and sensitive to minor inflections
 or variations.  These patterns above would fail to also capture the
-relationship between X and Z if provided \lit{X, such as Y and Z}. Some work
+relationship between \lit{animals} and \lit{dogs} if provided \lit{animals, such as cats and dogs}. Some work
 has sought to address these issues by expanding the lists of Hearst
 patterns and increasing coverage by using
 rough frequency estimates from web search engines (e.g. Google, Bing) rather
@@ -734,6 +739,7 @@ scores weakened. Altogether, this is evidence that the Asym measure is
 conforming to our Selective Distributional Inclusion interpretation.
 
 \subsection{Limitations of the Linear Model}
+\label{sec:linearlimits}
 
 We also inspect Asym's learned weights on the difference-squared features part
 of the hyperplane. Here we find that, opposite of the difference features, Asym

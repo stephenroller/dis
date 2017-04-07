@@ -16,8 +16,18 @@ material. The work in this chapter has been published in
 %model, and propose Probability-in-Context, a variation on this simple idea. We
 %find our proposed model significantly outperforms baselines, and analyze why it
 %improves over the prior work.
-%
-%\section{Lexical Substituion}
+
+Our discussions in the previous chapters assumed that a word has only one
+meaning, and that this meaning does not change with respect to context.
+However, some lexical entailments may hold in particular contexts but not
+in others. In this chapter, we consider the task of {\em Lexical Substitution},
+where we must propose paraphrases for a given target word appearing in
+a particular context. We propose Probability in Context (PIC), an unsupervised
+measure for estimating a paraphrase's appropriateness for a given target and
+context. We show our measure outperforms baseline measures, especially in an
+experimental setup where paraphrases are considered from the entire vocabulary.
+
+\section{Lexical Substituion}
 
 In our discussion of lexical relationships in the previous two chapters, we
 assumed that words are {\em monosemous}, or that they have only one meaning.
