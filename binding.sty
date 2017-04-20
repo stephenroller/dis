@@ -192,14 +192,17 @@
 %%%
 %%% Set up page layout parameters.
 %%%
-\setlength{\textheight}{7.75in} %{8in}- 1/4"        BKay
-\setlength{\oddsidemargin}{0.62in}  %{0.5in} + 1/8" BKay
-\setlength{\evensidemargin}{0.62in} %{0.5in}        BKay
-\setlength{\textwidth}{5.50in}
-\setlength{\topmargin}{0.62in} %{0.5in}+1/8"        BKay
-\setlength{\headheight}{0in}
-\setlength{\headsep}{0in}
-\setlength{\parindent}{12mm}
+\setlength{\paperwidth}{5.50in}
+\setlength{\paperheight}{8.50in}
+\setlength{\textheight}{8.00in} %{8in}- 1/4"        BKay
+\setlength{\textwidth}{4.50in}
+\setlength{\topmargin}{0.000in} %{0.5in}+1/8"        BKay
+\setlength{\headheight}{0.125in}
+\setlength{\headsep}{0.0in}
+\setlength{\parindent}{0.25in}
+\setlength{\oddsidemargin}{0.750in}  %{0.5in} + 1/8" BKay
+\setlength{\evensidemargin}{0.750in} %{0.5in}        BKay
+\setlength{\footskip}{0.25in}
 
 %%%
 %%% Set up default values.
@@ -319,11 +322,11 @@
 %\renewcommand*\l@paragraph{\@dottedtocline{4}{10em}{5em}}
 %\renewcommand*\l@subparagraph{\@dottedtocline{5}{12em}{6em}}
 \renewcommand{\cfttoctitlefont}{\hfill
-                                \vspace{-10mm}\fourteenBold}
+                                \fourteenBold}
 \renewcommand{\cftloftitlefont}{\hfill
-                                \vspace{-10mm}\fourteenBold}
+                                \fourteenBold}
 \renewcommand{\cftlottitlefont}{\hfill
-                                \vspace{-10mm}\fourteenBold}
+                                \fourteenBold}
 \renewcommand{\cftaftertoctitle}{\hfill}
 \renewcommand{\cftafterlottitle}{\hfill}
 \renewcommand{\cftafterloftitle}{\hfill}
@@ -428,7 +431,7 @@
       \end{spacing}
     \end{center}
     \vfill \strut
-    \newpage}
+    }
 
 %%%
 %%% Command to generate title page.
@@ -471,7 +474,7 @@
     \begin{center}
       \@thesistitle
     \end{center}
-    \vspace{50mm}
+    \vspace{80mm}
     \mbox{} \hfill 
            \begin{minipage}{67mm}
              \begin{spacing}{1}
@@ -549,7 +552,7 @@
 \newlength{\@tmplength}
 \newcommand{\thesiscertificationpage}{
     \thispagestyle{empty}
-    \vspace*{-12mm}
+    \cleardoublepage
     \centerline{\textbf{The \thesistype\ Committee for \thesisauthor}}
     \centerline{\textbf{certifies that this is the approved version of the following \MakeLowercase{\thesistype}:}}
     \vspace*{30pt}
@@ -566,25 +569,24 @@
     \vspace*{15px}
     \thesiscertificationsignaturelines
     \setlength\baselineskip\@tmplength
-    \clearpage}
+    \cleardoublepage}
 
-\newenvironment{maybesmall}{}{}
-\newenvironment{maybetiny}{}{}
+%%% small mode when in binding
+\newenvironment{maybesmall}{\begin{small}}{\end{small}}
+\newenvironment{maybetiny}{\begin{footnotesize}}{\end{footnotesize}}
 
 %%%
 %%% Environment to generate abstract page.
 %%%
 \newenvironment{thesisabstract}
     {\chapter*{}
-     %\addcontentsline{toc}{chapter}{Abstract}
-     \vspace*{-1.0in}
+     \addcontentsline{toc}{chapter}{Abstract}
      \begin{center}
        \setlength{\unitlength}{1mm}
        \begin{spacing}{2}
        \@thesistitle \\[10mm]
        \end{spacing}
        \begin{spacing}{\@defaultbaselinestretch}
-       \@publicationno
        \vspace*{-5mm}
        \thesisauthor, \thesisdegreeabbreviation \\
        \@universityname, \thesisyear \\[10mm]
@@ -605,6 +607,7 @@
 %%% Command to generate dedication page.
 %%%
 \newcommand{\thesisdedicationpage}{
+    \cleardoublepage
     \thispagestyle{empty}
     \strut \vfill
     \begin{spacing}{\@defaultbaselinestretch}
@@ -612,29 +615,17 @@
       \thesisdedication
     \end{center}
     \end{spacing}
-    \vfill \strut
-    \newpage}
+    \vfill \strut}
 
 %%%
 %%% Environment to generate acknowledgments page.
 %%%
 \newenvironment{thesisacknowledgments}
-    {%\doublespace\small\normalsize
-     \chapter*{
+    {\cleardoublepage\chapter*{
        \thesisacknowledgmentheadtypesize
-       \@thesisacknowledgmenthead
-         %\@mkboth{\uppercase{\@thesisacknowledgmenthead}}
-         %        {\uppercase{\@thesisacknowledgmenthead}}
-                 }                 
-     %\addcontentsline{toc}{chapter}{\@thesisacknowledgmenthead}
-     %\begin{spacing}{\@defaultbaselinestretch}
+       \@thesisacknowledgmenthead}
      }
-    {
-    %\end{spacing} 
-%    \par \vspace{20mm}
-%     \raggedleft \@thesisacknowledgmentsigname \\[10mm]
-%     \raggedright \@thesisacknowledgmentsigplace 
-     \newpage}
+    {}
 
 %%%
 %%% Environment to generate vita page.
@@ -664,8 +655,8 @@
 
 \newcommand{\@chapteralignment}{\centering}
 \renewcommand{\chapter}{
-   \clearpage
-   \vspace{10mm} % space above chapter title
+   \cleardoublepage
+   \vspace{-50mm} % space above chapter title
    \ifnum\@appendix=1
      \renewcommand{\@chaptertype}{\appendixname}
    \else
@@ -729,7 +720,7 @@
 %%%
 \usepackage{titlesec}
 \newcommand{\chapternumberstyle}[1]{#1:}
-\newcommand{\chapterstyle}[1]{\normalfont\Large\bfseries{#1}\vspace{20px}}
+\newcommand{\chapterstyle}[1]{\normalfont\Large\bfseries{#1}}
 \titleformat{\section}
 {\normalfont\normalsize\bfseries}{\thesection}{1em}{}
 \titleformat{\subsection}
@@ -759,7 +750,7 @@
     \vskip 14\p@
   }}
 \def\@makeschapterhead#1{%
-  \vspace*{-35\p@}%
+  \vspace*{5\p@}%
   {\parindent \z@ \@chapteralignment
     \reset@font
     \chapterstyle{#1}\par
@@ -799,47 +790,11 @@
 %%%
 %%% Command from report.cls, (c) LaTeX3 Project.
 %%%
-\renewcommand\listoftables{%
-    \clearpage  %%% AME 
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \chapter*{\listtablename
-      \@mkboth{\uppercase{\listtablename}}{\uppercase{\listtablename}}}%
-    \addcontentsline{toc}{chapter}{\listtablename}
-    \@starttoc{lot}%
-    \if@restonecol\twocolumn\fi
-    }
-\renewcommand\listoffigures{%
-    \clearpage  %%% AME 
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \chapter*{\listfigurename
-      \@mkboth{\uppercase{\listfigurename}}%
-              {\uppercase{\listfigurename}}}%
-    \addcontentsline{toc}{chapter}{\listfigurename}
-    \@starttoc{lof}%
-    \if@restonecol\twocolumn\fi
-    }
-\renewcommand\tableofcontents{%
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \chapter*{\contentsname
-        \@mkboth{\uppercase{\contentsname}}{\uppercase{\contentsname}}}%
-    \@starttoc{toc}%
-    \if@restonecol\twocolumn\fi
-    }
-\renewcommand{\cftbeforetoctitleskip}{-10mm}
-\renewcommand{\cftbeforelottitleskip}{-10mm}
-\renewcommand{\cftbeforeloftitleskip}{-10mm}
+
+
+\renewcommand{\cftbeforetoctitleskip}{0in}
+\renewcommand{\cftbeforelottitleskip}{0in}
+\renewcommand{\cftbeforeloftitleskip}{0in}
 
 
 %%%

@@ -205,7 +205,7 @@ implemented by \newcite{bird:2009:nltk}.
     \multicolumn{3}{|l}{\bf{Simple alignment Features}} & 10 \\
     \hline
     Length & Length of LHS, RHS and (absolute) difference & Real & 4\\
-    Alignments & Number of aligned/unaligned words on LHS and RHS & Real & 3\\
+    Alignments & Number of (un)aligned words on LHS, RHS & Real & 3\\
     Align Pct. & Alignment statistics rescaled to percentages & Real & 3\\
     \hline\hline
     \multicolumn{3}{|l}{\bf{Wordform}} & 18\\
@@ -219,14 +219,14 @@ implemented by \newcite{bird:2009:nltk}.
     \hline
     OOV & True if either lemma not in dist space & Binary & 2\\
     BoW Cosine & Cosine between LHS and RHS in BoW space & Real & 1\\
-    Dep Cosine & Cosine between LHS and RHS in syntactic space & Real & 1\\
+    Dep Cosine & Cosine between LHS and RHS in syn. space & Real & 1\\
     BoW Hist & Bins of BoW Cosine & Binary & 12\\
     Dep Hist & Bins of Dep Cosine & Binary & 12\\
     \hline
     \hline
     \multicolumn{3}{|l}{\bf WordNet} & 18\\
     \hline
-    OOV & True if a lemma is not in WordNet, or no path exists & Binary & 1\\
+    OOV & True if a lemma is not in WordNet & Binary & 1\\
     Hyper & True if LHS is hypernym of RHS & Binary & 1\\
     Hypo & True if RHS is hypernym of LHS & Binary & 1\\
     Syn & True if LHS and RHS is in same synset & Binary & 1\\

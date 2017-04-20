@@ -1,0 +1,178 @@
+\documentclass[10pt,twoside,openright,cleardoublepage=empty]{report}
+\sloppy
+\usepackage{binding}
+\usepackage{times}
+\usepackage{indentfirst}
+
+\usepackage[round]{natbib}
+\usepackage{titlesec}
+
+% \mastersthesis                     %% Uncomment one of these; if you don't
+\phdthesis                           %% use either, the default is \phdthesis.
+
+% \thesisdraft                       %% Uncomment this if you want a draft
+                                     %% version; this will print a timestamp
+                                     %% on each page of your thesis.
+
+% \leftchapter                       %% Uncomment one of these if you want
+% \centerchapter                     %% left-justified, centered or
+% \rightchapter                      %% right-justified chapter headings.
+                                     %% Chapter headings includes the
+                                     %% Contents, Acknowledgments, Lists
+                                     %% of Tables and Figures and the Vita.
+                                     %% The default is \centerchapter.
+
+% \renewcommand{\chosenspacing}{\singlespace}      %% Uncomment one of these if you want
+  \renewcommand{\chosenspacing}{\oneandhalfspace}  %% single-spacing, space-and-a-half
+% \renewcommand{\chosenspacing}{\doublespace}      %% or double-spacing; the default is
+                                                   %% \oneandhalfspace, which is the
+                                                   %% minimum spacing accepted by the
+                                                   %% Graduate School.
+\chosenspacing
+\frenchspacing
+
+
+\renewcommand{\thesismonth}{May}     %% Your month of graduation.
+\renewcommand{\thesisyear}{2017}      %% Your year of graduation.
+
+\renewcommand{\thesisauthorpreviousdegrees}{, B.S., M.S.Comp.Sci.}
+                                     %% Your previous degrees, abbreviated;
+                                     %% separate multiple degrees by commas.
+
+\renewcommand{\thesissupervisor}{Katrin Erk}
+                                     %% Your thesis supervisor; use mixed-case
+                                     %% and don't use any titles or degrees.
+
+% \renewcommand{\thesiscosupervisor}{Your Co-Advisor}
+                                     %% Your PhD. thesis co-supervisor; if any.
+                                     %% Uncomment if you have a co-supervisor.
+
+\renewcommand{\thesiscommitteemembera}{Ray Mooney}
+\renewcommand{\thesiscommitteememberb}{Risto Miikkulainen}
+\renewcommand{\thesiscommitteememberc}{Sebastian Pado}
+% \renewcommand{\thesiscommitteememberd}{}
+% \renewcommand{\thesiscommitteemembere}{}
+% \renewcommand{\thesiscommitteememberf}{}
+% \renewcommand{\thesiscommitteememberg}{}
+% \renewcommand{\thesiscommitteememberh}{}
+% \renewcommand{\thesiscommitteememberi}{}
+                                     %% Define your other committee members here;
+                                     %% use mixed case and don't use any titles
+                                     %% or degrees.  Uncomment as many
+                                     %% as neccessary. (Ignored for Master's)
+
+
+\renewcommand{\thesisauthor}{\myname}
+\renewcommand{\thesistitle}{\mytitle}
+
+\renewcommand{\thesisauthoraddress}{me@stephenroller.com}
+                                     %% Your permanent address; use "\\" for
+                                     %% linebreaks.
+
+\renewcommand{\thesisdedication}{To my sisters, Lindsey and Kacie.}
+                                     %% Your dedication, if you have one; use
+                                     %% "\\" for linebreaks.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%% The following commands are all optional, but useful if your requirements
+%%% are different from the default values in utthesis.sty.  To use them,
+%%% simply uncomment (remove the leading %) the line(s).
+
+% \renewcommand{\thesiscommitteesize}{...}
+                                     %% Uncomment this only if your thesis
+                                     %% committee does NOT have 5 members
+                                     %% for \phdthesis or 2 for \mastersthesis.
+                                     %% Replace the "..." with the correct
+                                     %% number of members.
+
+% \renewcommand{\thesisdegree}{...}  %% Uncomment this only if your thesis
+                                     %% degree is NOT "DOCTOR OF PHILOSOPHY"
+                                     %% for \phdthesis or "MASTER OF ARTS"
+                                     %% for \mastersthesis.  Provide the
+                                     %% correct FULL OFFICIAL name of
+                                     %% the degree.
+
+% \renewcommand{\thesisdegreeabbreviation}{...}
+                                     %% Use this if you also use the above
+                                     %% command; provide the OFFICIAL
+                                     %% abbreviation of your thesis degree.
+
+% \renewcommand{\thesistype}{...}    %% Use this ONLY if your thesis type
+                                     %% is NOT "Dissertation" for \phdthesis
+                                     %% or "Thesis" for \mastersthesis.
+                                     %% Provide the OFFICIAL type of the
+                                     %% thesis; use mixed-case.
+
+% \renewcommand{\thesistypist}{...}  %% Use this to specify the name of
+                                     %% the thesis typist if it is anything
+                                     %% other than "the author".
+
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\input{packages}
+\usepackage[showframe]{geometry}
+%\usepackage{geometry}
+\geometry{margin=0.5in,bmargin=0.75in,footskip=0.25in,bindingoffset=0.25in}
+\usepackage{emptypage}
+\begin{document}
+
+\thesiscopyrightpage                 %% Generate the copyright page.
+
+\thesiscertificationpage             %% Generate the PhD. certification page.
+
+\thesistitlepage                     %% Generate the title page.
+
+%\thesissignaturepage                %% Generate the Master's signature page.
+
+\thesisdedicationpage                %% Generate the dedication page.
+
+\renewcommand{\thesisdedication}{\parbox[c]{0.75\textwidth}{``I don't know the meaning of half those long words, and, what's more,
+    I don't believe you do either!''\begin{flushright}-- Lewis Carroll, \textit{Alice's Adventures in
+Wonderland}\end{flushright}}}
+\thesisdedicationpage                %% Generate the dedication page.
+
+\phantomsection
+\addcontentsline {toc}{chapter}{Acknowledgments}  %% Force Acknowledgements to appear in contents
+\begin{thesisacknowledgments}        %% Use this to write your
+\input{ack}
+\end{thesisacknowledgments}          %% allowed in LaTeX2e par-mode.
+
+
+\begin{thesisabstract}               %% Use this to write your thesis abstract; it can be anything allowed in LaTeX2e par-mode.
+\chosenspacing
+\indent\input{abstract}
+\end{thesisabstract}
+
+\cleardoublepage
+\tableofcontents                     %% Generate table of contents.
+% \listoftables                      %% Uncomment this to generate list
+                                     %% of tables.
+% \listoffigures                     %% Uncomment this to generate list
+                                     %% of figures.
+
+
+\input{content}
+
+
+
+\cleardoublepage
+\phantomsection
+\addcontentsline {toc}{chapter}{\bibname}  %% Force Bibliography to appear in contents
+\singlespace
+\bibliographystyle{utthesis2015}
+\bibliography{refs}
+
+\begin{thesisauthorvita}
+Stephen Roller was born in the early hours of a winter's day in 1988 in
+Baltimore, Maryland. He spent his formative years in Charlotte, North
+Carolina. He obtained a Bachelors of Science in Computer Science from
+North Carolina State University in 2010, and then entered graduate school
+at the University of Texas at Austin. He obtained a Masters of Science in
+Computer Science in 2014, and continued his doctoral studies, where he
+has been working on natural language understanding.
+\end{thesisauthorvita}
+
+\end{document}

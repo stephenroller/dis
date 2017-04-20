@@ -254,7 +254,7 @@ for this context.
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[scale=2.0]
+\begin{tikzpicture}[scale=\textwidth/6cm]
     \fontsize{11}{11}\selectfont
     \coordinate (origin) at (0,0);
     \draw [->,Gray] (origin) -- (130:1.5) node[above] {{wearing}};
@@ -466,9 +466,11 @@ procedure took around 45 minutes using a GPU.
 \end{table}
 
 \begin{table}
+\hfill
+\begin{minipage}{0.470\textwidth}
 \centering
-\begin{minipage}{6cm}
-\centering
+\begin{maybesmall}
+\setlength\tabcolsep{1.00ex}
 \begin{tabular}{|lccc|}
   \hline
   {\bf Measure} & {\bf SE} & {\bf CoInCo} & {\bf TWSI}\\
@@ -480,11 +482,14 @@ procedure took around 45 minutes using a GPU.
   \ourmeas           &     17.3   &    16.3   &     11.1       \\
   \ourmeasparam      & {\bf19.7}  &{\bf18.2}  & {\bf13.7}      \\
   \hline
-\end{tabular}\\~\\(a) Precision@1
+\end{tabular}\\~\\{(a) Precision@1}
+\end{maybesmall}
 \end{minipage}
-\quad
-\begin{minipage}{6cm}
+\hfill
+\begin{minipage}{0.470\textwidth}
 \centering
+\begin{maybesmall}
+\setlength\tabcolsep{1.00ex}
 \begin{tabular}{|lccc|}
   \hline
   {\bf Measure} & {\bf SE} & {\bf CoInCo} & {\bf TWSI}\\
@@ -497,7 +502,9 @@ procedure took around 45 minutes using a GPU.
   \ourmeasparam      &{\bf14.8}   &{\bf13.8}  &{\bf10.1}      \\
   \hline
 \end{tabular}\\~\\(b) Precision@3
+\end{maybesmall}
 \end{minipage}
+\hfill
 \caption{Performance of {\ourmeas} and {\ourmeasparam} on the three Lexical
   Substitution datasets in the all words ranking task, measured in
   (a)~P@1 and (b)~P@3.}

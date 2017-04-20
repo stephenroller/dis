@@ -411,7 +411,7 @@ intuitively, is the original vector after the projection has been removed:
 
 \begin{figure}
 \centering
-\begin{tikzpicture}[scale=1.5]
+\begin{tikzpicture}[scale=1.75]
     % Draw axes
     \def\r{0.5}
     % Draw two intersecting lines
@@ -612,7 +612,6 @@ while significantly outperforming it on BLESS and Medical datasets.
 \subsection{Ablation Experiments}
 \begin{table}
 \centering
-\begin{small}
 \begin{tabular}{|l|rrrr|}
   \hline
   Model         &      LEDS   &      BLESS  &      Medical  &      TM14   \\
@@ -622,7 +621,6 @@ while significantly outperforming it on BLESS and Medical datasets.
   No Inclusion  &      .010   &      .031   &      .014     &      .001   \\
   \hline
 \end{tabular}
-\end{small}
 \caption{Absolute decrease in mean F1 on the development sets with the
 different feature types ablated. Higher numbers indicate greater feature
 importance.}
@@ -812,7 +810,7 @@ evaluate our H-feature model.
   \hline
   \multicolumn{7}{c}{}\\
   [-0.5em]
-  \multicolumn{7}{c}{(a) Results from \newcite{shwartz:2016:acl}, reprinted here.}\\
+  \multicolumn{7}{c}{(a) results from \newcite{shwartz:2016:acl}, reprinted here.}\\
   \multicolumn{7}{c}{}\\
   \hline
   & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
@@ -823,7 +821,7 @@ evaluate our H-feature model.
   \hline
   \multicolumn{7}{c}{}\\
   [-0.5em]
-  \multicolumn{7}{c}{(b) Our results}\\
+  \multicolumn{7}{c}{(b) our results}\\
   \end{tabular}
   \caption{Comparing the H-feature model with Shwartz et al. (2016), a
     state-of-the-art system which combines a path-based with a distributional
@@ -977,22 +975,25 @@ be found in Table~\ref{tab:multimakeup}.
 
 \begin{table}
 \centering
-\begin{footnotesize}
+\begin{small}
+\begin{maybetiny}
+\setlength\tabcolsep{1.15ex}
 \begin{tabular}{|lr|lr|lr|lr|}
   \hline
-  \multicolumn{2}{|c|}{{\bf EVAL}} & \multicolumn{2}{c|}{{\bf BLESS}} & \multicolumn{2}{c|}{{\bf Root9}} & \multicolumn{2}{c|}{{\bf K\&H}}\\
+  \multicolumn{2}{|c|}{{\bf EVAL}} & \multicolumn{2}{c|}{{\bf BLESS}} & \multicolumn{2}{c|}{{\bf Root9}} & \multicolumn{2}{c|}{{\bf K\&H+N}}\\
   \hline
   \hline
-  Hypernymy & 25.5\% & Hypernymy   &  5.0\% & Hypernymy   & 25.0\% & Hypernymy   &  7.5\% \\
+  Hypernym  & 25.5\% & Hypernym    &  5.0\% & Hypernym    & 25.0\% & Hypernym    &  7.5\% \\
   Antonym   & 21.7\% & Co-hyp      & 13.4\% & Co-hyp      & 25.1\% & Co-hyp      & 44.9\% \\
-  Synonym   & 14.7\% & Meronymy    & 11.1\% & Random      & 49.9\% & Meronymy    &  1.8\% \\
+  Synonym   & 14.7\% & Meronym     & 11.1\% & Random      & 49.9\% & Meronym     &  1.8\% \\
   Has A     &  7.4\% & Attribute   & 10.3\% &             &        & Random      & 45.9\% \\
   Material  &  4.3\% & Event       & 14.4\% &             &        &             &        \\
   Property  & 17.6\% & Random      & 45.8\% &             &        &             &        \\
   Part Of   &  8.9\% &             &        &             &        &             &        \\
   \hline
 \end{tabular}
-\end{footnotesize}
+\end{maybetiny}
+\end{small}
 \caption{The makeup of each of the four multi-relation datasets, by relation type.}
 \label{tab:multimakeup}
 \end{table}

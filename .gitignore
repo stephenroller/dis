@@ -9,7 +9,7 @@
 *.bbl
 *.blg
 thesis.pdf
-draft.pdf
+binding.pdf
 main.pdf
 *.synctex.gz
 .DS_Store

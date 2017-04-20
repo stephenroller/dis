@@ -8,16 +8,17 @@ thesis:
 	pdflatex main
 	pdflatex main
 
-draft:
-	pdflatex draft
-	pdflatex draft
-	bibtex draft
-	bibtex draft
-	pdflatex draft
-	pdflatex draft
+binding:
+	pdflatex binding
+	pdflatex binding
+	bibtex binding
+	bibtex binding
+	pdflatex binding
+	pdflatex binding
 
-fastdraft:
-	pdflatex -interaction nonstopmode -file-line-error draft
+
+bindpreview:
+	max_print_line=2000 latexmk -verbose -pdf -file-line-error -interaction=nonstopmode -pvc -e '$$pdf_previewer = "/Applications/Skim.app/Contents/SharedSupport/displayline"' 'binding.tex'
 
 clean:
 	( echo rm -f ` cat .gitignore ` | bash ) || true

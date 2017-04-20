@@ -107,8 +107,9 @@ Section~\ref{sec:word2vec}.
 
 \begin{figure}
 \centering
-\begin{minipage}{7cm}
+\begin{minipage}[b]{0.45\textwidth}
 \centering
+\vfill
 \begin{scriptsize}
 \begin{alltt}
          the furry {\color{Cerulean}{dog}} is friendly to    
@@ -120,12 +121,14 @@ a reputation among {\color{Cerulean}{dog}} trainers of having
         as a guard {\color{Cerulean}{dog}} and to hunt       
    the mechanic 's {\color{Cerulean}{dog}} began to howl     
 \end{alltt}
-\end{scriptsize}~\\
+\end{scriptsize}
+\vfill
 (a) toy corpus
 \end{minipage}
-\quad
-\begin{minipage}{6cm}
+\hfill
+\begin{minipage}[b]{0.45\textwidth}
 \centering
+\vfill
 \begin{tikzpicture}[scale=1.3]
     \coordinate (origin) at (0,0);
     \coordinate (cat) at (85:1.7);
@@ -139,10 +142,11 @@ a reputation among {\color{Cerulean}{dog}} trainers of having
     \draw [] (12:0.5) arc (12:66:0.5) node[right,pos=0.75] {$\theta$};
     \draw [<->,ultra thick](2.5,0) -- (origin)  node (yaxis) [below,pos=0.5] {{underwater}}
       -- (0,2.0) node (xaxis) [above,pos=0.5,rotate=90] {{ furry}};
-\end{tikzpicture}\\
+\end{tikzpicture}
+\vfill
 (b) cartoon vector space
 \end{minipage}
-\caption{(a) Example contexts of the word \lit{dog}, and (b) cartoon drawing
+\caption{(a) Example contexts of the word \lit{dog}, and (b) Cartoon drawing
 of word vectors in the \ctx{furry} and \ctx{underwater} dimensions.}
 \label{fig:vsm}
 \end{figure}
