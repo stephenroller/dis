@@ -324,7 +324,7 @@ and the context, each taking the form of a softmax:
 where the $t$ is the target word, $s$ is a proposed substitute, $C$ is the set
 of syntactic contexts, and $Z_t$ and $Z_C$ are normalizing constants. Our
 model differs from \mbox{\balAddCos} in two important ways. First, our
-similarity measure uses{\em unnormalized} inner products $s^\top t$
+similarity measure uses {\em unnormalized} inner products $s^\top t$
 and $s^\top c$, rather than {\em normalized} cosine similarities; and
 second, we introduce two  free parameters, $W$ and $b$, which act as a linear
 transformation over the original context vectors. These parameters are
@@ -404,8 +404,7 @@ over all possible values of $i$:
   \text{GAP} & = \frac{1}{R}\sum_{k=1}^n\left[\sum_{i=1}^k\frac{g(h_i)}{i}\right]\\
   R & = \sum_{k=1}^n\left[\frac{1}{k}\sum_{i=1}^n g_i\right]
 \end{align*}
-Although this measure is a bit too difficult to unpack completely here,
-intuitively it measures 1.0 when the model perfectly ranks the list, and 0.0
+Intuitively, GAP measures 1.0 when the model perfectly ranks the list, and 0.0
 when the model provides the reverse listing. Partial credit is awarded for
 providing items in roughly the correct order, weighted by how important the
 items are in the gold scores.
@@ -420,7 +419,9 @@ On this all-words ranking task, we evaluate performance with (micro) mean
 Precision@1 and P@3: that is, of a system's top one/three guesses, the
 percentage also given by human annotators.  These evaluation metrics are
 similar to the {\em best} and {\em oot} metrics reported in the literature, but
-we find P@1 and P@3 easier to interpret and analyze.
+we find P@1 and P@3 easier to interpret and analyze. In case annotators did
+not provide three unique substitutes, that particular substitution is divided
+by the total number of unique substitutions.
 
 \subsection{Vectors and Training Procedure}
 

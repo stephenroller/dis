@@ -493,7 +493,7 @@ the same training data as each of the individual H-feature detectors, so
 our iterative procedure acts {\em only} as a method of feature
 extraction.
 
-For our final classifier, we use an SVM with an RBF-kernel, though decision
+For our final classifier, we use a regularized SVM with an RBF-kernel, though decision
 trees and other nonlinear classifiers also perform reasonably well. The
 nonlinear final classifier can be understood as doing a form of logical
 reasoning about the four slots: \lit{animal} is a hypernym of \lit{cat} because

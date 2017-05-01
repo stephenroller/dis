@@ -150,10 +150,10 @@ investigation.
 We observe the importance of experimental setup in lexical relationship
     classification and hypernymy detection, noting that traditional train/test
     splits can lead to {\em lexical memorization} and overestimation of the
-    lexical generalization.
-We propose an alternative experimental setup for lexical relationship
+    lexical generalization. We propose an alternative experimental setup for lexical relationship
     classification, where there is zero lexical overlap between the training
-    and test sets. We find this experimental setup is considerably more
+    and test sets. For example, if the word \lit{animal} may not appear in both
+    the training set and test set. We find this experimental setup is considerably more
     difficult, and better measures the ability of models to generalize to
     novel lexical items.
 
@@ -168,7 +168,7 @@ We analyze Asym within the context of the prototypicality framework
 
 \paragraph{H-features for Lexical Relationship Prediction}
 We analyze a lexical relationship classifier which is known to exhibit
-    strong prototypicality behavior, wherein a model predicts \lit{sofa
+    strong prototypicality behavior, wherein a model predicts \lit{cactus
     $\rightarrow$ animal}, simply because \lit{animal} is a prototypical
     hypernym. We consider its performance with respect to different
     distributional spaces, and use a novel technique to interpret the model

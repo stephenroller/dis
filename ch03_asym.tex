@@ -399,12 +399,12 @@ Table~\ref{tab:splits}b demonstrates our setup.
 \end{table}
 
 Unfortunately, one downside of this setup is that some pairs must be discarded
-in each particular train/test setup, as shown in the Dropped section of
+in each particular train/test setup, as shown in the Discarded section of
 Table~\ref{tab:splits}b. This will occur in any dataset where a particular word
 occurs in more than one example pair.  This can be mitigated by keeping the
 size of each test set to its smallest reasonable value to minimize the
 possibility of overlap with other pairs. Figure~\ref{fig:dataloss} shows the
-percentage of training data that must be discarded on two different datasets.
+fraction of training data that must be discarded on two different datasets.
 A traditional machine learning setup, where no pairs are discarded because
 overlap is disregarded, would lie at the $y = 0.0$ line. We see that the
 amount of data that must be discarded rapidly increases with the size of
@@ -451,12 +451,12 @@ evaluate a random split setting without lexical overlap.
   \centering
   \begin{tabular}{|l|c|c|}
       \hline
-      {\bf Stratification} & {\bf W/ overlap} & {\bf W/o overlap} \\
+      {\bf Stratification} & {\bf Training Examples} & {\bf W/ overlap} & {\bf W/o overlap} \\
       \hline
       \hline
-      Random               &   .976           &     -             \\
-      Concept (LHS)        &   .971           &   .765            \\
-      Category             &   .710           &   .652            \\
+      Random               &     13,464             &   .976           &     -             \\
+      Concept (LHS)        &     13,358             &   .971           &   .765            \\
+      Category             &     12,332             &   .710           &   .652            \\
       \hline
   \end{tabular}
   \caption{Comparing experimental conditions with and without lexical overlap
