@@ -404,7 +404,7 @@ Table~\ref{tab:splits}b. This will occur in any dataset where a particular word
 occurs in more than one example pair.  This can be mitigated by keeping the
 size of each test set to its smallest reasonable value to minimize the
 possibility of overlap with other pairs. Figure~\ref{fig:dataloss} shows the
-fraction of training data that must be discarded on two different datasets.
+percentage of training data that must be discarded on two different datasets.
 A traditional machine learning setup, where no pairs are discarded because
 overlap is disregarded, would lie at the $y = 0.0$ line. We see that the
 amount of data that must be discarded rapidly increases with the size of
@@ -449,7 +449,7 @@ evaluate a random split setting without lexical overlap.
 
 \begin{table}
   \centering
-  \begin{tabular}{|l|c|c|}
+  \begin{tabular}{|l|c|c|c|}
       \hline
       {\bf Stratification} & {\bf Training Examples} & {\bf W/ overlap} & {\bf W/o overlap} \\
       \hline
@@ -728,18 +728,18 @@ interpretation} of our model, not its absolute performance.
 \begin{table}
   \centering
   \begin{maybesmall}
-  \begin{tabular}{|l|cccc||cccc|}
+  \begin{tabular}{|l|cccc|cccc|}
     \hline
-    & \multicolumn{4}{c||}{Original Space} & \multicolumn{4}{c|}{Selective Space}\\
+    & \multicolumn{4}{c|}{{\bf Original Space}} & \multicolumn{4}{c|}{{\bf Selective Space}}\\
     \hline\hline
     \begin{maybetiny}Measure        \end{maybetiny}&
-    \begin{maybetiny}Cohyp  \end{maybetiny}&
+    \begin{maybetiny}Co-hyp  \end{maybetiny}&
     \begin{maybetiny}Hyper  \end{maybetiny}&
-    \begin{maybetiny}Mero  \end{maybetiny}&   
-    \begin{maybetiny}Rand  \end{maybetiny}& 
-    \begin{maybetiny}Cohyp  \end{maybetiny}&   
-    \begin{maybetiny}Hyper  \end{maybetiny}& 
-    \begin{maybetiny}Mero \end{maybetiny}&   
+    \begin{maybetiny}Mero  \end{maybetiny}&
+    \begin{maybetiny}Rand  \end{maybetiny}&
+    \begin{maybetiny}Co-hyp  \end{maybetiny}&
+    \begin{maybetiny}Hyper  \end{maybetiny}&
+    \begin{maybetiny}Mero \end{maybetiny}&
     \begin{maybetiny}Rand \end{maybetiny}\\
     \hline
     cosine         &   .68   &   .20  &  .27  &    .27  &    .69  &     .20  &  .24 &    .28 \\

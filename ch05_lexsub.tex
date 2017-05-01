@@ -589,11 +589,11 @@ the more difficult all-words task, we next strive to understand why.
 
 We first examine two hand-selected examples to provide intuitions about the
 strengths and weaknesses of our model.  Table~\ref{tab:cherry} contains a
-cherry-picked example where both our measures outperform the prior work.
-While OOC and \balAddCos~both suggest replacements with reasonable semantics,
-but are all misspelled.  \ourmeas~and \ourmeasparam~only pick words with the
-correct spellings, with the exception of \lit{realy}. This suggests that our
-model may be predicting terms with a higher unigram frequency.
+cherry-picked example where both our measures outperform prior work.
+OOC and \balAddCos~both suggest replacements with reasonable semantics,
+but contain misspelled substitutes.  \ourmeas~and \ourmeasparam~only pick words with the
+correct spellings, with the exception of \lit{realy}. This suggests our
+models are predicting terms with higher frequency.
 
 Table~\ref{tab:lemon} shows a lemon-picked example where our models perform
 strictly worse than the baseline models.  We notice that the unusual

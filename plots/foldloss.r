@@ -21,8 +21,12 @@ CSV_TEXT = "k,p,data,discarded,lower,upper
 
 data = read.csv(text=CSV_TEXT)
 
+
+
 require("ggplot2")
 pdf("foldloss.pdf", 5, 3)
+data$discarded = data$discarded *100.0
+data$p = data$p * 100.0
 ggplot(data, aes(x=p,y=discarded, linetype=data, shape=data)) + 
     theme_bw() + 
     geom_line(aes()) + 
@@ -30,7 +34,7 @@ ggplot(data, aes(x=p,y=discarded, linetype=data, shape=data)) +
     xlab("Percentage of Data Used as Test Set") + 
     ylab("Percentage of Train\nDiscarded by Overlap") + 
     theme(legend.title = element_blank()) +
-    ylim(0, 1.0) +
+    ylim(0, 100.0) +
     theme(legend.position=c(0.88, 0.18), legend.background=element_rect(colour = "black"), legend.margin=margin(0, 5, 5, 5))
 dev.off()
 

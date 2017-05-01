@@ -578,6 +578,7 @@ non-entailing).
   Concat+Diff      &      .801   &      .604   &      .224     &      .703   \\
   Concat+Asym      &      .843   &  {\bf.631}  &      .240     &      .701   \\
   \hline
+  \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
   RBF              &      .779   &      .574   &      .215     &      .705   \\
@@ -614,8 +615,8 @@ while significantly outperforming it on BLESS and Medical datasets.
 \centering
 \begin{tabular}{|l|rrrr|}
   \hline
-  Model         &      LEDS   &      BLESS  &      Medical  &      TM14   \\
-  \hline
+  {\bf Model}   & {\bf LEDS}  & {\bf BLESS} & {\bf Medical} & {\bf TM14}  \\
+  \hline\hline
   No Similarity &      .099   &      .061   &      .034     &      .003   \\
   No Detectors  &     -.008   &      .136   &      .018     &      .028   \\
   No Inclusion  &      .010   &      .031   &      .014     &      .001   \\
@@ -803,7 +804,7 @@ evaluate our H-feature model.
   \hline
   & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
   & {\bf P} & {\bf R} & {\bf F1} & {\bf P} & {\bf R} & {\bf F1}\\
-  \hline
+  \hline\hline
   Concat                    &    .901 &    .637 &    .746 &    .754 &    .551 &    .637 \\
   Path-based only           &    .811 &    .716 &    .761 &    .691 &    .632 &    .660 \\
   Hybrid Path and Dist.     &    .913 &{\bf.890}&{\bf.901}&{\bf.809}&    .617 &    .700 \\
@@ -815,6 +816,7 @@ evaluate our H-feature model.
   \hline
   & \multicolumn{3}{ c|}{\bf Random Split} & \multicolumn{3}{c|}{\bf No Overlap}\\
   & {\bf P} & {\bf R} & {\bf F1} & {\bf P} & {\bf R} & {\bf F1}\\
+  \hline
   \hline
   Concat                    &    .910 &    .874 &    .892 &    .746 &    .949 &{\bf.836}\\
   H-feature model           &{\bf.926}&    .850 &    .886 &    .700 &{\bf.964}&    .811 \\
@@ -1029,6 +1031,7 @@ applied to these datasets before.
   Asym             &      .453   &      .602   &      .671     &      .718   \\
   Concat+Diff      &      .459   &      .690   &      .596     &      .708   \\
   Concat+Asym      &      .464   &      .688   &      .644     &      .709   \\
+  \hline
   \hline
   \multicolumn{5}{|c|}{Nonlinear Models}\\
   \hline
