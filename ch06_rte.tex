@@ -3,7 +3,9 @@
 
 This chapter shows how the work of the previous three chapters may be combined
 into an end-to-end RTE system. Some of the contributions in this chapter are
-published in \newcite{beltagy:2016:cl}.
+published in \newcite{beltagy:2016:cl}. All material in this chapter constitutes
+original contributions, except as designated in
+Sections~\ref{sec:rtesystem}--\ref{sec:beltagy} and Section~\ref{sec:lai}.
 
 \section{Chapter Overview}
 
@@ -82,6 +84,7 @@ complete probabilistic logical reasoning is performed about the full sentences
 sentential entailment.
 
 \section{RTE Data and Lexical Entailment Annotations}
+\label{sec:beltagy}
 
 We evaluate using the Sentences Involving Compositional Knowledge (SICK)
 dataset, which contains nearly 10k sentence pairs, evenly split between
@@ -156,6 +159,7 @@ based on our findings about supervised distributional lexical entailment
 classifiers, and lexical substitution.
 
 \subsection{Baseline Features (Lai and Hockenmair~(2014)}
+\label{sec:lai}
 
 The baseline set of features we use were originally proposed by
 \newcite{lai:2014:semeval}, and consist of basic phrase features
